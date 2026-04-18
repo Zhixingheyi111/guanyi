@@ -4,32 +4,77 @@
 import axios from 'axios';
 
 const API_URL = 'https://api.anthropic.com/v1/messages';
-const MODEL   = 'claude-sonnet-4-5-20250929';
+const MODEL   = 'claude-sonnet-4-6';
 
-// ── Prompt 构建 ──────────────────────────────────────────────────────────────
+// ── Prompt 构建辅助函数 ──────────────────────────────────────────────────────
+
+/** 把 notes 对象格式化为可读字符串，例如：「元」始也；「亨」通也 */
+function formatNotes(notes) {
+  if (!notes || Object.keys(notes).length === 0) return null;
+  return Object.entries(notes).map(([k, v]) => `「${k}」${v}`).join('；');
+}
 
 /**
- * 将单个卦的关键数据格式化为 prompt 中的文本块
- * 只提供解读所需的语义内容，不要求 AI 重复原文
+ * 格式化单卦数据为 prompt 文本块
+ * 包含：卦辞、彖传、大象、爻辞的原文+翻译+注释
+ *
+ * @param {string}   label            显示标签（本卦/综卦/错卦/互卦/变卦）
+ * @param {object}   guaData          卦数据对象
+ * @param {object}   options
+ * @param {number[]} options.changingPositions  动爻位置（仅本卦传入）
+ * @param {number[]} options.bianGuaFrom        变卦来源动爻（仅变卦传入，用于说明来历）
  */
-function formatGuaForPrompt(label, guaData, changingPositions = []) {
-  if (!guaData) return `【${label}】无（本卦无动爻）\n`;
+function formatGuaForPrompt(label, guaData, options = {}) {
+  if (!guaData) return `【${label}】无（本卦无动爻，无变卦）\n`;
 
-  const lines = [`【${label}】${guaData.name}卦（${guaData.symbol}）`];
+  const { changingPositions = [], bianGuaFrom = null } = options;
+  const lines = [];
 
-  // 卦辞白话翻译（原文由前端展示，AI 只需翻译作语义参考）
-  lines.push(`卦义：${guaData.guaci.translation}`);
+  // 卦头
+  lines.push(`【${label}】${guaData.name}卦（${guaData.symbol}）`);
+  if (bianGuaFrom && bianGuaFrom.length > 0) {
+    const positions = bianGuaFrom.map(p => `第${p + 1}爻`).join('、');
+    lines.push(`（由本卦 ${positions} 动爻翻转而来，代表事情的发展走向）`);
+  }
 
-  // 动爻爻辞（仅当有动爻且是本卦时提供）
-  if (changingPositions.length > 0) {
-    const changingYao = changingPositions.map(pos => {
-      const yao = guaData.yaoci[pos];
-      return yao ? `  · ${yao.position}（第${pos + 1}爻）：${yao.translation}` : null;
-    }).filter(Boolean);
+  // 卦辞：原文 + 翻译 + 注释
+  lines.push(`\n卦辞原文：${guaData.guaci.original}`);
+  lines.push(`卦辞释义：${guaData.guaci.translation}`);
+  const guaciNotes = formatNotes(guaData.guaci.notes);
+  if (guaciNotes) lines.push(`字词注解：${guaciNotes}`);
 
-    if (changingYao.length > 0) {
-      lines.push('动爻提示：');
-      changingYao.forEach(y => lines.push(y));
+  // 彖传
+  if (guaData.tuanci) {
+    lines.push(`\n彖传：${guaData.tuanci}`);
+  }
+
+  // 大象
+  if (guaData.daxiang) {
+    lines.push(`大象：${guaData.daxiang}`);
+  }
+
+  // 爻辞：本卦只展示动爻（全文），其他卦展示所有爻的白话概要
+  if (guaData.yaoci && guaData.yaoci.length > 0) {
+    if (changingPositions.length > 0) {
+      lines.push('\n动爻爻辞（完整）：');
+      changingPositions.forEach(pos => {
+        const yao = guaData.yaoci[pos];
+        if (!yao) return;
+        lines.push(`  ▶ ${yao.position}（第${pos + 1}爻）`);
+        lines.push(`    爻辞原文：${yao.original}`);
+        lines.push(`    释义：${yao.translation}`);
+        const yaoNotes = formatNotes(yao.notes);
+        if (yaoNotes) lines.push(`    字词注：${yaoNotes}`);
+        if (yao.xiaoxiang) lines.push(`    小象：${yao.xiaoxiang}`);
+      });
+    } else {
+      // 非本卦：提供所有爻的白话概要，帮助 AI 理解整体卦势
+      lines.push('\n各爻概要：');
+      guaData.yaoci.forEach(yao => {
+        if (yao.position !== '用九' && yao.position !== '用六') {
+          lines.push(`  ${yao.position}：${yao.translation}`);
+        }
+      });
     }
   }
 
@@ -37,52 +82,81 @@ function formatGuaForPrompt(label, guaData, changingPositions = []) {
 }
 
 /**
- * 构建完整的 prompt
- * 核心原则：提供语义参考 → 要求 AI 输出解读，不重复原文
+ * 构建完整 prompt
  */
 function buildPrompt(question, hexagrams, changingPositions) {
   const { benGua, zongGua, cuoGua, huGua, bianGua } = hexagrams;
 
   const guaBlock = [
-    formatGuaForPrompt('本卦', benGua, changingPositions),
+    formatGuaForPrompt('本卦', benGua, { changingPositions }),
     formatGuaForPrompt('综卦', zongGua),
     formatGuaForPrompt('错卦', cuoGua),
     formatGuaForPrompt('互卦', huGua),
-    formatGuaForPrompt('变卦', bianGua),
-  ].join('\n');
+    formatGuaForPrompt('变卦', bianGua, { bianGuaFrom: changingPositions }),
+  ].join('\n\n---\n\n');
 
-  return `你是一位精通《周易》的易经大师，学贯象数义理，解卦深入浅出，善于联系现实情境给出指引。
+  return `你是一位融通象数与义理的易经大师。你的解卦风格深沉温暖、有智慧感，善于将古老的卦象智慧与当事人的具体处境相结合。
 
-## 用户问题
+你的解读原则：
+- 不算命，不做吉凶定论，而是揭示处境的结构与可能性
+- 启发当事人看清自己的位置、动力与方向
+- 语言深入浅出，避免空洞的套话
+
+---
+
+## 提问者的问题
+
 ${question}
 
-## 卦象信息
-以下是这次占卜的五层卦象数据，供你参考解读：
+---
+
+## 五层卦象数据
+
+以下是完整的卦象信息，包含原文、释义与注解，供你深度参考。
+⚠️ 重要：这些原文已由系统在界面上单独展示给用户，你的输出中【不要重复任何原文、卦名、卦符】，直接给出你的解读分析。
 
 ${guaBlock}
 
-## 解读要求
+---
 
-请针对用户的具体问题，从五层卦象角度给出解读。注意：
-1. 卦名、卦符、原文已由系统单独展示，**你的回答中不要重复这些内容**
-2. 直接给出你的解读和洞见，联系用户的实际情境
-3. 语气：智慧而亲切，深入浅出，不要卖弄术语
-4. 长度：每层卦象解读 2-4 句，综合建议 3-5 句
+## 解读框架
 
-## 输出格式
+请从以下五个层面分别解读，各有侧重：
 
-请严格按以下 JSON 格式输出，不要输出任何 JSON 以外的内容：
+- **本卦**：当下处境——提问者此刻身处何种能量场？核心的形势与动力是什么？
+- **综卦**：对方视角/事情的另一面——如果换一个角度或换一个当事人来看，会是什么图景？
+- **错卦**：欠缺与互补——本卦所缺少的、需要意识到并补足的是什么？
+- **互卦**：内在结构——表象之下，事情深处潜藏着怎样的动力与结构？
+- **变卦**：发展趋势——若顺此发展，事情将走向何方？（若无动爻则无变卦）
+
+综合建议请覆盖以下四个维度：
+1. **当下应做**：基于卦象，现在最重要的行动或态度是什么？
+2. **需要警惕**：什么样的倾向或做法可能带来麻烦？
+3. **需要补足**：有什么被忽视的资源或视角值得引入？
+4. **未来走向**：若按照卦象的指引，事情大致会如何演化？
+
+---
+
+## 输出要求
+
+1. 每层解读 2～4 句，精炼有洞察力
+2. 综合建议按四个维度展开，每项 1～3 句
+3. 语气：智慧、温暖、直接，如同一位深思熟虑的老师在与你对话
+4. 严格按以下 JSON 格式输出，不要输出任何 JSON 以外的内容：
 
 {
-  "benGuaInterpretation": "本卦解读（针对用户问题的核心卦象分析）",
-  "zongGuaInterpretation": "综卦解读（事情的另一面或对立视角）",
-  "cuoGuaInterpretation": "错卦解读（与本卦相错，揭示深层对立）",
-  "huGuaInterpretation": "互卦解读（事情内部潜藏的结构与动力）",
-  "bianGuaInterpretation": "变卦解读（事情的走向与结果）",
-  "comprehensiveAdvice": "综合建议（结合五卦，对用户问题给出具体可行的指引）"
-}
-
-若无变卦（无动爻），"bianGuaInterpretation" 填 null。`;
+  "benGuaInterpretation": "本卦解读",
+  "zongGuaInterpretation": "综卦解读",
+  "cuoGuaInterpretation": "错卦解读",
+  "huGuaInterpretation": "互卦解读",
+  "bianGuaInterpretation": "变卦解读，若无动爻则填 null",
+  "comprehensiveAdvice": {
+    "currentAction": "当下应做",
+    "warnings": "需要警惕",
+    "supplement": "需要补足",
+    "futureDirection": "未来走向"
+  }
+}`;
 }
 
 // ── 错误处理 ─────────────────────────────────────────────────────────────────
@@ -121,7 +195,12 @@ function handleApiError(error) {
  *   cuoGuaInterpretation: string,
  *   huGuaInterpretation: string,
  *   bianGuaInterpretation: string | null,
- *   comprehensiveAdvice: string
+ *   comprehensiveAdvice: {
+ *     currentAction: string,
+ *     warnings: string,
+ *     supplement: string,
+ *     futureDirection: string
+ *   }
  * }>}
  */
 export async function interpretHexagrams({ question, hexagrams, changingPositions }) {
