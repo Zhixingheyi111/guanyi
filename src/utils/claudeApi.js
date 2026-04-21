@@ -6,6 +6,39 @@ import axios from 'axios';
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL   = 'claude-sonnet-4-6';
 
+// Tool schema：强制 Claude 以结构化字段返回解读，彻底绕开 JSON 解析风险
+const INTERPRETATION_TOOL = {
+  name: 'yijing_interpret',
+  description: '输出五层卦象的易经解读与综合建议',
+  input_schema: {
+    type: 'object',
+    properties: {
+      benGuaInterpretation:  { type: 'string', description: '本卦解读：当下处境' },
+      zongGuaInterpretation: { type: 'string', description: '综卦解读：对方视角/另一面' },
+      cuoGuaInterpretation:  { type: 'string', description: '错卦解读：欠缺与互补' },
+      huGuaInterpretation:   { type: 'string', description: '互卦解读：内在结构' },
+      bianGuaInterpretation: { type: 'string', description: '变卦解读：发展趋势。若无动爻则可省略' },
+      comprehensiveAdvice: {
+        type: 'object',
+        properties: {
+          currentAction:   { type: 'string', description: '当下应做' },
+          warnings:        { type: 'string', description: '需要警惕' },
+          supplement:      { type: 'string', description: '需要补足' },
+          futureDirection: { type: 'string', description: '未来走向' },
+        },
+        required: ['currentAction', 'warnings', 'supplement', 'futureDirection'],
+      },
+    },
+    required: [
+      'benGuaInterpretation',
+      'zongGuaInterpretation',
+      'cuoGuaInterpretation',
+      'huGuaInterpretation',
+      'comprehensiveAdvice',
+    ],
+  },
+};
+
 // ── Prompt 构建辅助函数 ──────────────────────────────────────────────────────
 
 /** 把 notes 对象格式化为可读字符串，例如：「元」始也；「亨」通也 */
@@ -217,6 +250,8 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
         model: MODEL,
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }],
+        tools: [INTERPRETATION_TOOL],
+        tool_choice: { type: 'tool', name: 'yijing_interpret' },
       },
       {
         headers: {
@@ -231,14 +266,12 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
     handleApiError(error);
   }
 
-  // 解析 AI 返回的 JSON
-  const rawText = response.data.content[0].text.trim();
-  try {
-    return JSON.parse(rawText);
-  } catch {
-    // AI 偶尔会在 JSON 外包裹 markdown 代码块，尝试提取
-    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-    if (jsonMatch) return JSON.parse(jsonMatch[0]);
+  // 从 tool_use 块提取结构化结果（无需 JSON.parse）
+  const toolUse = response.data.content.find(block => block.type === 'tool_use');
+  console.log('[Claude tool_use]', toolUse);
+  if (!toolUse || !toolUse.input) {
     throw new Error('解读失败：返回格式异常');
   }
+  // 若无动爻，变卦解读可能缺失，显式补 null 以符合前端契约
+  return { bianGuaInterpretation: null, ...toolUse.input };
 }

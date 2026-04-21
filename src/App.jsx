@@ -104,14 +104,7 @@ export default function App() {
         bianGua: resolve(transforms.bianGua),
       };
 
-      // 4. 暂时只支持乾卦：若本卦不是乾卦则提示重新起卦
-      if (!hexagramsData.benGua || hexagramsData.benGua.id !== 1) {
-        setNotReady(true);
-        setLoading(false);
-        return;
-      }
-
-      // 5. 调用 Claude API 解读
+      // 4. 调用 Claude API 解读
       const interp = await interpretHexagrams({
         question,
         hexagrams: hexagramsData,
