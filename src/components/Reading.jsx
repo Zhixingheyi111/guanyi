@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const S = {
   section: {
     borderTop: '1px solid #333',
@@ -32,6 +34,42 @@ const S = {
     margin: '0.5rem 0',
     fontStyle: 'italic',
   },
+  translation: {
+    color: '#bbb',
+    fontSize: '0.9rem',
+    lineHeight: '1.8',
+    margin: '0.5rem 0',
+  },
+  notesList: {
+    margin: '0.5rem 0 0.75rem',
+    paddingLeft: '0.25rem',
+  },
+  noteItem: {
+    color: '#888',
+    fontSize: '0.85rem',
+    lineHeight: '1.7',
+    margin: '0.15rem 0',
+  },
+  noteKey: {
+    color: '#aaa',
+  },
+  subTitle: {
+    fontSize: '0.75rem',
+    letterSpacing: '0.2em',
+    color: '#888',
+    marginBottom: '0.4rem',
+  },
+  classicBlock: {
+    borderLeft: '2px solid #333',
+    paddingLeft: '0.75rem',
+    margin: '1rem 0',
+  },
+  classicText: {
+    color: '#aaa',
+    fontSize: '0.9rem',
+    lineHeight: '1.9',
+    margin: 0,
+  },
   interpretation: {
     color: '#e8e8e8',
     fontSize: '1rem',
@@ -45,11 +83,46 @@ const S = {
     padding: '0.75rem 1rem',
     marginBottom: '0.75rem',
   },
+  yaoBlockChanging: {
+    borderLeft: '2px solid #d4a24c',
+  },
+  yaoHeader: {
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: '0.5rem',
+    cursor: 'pointer',
+    userSelect: 'none',
+  },
+  yaoArrow: {
+    color: '#666',
+    fontSize: '0.75rem',
+    width: '0.75rem',
+    display: 'inline-block',
+  },
   yaoTitle: {
     fontSize: '0.85rem',
     color: '#aaa',
     letterSpacing: '0.1em',
-    marginBottom: '0.4rem',
+    whiteSpace: 'nowrap',
+  },
+  yaoOriginalInline: {
+    color: '#aaa',
+    fontSize: '0.9rem',
+    fontStyle: 'italic',
+    lineHeight: '1.6',
+    flex: 1,
+  },
+  yaoBody: {
+    marginTop: '0.6rem',
+    paddingTop: '0.6rem',
+    borderTop: '1px dashed #2a2a2a',
+  },
+  yaoChangingHint: {
+    color: '#d4a24c',
+    fontSize: '0.8rem',
+    lineHeight: '1.6',
+    margin: '0 0 0.6rem',
+    letterSpacing: '0.05em',
   },
   sideGuaRow: {
     display: 'grid',
@@ -61,6 +134,11 @@ const S = {
     border: '1px solid #333',
     borderRadius: '4px',
     padding: '0.75rem 1rem',
+  },
+  sideDivider: {
+    border: 0,
+    borderTop: '1px solid #2a2a2a',
+    margin: '0.6rem 0',
   },
   adviceGrid: {
     display: 'grid',
@@ -99,6 +177,57 @@ const S = {
   },
 };
 
+function NotesList({ notes }) {
+  if (!notes || typeof notes !== 'object') return null;
+  const entries = Object.entries(notes);
+  if (entries.length === 0) return null;
+  return (
+    <ul style={{ ...S.notesList, listStyle: 'none', padding: 0 }}>
+      {entries.map(([key, value]) => (
+        <li key={key} style={S.noteItem}>
+          ▪ <span style={S.noteKey}>{key}</span>：{value}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function YaoItem({ yao, index, isChanging }) {
+  const [open, setOpen] = useState(isChanging);
+  const blockStyle = isChanging
+    ? { ...S.yaoBlock, ...S.yaoBlockChanging }
+    : S.yaoBlock;
+  return (
+    <div style={blockStyle}>
+      <div style={S.yaoHeader} onClick={() => setOpen(o => !o)}>
+        <span style={S.yaoArrow}>{open ? '▾' : '▸'}</span>
+        <span style={S.yaoTitle}>
+          {isChanging ? '⚡ ' : ''}{yao.position}（第 {index + 1} 爻）
+        </span>
+        <span style={S.yaoOriginalInline}>{yao.original}</span>
+      </div>
+      {open && (
+        <div style={S.yaoBody}>
+          {isChanging && (
+            <p style={S.yaoChangingHint}>
+              ⚡ 此爻为动爻，详细解读见上方本卦解读
+            </p>
+          )}
+          <div style={S.subTitle}>小象</div>
+          <p style={{ ...S.classicText, marginBottom: '0.6rem' }}>{yao.xiaoxiang}</p>
+          {yao.translation && (
+            <>
+              <div style={S.subTitle}>白话</div>
+              <p style={{ ...S.translation, margin: '0 0 0.4rem' }}>{yao.translation}</p>
+            </>
+          )}
+          <NotesList notes={yao.notes} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function GuaRow({ label, guaData, interpretation }) {
   if (!guaData) return null;
   return (
@@ -108,8 +237,21 @@ function GuaRow({ label, guaData, interpretation }) {
         <span style={{ fontSize: '1.5rem' }}>{guaData.symbol}</span>
         <span style={{ letterSpacing: '0.1em' }}>{guaData.name}</span>
       </div>
+      {guaData.guaci?.original && (
+        <p style={{ ...S.original, fontSize: '0.85rem', margin: '0.3rem 0' }}>
+          {guaData.guaci.original}
+        </p>
+      )}
+      {guaData.daxiang && (
+        <p style={{ ...S.classicText, fontSize: '0.85rem', margin: '0.3rem 0' }}>
+          {guaData.daxiang}
+        </p>
+      )}
       {interpretation && (
-        <p style={{ ...S.interpretation, fontSize: '0.9rem', margin: 0 }}>{interpretation}</p>
+        <>
+          <hr style={S.sideDivider} />
+          <p style={{ ...S.interpretation, fontSize: '0.9rem', margin: 0 }}>{interpretation}</p>
+        </>
       )}
     </div>
   );
@@ -135,26 +277,42 @@ export default function Reading({ question, hexagrams, changingPositions, interp
           <span style={S.guaName}>{benGua.name}</span>
         </div>
         <p style={S.original}>{benGua.guaci.original}</p>
+        {benGua.guaci.translation && (
+          <p style={S.translation}>{benGua.guaci.translation}</p>
+        )}
+        <NotesList notes={benGua.guaci.notes} />
+
+        {benGua.tuanci && (
+          <div style={S.classicBlock}>
+            <div style={S.subTitle}>彖传</div>
+            <p style={S.classicText}>{benGua.tuanci}</p>
+          </div>
+        )}
+
+        {benGua.daxiang && (
+          <div style={S.classicBlock}>
+            <div style={S.subTitle}>大象</div>
+            <p style={S.classicText}>{benGua.daxiang}</p>
+          </div>
+        )}
+
         <p style={S.interpretation}>{interpretation.benGuaInterpretation}</p>
       </div>
 
-      {/* 动爻 */}
-      {changingPositions.length > 0 && (
-        <div style={S.section}>
-          <div style={S.sectionTitle}>动爻</div>
-          {changingPositions.map(pos => {
-            const yao = benGua.yaoci[pos];
-            if (!yao) return null;
-            return (
-              <div key={pos} style={S.yaoBlock}>
-                <div style={S.yaoTitle}>{yao.position}（第 {pos + 1} 爻）</div>
-                <p style={{ ...S.original, margin: '0 0 0.4rem' }}>{yao.original}</p>
-                <p style={{ ...S.interpretation, margin: 0, fontSize: '0.95rem' }}>{yao.xiaoxiang}</p>
-              </div>
-            );
-          })}
+      {/* 六爻 */}
+      <div style={S.section}>
+        <div style={S.sectionTitle}>
+          六爻{changingPositions.length > 0 && ` · ${changingPositions.length} 动爻`}
         </div>
-      )}
+        {benGua.yaoci.map((yao, index) => (
+          <YaoItem
+            key={index}
+            yao={yao}
+            index={index}
+            isChanging={changingPositions.includes(index)}
+          />
+        ))}
+      </div>
 
       {/* 综卦 / 错卦 */}
       <div style={S.section}>
