@@ -1,16 +1,21 @@
-# React + Vite
+# 观易
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+观天地之变，见生命之常。
 
-Currently, two official plugins are available:
+个人使用的易经网页应用，主要在手机使用。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 两种模式
 
-## React Compiler
+- 🌿 **问道**：模拟蓍草起卦，展示五层卦象（本/综/错/互/变），由 Claude 给出解读
+- 📖 **学易**：浏览六十四卦，阅读卦辞、彖传、大象、爻辞、文言传，并与大师对话学习
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 技术栈
+- React + Vite
+- 纯 CSS（无 UI 框架）
+- axios（Claude API 调用）
+- 部署：GitHub Pages
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 核心原则
+1. 事实与解读分离：卦名、卦符、卦辞、爻辞一律从本地数据库读取，AI 只负责解读与讲解
+2. AI 不生成卦符卦名原文，避免混淆
+3. 数据库（`src/data/`）是核心资产，修改前需确认

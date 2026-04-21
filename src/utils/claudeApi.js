@@ -75,13 +75,13 @@ function formatGuaForPrompt(label, guaData, options = {}) {
   if (guaciNotes) lines.push(`字词注解：${guaciNotes}`);
 
   // 彖传
-  if (guaData.tuanci) {
-    lines.push(`\n彖传：${guaData.tuanci}`);
+  if (guaData.tuanci?.original) {
+    lines.push(`\n彖传：${guaData.tuanci.original}`);
   }
 
   // 大象
-  if (guaData.daxiang) {
-    lines.push(`大象：${guaData.daxiang}`);
+  if (guaData.daxiang?.original) {
+    lines.push(`大象：${guaData.daxiang.original}`);
   }
 
   // 爻辞：本卦只展示动爻（全文），其他卦展示所有爻的白话概要

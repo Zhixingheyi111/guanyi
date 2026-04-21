@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import Divination from './components/Divination';
 import Reading from './components/Reading';
+import Navigation from './components/Navigation';
+import HexagramGrid from './components/HexagramGrid';
+import HexagramDetail from './components/HexagramDetail';
 import { generateHexagram } from './utils/divination';
 import { calculateTransformations } from './utils/transformations';
 import { getHexagramIdByBinary } from './data/hexagramIndex';
@@ -21,13 +24,24 @@ const S = {
     width: '100%',
     maxWidth: '600px',
   },
-  title: {
-    fontSize: '1.5rem',
-    fontWeight: 'normal',
-    letterSpacing: '0.4em',
+  brand: {
     textAlign: 'center',
-    marginBottom: '3rem',
+    marginBottom: '2rem',
+  },
+  brandTitle: {
+    fontSize: '1.75rem',
+    fontWeight: 'normal',
+    letterSpacing: '0.5em',
     color: '#fff',
+    margin: 0,
+    // 弥补 letter-spacing 在末尾产生的视觉偏移
+    paddingLeft: '0.5em',
+  },
+  brandSlogan: {
+    fontSize: '0.8rem',
+    color: '#666',
+    letterSpacing: '0.2em',
+    marginTop: '0.75rem',
   },
   error: {
     color: '#ff6666',
@@ -59,6 +73,11 @@ const S = {
 };
 
 export default function App() {
+  // 模式：divination（问道）/ study（学易）
+  const [mode, setMode]                         = useState('divination');
+  const [selectedHexagramId, setSelectedHexagramId] = useState(null);
+
+  // 问道模式的原有状态
   const [question, setQuestion]         = useState('');
   const [hexagrams, setHexagrams]       = useState(null);
   const [changingPositions, setChanging] = useState([]);
@@ -74,6 +93,12 @@ export default function App() {
     setInterpret(null);
     setError(null);
     setNotReady(false);
+  };
+
+  // 切换模式：清空学易选中卦，避免残留
+  const handleModeChange = (nextMode) => {
+    setMode(nextMode);
+    setSelectedHexagramId(null);
   };
 
   const handleSubmit = async () => {
@@ -122,35 +147,66 @@ export default function App() {
     }
   };
 
+  // 根据模式渲染主内容
+  const renderContent = () => {
+    if (mode === 'study') {
+      if (selectedHexagramId == null) {
+        return <HexagramGrid onSelectHexagram={setSelectedHexagramId} />;
+      }
+      return (
+        <HexagramDetail
+          hexagramId={selectedHexagramId}
+          onBack={() => setSelectedHexagramId(null)}
+        />
+      );
+    }
+
+    // 问道模式（divination）
+    if (interpretation && hexagrams) {
+      return (
+        <Reading
+          question={question}
+          hexagrams={hexagrams}
+          changingPositions={changingPositions}
+          interpretation={interpretation}
+          onReset={reset}
+        />
+      );
+    }
+    if (notReady) {
+      return (
+        <div style={S.notReady}>
+          <p>此次起出的卦数据尚待补充</p>
+          <p style={{ fontSize: '0.85rem' }}>当前只支持乾卦测试，请重新起卦</p>
+          <button style={S.resetButton} onClick={reset}>重新起卦</button>
+        </div>
+      );
+    }
+    return (
+      <Divination
+        question={question}
+        setQuestion={setQuestion}
+        onSubmit={handleSubmit}
+        loading={loading}
+      />
+    );
+  };
+
   return (
     <div style={S.page}>
       <div style={S.container}>
-        <h1 style={S.title}>易 经 问 道</h1>
+        {/* 品牌标题区 */}
+        <div style={S.brand}>
+          <h1 style={S.brandTitle}>观 易</h1>
+          <div style={S.brandSlogan}>观易 · 见自己</div>
+        </div>
+
+        {/* 模式导航 */}
+        <Navigation currentMode={mode} onModeChange={handleModeChange} />
 
         {error && <div style={S.error}>{error}</div>}
 
-        {interpretation && hexagrams ? (
-          <Reading
-            question={question}
-            hexagrams={hexagrams}
-            changingPositions={changingPositions}
-            interpretation={interpretation}
-            onReset={reset}
-          />
-        ) : notReady ? (
-          <div style={S.notReady}>
-            <p>此次起出的卦数据尚待补充</p>
-            <p style={{ fontSize: '0.85rem' }}>当前只支持乾卦测试，请重新起卦</p>
-            <button style={S.resetButton} onClick={reset}>重新起卦</button>
-          </div>
-        ) : (
-          <Divination
-            question={question}
-            setQuestion={setQuestion}
-            onSubmit={handleSubmit}
-            loading={loading}
-          />
-        )}
+        {renderContent()}
       </div>
     </div>
   );

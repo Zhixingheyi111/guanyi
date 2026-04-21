@@ -242,9 +242,9 @@ function GuaRow({ label, guaData, interpretation }) {
           {guaData.guaci.original}
         </p>
       )}
-      {guaData.daxiang && (
+      {guaData.daxiang?.original && (
         <p style={{ ...S.classicText, fontSize: '0.85rem', margin: '0.3rem 0' }}>
-          {guaData.daxiang}
+          {guaData.daxiang.original}
         </p>
       )}
       {interpretation && (
@@ -282,17 +282,17 @@ export default function Reading({ question, hexagrams, changingPositions, interp
         )}
         <NotesList notes={benGua.guaci.notes} />
 
-        {benGua.tuanci && (
+        {benGua.tuanci?.original && (
           <div style={S.classicBlock}>
             <div style={S.subTitle}>彖传</div>
-            <p style={S.classicText}>{benGua.tuanci}</p>
+            <p style={S.classicText}>{benGua.tuanci.original}</p>
           </div>
         )}
 
-        {benGua.daxiang && (
+        {benGua.daxiang?.original && (
           <div style={S.classicBlock}>
-            <div style={S.subTitle}>大象</div>
-            <p style={S.classicText}>{benGua.daxiang}</p>
+            <div style={S.subTitle}>象传</div>
+            <p style={S.classicText}>{benGua.daxiang.original}</p>
           </div>
         )}
 
