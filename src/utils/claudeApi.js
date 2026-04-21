@@ -6,7 +6,8 @@ import axios from 'axios';
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL   = 'claude-sonnet-4-6';
 
-// Tool schema：强制 Claude 以结构化字段返回解读，彻底绕开 JSON 解析风险
+// Tool schema：全部拍平为顶级 string 字段
+// 历史教训：嵌套 object 时模型会把子对象序列化成畸形 JSON 字符串塞进来
 const INTERPRETATION_TOOL = {
   name: 'yijing_interpret',
   description: '输出五层卦象的易经解读与综合建议',
@@ -18,23 +19,20 @@ const INTERPRETATION_TOOL = {
       cuoGuaInterpretation:  { type: 'string', description: '错卦解读：欠缺与互补' },
       huGuaInterpretation:   { type: 'string', description: '互卦解读：内在结构' },
       bianGuaInterpretation: { type: 'string', description: '变卦解读：发展趋势。若无动爻则可省略' },
-      comprehensiveAdvice: {
-        type: 'object',
-        properties: {
-          currentAction:   { type: 'string', description: '当下应做' },
-          warnings:        { type: 'string', description: '需要警惕' },
-          supplement:      { type: 'string', description: '需要补足' },
-          futureDirection: { type: 'string', description: '未来走向' },
-        },
-        required: ['currentAction', 'warnings', 'supplement', 'futureDirection'],
-      },
+      adviceCurrentAction:   { type: 'string', description: '综合建议 - 当下应做' },
+      adviceWarnings:        { type: 'string', description: '综合建议 - 需要警惕' },
+      adviceSupplement:      { type: 'string', description: '综合建议 - 需要补足' },
+      adviceFutureDirection: { type: 'string', description: '综合建议 - 未来走向' },
     },
     required: [
       'benGuaInterpretation',
       'zongGuaInterpretation',
       'cuoGuaInterpretation',
       'huGuaInterpretation',
-      'comprehensiveAdvice',
+      'adviceCurrentAction',
+      'adviceWarnings',
+      'adviceSupplement',
+      'adviceFutureDirection',
     ],
   },
 };
@@ -175,21 +173,7 @@ ${guaBlock}
 1. 每层解读 2～4 句，精炼有洞察力
 2. 综合建议按四个维度展开，每项 1～3 句
 3. 语气：智慧、温暖、直接，如同一位深思熟虑的老师在与你对话
-4. 严格按以下 JSON 格式输出，不要输出任何 JSON 以外的内容：
-
-{
-  "benGuaInterpretation": "本卦解读",
-  "zongGuaInterpretation": "综卦解读",
-  "cuoGuaInterpretation": "错卦解读",
-  "huGuaInterpretation": "互卦解读",
-  "bianGuaInterpretation": "变卦解读，若无动爻则填 null",
-  "comprehensiveAdvice": {
-    "currentAction": "当下应做",
-    "warnings": "需要警惕",
-    "supplement": "需要补足",
-    "futureDirection": "未来走向"
-  }
-}`;
+4. 通过 yijing_interpret 工具返回结构化结果。综合建议的四个维度分别填入 adviceCurrentAction / adviceWarnings / adviceSupplement / adviceFutureDirection 这四个独立字段`;
 }
 
 // ── 错误处理 ─────────────────────────────────────────────────────────────────
@@ -272,6 +256,32 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
   if (!toolUse || !toolUse.input) {
     throw new Error('解读失败：返回格式异常');
   }
-  // 若无动爻，变卦解读可能缺失，显式补 null 以符合前端契约
-  return { bianGuaInterpretation: null, ...toolUse.input };
+  const input = toolUse.input;
+
+  // 把扁平的 advice* 字段重组回前端期望的嵌套结构
+  const comprehensiveAdvice = {
+    currentAction:   input.adviceCurrentAction,
+    warnings:        input.adviceWarnings,
+    supplement:      input.adviceSupplement,
+    futureDirection: input.adviceFutureDirection,
+  };
+
+  // 防御性兜底：若将来模型又回到嵌套形态并包成 JSON 字符串，尝试解析
+  if (typeof input.comprehensiveAdvice === 'string') {
+    try {
+      const parsed = JSON.parse(input.comprehensiveAdvice);
+      Object.assign(comprehensiveAdvice, parsed);
+    } catch {
+      // 解析失败则沿用扁平字段的值
+    }
+  }
+
+  return {
+    benGuaInterpretation:  input.benGuaInterpretation,
+    zongGuaInterpretation: input.zongGuaInterpretation,
+    cuoGuaInterpretation:  input.cuoGuaInterpretation,
+    huGuaInterpretation:   input.huGuaInterpretation,
+    bianGuaInterpretation: input.bianGuaInterpretation ?? null,
+    comprehensiveAdvice,
+  };
 }
