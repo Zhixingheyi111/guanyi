@@ -174,6 +174,20 @@ const S = {
     fontSize: '0.9rem',
     letterSpacing: '0.15em',
     cursor: 'pointer',
+    minHeight: '44px',
+  },
+  backButton: {
+    display: 'inline-block',
+    marginBottom: '1.25rem',
+    padding: '0.4rem 0.9rem',
+    background: 'transparent',
+    border: '1px solid #444',
+    color: '#aaa',
+    fontFamily: 'Georgia, "Times New Roman", serif',
+    fontSize: '0.85rem',
+    letterSpacing: '0.1em',
+    cursor: 'pointer',
+    minHeight: '36px',
   },
 };
 
@@ -257,12 +271,17 @@ function GuaRow({ label, guaData, interpretation }) {
   );
 }
 
-export default function Reading({ question, hexagrams, changingPositions, interpretation, onReset }) {
+export default function Reading({ question, hexagrams, changingPositions, interpretation, onRestart, onBack }) {
   const { benGua, zongGua, cuoGua, huGua, bianGua } = hexagrams;
   const { comprehensiveAdvice } = interpretation;
 
   return (
     <div>
+      {/* 顶部返回（仅在查看历史详情时出现）*/}
+      {onBack && (
+        <button style={S.backButton} onClick={onBack}>← 返回历史</button>
+      )}
+
       {/* 问题 */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={S.sectionTitle}>您的问题</div>
@@ -361,7 +380,9 @@ export default function Reading({ question, hexagrams, changingPositions, interp
         </div>
       </div>
 
-      <button style={S.resetButton} onClick={onReset}>重新起卦</button>
+      {onRestart && (
+        <button style={S.resetButton} onClick={onRestart}>重新起卦</button>
+      )}
     </div>
   );
 }

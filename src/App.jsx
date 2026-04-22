@@ -9,6 +9,11 @@ import { calculateTransformations } from './utils/transformations';
 import { getHexagramIdByBinary } from './data/hexagramIndex';
 import { getHexagramById } from './data/hexagrams';
 import { interpretHexagrams } from './utils/claudeApi';
+import {
+  generateDivinationId,
+  saveDivinationRecord,
+  getDivinationRecord,
+} from './utils/storage';
 
 const S = {
   page: {
@@ -86,6 +91,9 @@ export default function App() {
   const [error, setError]               = useState(null);
   const [notReady, setNotReady]         = useState(false);
 
+  // 查看历史详情的状态：null = 正常问道；非 null = 从历史中查看
+  const [viewingHistoryId, setViewingHistoryId] = useState(null);
+
   const reset = () => {
     setQuestion('');
     setHexagrams(null);
@@ -95,10 +103,11 @@ export default function App() {
     setNotReady(false);
   };
 
-  // 切换模式：清空学易选中卦，避免残留
+  // 切换模式：清空学易选中卦、历史查看状态，避免残留
   const handleModeChange = (nextMode) => {
     setMode(nextMode);
     setSelectedHexagramId(null);
+    setViewingHistoryId(null);
   };
 
   const handleSubmit = async () => {
@@ -140,6 +149,21 @@ export default function App() {
       setChanging(cp);
       setInterpret(interp);
 
+      // 5. 保存起卦历史到 localStorage
+      saveDivinationRecord({
+        id: generateDivinationId(),
+        timestamp: Date.now(),
+        question,
+        benGua:  hexagramsData.benGua,
+        zongGua: hexagramsData.zongGua,
+        cuoGua:  hexagramsData.cuoGua,
+        huGua:   hexagramsData.huGua,
+        bianGua: hexagramsData.bianGua,
+        changingPositions: cp,
+        interpretation: interp,
+        userNote: '',
+      });
+
     } catch (err) {
       setError(err.message || '未知错误');
     } finally {
@@ -161,6 +185,36 @@ export default function App() {
       );
     }
 
+    // 查看历史详情（问道模式下）
+    if (viewingHistoryId) {
+      const record = getDivinationRecord(viewingHistoryId);
+      if (!record) {
+        return (
+          <div style={S.notReady}>
+            <p>这条记录已消失</p>
+            <button style={S.resetButton} onClick={() => setViewingHistoryId(null)}>
+              返回
+            </button>
+          </div>
+        );
+      }
+      return (
+        <Reading
+          question={record.question}
+          hexagrams={{
+            benGua:  record.benGua,
+            zongGua: record.zongGua,
+            cuoGua:  record.cuoGua,
+            huGua:   record.huGua,
+            bianGua: record.bianGua,
+          }}
+          changingPositions={record.changingPositions}
+          interpretation={record.interpretation}
+          onBack={() => setViewingHistoryId(null)}
+        />
+      );
+    }
+
     // 问道模式（divination）
     if (interpretation && hexagrams) {
       return (
@@ -169,7 +223,7 @@ export default function App() {
           hexagrams={hexagrams}
           changingPositions={changingPositions}
           interpretation={interpretation}
-          onReset={reset}
+          onRestart={reset}
         />
       );
     }
@@ -188,6 +242,7 @@ export default function App() {
         setQuestion={setQuestion}
         onSubmit={handleSubmit}
         loading={loading}
+        onViewHistory={setViewingHistoryId}
       />
     );
   };

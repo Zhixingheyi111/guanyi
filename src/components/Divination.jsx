@@ -1,3 +1,5 @@
+import DivinationHistory from './DivinationHistory';
+
 const S = {
   wrapper: {
     display: 'flex',
@@ -43,9 +45,10 @@ const S = {
   },
 };
 
-export default function Divination({ question, setQuestion, onSubmit, loading }) {
+export default function Divination({ question, setQuestion, onSubmit, loading, onViewHistory }) {
   return (
     <div style={S.wrapper}>
+      <DivinationHistory onView={onViewHistory} />
       <p style={S.label}>请将您的问题告知易经：</p>
       <textarea
         style={S.textarea}
