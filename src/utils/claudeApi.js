@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'https://api.anthropic.com/v1/messages';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/messages`;
 const MODEL   = 'claude-sonnet-4-6';
 
 // Tool schema：全部拍平为顶级 string 字段
@@ -221,8 +221,8 @@ function handleApiError(error) {
  * }>}
  */
 export async function interpretHexagrams({ question, hexagrams, changingPositions }) {
-  const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('密钥配置错误');
+  const appSecret = import.meta.env.VITE_APP_SECRET;
+  if (!appSecret) throw new Error('密钥配置错误');
 
   const prompt = buildPrompt(question, hexagrams, changingPositions);
 
@@ -239,10 +239,8 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
       },
       {
         headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
+          'x-app-secret': appSecret,
           'content-type': 'application/json',
-          'anthropic-dangerous-direct-browser-access': 'true',
         },
       }
     );

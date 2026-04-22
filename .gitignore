@@ -13,6 +13,10 @@ dist
 dist-ssr
 *.local
 
+# Cloudflare Worker 本地状态
+.wrangler/
+worker/.wrangler/
+
 # 本地调试脚本（不入库）
 debug-api.js
 /tmp/claude-last-response.json

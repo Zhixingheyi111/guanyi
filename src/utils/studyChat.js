@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'https://api.anthropic.com/v1/messages';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/messages`;
 const MODEL   = 'claude-sonnet-4-6';
 
 // ── Prompt 构建 ─────────────────────────────────────────────────────────────
@@ -128,8 +128,8 @@ function handleApiError(error) {
  * @returns {Promise<string>} 学者的回复文本
  */
 export async function sendStudyMessage({ hexagram, history, userMessage }) {
-  const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('密钥配置错误');
+  const appSecret = import.meta.env.VITE_APP_SECRET;
+  if (!appSecret) throw new Error('密钥配置错误');
 
   const systemPrompt = buildSystemPrompt(hexagram);
   const messages = [
@@ -149,10 +149,8 @@ export async function sendStudyMessage({ hexagram, history, userMessage }) {
       },
       {
         headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
+          'x-app-secret': appSecret,
           'content-type': 'application/json',
-          'anthropic-dangerous-direct-browser-access': 'true',
         },
       }
     );
