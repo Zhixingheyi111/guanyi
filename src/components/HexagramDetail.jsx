@@ -1,6 +1,8 @@
-// 单卦详情页：完整经典原文 + 问学
+// 单卦详情页：完整经典原文 + 卦笔记 + 问学
 import { getHexagramById } from '../data/hexagrams';
+import { getHexagramNote, saveHexagramNote } from '../utils/storage';
 import StudyChat from './StudyChat';
+import NoteEditor from './NoteEditor';
 
 const S = {
   backButton: {
@@ -294,6 +296,18 @@ export default function HexagramDetail({ hexagramId, onBack }) {
             <NotesList notes={yao.notes} />
           </div>
         ))}
+      </div>
+
+      {/* 我的笔记 */}
+      <div style={S.section}>
+        <div style={S.sectionTitle}>✍️ 我的笔记</div>
+        <NoteEditor
+          key={hexagram.id}
+          initialValue={getHexagramNote(hexagram.id)}
+          onSave={(v) => saveHexagramNote(hexagram.id, v)}
+          placeholder="写下你对这一卦的理解..."
+          minHeight="140px"
+        />
       </div>
 
       {/* 问学 */}
