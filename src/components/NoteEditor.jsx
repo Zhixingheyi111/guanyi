@@ -17,7 +17,8 @@ const S = {
     borderRadius: '4px',
     color: '#e8e8e8',
     fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.95rem',
+    // 1rem = 16px，低于 16px 时 iOS Safari 聚焦会自动缩放页面
+    fontSize: '1rem',
     padding: '0.75rem',
     resize: 'vertical',
     outline: 'none',

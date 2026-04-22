@@ -90,10 +90,12 @@ const S = {
   },
   yaoHeader: {
     display: 'flex',
-    alignItems: 'baseline',
+    alignItems: 'center',
     gap: '0.5rem',
     cursor: 'pointer',
     userSelect: 'none',
+    minHeight: '44px',
+    padding: '0.25rem 0',
   },
   yaoArrow: {
     color: '#666',
@@ -128,7 +130,8 @@ const S = {
   },
   sideGuaRow: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    // 宽屏两列，窄屏（小于约 540px 的卡片容器）自动落到一列
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
     gap: '1rem',
   },
   sideGuaItem: {
@@ -144,7 +147,7 @@ const S = {
   },
   adviceGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
     gap: '1rem',
   },
   adviceItem: {
@@ -181,15 +184,15 @@ const S = {
   backButton: {
     display: 'inline-block',
     marginBottom: '1.25rem',
-    padding: '0.4rem 0.9rem',
+    padding: '0.5rem 1rem',
     background: 'transparent',
     border: '1px solid #444',
     color: '#aaa',
     fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.85rem',
+    fontSize: '0.9rem',
     letterSpacing: '0.1em',
     cursor: 'pointer',
-    minHeight: '36px',
+    minHeight: '44px',
   },
 };
 

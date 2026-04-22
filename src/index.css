@@ -2,10 +2,27 @@
   box-sizing: border-box;
 }
 
+html {
+  /* iOS 横屏切换时避免放大字号 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
+  /* 长中文/英文单词默认换行，避免窄屏出现横向滚动 */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 #root {
   min-height: 100vh;
+  /* 防止 100vh 在 iOS Safari 底部工具栏区域留空 */
+  min-height: 100dvh;
+}
+
+/* 按钮/输入框在 iOS 上的默认内发光和圆角清除 */
+button, input, textarea {
+  -webkit-appearance: none;
+  appearance: none;
 }

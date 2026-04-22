@@ -10,11 +10,12 @@ const S = {
   button: {
     background: 'transparent',
     border: 'none',
-    padding: '0.3rem 0.2rem',
+    padding: '0.6rem 0.6rem',
     fontFamily: 'Georgia, "Times New Roman", serif',
     fontSize: '0.95rem',
     letterSpacing: '0.15em',
     cursor: 'pointer',
+    minHeight: '44px',
   },
   active: {
     color: '#fff',

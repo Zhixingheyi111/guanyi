@@ -13,8 +13,9 @@ const S = {
     fontSize: '0.9rem',
     letterSpacing: '0.1em',
     cursor: 'pointer',
-    padding: '0.3rem 0',
-    marginBottom: '1.5rem',
+    padding: '0.6rem 0',
+    marginBottom: '1rem',
+    minHeight: '44px',
   },
   backButtonBottom: {
     display: 'block',
@@ -28,6 +29,7 @@ const S = {
     fontSize: '0.9rem',
     letterSpacing: '0.15em',
     cursor: 'pointer',
+    minHeight: '44px',
   },
   header: {
     textAlign: 'center',

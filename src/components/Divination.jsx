@@ -35,6 +35,7 @@ const S = {
     fontSize: '1rem',
     letterSpacing: '0.2em',
     cursor: 'pointer',
+    minHeight: '44px',
   },
   status: {
     color: '#aaa',

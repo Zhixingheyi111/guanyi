@@ -73,10 +73,12 @@ const S = {
     color: '#e8e8e8',
     padding: '0.6rem 0.8rem',
     fontFamily: 'inherit',
-    fontSize: '0.9rem',
+    // 防止 iOS 聚焦缩放
+    fontSize: '1rem',
     resize: 'none',
     outline: 'none',
-    minHeight: '2.4rem',
+    minHeight: '44px',
+    lineHeight: '1.6',
   },
   sendButton: {
     background: 'transparent',
@@ -88,6 +90,7 @@ const S = {
     padding: '0 1rem',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
+    minHeight: '44px',
   },
   sendButtonDisabled: {
     opacity: 0.4,
