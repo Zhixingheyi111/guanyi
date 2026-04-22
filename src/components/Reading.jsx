@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import NoteEditor from './NoteEditor';
+import { updateDivinationNote } from '../utils/storage';
 
 const S = {
   section: {
@@ -271,7 +273,16 @@ function GuaRow({ label, guaData, interpretation }) {
   );
 }
 
-export default function Reading({ question, hexagrams, changingPositions, interpretation, onRestart, onBack }) {
+export default function Reading({
+  question,
+  hexagrams,
+  changingPositions,
+  interpretation,
+  onRestart,
+  onBack,
+  recordId,
+  initialNote = '',
+}) {
   const { benGua, zongGua, cuoGua, huGua, bianGua } = hexagrams;
   const { comprehensiveAdvice } = interpretation;
 
@@ -379,6 +390,20 @@ export default function Reading({ question, hexagrams, changingPositions, interp
           </div>
         </div>
       </div>
+
+      {/* 反思笔记（需要 recordId 才出现） */}
+      {recordId && (
+        <div style={S.section}>
+          <div style={S.sectionTitle}>✍️ 我的反思</div>
+          <NoteEditor
+            key={recordId}
+            initialValue={initialNote}
+            onSave={(v) => updateDivinationNote(recordId, v)}
+            placeholder="这一卦给你什么启发？"
+            minHeight="140px"
+          />
+        </div>
+      )}
 
       {onRestart && (
         <button style={S.resetButton} onClick={onRestart}>重新起卦</button>

@@ -93,6 +93,8 @@ export default function App() {
 
   // 查看历史详情的状态：null = 正常问道；非 null = 从历史中查看
   const [viewingHistoryId, setViewingHistoryId] = useState(null);
+  // 当前起卦的记录 id（用于反思笔记写回）
+  const [currentRecordId,  setCurrentRecordId]  = useState(null);
 
   const reset = () => {
     setQuestion('');
@@ -101,6 +103,7 @@ export default function App() {
     setInterpret(null);
     setError(null);
     setNotReady(false);
+    setCurrentRecordId(null);
   };
 
   // 切换模式：清空学易选中卦、历史查看状态，避免残留
@@ -149,9 +152,10 @@ export default function App() {
       setChanging(cp);
       setInterpret(interp);
 
-      // 5. 保存起卦历史到 localStorage
+      // 5. 保存起卦历史到 localStorage，并记下 id 供反思笔记写回
+      const newId = generateDivinationId();
       saveDivinationRecord({
-        id: generateDivinationId(),
+        id: newId,
         timestamp: Date.now(),
         question,
         benGua:  hexagramsData.benGua,
@@ -163,6 +167,7 @@ export default function App() {
         interpretation: interp,
         userNote: '',
       });
+      setCurrentRecordId(newId);
 
     } catch (err) {
       setError(err.message || '未知错误');
@@ -210,6 +215,8 @@ export default function App() {
           }}
           changingPositions={record.changingPositions}
           interpretation={record.interpretation}
+          recordId={viewingHistoryId}
+          initialNote={record.userNote || ''}
           onBack={() => setViewingHistoryId(null)}
         />
       );
@@ -223,6 +230,8 @@ export default function App() {
           hexagrams={hexagrams}
           changingPositions={changingPositions}
           interpretation={interpretation}
+          recordId={currentRecordId}
+          initialNote=""
           onRestart={reset}
         />
       );
