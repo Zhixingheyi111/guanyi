@@ -13,6 +13,12 @@ body {
   /* 长中文/英文单词默认换行，避免窄屏出现横向滚动 */
   overflow-wrap: break-word;
   word-wrap: break-word;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  /* iOS 上中文字体抗锯齿，细笔画更清晰 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {

@@ -12,27 +12,28 @@ const S = {
   },
   textarea: {
     width: '100%',
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    color: '#e8e8e8',
-    fontFamily: 'Georgia, "Times New Roman", serif',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    color: 'var(--ink)',
+    fontFamily: 'var(--font-serif)',
     // 1rem = 16px，低于 16px 时 iOS Safari 聚焦会自动缩放页面
-    fontSize: '1rem',
-    padding: '0.75rem',
+    fontSize: 'var(--text-base)',
+    padding: 'var(--space-3)',
     resize: 'vertical',
     outline: 'none',
-    lineHeight: '1.8',
+    lineHeight: 1.85,
     boxSizing: 'border-box',
   },
   footer: {
     textAlign: 'right',
-    fontSize: '0.75rem',
+    fontSize: 'var(--text-xs)',
     height: '1rem',
     marginTop: '0.35rem',
     transition: 'opacity 0.6s ease',
+    letterSpacing: 'var(--track-wide)',
   },
-  saved: { opacity: 1, color: '#6a8' },
+  saved: { opacity: 1, color: 'var(--wuxing-wood)' }, // 竹青色：已保存，象征生长稳定
   idle:  { opacity: 0 },
 };
 

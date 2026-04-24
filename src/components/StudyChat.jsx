@@ -4,13 +4,13 @@ import { sendStudyMessage } from '../utils/studyChat';
 
 const S = {
   container: {
-    marginTop: '0.5rem',
+    marginTop: 'var(--space-2)',
   },
   messages: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.75rem',
-    marginBottom: '1rem',
+    gap: 'var(--space-3)',
+    marginBottom: 'var(--space-4)',
     minHeight: '80px',
   },
   bubbleRow: {
@@ -23,42 +23,49 @@ const S = {
   bubbleRowMaster: {
     justifyContent: 'flex-start',
   },
+  // 用户：墨色底（自己说的话 = 自己写在纸上）
   bubbleUser: {
-    background: '#1e3a3a',
-    color: '#e8e8e8',
+    background: 'var(--ink)',
+    color: 'var(--paper)',
     padding: '0.6rem 0.9rem',
     borderRadius: '12px 12px 2px 12px',
     maxWidth: '80%',
-    fontSize: '0.9rem',
-    lineHeight: '1.7',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.75,
     whiteSpace: 'pre-wrap',
     wordBreak: 'break-word',
+    fontFamily: 'var(--font-serif)',
+    letterSpacing: 'var(--track-tight)',
   },
+  // 师者：浅宣纸底（像引述古籍）
   bubbleMaster: {
-    background: '#111',
-    border: '1px solid #333',
-    color: '#e0e0e0',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink)',
     padding: '0.75rem 1rem',
     borderRadius: '12px 12px 12px 2px',
     maxWidth: '90%',
-    fontSize: '0.95rem',
-    lineHeight: '1.9',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.95,
     whiteSpace: 'pre-wrap',
     wordBreak: 'break-word',
+    fontFamily: 'var(--font-serif)',
   },
   loading: {
-    color: '#888',
-    fontSize: '0.85rem',
+    color: 'var(--ink-light)',
+    fontSize: 'var(--text-sm)',
     fontStyle: 'italic',
-    padding: '0.5rem 0',
+    padding: 'var(--space-2) 0',
+    letterSpacing: 'var(--track-normal)',
   },
   error: {
-    color: '#ff6666',
-    fontSize: '0.85rem',
-    padding: '0.6rem 0.8rem',
-    border: '1px solid #441111',
-    borderRadius: '4px',
-    marginBottom: '0.75rem',
+    color: 'var(--vermilion-deep)',
+    fontSize: 'var(--text-sm)',
+    padding: 'var(--space-2) var(--space-3)',
+    border: '1px solid var(--vermilion)',
+    borderRadius: 'var(--radius-md)',
+    marginBottom: 'var(--space-3)',
+    background: 'var(--paper-soft)',
   },
   inputRow: {
     display: 'flex',
@@ -67,40 +74,44 @@ const S = {
   },
   input: {
     flex: 1,
-    background: '#0a0a0a',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    color: '#e8e8e8',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    color: 'var(--ink)',
     padding: '0.6rem 0.8rem',
-    fontFamily: 'inherit',
+    fontFamily: 'var(--font-serif)',
     // 防止 iOS 聚焦缩放
-    fontSize: '1rem',
+    fontSize: 'var(--text-base)',
     resize: 'none',
     outline: 'none',
     minHeight: '44px',
-    lineHeight: '1.6',
+    lineHeight: 1.7,
   },
   sendButton: {
-    background: 'transparent',
-    border: '1px solid #555',
-    color: '#ccc',
-    fontFamily: 'inherit',
-    fontSize: '0.9rem',
-    letterSpacing: '0.1em',
-    padding: '0 1rem',
+    background: 'var(--ink)',
+    border: '1px solid var(--ink)',
+    color: 'var(--paper)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
+    padding: '0 1.1rem',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
     minHeight: '44px',
+    borderRadius: 'var(--radius-md)',
+    transition: 'opacity 0.2s ease',
   },
   sendButtonDisabled: {
-    opacity: 0.4,
+    opacity: 0.35,
     cursor: 'not-allowed',
   },
   hint: {
-    color: '#555',
-    fontSize: '0.8rem',
+    color: 'var(--ink-light)',
+    fontSize: 'var(--text-sm)',
     textAlign: 'center',
-    padding: '1rem 0',
+    padding: 'var(--space-4) 0',
+    letterSpacing: 'var(--track-normal)',
+    fontStyle: 'italic',
   },
 };
 
@@ -126,27 +137,24 @@ export default function StudyChat({ hexagram }) {
     setInput('');
 
     const userMsg = { role: 'user', content: text };
-    // 立刻把用户消息加入界面
     setHistory(prev => [...prev, userMsg]);
     setLoading(true);
 
     try {
       const reply = await sendStudyMessage({
         hexagram,
-        history,          // 发送时不含本次 userMsg，API 侧会追加
+        history,
         userMessage: text,
       });
       setHistory(prev => [...prev, { role: 'assistant', content: reply }]);
     } catch (err) {
       setError(err.message || '请求失败');
-      // 失败时保留用户消息，方便重试
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    // Enter 发送，Shift+Enter 换行
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -174,7 +182,7 @@ export default function StudyChat({ hexagram }) {
         ))}
         {loading && (
           <div style={{ ...S.bubbleRow, ...S.bubbleRowMaster }}>
-            <div style={S.loading}>思考中…</div>
+            <div style={S.loading}>思考中……</div>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -188,7 +196,7 @@ export default function StudyChat({ hexagram }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="向经典问学…（Enter 发送，Shift+Enter 换行）"
+          placeholder="向经典问学……（Enter 发送，Shift+Enter 换行）"
           rows={2}
           disabled={loading}
         />

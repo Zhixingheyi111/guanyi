@@ -2,8 +2,9 @@ import { useState } from 'react';
 import Divination from './components/Divination';
 import Reading from './components/Reading';
 import Navigation from './components/Navigation';
-import HexagramGrid from './components/HexagramGrid';
-import HexagramDetail from './components/HexagramDetail';
+import Study from './components/Study';
+import Bagua from './components/Bagua';
+import Seal from './components/Seal';
 import { generateHexagram } from './utils/divination';
 import { calculateTransformations } from './utils/transformations';
 import { getHexagramIdByBinary } from './data/hexagramIndex';
@@ -16,71 +17,157 @@ import {
 } from './utils/storage';
 
 const S = {
+  // 外层：深宣纸色，微微的径向渐变让中心略亮，视觉上提示"焦点在中间"
   page: {
     minHeight: '100vh',
-    backgroundColor: '#000',
-    color: '#fff',
-    fontFamily: 'Georgia, "Times New Roman", serif',
+    backgroundColor: 'var(--paper-deep)',
+    backgroundImage:
+      'radial-gradient(ellipse at center top, rgba(245, 241, 232, 0.7) 0%, rgba(237, 230, 214, 0.1) 60%, rgba(221, 212, 190, 0) 100%)',
+    color: 'var(--ink)',
+    fontFamily: 'var(--font-serif)',
     display: 'flex',
     justifyContent: 'center',
-    padding: '3rem 1.5rem',
+    padding: 'var(--space-6) var(--space-4)',
+    position: 'relative',
+    overflow: 'hidden', // 防止水印溢出造成横向滚动
   },
-  container: {
+  // 主内容卡片：浅宣纸色，软阴影浮于深宣纸之上，如一张信笺铺桌
+  card: {
+    position: 'relative',
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '620px',
+    background: 'var(--paper)',
+    borderRadius: 'var(--radius-lg)',
+    boxShadow: 'var(--shadow-paper)',
+    padding: 'var(--space-6) var(--space-5) var(--space-8)',
+    // 细微纸边，增强"一张纸"的质感
+    border: '1px solid var(--paper-edge)',
+    overflow: 'hidden', // 让水印裁在卡片内
   },
-  brand: {
-    textAlign: 'center',
-    marginBottom: '2rem',
+  // 八卦水印：卡片内部居中，巨大低透明度，轻微慢转
+  watermark: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    pointerEvents: 'none',
+    opacity: 0.055, // 足够淡，不干扰阅读
+    zIndex: 0,
+  },
+  // 内容层：必须显式抬升到水印之上
+  content: {
+    position: 'relative',
+    zIndex: 1,
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 'var(--space-4)',
+    marginBottom: 'var(--space-2)',
+    position: 'relative',
+  },
+  // 装饰占位，让印章和标题视觉居中（标题两侧各有元素对称）
+  headerSpacer: {
+    width: '44px',
+    height: '44px',
+    flexShrink: 0,
   },
   brandTitle: {
-    fontSize: '1.75rem',
-    fontWeight: 'normal',
-    letterSpacing: '0.5em',
-    color: '#fff',
+    fontSize: 'var(--text-2xl)',
+    fontWeight: 500,
+    letterSpacing: 'var(--track-hero)',
+    color: 'var(--ink)',
     margin: 0,
-    // 弥补 letter-spacing 在末尾产生的视觉偏移
-    paddingLeft: '0.5em',
+    paddingLeft: '0.5em', // 补 letter-spacing 造成的末尾视觉偏移
+    lineHeight: 1.2,
   },
   brandSlogan: {
-    fontSize: '0.8rem',
-    color: '#666',
-    letterSpacing: '0.2em',
-    marginTop: '0.75rem',
+    textAlign: 'center',
+    fontSize: 'var(--text-xs)',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-xwide)',
+    marginTop: 'var(--space-2)',
+    marginBottom: 'var(--space-5)',
   },
   error: {
-    color: '#ff6666',
+    color: 'var(--vermilion-deep)',
     fontSize: '0.9rem',
-    lineHeight: '1.7',
-    padding: '1rem',
-    border: '1px solid #441111',
-    borderRadius: '4px',
-    marginBottom: '1.5rem',
+    lineHeight: 1.7,
+    padding: 'var(--space-4)',
+    border: '1px solid var(--vermilion)',
+    borderRadius: 'var(--radius-md)',
+    marginBottom: 'var(--space-5)',
+    background: 'var(--paper-soft)',
   },
   notReady: {
     textAlign: 'center',
-    color: '#888',
-    lineHeight: '2',
-    padding: '2rem 0',
+    color: 'var(--ink-light)',
+    lineHeight: 2,
+    padding: 'var(--space-6) 0',
   },
   resetButton: {
     display: 'block',
-    margin: '1.5rem auto 0',
+    margin: 'var(--space-5) auto 0',
     padding: '0.5rem 1.5rem',
     background: 'transparent',
-    border: '1px solid #555',
-    color: '#aaa',
-    fontFamily: 'Georgia, "Times New Roman", serif',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
     fontSize: '0.9rem',
-    letterSpacing: '0.15em',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
+    borderRadius: 'var(--radius-md)',
   },
 };
 
+// 水墨干笔分隔线：一笔带点飞白的墨痕，两端渐隐
+function InkSeparator() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'var(--space-4) 0 var(--space-6)',
+      }}
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 300 8"
+        width="70%"
+        height="8"
+        preserveAspectRatio="none"
+        style={{ color: 'var(--ink)' }}
+      >
+        {/* 主笔 */}
+        <path
+          d="M 20 4 Q 90 2.6 150 3.8 T 280 4"
+          stroke="currentColor"
+          strokeWidth="1.3"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.55"
+        />
+        {/* 副笔，制造"枯笔"层次 */}
+        <path
+          d="M 45 4.3 Q 140 3 170 4.6 T 260 4.2"
+          stroke="currentColor"
+          strokeWidth="0.6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.3"
+        />
+        {/* 中心小点，像一滴墨 */}
+        <circle cx="150" cy="3.8" r="1.1" fill="currentColor" opacity="0.5" />
+      </svg>
+    </div>
+  );
+}
+
 export default function App() {
   // 模式：divination（问道）/ study（学易）
-  const [mode, setMode]                         = useState('divination');
-  const [selectedHexagramId, setSelectedHexagramId] = useState(null);
+  const [mode, setMode] = useState('divination');
 
   // 问道模式的原有状态
   const [question, setQuestion]         = useState('');
@@ -91,9 +178,8 @@ export default function App() {
   const [error, setError]               = useState(null);
   const [notReady, setNotReady]         = useState(false);
 
-  // 查看历史详情的状态：null = 正常问道；非 null = 从历史中查看
+  // 查看历史详情
   const [viewingHistoryId, setViewingHistoryId] = useState(null);
-  // 当前起卦的记录 id（用于反思笔记写回）
   const [currentRecordId,  setCurrentRecordId]  = useState(null);
 
   const reset = () => {
@@ -106,10 +192,10 @@ export default function App() {
     setCurrentRecordId(null);
   };
 
-  // 切换模式：清空学易选中卦、历史查看状态，避免残留
+  // 学易模式的所有子路由（课程/词条/卦详情）都封装在 Study 组件内部，
+  // 模式切换时 Study 会 unmount，内部状态自然重置，这里不用手动清理
   const handleModeChange = (nextMode) => {
     setMode(nextMode);
-    setSelectedHexagramId(null);
     setViewingHistoryId(null);
   };
 
@@ -119,14 +205,11 @@ export default function App() {
     setLoading(true);
 
     try {
-      // 1. 揲蓍起卦
       const result = generateHexagram();
       const { binary, changingPositions: cp } = result;
 
-      // 2. 计算五层卦象的二进制
       const transforms = calculateTransformations(binary, cp);
 
-      // 3. 二进制 → 卦号 → 完整卦数据
       const resolve = (bin) => {
         if (!bin) return null;
         const id = getHexagramIdByBinary(bin);
@@ -141,7 +224,6 @@ export default function App() {
         bianGua: resolve(transforms.bianGua),
       };
 
-      // 4. 调用 Claude API 解读
       const interp = await interpretHexagrams({
         question,
         hexagrams: hexagramsData,
@@ -152,7 +234,6 @@ export default function App() {
       setChanging(cp);
       setInterpret(interp);
 
-      // 5. 保存起卦历史到 localStorage，并记下 id 供反思笔记写回
       const newId = generateDivinationId();
       saveDivinationRecord({
         id: newId,
@@ -176,21 +257,11 @@ export default function App() {
     }
   };
 
-  // 根据模式渲染主内容
   const renderContent = () => {
     if (mode === 'study') {
-      if (selectedHexagramId == null) {
-        return <HexagramGrid onSelectHexagram={setSelectedHexagramId} />;
-      }
-      return (
-        <HexagramDetail
-          hexagramId={selectedHexagramId}
-          onBack={() => setSelectedHexagramId(null)}
-        />
-      );
+      return <Study />;
     }
 
-    // 查看历史详情（问道模式下）
     if (viewingHistoryId) {
       const record = getDivinationRecord(viewingHistoryId);
       if (!record) {
@@ -222,7 +293,6 @@ export default function App() {
       );
     }
 
-    // 问道模式（divination）
     if (interpretation && hexagrams) {
       return (
         <Reading
@@ -258,20 +328,46 @@ export default function App() {
 
   return (
     <div style={S.page}>
-      <div style={S.container}>
-        {/* 品牌标题区 */}
-        <div style={S.brand}>
-          <h1 style={S.brandTitle}>观 易</h1>
-          <div style={S.brandSlogan}>观易 · 见自己</div>
+      {/* 全局样式：水印慢转动画 */}
+      <style>{`
+        @keyframes guanyi-watermark-spin {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .guanyi-watermark {
+          animation: guanyi-watermark-spin 180s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .guanyi-watermark { animation: none; }
+        }
+      `}</style>
+
+      <main style={S.card}>
+        {/* 极淡的先天八卦水印，卡片中心缓慢旋转 */}
+        <div className="guanyi-watermark" style={S.watermark}>
+          <Bagua variant="watermark" size={Math.min(520, window.innerWidth * 0.95)} />
         </div>
 
-        {/* 模式导航 */}
-        <Navigation currentMode={mode} onModeChange={handleModeChange} />
+        <div style={S.content}>
+          {/* 品牌标题区：左侧朱砂印 + 居中标题 + 右侧对称占位 */}
+          <div style={S.header}>
+            <Seal size={44} character="观" />
+            <h1 style={S.brandTitle}>观　易</h1>
+            <div style={S.headerSpacer} aria-hidden="true" />
+          </div>
+          <div style={S.brandSlogan}>观易 · 见自己</div>
 
-        {error && <div style={S.error}>{error}</div>}
+          {/* 水墨分隔线 */}
+          <InkSeparator />
 
-        {renderContent()}
-      </div>
+          {/* 模式导航 */}
+          <Navigation currentMode={mode} onModeChange={handleModeChange} />
+
+          {error && <div style={S.error}>{error}</div>}
+
+          {renderContent()}
+        </div>
+      </main>
     </div>
   );
 }

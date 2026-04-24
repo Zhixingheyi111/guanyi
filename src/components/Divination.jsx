@@ -1,93 +1,125 @@
 import { useState } from 'react';
 import DivinationHistory from './DivinationHistory';
+import Bagua from './Bagua';
 
 const S = {
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2rem',
+    gap: 'var(--space-6)',
   },
   inputBlock: {
     display: 'flex',
     flexDirection: 'column',
   },
   title: {
-    fontSize: '1.15rem',
-    color: '#eee',
+    fontSize: 'var(--text-md)',
+    color: 'var(--ink)',
     letterSpacing: '0.08em',
-    lineHeight: '1.6',
-    margin: '0 0 1.25rem',
+    lineHeight: 1.6,
+    margin: '0 0 var(--space-4)',
+    fontWeight: 500,
   },
   textarea: {
     width: '100%',
-    minHeight: '200px',
-    background: '#111',
-    border: '1px solid #444',
-    borderRadius: '4px',
-    color: '#fff',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '1rem',
-    padding: '0.85rem',
+    minHeight: '180px',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    color: 'var(--ink)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-base)',
+    padding: 'var(--space-3)',
     resize: 'vertical',
     outline: 'none',
-    lineHeight: '1.7',
+    lineHeight: 1.85,
   },
   hint: {
-    color: '#888',
-    fontSize: '0.85rem',
-    lineHeight: '1.7',
-    margin: '0.75rem 0 0',
+    color: 'var(--ink-light)',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.8,
+    margin: 'var(--space-3) 0 0',
+    paddingLeft: 'var(--space-3)',
+    borderLeft: '2px solid var(--paper-edge)',
   },
   exampleToggle: {
     background: 'transparent',
     border: 'none',
     padding: '0.4rem 0',
-    color: '#888',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.85rem',
-    letterSpacing: '0.05em',
+    color: 'var(--ink-light)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-normal)',
     textAlign: 'left',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: '#444',
+    textDecorationColor: 'var(--paper-edge)',
     textUnderlineOffset: '4px',
     alignSelf: 'flex-start',
-    marginTop: '1rem',
+    marginTop: 'var(--space-4)',
     minHeight: '32px',
   },
   exampleText: {
-    color: '#999',
+    color: 'var(--ink-soft)',
     fontSize: '0.9rem',
-    lineHeight: '1.85',
-    margin: '0.75rem 0 0',
-    paddingLeft: '0.85rem',
-    borderLeft: '2px solid #333',
+    lineHeight: 1.95,
+    margin: 'var(--space-3) 0 0',
+    paddingLeft: 'var(--space-3)',
+    borderLeft: '2px solid var(--gold)',
+    fontStyle: 'italic',
   },
-  button: {
-    alignSelf: 'flex-end',
-    padding: '0.6rem 2rem',
-    background: 'transparent',
-    border: '1px solid #fff',
-    color: '#fff',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '1rem',
-    letterSpacing: '0.2em',
+  // 八卦按钮整体容器
+  baguaButtonWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 'var(--space-3)',
+    marginTop: 'var(--space-4)',
+    marginBottom: 'var(--space-2)',
+  },
+  // 八卦按钮本身（圆形，可点击）
+  baguaButton: {
+    width: '168px',
+    height: '168px',
+    borderRadius: '50%',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     cursor: 'pointer',
-    minHeight: '44px',
+    padding: 0,
+    boxShadow: 'var(--shadow-paper)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
+    position: 'relative',
+  },
+  baguaButtonHover: {
+    transform: 'scale(1.03)',
+    boxShadow: 'var(--shadow-lift)',
+  },
+  // 按钮下方的提示文字
+  buttonLabel: {
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-xwide)',
+    margin: 0,
+  },
+  buttonLabelActive: {
+    color: 'var(--vermilion)',
   },
   status: {
-    color: '#aaa',
-    fontSize: '0.9rem',
-    letterSpacing: '0.05em',
+    color: 'var(--ink-light)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-normal)',
     textAlign: 'center',
-    padding: '1rem 0',
+    padding: 'var(--space-2) 0 0',
   },
   footer: {
-    color: '#555',
-    fontSize: '0.8rem',
-    letterSpacing: '0.15em',
+    color: 'var(--ink-whisper)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     textAlign: 'center',
-    marginTop: '4rem',
+    marginTop: 'var(--space-8)',
     marginBottom: 0,
   },
 };
@@ -96,12 +128,27 @@ const EXAMPLE_TEXT = '我最近收到一份工作邀约，待遇比现在好很�
 
 export default function Divination({ question, setQuestion, onSubmit, loading, onViewHistory }) {
   const [showExample, setShowExample] = useState(false);
+  const [hovering, setHovering]       = useState(false);
+
+  const canSubmit = !loading && question.trim();
 
   return (
     <div style={S.wrapper}>
-      {/* placeholder 颜色用伪元素，inline style 不支持，所以局部注入一段 style */}
       <style>{`
-        .guanyi-question-input::placeholder { color: #555; }
+        .guanyi-question-input::placeholder { color: var(--ink-whisper); }
+        .guanyi-question-input:focus { border-color: var(--ink-soft); }
+
+        /* 八卦按钮 loading 状态：缓慢自转，象征蓍草揲数进行中 */
+        @keyframes guanyi-bagua-spin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        .guanyi-bagua-loading {
+          animation: guanyi-bagua-spin 12s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .guanyi-bagua-loading { animation: none; }
+        }
       `}</style>
 
       <DivinationHistory onView={onViewHistory} />
@@ -114,12 +161,12 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
           style={S.textarea}
           value={question}
           onChange={e => setQuestion(e.target.value)}
-          placeholder="在此描述..."
+          placeholder="在此描述……"
           disabled={loading}
         />
 
         <p style={S.hint}>
-          💡 易经不是占卜，是一面镜子。描述你的处境与挣扎，让卦象帮你看见自己。
+          易经不是占卜，是一面镜子。描述你的处境与挣扎，让卦象帮你看见自己。
         </p>
 
         <button
@@ -127,7 +174,7 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
           style={S.exampleToggle}
           onClick={() => setShowExample(v => !v)}
         >
-          {showExample ? '📖 收起示例' : '📖 看一个示例'}
+          {showExample ? '收起示例' : '看一个示例'}
         </button>
 
         {showExample && (
@@ -135,23 +182,42 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
         )}
       </div>
 
-      <button
-        style={{
-          ...S.button,
-          opacity: loading || !question.trim() ? 0.4 : 1,
-          cursor: loading || !question.trim() ? 'default' : 'pointer',
-        }}
-        onClick={onSubmit}
-        disabled={loading || !question.trim()}
-      >
-        {loading ? '占卜中…' : '开始起卦'}
-      </button>
+      {/* 八卦起卦按钮：圆形八卦图本身即为按钮 */}
+      <div style={S.baguaButtonWrap}>
+        <button
+          type="button"
+          onClick={onSubmit}
+          disabled={!canSubmit}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+          aria-label={loading ? '起卦中' : '点击起卦'}
+          style={{
+            ...S.baguaButton,
+            ...(canSubmit && hovering ? S.baguaButtonHover : null),
+            opacity: !canSubmit && !loading ? 0.4 : 1,
+            cursor: canSubmit ? 'pointer' : 'default',
+          }}
+        >
+          <div className={loading ? 'guanyi-bagua-loading' : undefined}>
+            <Bagua variant="button" size={150} />
+          </div>
+        </button>
+
+        <p
+          style={{
+            ...S.buttonLabel,
+            ...(loading ? S.buttonLabelActive : null),
+          }}
+        >
+          {loading ? '蓍草　揲　数　中' : canSubmit ? '　叩　卦　' : '先描述处境'}
+        </p>
+      </div>
 
       {loading && (
-        <p style={S.status}>蓍草正在揲数，易经正在为您解读…</p>
+        <p style={S.status}>易经正在为您解读……</p>
       )}
 
-      <p style={S.footer}>"善易者不卜" — 子曰</p>
+      <p style={S.footer}>天行健，君子以自强不息</p>
     </div>
   );
 }

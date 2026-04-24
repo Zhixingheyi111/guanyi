@@ -5,6 +5,7 @@ const KEY_PREFIX            = 'guanyi:';
 const DIVINATION_PREFIX     = `${KEY_PREFIX}divination:`;
 const DIVINATION_INDEX_KEY  = `${KEY_PREFIX}divination:index`;
 const HEXAGRAM_NOTE_PREFIX  = `${KEY_PREFIX}note:hexagram:`;
+const LESSONS_READ_KEY      = `${KEY_PREFIX}lessons:read`;
 
 // ---------- 低层工具 ----------
 
@@ -103,4 +104,22 @@ export function getHexagramNote(hexagramId) {
 
 export function saveHexagramNote(hexagramId, note) {
   return safeSet(HEXAGRAM_NOTE_PREFIX + hexagramId, note);
+}
+
+// ---------- 入门课程进度 ----------
+
+// 返回一个已读课程 id 的 Set
+export function getLessonsRead() {
+  const v = safeGet(LESSONS_READ_KEY);
+  return new Set(Array.isArray(v) ? v : []);
+}
+
+export function markLessonRead(lessonId) {
+  const set = getLessonsRead();
+  set.add(lessonId);
+  return safeSet(LESSONS_READ_KEY, Array.from(set));
+}
+
+export function isLessonRead(lessonId) {
+  return getLessonsRead().has(lessonId);
 }

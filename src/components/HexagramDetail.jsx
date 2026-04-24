@@ -8,140 +8,163 @@ const S = {
   backButton: {
     background: 'transparent',
     border: 'none',
-    color: '#888',
-    fontFamily: 'inherit',
-    fontSize: '0.9rem',
-    letterSpacing: '0.1em',
+    color: 'var(--ink-light)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
     padding: '0.6rem 0',
-    marginBottom: '1rem',
+    marginBottom: 'var(--space-4)',
     minHeight: '44px',
   },
   backButtonBottom: {
     display: 'block',
     width: '100%',
-    marginTop: '2rem',
-    padding: '0.6rem',
+    marginTop: 'var(--space-6)',
+    padding: 'var(--space-3)',
     background: 'transparent',
-    border: '1px solid #555',
-    color: '#aaa',
-    fontFamily: 'inherit',
-    fontSize: '0.9rem',
-    letterSpacing: '0.15em',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
     minHeight: '44px',
+    borderRadius: 'var(--radius-md)',
   },
   header: {
     textAlign: 'center',
-    marginBottom: '2rem',
+    marginBottom: 'var(--space-6)',
   },
   nameRow: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'baseline',
-    gap: '0.75rem',
+    gap: 'var(--space-3)',
   },
   symbol: {
     fontSize: '3rem',
     lineHeight: 1,
+    color: 'var(--ink)',
   },
   name: {
     fontSize: '2rem',
-    letterSpacing: '0.2em',
+    letterSpacing: 'var(--track-xwide)',
+    color: 'var(--ink)',
+    fontWeight: 500,
   },
   pinyin: {
-    fontSize: '0.85rem',
-    color: '#888',
-    letterSpacing: '0.1em',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-wide)',
     marginTop: '0.5rem',
     fontStyle: 'italic',
   },
   trigramRow: {
-    fontSize: '0.85rem',
-    color: '#888',
-    letterSpacing: '0.15em',
-    marginTop: '1rem',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-wide)',
+    marginTop: 'var(--space-4)',
   },
   // 分节
   section: {
-    borderTop: '1px solid #333',
-    paddingTop: '1.5rem',
-    marginTop: '1.5rem',
+    borderTop: '1px solid var(--paper-edge)',
+    paddingTop: 'var(--space-5)',
+    marginTop: 'var(--space-5)',
   },
   sectionTitle: {
-    fontSize: '0.85rem',
-    letterSpacing: '0.25em',
-    color: '#aaa',
-    marginBottom: '0.75rem',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-xwide)',
+    color: 'var(--ink)',
+    marginBottom: 'var(--space-3)',
+    fontWeight: 500,
+    // 左侧加一道朱砂竖线，像古籍的"节标"
+    borderLeft: '3px solid var(--vermilion)',
+    paddingLeft: '0.6rem',
+    lineHeight: 1.4,
   },
+  // 经典原文：墨色、衬线、可读性优先
   original: {
-    color: '#ddd',
-    fontSize: '1rem',
-    lineHeight: '2',
-    margin: '0.5rem 0',
+    color: 'var(--ink)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 2,
+    margin: 'var(--space-2) 0',
     fontStyle: 'italic',
+    letterSpacing: 'var(--track-tight)',
   },
+  // 白话翻译：比原文稍淡，但仍可读
   translation: {
-    color: '#bbb',
-    fontSize: '0.9rem',
-    lineHeight: '1.8',
-    margin: '0.5rem 0',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.9,
+    margin: 'var(--space-2) 0',
   },
+  // 象辞大段文字：用正文颜色，保持可读
   classicText: {
-    color: '#ccc',
+    color: 'var(--ink-soft)',
     fontSize: '0.95rem',
-    lineHeight: '2',
-    margin: '0.5rem 0',
+    lineHeight: 2,
+    margin: 'var(--space-2) 0',
   },
   notesList: {
     listStyle: 'none',
     padding: 0,
-    margin: '0.5rem 0 0.75rem',
+    margin: 'var(--space-3) 0 var(--space-2)',
   },
   noteItem: {
-    color: '#888',
-    fontSize: '0.85rem',
-    lineHeight: '1.7',
-    margin: '0.2rem 0',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.8,
+    margin: '0.25rem 0',
   },
+  // 关键字用朱砂色点亮
   noteKey: {
-    color: '#aaa',
+    color: 'var(--vermilion)',
+    fontWeight: 500,
+  },
+  noteBullet: {
+    color: 'var(--ink-whisper)',
+    marginRight: '0.25rem',
   },
   // 文言传小节
   wenyanPart: {
-    borderLeft: '2px solid #333',
-    paddingLeft: '0.9rem',
-    margin: '1rem 0',
+    borderLeft: '2px solid var(--gold)',
+    paddingLeft: 'var(--space-3)',
+    margin: 'var(--space-4) 0',
   },
   wenyanSection: {
-    fontSize: '0.85rem',
-    color: '#aaa',
-    letterSpacing: '0.15em',
-    marginBottom: '0.5rem',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
+    marginBottom: 'var(--space-2)',
+    fontWeight: 500,
   },
-  // 爻详解
+  // 爻详解卡片：浅宣纸底 + 墨色边框
   yaoBlock: {
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '1rem 1.1rem',
-    marginBottom: '1rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-4) var(--space-4)',
+    marginBottom: 'var(--space-4)',
   },
   yaoTitle: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.75rem',
-    marginBottom: '0.75rem',
+    gap: 'var(--space-3)',
+    marginBottom: 'var(--space-3)',
+    paddingBottom: 'var(--space-2)',
+    borderBottom: '1px dashed var(--paper-edge)',
   },
   yaoPosition: {
-    fontSize: '1rem',
-    color: '#ddd',
-    letterSpacing: '0.15em',
+    fontSize: 'var(--text-base)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
+    fontWeight: 500,
   },
   singleYaoLine: {
     height: '3px',
     width: '70px',
-    background: '#ccc',
+    background: 'var(--ink)',
     borderRadius: '1px',
   },
   singleYaoBroken: {
@@ -152,15 +175,21 @@ const S = {
   singleYaoHalf: {
     height: '3px',
     width: '30px',
-    background: '#ccc',
+    background: 'var(--ink)',
     borderRadius: '1px',
   },
+  // 小象、白话等小标签
   subLabel: {
-    fontSize: '0.75rem',
-    color: '#888',
-    letterSpacing: '0.15em',
-    marginTop: '0.75rem',
-    marginBottom: '0.3rem',
+    display: 'inline-block',
+    fontSize: '0.7rem',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-xwide)',
+    marginTop: 'var(--space-3)',
+    marginBottom: 'var(--space-1)',
+    padding: '0.1rem 0.45rem',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: '2px',
+    background: 'var(--paper)',
   },
 };
 
@@ -174,7 +203,10 @@ function NotesList({ notes }) {
     <ul style={S.notesList}>
       {entries.map(([key, value]) => (
         <li key={key} style={S.noteItem}>
-          ▪ <span style={S.noteKey}>{key}</span>：{value}
+          <span style={S.noteBullet}>·</span>
+          <span style={S.noteKey}>{key}</span>
+          <span style={{ color: 'var(--ink-light)' }}>：</span>
+          {value}
         </li>
       ))}
     </ul>
@@ -201,7 +233,7 @@ export default function HexagramDetail({ hexagramId, onBack }) {
     return (
       <div>
         <button style={S.backButton} onClick={onBack}>← 返回六十四卦</button>
-        <p style={{ color: '#888' }}>未找到该卦</p>
+        <p style={{ color: 'var(--ink-light)' }}>未找到该卦</p>
       </div>
     );
   }
@@ -224,7 +256,7 @@ export default function HexagramDetail({ hexagramId, onBack }) {
 
       {/* 卦辞 */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>📜 卦辞</div>
+        <div style={S.sectionTitle}>卦　辞</div>
         <p style={S.original}>{hexagram.guaci.original}</p>
         {hexagram.guaci.translation && (
           <p style={S.translation}>{hexagram.guaci.translation}</p>
@@ -235,8 +267,8 @@ export default function HexagramDetail({ hexagramId, onBack }) {
       {/* 彖辞 */}
       {hexagram.tuanci && (
         <div style={S.section}>
-          <div style={S.sectionTitle}>📜 彖辞</div>
-          <p style={S.original}>{hexagram.tuanci.original}</p>
+          <div style={S.sectionTitle}>彖　传</div>
+          <p style={S.classicText}>{hexagram.tuanci.original}</p>
           {hexagram.tuanci.translation && (
             <p style={S.translation}>{hexagram.tuanci.translation}</p>
           )}
@@ -247,8 +279,8 @@ export default function HexagramDetail({ hexagramId, onBack }) {
       {/* 象传 */}
       {hexagram.daxiang && (
         <div style={S.section}>
-          <div style={S.sectionTitle}>📜 象传</div>
-          <p style={S.original}>{hexagram.daxiang.original}</p>
+          <div style={S.sectionTitle}>象　传</div>
+          <p style={S.classicText}>{hexagram.daxiang.original}</p>
           {hexagram.daxiang.translation && (
             <p style={S.translation}>{hexagram.daxiang.translation}</p>
           )}
@@ -259,11 +291,11 @@ export default function HexagramDetail({ hexagramId, onBack }) {
       {/* 文言传 */}
       {hasWenyan && (
         <div style={S.section}>
-          <div style={S.sectionTitle}>📜 文言传</div>
+          <div style={S.sectionTitle}>文　言　传</div>
           {hexagram.wenyan.parts.map((part, i) => (
             <div key={i} style={S.wenyanPart}>
               <div style={S.wenyanSection}>{part.section}</div>
-              <p style={S.original}>{part.original}</p>
+              <p style={S.classicText}>{part.original}</p>
               {part.translation && (
                 <p style={S.translation}>{part.translation}</p>
               )}
@@ -275,7 +307,7 @@ export default function HexagramDetail({ hexagramId, onBack }) {
 
       {/* 六爻详解 */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>📜 六爻详解</div>
+        <div style={S.sectionTitle}>六　爻　详　解</div>
         {hexagram.yaoci.map((yao, i) => (
           <div key={i} style={S.yaoBlock}>
             <div style={S.yaoTitle}>
@@ -286,13 +318,13 @@ export default function HexagramDetail({ hexagramId, onBack }) {
             {yao.xiaoxiang && (
               <>
                 <div style={S.subLabel}>小象</div>
-                <p style={{ ...S.classicText, margin: 0 }}>{yao.xiaoxiang}</p>
+                <p style={{ ...S.classicText, margin: '0 0 0.5rem' }}>{yao.xiaoxiang}</p>
               </>
             )}
             {yao.translation && (
               <>
                 <div style={S.subLabel}>白话</div>
-                <p style={{ ...S.translation, margin: 0 }}>{yao.translation}</p>
+                <p style={{ ...S.translation, margin: '0 0 0.5rem' }}>{yao.translation}</p>
               </>
             )}
             <NotesList notes={yao.notes} />
@@ -302,19 +334,19 @@ export default function HexagramDetail({ hexagramId, onBack }) {
 
       {/* 我的笔记 */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>✍️ 我的笔记</div>
+        <div style={S.sectionTitle}>我　的　笔　记</div>
         <NoteEditor
           key={hexagram.id}
           initialValue={getHexagramNote(hexagram.id)}
           onSave={(v) => saveHexagramNote(hexagram.id, v)}
-          placeholder="写下你对这一卦的理解..."
+          placeholder="写下你对这一卦的理解……"
           minHeight="140px"
         />
       </div>
 
       {/* 问学 */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>📖 问学</div>
+        <div style={S.sectionTitle}>问　学</div>
         <StudyChat hexagram={hexagram} />
       </div>
 

@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react';
 import { getDivinationRecords, deleteDivinationRecord } from '../utils/storage';
 
 const S = {
-  container: { marginBottom: '1.25rem' },
+  container: { marginBottom: 'var(--space-5)' },
   trigger: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    background: 'transparent',
-    border: '1px solid #333',
-    borderRadius: '4px',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
     padding: '0.6rem 0.9rem',
-    color: '#aaa',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.9rem',
-    letterSpacing: '0.1em',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
     minHeight: '44px',
   },
@@ -28,70 +28,76 @@ const S = {
     display: 'inline-block',
     minWidth: '1.25rem',
     textAlign: 'center',
-    background: '#d4a24c',
-    color: '#000',
+    background: 'var(--vermilion)',
+    color: 'var(--paper)',
     borderRadius: '10px',
     padding: '0.05rem 0.5rem',
     fontSize: '0.72rem',
     letterSpacing: '0.05em',
     fontWeight: 'bold',
   },
-  arrow: { color: '#666', fontSize: '0.8rem' },
+  arrow: {
+    color: 'var(--ink-light)',
+    fontSize: '0.7rem',
+    transition: 'transform 0.2s ease',
+  },
   drawer: {
     marginTop: '0.4rem',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    background: '#0b0b0b',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    background: 'var(--paper-soft)',
     overflow: 'hidden',
   },
   empty: {
     textAlign: 'center',
-    color: '#666',
-    padding: '1.25rem',
-    fontSize: '0.85rem',
-    letterSpacing: '0.05em',
+    color: 'var(--ink-light)',
+    padding: 'var(--space-5)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-normal)',
   },
   item: {
-    borderBottom: '1px solid #222',
-    padding: '0.75rem 0.9rem',
+    borderBottom: '1px solid var(--paper-edge)',
+    padding: 'var(--space-3) var(--space-4)',
     display: 'flex',
     flexDirection: 'column',
     gap: '0.35rem',
   },
   itemLast: { borderBottom: 'none' },
   timestamp: {
-    color: '#666',
-    fontSize: '0.75rem',
-    letterSpacing: '0.05em',
+    color: 'var(--ink-light)',
+    fontSize: 'var(--text-xs)',
+    letterSpacing: 'var(--track-normal)',
   },
   question: {
-    color: '#ccc',
-    fontSize: '0.9rem',
-    lineHeight: '1.5',
+    color: 'var(--ink)',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.5,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
   guaLine: {
-    color: '#aaa',
-    fontSize: '0.85rem',
-    letterSpacing: '0.05em',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-normal)',
     display: 'flex',
     alignItems: 'center',
     gap: '0.4rem',
     flexWrap: 'wrap',
   },
-  guaSymbol: { fontSize: '1.15rem', lineHeight: 1 },
-  arrowBetween: { color: '#555' },
+  guaSymbol: { fontSize: '1.15rem', lineHeight: 1, color: 'var(--ink)' },
+  arrowBetween: { color: 'var(--ink-whisper)' },
   changingHint: {
-    color: '#d4a24c',
-    fontSize: '0.75rem',
+    color: 'var(--vermilion)',
+    fontSize: 'var(--text-xs)',
     marginLeft: '0.1rem',
+    letterSpacing: 'var(--track-tight)',
   },
   noChanging: {
-    color: '#555',
-    fontSize: '0.75rem',
+    color: 'var(--ink-whisper)',
+    fontSize: 'var(--text-xs)',
     marginLeft: '0.1rem',
+    letterSpacing: 'var(--track-tight)',
   },
   actions: {
     display: 'flex',
@@ -99,26 +105,28 @@ const S = {
     marginTop: '0.3rem',
   },
   btnView: {
-    padding: '0.5rem 1.1rem',
+    padding: '0.45rem 1.1rem',
     background: 'transparent',
-    border: '1px solid #555',
-    color: '#ccc',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.85rem',
-    letterSpacing: '0.1em',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-xs)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
-    minHeight: '44px',
+    minHeight: '40px',
+    borderRadius: 'var(--radius-md)',
   },
   btnDelete: {
-    padding: '0.5rem 1.1rem',
+    padding: '0.45rem 1.1rem',
     background: 'transparent',
-    border: '1px solid #553333',
-    color: '#b66',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.85rem',
-    letterSpacing: '0.1em',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--vermilion-deep)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-xs)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
-    minHeight: '44px',
+    minHeight: '40px',
+    borderRadius: 'var(--radius-md)',
   },
 };
 
@@ -132,7 +140,6 @@ export default function DivinationHistory({ onView }) {
   const [open, setOpen]       = useState(false);
   const [records, setRecords] = useState(() => getDivinationRecords());
 
-  // 每次展开抽屉时重新读取，避免其他页面新增后看不到
   useEffect(() => {
     if (open) setRecords(getDivinationRecords());
   }, [open]);
@@ -149,10 +156,17 @@ export default function DivinationHistory({ onView }) {
     <div style={S.container}>
       <button style={S.trigger} onClick={() => setOpen(o => !o)}>
         <span style={S.triggerLabel}>
-          📜 起卦历史
+          起卦历史
           {count > 0 && <span style={S.badge}>{count}</span>}
         </span>
-        <span style={S.arrow}>{open ? '▲' : '▼'}</span>
+        <span
+          style={{
+            ...S.arrow,
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        >
+          ▾
+        </span>
       </button>
       {open && (
         <div style={S.drawer}>

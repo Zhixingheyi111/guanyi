@@ -3,56 +3,64 @@ import { hexagrams } from '../data/hexagrams';
 
 const S = {
   title: {
-    fontSize: '1.1rem',
-    letterSpacing: '0.3em',
+    fontSize: 'var(--text-md)',
+    letterSpacing: 'var(--track-xwide)',
     textAlign: 'center',
-    color: '#ccc',
-    marginBottom: '1.5rem',
-    fontWeight: 'normal',
+    color: 'var(--ink-soft)',
+    marginTop: 0,
+    marginBottom: 'var(--space-5)',
+    fontWeight: 500,
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))',
-    gap: '0.5rem',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(72px, 1fr))',
+    gap: 'var(--space-2)',
   },
   cell: {
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '0.6rem 0.3rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    padding: '0.7rem 0.3rem 0.5rem',
     cursor: 'pointer',
     textAlign: 'center',
-    transition: 'background 0.15s, border-color 0.15s',
+    transition: 'background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+    fontFamily: 'var(--font-serif)',
   },
   cellHover: {
-    background: '#1a1a1a',
-    borderColor: '#555',
+    background: 'var(--paper)',
+    borderColor: 'var(--ink-light)',
+    transform: 'translateY(-1px)',
+    boxShadow: 'var(--shadow-paper)',
   },
   symbol: {
     fontSize: '1.75rem',
     lineHeight: 1,
-    color: '#fff',
+    color: 'var(--ink)',
   },
   name: {
-    fontSize: '0.9rem',
-    color: '#ddd',
-    letterSpacing: '0.1em',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
     marginTop: '0.35rem',
+    fontWeight: 500,
   },
   id: {
     fontSize: '0.7rem',
-    color: '#666',
+    color: 'var(--ink-whisper)',
     marginTop: '0.2rem',
-    letterSpacing: '0.05em',
+    letterSpacing: 'var(--track-normal)',
   },
 };
 
 function Cell({ hexagram, onClick }) {
-  // 用内联事件处理 hover，避免引入 CSS 文件
-  const handleEnter = (e) => Object.assign(e.currentTarget.style, S.cellHover);
+  const handleEnter = (e) => {
+    Object.assign(e.currentTarget.style, S.cellHover);
+  };
   const handleLeave = (e) => {
     e.currentTarget.style.background = S.cell.background;
-    e.currentTarget.style.borderColor = S.cell.border.split(' ')[2];
+    e.currentTarget.style.borderColor = 'var(--paper-edge)';
+    e.currentTarget.style.transform = 'none';
+    e.currentTarget.style.boxShadow = 'none';
   };
 
   return (

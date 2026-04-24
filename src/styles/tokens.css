@@ -1,0 +1,74 @@
+/* ============================================================
+   观易 Design Tokens
+   主题：宣纸墨韵（日间）+ 五行色点缀
+   ============================================================ */
+
+:root {
+  /* ---------- 基础配色：宣纸墨韵 ---------- */
+
+  /* 纸：底色系统 */
+  --paper:         #F5F1E8;  /* 宣纸本色：主背景 */
+  --paper-deep:    #EDE6D6;  /* 宣纸深：卡片、区块底 */
+  --paper-soft:    #FAF7EF;  /* 宣纸浅：高亮/选中 */
+  --paper-edge:    #DDD4BE;  /* 纸纹线：细分割线 */
+
+  /* 墨：文字系统 */
+  --ink:           #1C1A17;  /* 松烟墨：正文、标题 */
+  --ink-soft:      #3A3731;  /* 淡墨：副标题 */
+  --ink-light:     #6E6A5E;  /* 远墨：提示文案 */
+  --ink-whisper:   #A59F8E;  /* 渺墨：极弱化、placeholder */
+
+  /* 点睛色 */
+  --vermilion:      #C04851;  /* 朱砂：关键字、强调 */
+  --vermilion-deep: #8E2B31;  /* 深朱：变爻、warning */
+  --gold:           #BF8A4A;  /* 赭金：卦名装饰 */
+
+  /* ---------- 五行色：卦象层次专用 ---------- */
+  --wuxing-earth:  #CA8269;  /* 土｜本卦（当前处境） */
+  --wuxing-wood:   #789262;  /* 木｜互卦（内核生发） */
+  --wuxing-fire:   #C04851;  /* 火｜变卦（未来方向） */
+  --wuxing-metal:  #8B94A0;  /* 金｜综卦（对面视角） */
+  --wuxing-water:  #3D3B4F;  /* 水｜错卦（阴阳反转） */
+
+  /* ---------- 字体 ----------
+     优先用系统自带的中文宋体（iOS/Mac 的 Songti SC、Windows 的 SimSun），
+     这些立即可用、无需网络，避免因 Google Fonts 被墙导致字体 fallback 到苹方/黑体。
+     Noto Serif SC 作为补充，有就用，没有也无所谓。 */
+  --font-serif: 'Songti SC', 'STSong', 'SimSun', 'Source Han Serif SC', 'Noto Serif SC', 'Source Han Serif CN', 'serif';
+  --font-ui:    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* ---------- 字号 ---------- */
+  --text-xs:   0.75rem;
+  --text-sm:   0.85rem;
+  --text-base: 1rem;
+  --text-md:   1.15rem;
+  --text-lg:   1.4rem;
+  --text-xl:   1.75rem;
+  --text-2xl:  2.25rem;
+
+  /* ---------- 间距（节奏）---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+
+  /* ---------- 圆角 ---------- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* ---------- 字间距（letter-spacing）---------- */
+  --track-tight:  0.02em;
+  --track-normal: 0.05em;
+  --track-wide:   0.15em;
+  --track-xwide:  0.3em;
+  --track-hero:   0.5em;
+
+  /* ---------- 阴影（克制的纸面阴影）---------- */
+  --shadow-paper: 0 1px 0 rgba(28, 26, 23, 0.03), 0 2px 12px rgba(28, 26, 23, 0.05);
+  --shadow-lift:  0 2px 0 rgba(28, 26, 23, 0.04), 0 8px 24px rgba(28, 26, 23, 0.08);
+}

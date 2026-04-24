@@ -4,26 +4,30 @@ const S = {
   nav: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '2rem',
-    marginBottom: '2.5rem',
+    gap: 'var(--space-6)',
+    marginBottom: 'var(--space-5)',
   },
   button: {
     background: 'transparent',
     border: 'none',
-    padding: '0.6rem 0.6rem',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.95rem',
-    letterSpacing: '0.15em',
+    padding: '0.6rem 0.9rem',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-md)',
+    letterSpacing: 'var(--track-xwide)',
     cursor: 'pointer',
     minHeight: '44px',
+    transition: 'color 0.2s ease, border-bottom-color 0.2s ease',
+    // 占位以保持激活/非激活时总高度一致
+    borderBottom: '1px solid transparent',
   },
   active: {
-    color: '#fff',
-    borderBottom: '1px solid #fff',
+    color: 'var(--ink)',
+    fontWeight: 500,
+    borderBottomColor: 'var(--vermilion)',
   },
   inactive: {
-    color: '#666',
-    borderBottom: '1px solid transparent',
+    color: 'var(--ink-light)',
+    fontWeight: 400,
   },
 };
 
@@ -34,12 +38,12 @@ export default function Navigation({ currentMode, onModeChange }) {
   });
 
   return (
-    <nav style={S.nav}>
+    <nav style={S.nav} aria-label="模式切换">
       <button style={btnStyle('divination')} onClick={() => onModeChange('divination')}>
-        🌿 问道
+        问道
       </button>
       <button style={btnStyle('study')} onClick={() => onModeChange('study')}>
-        📖 学易
+        学易
       </button>
     </nav>
   );

@@ -2,197 +2,262 @@ import { useState } from 'react';
 import NoteEditor from './NoteEditor';
 import { updateDivinationNote } from '../utils/storage';
 
+// 五行色 → 五层卦象：每一层卦象都有自己的气质
+// 本卦（当下）= 土（赭黄，立足点）
+// 互卦（内核）= 木（竹青，生发）
+// 变卦（未来）= 火（朱砂，方向）
+// 综卦（对面）= 金（月白偏灰，反观）
+// 错卦（阴阳反转）= 水（玄墨，对立）
+const WUXING_COLORS = {
+  ben:  'var(--wuxing-earth)',
+  hu:   'var(--wuxing-wood)',
+  bian: 'var(--wuxing-fire)',
+  zong: 'var(--wuxing-metal)',
+  cuo:  'var(--wuxing-water)',
+};
+
 const S = {
   section: {
-    borderTop: '1px solid #333',
-    paddingTop: '1.5rem',
-    marginTop: '1.5rem',
+    borderTop: '1px solid var(--paper-edge)',
+    paddingTop: 'var(--space-5)',
+    marginTop: 'var(--space-5)',
   },
   sectionTitle: {
-    fontSize: '0.75rem',
-    letterSpacing: '0.25em',
-    color: '#888',
-    textTransform: 'uppercase',
-    marginBottom: '0.75rem',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-xwide)',
+    color: 'var(--ink)',
+    marginBottom: 'var(--space-3)',
+    fontWeight: 500,
+    borderLeft: '3px solid var(--vermilion)',
+    paddingLeft: '0.6rem',
+    lineHeight: 1.4,
   },
   guaHeader: {
     display: 'flex',
     alignItems: 'baseline',
-    gap: '0.75rem',
-    marginBottom: '0.5rem',
+    gap: 'var(--space-3)',
+    marginBottom: 'var(--space-2)',
   },
   guaName: {
     fontSize: '1.5rem',
-    letterSpacing: '0.15em',
+    letterSpacing: 'var(--track-wide)',
+    color: 'var(--ink)',
+    fontWeight: 500,
   },
   guaSymbol: {
     fontSize: '2.5rem',
     lineHeight: 1,
+    color: 'var(--ink)',
   },
   original: {
-    color: '#aaa',
-    fontSize: '0.9rem',
-    lineHeight: '1.8',
-    margin: '0.5rem 0',
+    color: 'var(--ink)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 2,
+    margin: 'var(--space-2) 0',
     fontStyle: 'italic',
   },
   translation: {
-    color: '#bbb',
-    fontSize: '0.9rem',
-    lineHeight: '1.8',
-    margin: '0.5rem 0',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.9,
+    margin: 'var(--space-2) 0',
   },
   notesList: {
-    margin: '0.5rem 0 0.75rem',
-    paddingLeft: '0.25rem',
+    margin: 'var(--space-2) 0 var(--space-3)',
+    paddingLeft: 0,
+    listStyle: 'none',
   },
   noteItem: {
-    color: '#888',
-    fontSize: '0.85rem',
-    lineHeight: '1.7',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.8,
     margin: '0.15rem 0',
   },
   noteKey: {
-    color: '#aaa',
+    color: 'var(--vermilion)',
+    fontWeight: 500,
+  },
+  noteBullet: {
+    color: 'var(--ink-whisper)',
+    marginRight: '0.25rem',
   },
   subTitle: {
-    fontSize: '0.75rem',
-    letterSpacing: '0.2em',
-    color: '#888',
-    marginBottom: '0.4rem',
+    display: 'inline-block',
+    fontSize: '0.7rem',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-xwide)',
+    marginBottom: 'var(--space-1)',
+    padding: '0.1rem 0.45rem',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: '2px',
+    background: 'var(--paper-soft)',
   },
   classicBlock: {
-    borderLeft: '2px solid #333',
-    paddingLeft: '0.75rem',
-    margin: '1rem 0',
+    borderLeft: '2px solid var(--paper-edge)',
+    paddingLeft: 'var(--space-3)',
+    margin: 'var(--space-4) 0',
   },
   classicText: {
-    color: '#aaa',
-    fontSize: '0.9rem',
-    lineHeight: '1.9',
+    color: 'var(--ink-soft)',
+    fontSize: '0.95rem',
+    lineHeight: 2,
     margin: 0,
   },
   interpretation: {
-    color: '#e8e8e8',
-    fontSize: '1rem',
-    lineHeight: '1.9',
-    margin: '0.5rem 0',
+    color: 'var(--ink)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.9,
+    margin: 'var(--space-3) 0',
   },
+  // 爻卡
   yaoBlock: {
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '0.75rem 1rem',
-    marginBottom: '0.75rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-3) var(--space-4)',
+    marginBottom: 'var(--space-3)',
   },
+  // 动爻高亮：左侧朱砂竖线
   yaoBlockChanging: {
-    borderLeft: '2px solid #d4a24c',
+    borderLeft: '3px solid var(--vermilion)',
   },
   yaoHeader: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.5rem',
+    gap: 'var(--space-2)',
     cursor: 'pointer',
     userSelect: 'none',
     minHeight: '44px',
     padding: '0.25rem 0',
   },
   yaoArrow: {
-    color: '#666',
-    fontSize: '0.75rem',
+    color: 'var(--ink-light)',
+    fontSize: '0.7rem',
     width: '0.75rem',
     display: 'inline-block',
   },
   yaoTitle: {
-    fontSize: '0.85rem',
-    color: '#aaa',
-    letterSpacing: '0.1em',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
     whiteSpace: 'nowrap',
+    fontWeight: 500,
   },
   yaoOriginalInline: {
-    color: '#aaa',
-    fontSize: '0.9rem',
+    color: 'var(--ink-soft)',
+    fontSize: 'var(--text-sm)',
     fontStyle: 'italic',
-    lineHeight: '1.6',
+    lineHeight: 1.6,
     flex: 1,
   },
   yaoBody: {
-    marginTop: '0.6rem',
-    paddingTop: '0.6rem',
-    borderTop: '1px dashed #2a2a2a',
+    marginTop: 'var(--space-2)',
+    paddingTop: 'var(--space-2)',
+    borderTop: '1px dashed var(--paper-edge)',
   },
   yaoChangingHint: {
-    color: '#d4a24c',
-    fontSize: '0.8rem',
-    lineHeight: '1.6',
-    margin: '0 0 0.6rem',
-    letterSpacing: '0.05em',
+    color: 'var(--vermilion-deep)',
+    fontSize: 'var(--text-sm)',
+    lineHeight: 1.6,
+    margin: '0 0 var(--space-2)',
+    letterSpacing: 'var(--track-normal)',
+    fontStyle: 'italic',
   },
+  // 侧卦网格
   sideGuaRow: {
     display: 'grid',
-    // 宽屏两列，窄屏（小于约 540px 的卡片容器）自动落到一列
     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '1rem',
+    gap: 'var(--space-3)',
   },
+  // 单个侧卦卡片：浅纸底 + 左侧 4px 五行色带，让五层有层次
   sideGuaItem: {
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '0.75rem 1rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderLeftWidth: '4px',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-3) var(--space-4)',
+  },
+  sideGuaItemEmpty: {
+    background: 'var(--paper-soft)',
+    border: '1px dashed var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-3) var(--space-4)',
+  },
+  sideLabel: {
+    fontSize: '0.75rem',
+    letterSpacing: 'var(--track-xwide)',
+    color: 'var(--ink-soft)',
+    marginBottom: 'var(--space-2)',
+    fontWeight: 500,
   },
   sideDivider: {
     border: 0,
-    borderTop: '1px solid #2a2a2a',
-    margin: '0.6rem 0',
+    borderTop: '1px solid var(--paper-edge)',
+    margin: 'var(--space-2) 0',
   },
+  // 综合建议
   adviceGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: '1rem',
+    gap: 'var(--space-3)',
   },
   adviceItem: {
-    background: '#111',
-    border: '1px solid #333',
-    borderRadius: '4px',
-    padding: '0.75rem 1rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-3) var(--space-4)',
   },
   adviceLabel: {
     fontSize: '0.75rem',
-    letterSpacing: '0.15em',
-    color: '#888',
-    marginBottom: '0.4rem',
+    letterSpacing: 'var(--track-wide)',
+    color: 'var(--ink-light)',
+    marginBottom: 'var(--space-2)',
+    fontWeight: 500,
   },
   adviceText: {
     fontSize: '0.95rem',
-    color: '#e8e8e8',
-    lineHeight: '1.8',
+    color: 'var(--ink)',
+    lineHeight: 1.8,
   },
   resetButton: {
     display: 'block',
     width: '100%',
-    marginTop: '2rem',
-    padding: '0.6rem',
+    marginTop: 'var(--space-6)',
+    padding: 'var(--space-3)',
     background: 'transparent',
-    border: '1px solid #555',
-    color: '#aaa',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.9rem',
-    letterSpacing: '0.15em',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
     minHeight: '44px',
+    borderRadius: 'var(--radius-md)',
   },
   backButton: {
     display: 'inline-block',
-    marginBottom: '1.25rem',
+    marginBottom: 'var(--space-4)',
     padding: '0.5rem 1rem',
     background: 'transparent',
-    border: '1px solid #444',
-    color: '#aaa',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    fontSize: '0.9rem',
-    letterSpacing: '0.1em',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
     cursor: 'pointer',
     minHeight: '44px',
+    borderRadius: 'var(--radius-md)',
+  },
+  question: {
+    color: 'var(--ink)',
+    lineHeight: 1.85,
+    margin: 0,
+    fontSize: 'var(--text-base)',
+    padding: 'var(--space-3) var(--space-4)',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    fontStyle: 'italic',
   },
 };
 
@@ -201,10 +266,13 @@ function NotesList({ notes }) {
   const entries = Object.entries(notes);
   if (entries.length === 0) return null;
   return (
-    <ul style={{ ...S.notesList, listStyle: 'none', padding: 0 }}>
+    <ul style={S.notesList}>
       {entries.map(([key, value]) => (
         <li key={key} style={S.noteItem}>
-          ▪ <span style={S.noteKey}>{key}</span>：{value}
+          <span style={S.noteBullet}>·</span>
+          <span style={S.noteKey}>{key}</span>
+          <span style={{ color: 'var(--ink-light)' }}>：</span>
+          {value}
         </li>
       ))}
     </ul>
@@ -221,7 +289,7 @@ function YaoItem({ yao, index, isChanging }) {
       <div style={S.yaoHeader} onClick={() => setOpen(o => !o)}>
         <span style={S.yaoArrow}>{open ? '▾' : '▸'}</span>
         <span style={S.yaoTitle}>
-          {isChanging ? '⚡ ' : ''}{yao.position}（第 {index + 1} 爻）
+          {isChanging ? '动· ' : ''}{yao.position}（第 {index + 1} 爻）
         </span>
         <span style={S.yaoOriginalInline}>{yao.original}</span>
       </div>
@@ -229,15 +297,15 @@ function YaoItem({ yao, index, isChanging }) {
         <div style={S.yaoBody}>
           {isChanging && (
             <p style={S.yaoChangingHint}>
-              ⚡ 此爻为动爻，详细解读见上方本卦解读
+              此爻为动爻，详细解读见上方本卦解读
             </p>
           )}
           <div style={S.subTitle}>小象</div>
-          <p style={{ ...S.classicText, marginBottom: '0.6rem' }}>{yao.xiaoxiang}</p>
+          <p style={{ ...S.classicText, margin: '0.25rem 0 var(--space-2)' }}>{yao.xiaoxiang}</p>
           {yao.translation && (
             <>
               <div style={S.subTitle}>白话</div>
-              <p style={{ ...S.translation, margin: '0 0 0.4rem' }}>{yao.translation}</p>
+              <p style={{ ...S.translation, margin: '0.25rem 0 var(--space-2)' }}>{yao.translation}</p>
             </>
           )}
           <NotesList notes={yao.notes} />
@@ -247,29 +315,37 @@ function YaoItem({ yao, index, isChanging }) {
   );
 }
 
-function GuaRow({ label, guaData, interpretation }) {
+// 五层卦象侧卡：label + 卦名 + 卦辞/象传 + AI 解读
+// wuxingKey 用于决定左侧色带颜色
+function GuaRow({ label, guaData, interpretation, wuxingKey }) {
   if (!guaData) return null;
+  const itemStyle = {
+    ...S.sideGuaItem,
+    borderLeftColor: WUXING_COLORS[wuxingKey] || 'var(--paper-edge)',
+  };
   return (
-    <div style={S.sideGuaItem}>
-      <div style={S.sectionTitle}>{label}</div>
+    <div style={itemStyle}>
+      <div style={S.sideLabel}>{label}</div>
       <div style={S.guaHeader}>
-        <span style={{ fontSize: '1.5rem' }}>{guaData.symbol}</span>
-        <span style={{ letterSpacing: '0.1em' }}>{guaData.name}</span>
+        <span style={{ fontSize: '1.75rem', color: 'var(--ink)' }}>{guaData.symbol}</span>
+        <span style={{ letterSpacing: 'var(--track-wide)', color: 'var(--ink)', fontWeight: 500, fontSize: '1.1rem' }}>
+          {guaData.name}
+        </span>
       </div>
       {guaData.guaci?.original && (
-        <p style={{ ...S.original, fontSize: '0.85rem', margin: '0.3rem 0' }}>
+        <p style={{ ...S.original, fontSize: '0.9rem', margin: 'var(--space-2) 0', lineHeight: 1.85 }}>
           {guaData.guaci.original}
         </p>
       )}
       {guaData.daxiang?.original && (
-        <p style={{ ...S.classicText, fontSize: '0.85rem', margin: '0.3rem 0' }}>
+        <p style={{ ...S.classicText, fontSize: '0.85rem', margin: 'var(--space-2) 0', lineHeight: 1.85 }}>
           {guaData.daxiang.original}
         </p>
       )}
       {interpretation && (
         <>
           <hr style={S.sideDivider} />
-          <p style={{ ...S.interpretation, fontSize: '0.9rem', margin: 0 }}>{interpretation}</p>
+          <p style={{ ...S.interpretation, fontSize: '0.95rem', margin: 0 }}>{interpretation}</p>
         </>
       )}
     </div>
@@ -291,19 +367,27 @@ export default function Reading({
 
   return (
     <div>
-      {/* 顶部返回（仅在查看历史详情时出现）*/}
       {onBack && (
         <button style={S.backButton} onClick={onBack}>← 返回历史</button>
       )}
 
       {/* 问题 */}
-      <div style={{ marginBottom: '1.5rem' }}>
+      <div style={{ marginBottom: 'var(--space-5)' }}>
         <div style={S.sectionTitle}>您的问题</div>
-        <p style={{ color: '#ccc', lineHeight: '1.7', margin: 0 }}>{question}</p>
+        <p style={S.question}>{question}</p>
       </div>
 
-      {/* 本卦 */}
-      <div style={S.section}>
+      {/* 本卦（土色） */}
+      <div
+        style={{
+          ...S.section,
+          borderLeft: `4px solid ${WUXING_COLORS.ben}`,
+          borderTop: 'none',
+          paddingLeft: 'var(--space-4)',
+          marginTop: 'var(--space-5)',
+          paddingTop: 'var(--space-3)',
+        }}
+      >
         <div style={S.sectionTitle}>本卦 · 当下处境</div>
         <div style={S.guaHeader}>
           <span style={S.guaSymbol}>{benGua.symbol}</span>
@@ -318,14 +402,24 @@ export default function Reading({
         {benGua.tuanci?.original && (
           <div style={S.classicBlock}>
             <div style={S.subTitle}>彖传</div>
-            <p style={S.classicText}>{benGua.tuanci.original}</p>
+            <p style={{ ...S.classicText, marginTop: '0.25rem' }}>{benGua.tuanci.original}</p>
+            {benGua.tuanci.translation && (
+              <p style={{ ...S.translation, fontSize: '0.9rem', marginTop: 'var(--space-2)' }}>
+                {benGua.tuanci.translation}
+              </p>
+            )}
           </div>
         )}
 
         {benGua.daxiang?.original && (
           <div style={S.classicBlock}>
             <div style={S.subTitle}>象传</div>
-            <p style={S.classicText}>{benGua.daxiang.original}</p>
+            <p style={{ ...S.classicText, marginTop: '0.25rem' }}>{benGua.daxiang.original}</p>
+            {benGua.daxiang.translation && (
+              <p style={{ ...S.translation, fontSize: '0.9rem', marginTop: 'var(--space-2)' }}>
+                {benGua.daxiang.translation}
+              </p>
+            )}
           </div>
         )}
 
@@ -335,7 +429,7 @@ export default function Reading({
       {/* 六爻 */}
       <div style={S.section}>
         <div style={S.sectionTitle}>
-          六爻{changingPositions.length > 0 && ` · ${changingPositions.length} 动爻`}
+          六爻{changingPositions.length > 0 && `　·　${changingPositions.length} 动爻`}
         </div>
         {benGua.yaoci.map((yao, index) => (
           <YaoItem
@@ -347,25 +441,47 @@ export default function Reading({
         ))}
       </div>
 
-      {/* 综卦 / 错卦 */}
+      {/* 综卦（金） / 错卦（水） */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>综卦 · 错卦</div>
+        <div style={S.sectionTitle}>综卦　·　错卦</div>
         <div style={S.sideGuaRow}>
-          <GuaRow label="综卦 · 对方视角" guaData={zongGua} interpretation={interpretation.zongGuaInterpretation} />
-          <GuaRow label="错卦 · 欠缺互补" guaData={cuoGua} interpretation={interpretation.cuoGuaInterpretation} />
+          <GuaRow
+            label="综卦 · 对方视角"
+            guaData={zongGua}
+            interpretation={interpretation.zongGuaInterpretation}
+            wuxingKey="zong"
+          />
+          <GuaRow
+            label="错卦 · 欠缺互补"
+            guaData={cuoGua}
+            interpretation={interpretation.cuoGuaInterpretation}
+            wuxingKey="cuo"
+          />
         </div>
       </div>
 
-      {/* 互卦 / 变卦 */}
+      {/* 互卦（木） / 变卦（火） */}
       <div style={S.section}>
-        <div style={S.sectionTitle}>互卦 · 变卦</div>
+        <div style={S.sectionTitle}>互卦　·　变卦</div>
         <div style={S.sideGuaRow}>
-          <GuaRow label="互卦 · 内在结构" guaData={huGua} interpretation={interpretation.huGuaInterpretation} />
+          <GuaRow
+            label="互卦 · 内在结构"
+            guaData={huGua}
+            interpretation={interpretation.huGuaInterpretation}
+            wuxingKey="hu"
+          />
           {bianGua
-            ? <GuaRow label="变卦 · 发展趋势" guaData={bianGua} interpretation={interpretation.bianGuaInterpretation} />
-            : <div style={S.sideGuaItem}>
-                <div style={S.sectionTitle}>变卦 · 发展趋势</div>
-                <p style={{ color: '#555', fontSize: '0.9rem', margin: 0 }}>无动爻，卦象不变</p>
+            ? <GuaRow
+                label="变卦 · 发展趋势"
+                guaData={bianGua}
+                interpretation={interpretation.bianGuaInterpretation}
+                wuxingKey="bian"
+              />
+            : <div style={S.sideGuaItemEmpty}>
+                <div style={S.sideLabel}>变卦 · 发展趋势</div>
+                <p style={{ color: 'var(--ink-light)', fontSize: '0.9rem', margin: 0, fontStyle: 'italic' }}>
+                  无动爻，卦象不变
+                </p>
               </div>
           }
         </div>
@@ -394,10 +510,10 @@ export default function Reading({
         </div>
       </div>
 
-      {/* 反思笔记（需要 recordId 才出现） */}
+      {/* 反思笔记 */}
       {recordId && (
         <div style={S.section}>
-          <div style={S.sectionTitle}>✍️ 我的反思</div>
+          <div style={S.sectionTitle}>我的反思</div>
           <NoteEditor
             key={recordId}
             initialValue={initialNote}
