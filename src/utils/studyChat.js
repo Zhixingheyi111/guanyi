@@ -21,7 +21,14 @@ function formatYaoci(yaoci) {
       `  ${yao.position}：${yao.original}`,
       `    释义：${yao.translation}`,
     ];
-    if (yao.xiaoxiang) parts.push(`    小象：${yao.xiaoxiang}`);
+    // xiaoxiang 兼容老 string 与新 {original, translation} 两种格式
+    const xx = yao.xiaoxiang;
+    if (xx) {
+      const xxOriginal = typeof xx === 'string' ? xx : xx.original;
+      const xxTranslation = typeof xx === 'object' ? xx.translation : null;
+      if (xxOriginal) parts.push(`    小象：${xxOriginal}`);
+      if (xxTranslation) parts.push(`    小象释义：${xxTranslation}`);
+    }
     const notes = formatNotes(yao.notes);
     if (notes) parts.push(`    字词注：${notes}`);
     return parts.join('\n');

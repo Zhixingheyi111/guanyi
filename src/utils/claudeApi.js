@@ -96,7 +96,14 @@ function formatGuaForPrompt(label, guaData, options = {}) {
         lines.push(`    释义：${yao.translation}`);
         const yaoNotes = formatNotes(yao.notes);
         if (yaoNotes) lines.push(`    字词注：${yaoNotes}`);
-        if (yao.xiaoxiang) lines.push(`    小象：${yao.xiaoxiang}`);
+        // xiaoxiang 兼容老 string 与新 {original, translation} 两种格式
+        const xx = yao.xiaoxiang;
+        if (xx) {
+          const xxOriginal = typeof xx === 'string' ? xx : xx.original;
+          const xxTranslation = typeof xx === 'object' ? xx.translation : null;
+          if (xxOriginal) lines.push(`    小象：${xxOriginal}`);
+          if (xxTranslation) lines.push(`    小象释义：${xxTranslation}`);
+        }
       });
     } else {
       // 非本卦：提供所有爻的白话概要，帮助 AI 理解整体卦势

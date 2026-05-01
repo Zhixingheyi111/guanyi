@@ -92,6 +92,33 @@ const S = {
     borderRadius: '2px',
     background: 'var(--paper-soft)',
   },
+  // 爻内分区头（爻辞·周公 / 小象·孔子），与 HexagramDetail 一致
+  subSectionHeader: {
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: 'var(--space-2)',
+    marginTop: 'var(--space-3)',
+    marginBottom: 'var(--space-2)',
+    paddingBottom: 'var(--space-1)',
+    borderBottom: '1px dashed var(--paper-edge)',
+  },
+  subSectionTitle: {
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    fontWeight: 500,
+    letterSpacing: 'var(--track-xwide)',
+  },
+  subSectionAuthor: {
+    fontSize: '0.7rem',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-normal)',
+    fontStyle: 'italic',
+  },
+  yaoInnerDivider: {
+    height: 0,
+    borderTop: '1px solid var(--paper-edge)',
+    margin: 'var(--space-3) calc(-1 * var(--space-4))',
+  },
   classicBlock: {
     borderLeft: '2px solid var(--paper-edge)',
     paddingLeft: 'var(--space-3)',
@@ -279,11 +306,19 @@ function NotesList({ notes }) {
   );
 }
 
+// 兼容老 string 格式与新 {original, translation} 对象格式
+function unwrapXiaoxiang(x) {
+  if (!x) return null;
+  if (typeof x === 'string') return { original: x, translation: null };
+  return x;
+}
+
 function YaoItem({ yao, index, isChanging }) {
   const [open, setOpen] = useState(isChanging);
   const blockStyle = isChanging
     ? { ...S.yaoBlock, ...S.yaoBlockChanging }
     : S.yaoBlock;
+  const xx = unwrapXiaoxiang(yao.xiaoxiang);
   return (
     <div style={blockStyle}>
       <div style={S.yaoHeader} onClick={() => setOpen(o => !o)}>
@@ -300,15 +335,32 @@ function YaoItem({ yao, index, isChanging }) {
               此爻为动爻，详细解读见上方本卦解读
             </p>
           )}
-          <div style={S.subTitle}>小象</div>
-          <p style={{ ...S.classicText, margin: '0.25rem 0 var(--space-2)' }}>{yao.xiaoxiang}</p>
+
+          {/* 爻辞 · 周公 */}
+          <div style={S.subSectionHeader}>
+            <span style={S.subSectionTitle}>爻辞</span>
+            <span style={S.subSectionAuthor}>· 周公</span>
+          </div>
+          <p style={{ ...S.original, margin: '0.25rem 0 var(--space-2)' }}>{yao.original}</p>
           {yao.translation && (
-            <>
-              <div style={S.subTitle}>白话</div>
-              <p style={{ ...S.translation, margin: '0.25rem 0 var(--space-2)' }}>{yao.translation}</p>
-            </>
+            <p style={{ ...S.translation, margin: '0.25rem 0 var(--space-2)' }}>{yao.translation}</p>
           )}
           <NotesList notes={yao.notes} />
+
+          {/* 小象 · 孔子 */}
+          {xx?.original && (
+            <>
+              <div style={S.yaoInnerDivider} />
+              <div style={S.subSectionHeader}>
+                <span style={S.subSectionTitle}>小象</span>
+                <span style={S.subSectionAuthor}>· 孔子</span>
+              </div>
+              <p style={{ ...S.classicText, margin: '0.25rem 0 var(--space-2)' }}>{xx.original}</p>
+              {xx.translation && (
+                <p style={{ ...S.translation, margin: '0.25rem 0 var(--space-2)' }}>{xx.translation}</p>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>

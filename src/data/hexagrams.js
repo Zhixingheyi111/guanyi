@@ -216,7 +216,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "潜龙勿用。",
-        xiaoxiang: "象曰：潜龙勿用，阳在下也。",
+        xiaoxiang: {
+          original: "象曰：潜龙勿用，阳在下也。",
+          translation: "之所以「潜龙勿用」，是因为阳气尚处下位（时位皆低，未到出动之时）。"
+        },
         translation: "龙潜伏未出，暂不宜有所作为。",
         notes: {
           "潜": "隐而未见，藏而待时",
@@ -227,7 +230,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "见龙在田，利见大人。",
-        xiaoxiang: "象曰：见龙在田，德施普也。",
+        xiaoxiang: {
+          original: "象曰：见龙在田，德施普也。",
+          translation: "之所以「见龙在田」，是因为德泽已能广施于世。"
+        },
         translation: "龙出现在田野之中，有利于拜见德高望重之人。",
         notes: {
           "见龙在田": "龙离潜渊而出，阳德已显于世",
@@ -237,7 +243,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "君子终日乾乾，夕惕若厉，无咎。",
-        xiaoxiang: "象曰：终日乾乾，反复道也。",
+        xiaoxiang: {
+          original: "象曰：终日乾乾，反复道也。",
+          translation: "「终日乾乾」的真义，在于反复践行正道而不偏离。"
+        },
         translation: "君子整日勤勉自强，傍晚仍警惕谨慎如临危境，可以没有过失。",
         notes: {
           "乾乾": "健行不止，努力不懈",
@@ -249,7 +258,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "或跃在渊，无咎。",
-        xiaoxiang: "象曰：或跃在渊，进无咎也。",
+        xiaoxiang: {
+          original: "象曰：或跃在渊，进无咎也。",
+          translation: "「或跃在渊」之所以无咎，是因为时机至则进，不强求。"
+        },
         translation: "或腾跃而上，或退处深渊，进退皆无过失。",
         notes: {
           "或": "不定之辞，可进可退",
@@ -260,7 +272,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "飞龙在天，利见大人。",
-        xiaoxiang: "象曰：飞龙在天，大人造也。",
+        xiaoxiang: {
+          original: "象曰：飞龙在天，大人造也。",
+          translation: "之所以「飞龙在天」，是大人成就大事的时刻。"
+        },
         translation: "龙飞腾于天，有利于拜见德高望重之人。",
         notes: {
           "飞龙在天": "龙升于天，喻圣人登位，阳德大盛",
@@ -271,7 +286,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "亢龙有悔。",
-        xiaoxiang: "象曰：亢龙有悔，盈不可久也。",
+        xiaoxiang: {
+          original: "象曰：亢龙有悔，盈不可久也。",
+          translation: "之所以「亢龙有悔」，是因为满盈之态不可长久。"
+        },
         translation: "龙飞得过高，必有悔恨。",
         notes: {
           "亢": "极也，过高而无退路",
@@ -281,7 +299,10 @@ export const hexagrams = [
       {
         position: "用九",
         original: "见群龙无首，吉。",
-        xiaoxiang: "象曰：用九，天德不可为首也。",
+        xiaoxiang: {
+          original: "象曰：用九，天德不可为首也。",
+          translation: "「用九」的精髓在于：天的刚健之德，绝不以争先为首。"
+        },
         translation: "六爻皆阳时，见群龙皆不争为首，吉祥。",
         notes: {
           "用九": "乾卦特有，筮得六爻皆老阳（变爻）时所用",
@@ -424,7 +445,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "履霜，坚冰至。",
-        xiaoxiang: "象曰：履霜坚冰，阴始凝也；驯致其道，至坚冰也。",
+        xiaoxiang: {
+          original: "象曰：履霜坚冰，阴始凝也；驯致其道，至坚冰也。",
+          translation: "「履霜坚冰至」，是阴气开始凝聚；顺其势发展，必至坚冰——见微知著，防患于初。"
+        },
         translation: "踩到霜，坚冰就要到来了。",
         notes: {
           "履霜": "踏霜为先兆，阴气初现于外",
@@ -434,7 +458,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "直，方，大，不习无不利。",
-        xiaoxiang: "象曰：六二之动，直以方也；不习无不利，地道光也。",
+        xiaoxiang: {
+          original: "象曰：六二之动，直以方也；不习无不利，地道光也。",
+          translation: "六二的行动，正直而方正；不需刻意习练也无所不利，因为地道本身光明广大。"
+        },
         translation: "正直、方正、宏大，不需刻意学习也无所不利。",
         notes: {
           "直": "正直，内无曲私",
@@ -446,7 +473,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "含章可贞，或从王事，无成有终。",
-        xiaoxiang: "象曰：含章可贞，以时发也；或从王事，知光大也。",
+        xiaoxiang: {
+          original: "象曰：含章可贞，以时发也；或从王事，知光大也。",
+          translation: "「含章可贞」，是含蓄等待时机才发挥；「或从王事」，是因深知大道光明广大。"
+        },
         translation: "含蓄才华可守正，有时随从王事，不居功但善始善终。",
         notes: {
           "含章": "内藏文采，含而不露，蓄而待时",
@@ -457,7 +487,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "括囊，无咎无誉。",
-        xiaoxiang: "象曰：括囊无咎，慎不害也。",
+        xiaoxiang: {
+          original: "象曰：括囊无咎，慎不害也。",
+          translation: "「括囊无咎」，是因为谨慎自守便不会招害。"
+        },
         translation: "扎紧袋口，既无过失，也无荣誉。",
         notes: {
           "括囊": "扎紧袋口，比喻缄默自守，不轻易表露",
@@ -467,7 +500,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "黄裳，元吉。",
-        xiaoxiang: "象曰：黄裳元吉，文在中也。",
+        xiaoxiang: {
+          original: "象曰：黄裳元吉，文在中也。",
+          translation: "「黄裳元吉」，是因为美德蕴藏于中（黄为中色，文采居中）。"
+        },
         translation: "穿黄色裙裳，大为吉祥。",
         notes: {
           "黄": "中色，居中之象，喻中正之德",
@@ -478,7 +514,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "龙战于野，其血玄黄。",
-        xiaoxiang: "象曰：龙战于野，其道穷也。",
+        xiaoxiang: {
+          original: "象曰：龙战于野，其道穷也。",
+          translation: "「龙战于野」，是因为阴道已发展到穷尽之处。"
+        },
         translation: "龙在郊野争战，血色玄黄。",
         notes: {
           "龙战于野": "阴盛极而与阳相争，物极必反，阴阳失位",
@@ -488,7 +527,10 @@ export const hexagrams = [
       {
         position: "用六",
         original: "利永贞。",
-        xiaoxiang: "象曰：用六永贞，以大终也。",
+        xiaoxiang: {
+          original: "象曰：用六永贞，以大终也。",
+          translation: "「用六永贞」，是因为坤道以广大之德成全终结。"
+        },
         translation: "利于长久守正。",
         notes: {
           "用六": "坤卦特有，六爻皆老阴（变爻）时所用",
@@ -539,7 +581,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "磐桓，利居贞，利建侯。",
-        xiaoxiang: "象曰：虽磐桓，志行正也。以贵下贱，大得民也。",
+        xiaoxiang: {
+          original: "象曰：虽磐桓，志行正也。以贵下贱，大得民也。",
+          translation: "虽徘徊不进，但志向是行正道。以尊贵之身屈居卑下，所以能大得民心。"
+        },
         translation: "盘旋徘徊，有利于安守正道，有利于建立邦国。",
         notes: {
           "磐桓": "盘旋徘徊、踌躇不进之状；处屯难之初，审时度势",
@@ -550,7 +595,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "屯如邅如，乘马班如。匪寇婚媾，女子贞不字，十年乃字。",
-        xiaoxiang: "象曰：六二之难，乘刚也。十年乃字，反常也。",
+        xiaoxiang: {
+          original: "象曰：六二之难，乘刚也。十年乃字，反常也。",
+          translation: "六二的艰难，是因为乘凌于阳刚之上。十年才许嫁，是反常之后归常。"
+        },
         translation: "屯难不前，回旋往复，骑马欲行却停滞不前。来者并非强寇，而是求婚之人。女子守正不许婚嫁，十年之后才许嫁。",
         notes: {
           "屯如邅如": "屯难不进、回旋往复之状，进退两难",
@@ -563,7 +611,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "即鹿无虞，惟入于林中，君子几不如舍，往吝。",
-        xiaoxiang: "象曰：即鹿无虞，以从禽也。君子舍之，往吝穷也。",
+        xiaoxiang: {
+          original: "象曰：即鹿无虞，以从禽也。君子舍之，往吝穷也。",
+          translation: "「即鹿无虞」是因贪逐禽兽。君子若不舍弃强追，前往便会困穷。"
+        },
         translation: "追逐麋鹿却没有向导，只是深入林中迷失。君子几乎不如舍弃不追，强行前往将遭困窘。",
         notes: {
           "即鹿无虞": "追逐猎物却无虞人（掌山泽之官）引导；喻盲目行动，无人辅助",
@@ -575,7 +626,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "乘马班如，求婚媾，往吉，无不利。",
-        xiaoxiang: "象曰：求而往，明也。",
+        xiaoxiang: {
+          original: "象曰：求而往，明也。",
+          translation: "主动求应而往，是明智之举。"
+        },
         translation: "骑马盘旋不前，主动去求婚嫁，前往则吉，无所不利。",
         notes: {
           "乘马班如": "同六二，骑马欲行而迟疑；但六四主动求应，与六二处境不同",
@@ -586,7 +640,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "屯其膏，小贞吉，大贞凶。",
-        xiaoxiang: "象曰：屯其膏，施未光也。",
+        xiaoxiang: {
+          original: "象曰：屯其膏，施未光也。",
+          translation: "「屯其膏」，是因为恩泽尚未能广施。"
+        },
         translation: "积聚恩泽而难以施布，小事守正则吉，大事守正则凶。",
         notes: {
           "屯其膏": "膏，恩泽、膏润；九五居险陷（坎）之中，虽有君位之德，恩泽难以施布于天下",
@@ -597,7 +654,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "乘马班如，泣血涟如。",
-        xiaoxiang: "象曰：泣血涟如，何可长也。",
+        xiaoxiang: {
+          original: "象曰：泣血涟如，何可长也。",
+          translation: "「泣血涟如」的极困之态，怎能长久？"
+        },
         translation: "骑马盘旋不前，哭泣至泣血不止。",
         notes: {
           "泣血涟如": "哭泣至泣血连绵，形容极度悲痛困窘；处屯卦之终，无援无应，进退两难",
@@ -652,7 +712,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "发蒙，利用刑人，用说桎梏，以往吝。",
-        xiaoxiang: "象曰：利用刑人，以正法也。",
+        xiaoxiang: {
+          original: "象曰：利用刑人，以正法也。",
+          translation: "「利用刑人」，是为了端正法度（不是残酷，而是立规）。"
+        },
         translation: "启发蒙昧，适宜以刑法教育人，去除桎梏枷锁；若就此轻率前往则有困窘。",
         notes: {
           "发蒙": "启发蒙昧，开蒙之始",
@@ -664,7 +727,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "包蒙，吉。纳妇，吉。子克家。",
-        xiaoxiang: "象曰：子克家，刚柔接也。",
+        xiaoxiang: {
+          original: "象曰：子克家，刚柔接也。",
+          translation: "「子克家」，是因为刚柔相接（九二刚中下应六五柔中）。"
+        },
         translation: "宽容包纳蒙昧之人，吉祥。迎娶妇人，吉祥。儿子能够持家立业。",
         notes: {
           "包蒙": "以宽容之心包纳蒙昧者；九二刚中，能以一阳统摄众阴，喻师者之包容",
@@ -675,7 +741,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "勿用取女，见金夫，不有躬，无攸利。",
-        xiaoxiang: "象曰：勿用取女，行不顺也。",
+        xiaoxiang: {
+          original: "象曰：勿用取女，行不顺也。",
+          translation: "「勿用取女」，是因为她行为不正、不合于顺道。"
+        },
         translation: "不宜娶此女，她见到有钱有势的男子便不能守身，毫无利益。",
         notes: {
           "取女": "取通「娶」",
@@ -687,7 +756,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "困蒙，吝。",
-        xiaoxiang: "象曰：困蒙之吝，独远实也。",
+        xiaoxiang: {
+          original: "象曰：困蒙之吝，独远实也。",
+          translation: "「困蒙之吝」，是因为独自远离了刚实（六四远离九二的刚中之德）。"
+        },
         translation: "被蒙昧所困，有困窘。",
         notes: {
           "困蒙": "深陷蒙昧而无法自出；六四远离九二之刚，上无正应，孤立无援",
@@ -697,7 +769,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "童蒙，吉。",
-        xiaoxiang: "象曰：童蒙之吉，顺以巽也。",
+        xiaoxiang: {
+          original: "象曰：童蒙之吉，顺以巽也。",
+          translation: "「童蒙之吉」，是因为柔顺谦逊、虚心受教。"
+        },
         translation: "像童子般虚心受教，吉祥。",
         notes: {
           "童蒙": "童子之蒙昧，喻虚心柔顺，不自以为是，甘心就教于师",
@@ -708,7 +783,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "击蒙，不利为寇，利御寇。",
-        xiaoxiang: "象曰：利用御寇，上下顺也。",
+        xiaoxiang: {
+          original: "象曰：利用御寇，上下顺也。",
+          translation: "「利用御寇」，是因为上下都顺从其道。"
+        },
         translation: "以强力击破蒙昧，不利于主动侵犯他人，有利于防御外寇。",
         notes: {
           "击蒙": "以刚力打击蒙昧，破除顽固之蒙；上九以阳刚居终，有果断击破之力",
@@ -762,7 +840,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "需于郊，利用恒，无咎。",
-        xiaoxiang: "象曰：需于郊，不犯难行也。利用恒无咎，未失常也。",
+        xiaoxiang: {
+          original: "象曰：需于郊，不犯难行也。利用恒无咎，未失常也。",
+          translation: "「需于郊」，是不冒犯险难前行。「利用恒无咎」，是因为未失常道。"
+        },
         translation: "在郊野等待，坚持恒久有利，无过失。",
         notes: {
           "需于郊": "在郊外等待，远离险境；初九去坎险最远，处境尚安",
@@ -773,7 +854,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "需于沙，小有言，终吉。",
-        xiaoxiang: "象曰：需于沙，衍在中也。虽小有言，以吉终也。",
+        xiaoxiang: {
+          original: "象曰：需于沙，衍在中也。虽小有言，以吉终也。",
+          translation: "「需于沙」，居中而宽裕自得。虽有小的非议，最终归于吉祥。"
+        },
         translation: "在沙滩上等待，略有言语争议，最终吉祥。",
         notes: {
           "需于沙": "在近水之沙上等待，渐近险境，处境较初九稍紧",
@@ -784,7 +868,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "需于泥，致寇至。",
-        xiaoxiang: "象曰：需于泥，灾在外也。自我致寇，敬慎不败也。",
+        xiaoxiang: {
+          original: "象曰：需于泥，灾在外也。自我致寇，敬慎不败也。",
+          translation: "「需于泥」，灾患在外。自己招来强寇，但敬慎自守便不致失败。"
+        },
         translation: "在泥沼中等待，招致强寇来犯。",
         notes: {
           "需于泥": "在泥泞中等待，已近坎险；九三乾极，刚健冒进，自陷于险境之边",
@@ -795,7 +882,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "需于血，出自穴。",
-        xiaoxiang: "象曰：需于血，顺以听也。",
+        xiaoxiang: {
+          original: "象曰：需于血，顺以听也。",
+          translation: "「需于血」，是顺承时势、听命而待。"
+        },
         translation: "在险难之中等待，终能出离险穴。",
         notes: {
           "需于血": "血，险难危急之地；六四已深入坎险之中，处于危难",
@@ -806,7 +896,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "需于酒食，贞吉。",
-        xiaoxiang: "象曰：酒食贞吉，以中正也。",
+        xiaoxiang: {
+          original: "象曰：酒食贞吉，以中正也。",
+          translation: "「酒食贞吉」，是因为九五居中得正。"
+        },
         translation: "在饮宴中安然等待，守正则吉。",
         notes: {
           "需于酒食": "九五居中得正，以中正之德安然自处，宴饮自乐以待时机",
@@ -817,7 +910,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "入于穴，有不速之客三人来，敬之，终吉。",
-        xiaoxiang: "象曰：不速之客来，敬之终吉。虽不当位，未大失也。",
+        xiaoxiang: {
+          original: "象曰：不速之客来，敬之终吉。虽不当位，未大失也。",
+          translation: "不请自来的客人到，恭敬以待，最终吉祥。虽然位置不当，但未大失（能敬慎应对）。"
+        },
         translation: "陷入险穴，有三位不请自来的客人到来，以礼恭敬相待，最终吉祥。",
         notes: {
           "入于穴": "上六居坎险之极，深陷险穴",
@@ -872,7 +968,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "不永所事，小有言，终吉。",
-        xiaoxiang: "象曰：不永所事，讼不可长也。虽小有言，其辩明也。",
+        xiaoxiang: {
+          original: "象曰：不永所事，讼不可长也。虽小有言，其辩明也。",
+          translation: "「不永所事」，因为诉讼不可拖长。虽有些争议，但是非辩得清明。"
+        },
         translation: "不把诉讼拖得太久，虽有些许争议，最终吉祥。",
         notes: {
           "不永所事": "不使诉讼长久持续，及早了结；讼贵速决，久则生变",
@@ -883,7 +982,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "不克讼，归而逋，其邑人三百户，无眚。",
-        xiaoxiang: "象曰：不克讼，归逋窜也。自下讼上，患至掇也。",
+        xiaoxiang: {
+          original: "象曰：不克讼，归逋窜也。自下讼上，患至掇也。",
+          translation: "「不克讼」便归来躲避。以下犯上争讼，祸患如自取。"
+        },
         translation: "争讼失败，归来躲避，其封邑三百户（小邑），无灾祸。",
         notes: {
           "不克讼": "争讼失败，未能胜诉",
@@ -896,7 +998,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "食旧德，贞厉，终吉。或从王事，无成。",
-        xiaoxiang: "象曰：食旧德，从上吉也。",
+        xiaoxiang: {
+          original: "象曰：食旧德，从上吉也。",
+          translation: "「食旧德」，因为顺从在上者所以吉祥。"
+        },
         translation: "守食先人旧日之德，守正虽有危厉，终归吉祥。有时随从王事，不居功自成。",
         notes: {
           "食旧德": "守食先人积累之旧德，安守本分，不贪冒进",
@@ -907,7 +1012,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "不克讼，复即命，渝安贞，吉。",
-        xiaoxiang: "象曰：复即命，渝安贞，不失也。",
+        xiaoxiang: {
+          original: "象曰：复即命，渝安贞，不失也。",
+          translation: "回归正命，改变态度安于守正——这才是不偏失。"
+        },
         translation: "争讼不胜，回归正道，改变态度安于守正，吉祥。",
         notes: {
           "不克讼": "争讼不克，知难而止",
@@ -919,7 +1027,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "讼，元吉。",
-        xiaoxiang: "象曰：讼，元吉，以中正也。",
+        xiaoxiang: {
+          original: "象曰：讼，元吉，以中正也。",
+          translation: "「讼，元吉」，是因为九五以中正之德裁决。"
+        },
         translation: "裁决争讼，大为吉祥。",
         notes: {
           "讼，元吉": "九五刚中正位，居天子之位，是最公正的裁决者，故元吉",
@@ -929,7 +1040,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "或锡之鞶带，终朝三褫之。",
-        xiaoxiang: "象曰：以讼受服，亦不足敬也。",
+        xiaoxiang: {
+          original: "象曰：以讼受服，亦不足敬也。",
+          translation: "通过争讼得来的荣服，也不值得尊敬。"
+        },
         translation: "或许被赐予皮带（荣誉），但一整天之内三次被剥夺。",
         notes: {
           "鞶带": "皮制大带，古代贵族礼服配件，象征荣誉地位",
@@ -981,7 +1095,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "师出以律，否臧，凶。",
-        xiaoxiang: "象曰：师出以律，失律凶也。",
+        xiaoxiang: {
+          original: "象曰：师出以律，失律凶也。",
+          translation: "「师出以律」，因为失去纪律必然招凶。"
+        },
         translation: "军队出征须遵守纪律法令，违反纪律则凶。",
         notes: {
           "师出以律": "军队出征须有严明纪律，无律则散",
@@ -992,7 +1109,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "在师中，吉，无咎，王三锡命。",
-        xiaoxiang: "象曰：在师中吉，承天宠也。王三锡命，怀万邦也。",
+        xiaoxiang: {
+          original: "象曰：在师中吉，承天宠也。王三锡命，怀万邦也。",
+          translation: "「在师中吉」，因为承受天命的眷顾。「王三锡命」，是为安抚万邦。"
+        },
         translation: "在军队中居中统帅，吉祥，无过失，君王多次赐命嘉奖。",
         notes: {
           "在师中": "九二以刚居中，是全卦唯一阳爻，为统帅之象",
@@ -1003,7 +1123,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "师或舆尸，凶。",
-        xiaoxiang: "象曰：师或舆尸，大无功也。",
+        xiaoxiang: {
+          original: "象曰：师或舆尸，大无功也。",
+          translation: "「师或舆尸」，是因为出师全无功效。"
+        },
         translation: "军队或许用车载回战死者，凶。",
         notes: {
           "舆尸": "舆，车；尸，死者；用车运回阵亡将士，喻战败",
@@ -1013,7 +1136,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "师左次，无咎。",
-        xiaoxiang: "象曰：左次无咎，未失常也。",
+        xiaoxiang: {
+          original: "象曰：左次无咎，未失常也。",
+          translation: "「左次无咎」，因为未失行军之常道（撤退也是正当）。"
+        },
         translation: "军队向左退守驻扎，无过失。",
         notes: {
           "左次": "古时以右为前进、左为后退；左次即退守驻扎",
@@ -1023,7 +1149,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "田有禽，利执言，无咎。长子帅师，弟子舆尸，贞凶。",
-        xiaoxiang: "象曰：长子帅师，以中行也。弟子舆尸，使不当也。",
+        xiaoxiang: {
+          original: "象曰：长子帅师，以中行也。弟子舆尸，使不当也。",
+          translation: "「长子帅师」，是以中道而行。「弟子舆尸」，是任用不当。"
+        },
         translation: "田野有禽兽入侵，宜出兵讨伐，无过失。以长子统帅军队，若以次子领兵则车载败兵，守正亦凶。",
         notes: {
           "田有禽": "禽兽入田为害，喻有外敌入侵，师出有名",
@@ -1036,7 +1165,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "大君有命，开国承家，小人勿用。",
-        xiaoxiang: "象曰：大君有命，以正功也。小人勿用，必乱邦也。",
+        xiaoxiang: {
+          original: "象曰：大君有命，以正功也。小人勿用，必乱邦也。",
+          translation: "「大君有命」，是为了端正功绩。「小人勿用」，是因小人必将乱邦。"
+        },
         translation: "大君颁布命令，论功行赏，开国封侯、赐家承业，但小人不可任用。",
         notes: {
           "大君有命": "战后论功行赏，大君颁命封赏",
@@ -1093,7 +1225,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "有孚比之，无咎。有孚盈缶，终来有他，吉。",
-        xiaoxiang: "象曰：比之初六，有他吉也。",
+        xiaoxiang: {
+          original: "象曰：比之初六，有他吉也。",
+          translation: "比卦初六的吉祥，来自意外之吉（诚信感人，他人来归）。"
+        },
         translation: "以诚信亲比，无过失。诚信充盈如缶满，最终会有意外之吉来临。",
         notes: {
           "有孚比之": "以诚信为基础亲近他人，是比卦的根本",
@@ -1104,7 +1239,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "比之自内，贞吉。",
-        xiaoxiang: "象曰：比之自内，不自失也。",
+        xiaoxiang: {
+          original: "象曰：比之自内，不自失也。",
+          translation: "「比之自内」，是不自我迷失（内有所守）。"
+        },
         translation: "从内心出发亲比（九五），守正吉祥。",
         notes: {
           "比之自内": "从自身内心出发，发自内心地亲近，非外力驱使",
@@ -1114,7 +1252,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "比之匪人。",
-        xiaoxiang: "象曰：比之匪人，不亦伤乎。",
+        xiaoxiang: {
+          original: "象曰：比之匪人，不亦伤乎。",
+          translation: "与不正之人相亲比，岂不令人伤痛？"
+        },
         translation: "亲比的对象是不正之人。",
         notes: {
           "匪人": "不正之人；六三阴柔失正，上下皆非正应，所亲非人",
@@ -1124,7 +1265,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "外比之，贞吉。",
-        xiaoxiang: "象曰：外比于贤，以从上也。",
+        xiaoxiang: {
+          original: "象曰：外比于贤，以从上也。",
+          translation: "「外比于贤」，是顺从在上的明君。"
+        },
         translation: "向外亲比贤者（九五），守正吉祥。",
         notes: {
           "外比之": "向外（上）亲比，指六四上比九五",
@@ -1134,7 +1278,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "显比，王用三驱，失前禽，邑人不诫，吉。",
-        xiaoxiang: "象曰：显比之吉，位正中也。舍逆取顺，失前禽也。邑人不诫，上使中也。",
+        xiaoxiang: {
+          original: "象曰：显比之吉，位正中也。舍逆取顺，失前禽也。邑人不诫，上使中也。",
+          translation: "「显比」之吉，是九五位居正中。舍逆来者、纳顺来者，便如失去前面跑掉的禽兽。邑人不必戒备，因为上者用中正之道。"
+        },
         translation: "光明正大地亲比，君王行三面围猎，放走前方逃跑的禽兽，邑中百姓不须戒备，吉祥。",
         notes: {
           "显比": "光明正大地亲比，无私无隐，是九五中正之君的亲比之道",
@@ -1146,7 +1293,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "比之无首，凶。",
-        xiaoxiang: "象曰：比之无首，无所终也。",
+        xiaoxiang: {
+          original: "象曰：比之无首，无所终也。",
+          translation: "「比之无首」（比附无首脑），便没有好的结果。"
+        },
         translation: "亲比却没有开始（领头），凶。",
         notes: {
           "无首": "无首领、无始终；上六居卦之终，来比已迟，又无正应，无所依归",
@@ -1199,7 +1349,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "复自道，何其咎，吉。",
-        xiaoxiang: "象曰：复自道，其义吉也。",
+        xiaoxiang: {
+          original: "象曰：复自道，其义吉也。",
+          translation: "「复自道」，按义理而行，所以吉祥。"
+        },
         translation: "回归自身正道，有什么过失呢，吉祥。",
         notes: {
           "复自道": "回归本来的正道；初九阳刚，处小畜之初，不强进，自守其道",
@@ -1209,7 +1362,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "牵复，吉。",
-        xiaoxiang: "象曰：牵复在中，亦不自失也。",
+        xiaoxiang: {
+          original: "象曰：牵复在中，亦不自失也。",
+          translation: "「牵复在中」，也不会自我迷失（九二中位之德）。"
+        },
         translation: "相互牵引回归，吉祥。",
         notes: {
           "牵复": "与同类相互牵引，共同回归正道；九二与初九、九三同为阳爻，志同道合",
@@ -1219,7 +1375,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "舆说辐，夫妻反目。",
-        xiaoxiang: "象曰：夫妻反目，不能正室也。",
+        xiaoxiang: {
+          original: "象曰：夫妻反目，不能正室也。",
+          translation: "「夫妻反目」，是因为不能端正家室。"
+        },
         translation: "车轮脱落车轴，夫妻反目相争。",
         notes: {
           "舆说辐": "说通「脱」；辐，车轮辐条；车辐脱落，行进受阻，喻前进受阻",
@@ -1230,7 +1389,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "有孚，血去惕出，无咎。",
-        xiaoxiang: "象曰：有孚惕出，上合志也。",
+        xiaoxiang: {
+          original: "象曰：有孚惕出，上合志也。",
+          translation: "「有孚惕出」（诚信戒惧而脱险），因为与上者合志。"
+        },
         translation: "有诚信，血迹消去，警惕消除，无过失。",
         notes: {
           "血去惕出": "血，险象；惕，忧惧；有诚信则险象消除，忧惧得解",
@@ -1240,7 +1402,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "有孚挛如，富以其邻。",
-        xiaoxiang: "象曰：有孚挛如，不独富也。",
+        xiaoxiang: {
+          original: "象曰：有孚挛如，不独富也。",
+          translation: "「有孚挛如」（诚信牵连相聚），是因为不独自占有富贵（与众共享）。"
+        },
         translation: "以诚信相互连结，以财富与邻居共享。",
         notes: {
           "挛如": "连结依附之状；以诚信相互挽结，团结一致",
@@ -1251,7 +1416,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "既雨既处，尚德载，妇贞厉。月几望，君子征，凶。",
-        xiaoxiang: "象曰：既雨既处，德积载也。君子征凶，有所疑也。",
+        xiaoxiang: {
+          original: "象曰：既雨既处，德积载也。君子征凶，有所疑也。",
+          translation: "「既雨既处」，是积累的德行得以承载。君子若强行前进有凶，因为时机有疑。"
+        },
         translation: "既已降雨又已止息，德积已满载，妇人守正亦有危厉。月近满月，君子出征，凶。",
         notes: {
           "既雨既处": "密云终于成雨，小畜之功已成；雨后止息，阴阳调和",
@@ -1307,7 +1475,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "素履往，无咎。",
-        xiaoxiang: "象曰：素履之往，独行愿也。",
+        xiaoxiang: {
+          original: "象曰：素履之往，独行愿也。",
+          translation: "「素履之往」，是独自践行心中之愿（朴素之心，不假外求）。"
+        },
         translation: "以朴素的本色前行，无过失。",
         notes: {
           "素履": "素，朴素、本色；以本来面目、朴实无华地行走，不矫饰",
@@ -1317,7 +1488,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "履道坦坦，幽人贞吉。",
-        xiaoxiang: "象曰：幽人贞吉，中不自乱也。",
+        xiaoxiang: {
+          original: "象曰：幽人贞吉，中不自乱也。",
+          translation: "「幽人贞吉」，是因为内心居中不乱。"
+        },
         translation: "行走的道路平坦宽广，隐居之人守正吉祥。",
         notes: {
           "履道坦坦": "行走之路平坦开阔；九二刚中，所行之道坦荡",
@@ -1328,7 +1502,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "眇能视，跛能履，履虎尾，咥人，凶。武人为于大君。",
-        xiaoxiang: "象曰：眇能视，不足以有明也。跛能履，不足以与行也。咥人之凶，位不当也。武人为于大君，志刚也。",
+        xiaoxiang: {
+          original: "象曰：眇能视，不足以有明也。跛能履，不足以与行也。咥人之凶，位不当也。武人为于大君，志刚也。",
+          translation: "一只眼能看，不足以为明亮；瘸腿能走，不足以同行。「咥人之凶」（被虎咬伤），是位置不当。武人想效大君，是志气过刚。"
+        },
         translation: "独眼能看，瘸腿能走，踩踏虎尾，被虎咬伤，凶。如同武夫自以为能代替大君。",
         notes: {
           "眇能视，跛能履": "能力不足却勉强而为，喻六三阴柔失位，才德不足",
@@ -1339,7 +1516,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "履虎尾，愬愬，终吉。",
-        xiaoxiang: "象曰：愬愬终吉，志行也。",
+        xiaoxiang: {
+          original: "象曰：愬愬终吉，志行也。",
+          translation: "「愬愬终吉」（戒惧而最终吉祥），是因为志向得行。"
+        },
         translation: "踩踏虎尾，战战兢兢，最终吉祥。",
         notes: {
           "愬愬": "战战兢兢、惶恐戒慎之状",
@@ -1350,7 +1530,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "夬履，贞厉。",
-        xiaoxiang: "象曰：夬履贞厉，位正当也。",
+        xiaoxiang: {
+          original: "象曰：夬履贞厉，位正当也。",
+          translation: "「夬履贞厉」（果决而行守正有危），是因为九五位置正当（虽危亦正）。"
+        },
         translation: "果断决然地践履，守正亦有危厉。",
         notes: {
           "夬履": "夬，决断；以果断决然之势践履，九五居尊位，行事决断",
@@ -1360,7 +1543,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "视履考祥，其旋元吉。",
-        xiaoxiang: "象曰：元吉在上，大有庆也。",
+        xiaoxiang: {
+          original: "象曰：元吉在上，大有庆也。",
+          translation: "元吉在上爻（履卦上九），是大有庆吉。"
+        },
         translation: "回顾审视所走过的路，考察其吉凶祥应，圆满归来则大为吉祥。",
         notes: {
           "视履考祥": "回头审视自己所践行的道路，考察其结果是否吉祥",
@@ -1414,7 +1600,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "拔茅茹，以其汇，征吉。",
-        xiaoxiang: "象曰：拔茅征吉，志在外也。",
+        xiaoxiang: {
+          original: "象曰：拔茅征吉，志在外也。",
+          translation: "「拔茅征吉」，是志向在外（同德相聚而往）。"
+        },
         translation: "拔起茅草，根须相连，同类相从，出征吉祥。",
         notes: {
           "拔茅茹": "茅草根须相连，拔一根则带出一串；喻同类相连，志同道合者相率而进",
@@ -1425,7 +1614,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "包荒，用冯河，不遐遗，朋亡，得尚于中行。",
-        xiaoxiang: "象曰：包荒，得尚于中行，以光大也。",
+        xiaoxiang: {
+          original: "象曰：包荒，得尚于中行，以光大也。",
+          translation: "「包荒」（包容广大），「得尚于中行」（以中道行事），是为光大其德。"
+        },
         translation: "包容荒废之人，徒步渡河（勇于任事），不遗漏远方之人，不结党营私，得以配合中道而行。",
         notes: {
           "包荒": "包容荒废粗鄙之人，宰相肚里能撑船，泰时宜宽容大度",
@@ -1438,7 +1630,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "无平不陂，无往不复，艰贞无咎。勿恤其孚，于食有福。",
-        xiaoxiang: "象曰：无往不复，天地际也。",
+        xiaoxiang: {
+          original: "象曰：无往不复，天地际也。",
+          translation: "「无往不复」（去而必返），是天地交际之理（阴阳相循）。"
+        },
         translation: "没有永远平坦的大地，没有只去不回的事情，在艰难中守正无过失。不必忧虑诚信之事，在饮食（日常生活）中自有福分。",
         notes: {
           "无平不陂，无往不复": "陂，倾斜；物极必反，泰极将否；此为泰卦中的忧患意识",
@@ -1449,7 +1644,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "翩翩，不富以其邻，不戒以孚。",
-        xiaoxiang: "象曰：翩翩不富，皆失实也。不戒以孚，中心愿也。",
+        xiaoxiang: {
+          original: "象曰：翩翩不富，皆失实也。不戒以孚，中心愿也。",
+          translation: "「翩翩不富」（轻飘相聚而不富），是大家都失去刚实。「不戒以孚」（不待告诫便相信），是出于内心所愿。"
+        },
         translation: "轻盈翩然（群阴下降），不凭富贵而与邻居（阳爻）交往，不须戒备而以诚信相待。",
         notes: {
           "翩翩": "轻盈飞翔之状；六四与相邻的阴爻群相率下交阳爻",
@@ -1460,7 +1658,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "帝乙归妹，以祉元吉。",
-        xiaoxiang: "象曰：以祉元吉，中以行愿也。",
+        xiaoxiang: {
+          original: "象曰：以祉元吉，中以行愿也。",
+          translation: "「以祉元吉」（以福得元吉），是用中道实现心愿。"
+        },
         translation: "帝乙嫁女（以柔顺下嫁），带来福祉，大为吉祥。",
         notes: {
           "帝乙归妹": "帝乙，商朝君王；归妹，嫁女；以尊贵之身下嫁，喻六五阴柔居尊，谦顺下交九二",
@@ -1471,7 +1672,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "城复于隍，勿用师，自邑告命，贞吝。",
-        xiaoxiang: "象曰：城复于隍，其命乱也。",
+        xiaoxiang: {
+          original: "象曰：城复于隍，其命乱也。",
+          translation: "「城复于隍」（城墙倒塌至护城河），是天命已乱（泰极而否）。"
+        },
         translation: "城墙倒塌回归城壕，不要用兵，从自己的封邑颁布命令，守正亦有困窘。",
         notes: {
           "城复于隍": "城墙倒塌回归护城壕；隍，无水的护城壕；泰极而否，盛极而衰的象征",
@@ -1526,7 +1730,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "拔茅茹，以其汇，贞吉，亨。",
-        xiaoxiang: "象曰：拔茅贞吉，志在君也。",
+        xiaoxiang: {
+          original: "象曰：拔茅贞吉，志在君也。",
+          translation: "「拔茅贞吉」，是志向在君（同心向上以匡乱）。"
+        },
         translation: "拔起茅草，根须相连，同类相从，守正吉祥，亨通。",
         notes: {
           "拔茅茹，以其汇": "与泰卦初九同象，但此处阴爻相连，喻小人相率而退，知止守正",
@@ -1537,7 +1744,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "包承，小人吉，大人否亨。",
-        xiaoxiang: "象曰：大人否亨，不乱群也。",
+        xiaoxiang: {
+          original: "象曰：大人否亨，不乱群也。",
+          translation: "「大人否亨」（大人于否塞中亨通），是不混乱于群小之中。"
+        },
         translation: "包容承顺（上位），小人可获吉祥，大人处否而能亨通。",
         notes: {
           "包承": "包容承顺，顺从上位；六二柔顺居中，随顺否世",
@@ -1549,7 +1759,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "包羞。",
-        xiaoxiang: "象曰：包羞，位不当也。",
+        xiaoxiang: {
+          original: "象曰：包羞，位不当也。",
+          translation: "「包羞」（包藏羞耻），是因为位置不当。"
+        },
         translation: "包藏羞耻。",
         notes: {
           "包羞": "心怀羞耻，却包藏隐忍不发；六三阴柔失位，无才无德却居其位",
@@ -1559,7 +1772,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "有命无咎，畴离祉。",
-        xiaoxiang: "象曰：有命无咎，志行也。",
+        xiaoxiang: {
+          original: "象曰：有命无咎，志行也。",
+          translation: "「有命无咎」，是天命使然，志向得行。"
+        },
         translation: "秉承天命行事，无过失，同类皆沾福祉。",
         notes: {
           "有命": "秉承天命，以正道行事；九四阳刚，否极将泰之际",
@@ -1570,7 +1786,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "休否，大人吉。其亡其亡，系于苞桑。",
-        xiaoxiang: "象曰：大人之吉，位正当也。",
+        xiaoxiang: {
+          original: "象曰：大人之吉，位正当也。",
+          translation: "大人的吉祥，是因为位置正当。"
+        },
         translation: "终止否塞，大人吉祥。时刻警惕「要灭亡了」，如此则根基稳固如系于丛生的桑树。",
         notes: {
           "休否": "休，止息；终止否塞之局，否极泰来",
@@ -1582,7 +1801,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "倾否，先否后喜。",
-        xiaoxiang: "象曰：否终则倾，何可长也。",
+        xiaoxiang: {
+          original: "象曰：否终则倾，何可长也。",
+          translation: "否塞到尽头则倾覆，怎能长久？"
+        },
         translation: "否塞倾覆，先有否塞后有喜悦。",
         notes: {
           "倾否": "将否塞彻底倾覆，否极必泰",
@@ -1634,7 +1856,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "同人于门，无咎。",
-        xiaoxiang: "象曰：出门同人，又谁咎也。",
+        xiaoxiang: {
+          original: "象曰：出门同人，又谁咎也。",
+          translation: "「出门同人」（出门寻志同道合者），又有谁能责怪？"
+        },
         translation: "在门口与人相合，无过失。",
         notes: {
           "同人于门": "出门即与人同，尚无私党；初九阳刚，处卦之始，广泛结交",
@@ -1644,7 +1869,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "同人于宗，吝。",
-        xiaoxiang: "象曰：同人于宗，吝道也。",
+        xiaoxiang: {
+          original: "象曰：同人于宗，吝道也。",
+          translation: "「同人于宗」（只与同宗相亲），是狭隘之道。"
+        },
         translation: "只与同宗族的人相合，有所局限。",
         notes: {
           "同人于宗": "宗，宗族；仅限于宗亲范围内同心，失去广博之义",
@@ -1654,7 +1882,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "伏戎于莽，升其高陵，三岁不兴。",
-        xiaoxiang: "象曰：伏戎于莽，敌刚也。三岁不兴，安行也。",
+        xiaoxiang: {
+          original: "象曰：伏戎于莽，敌刚也。三岁不兴，安行也。",
+          translation: "「伏戎于莽」（埋伏军队于草丛），因为对手强刚。「三岁不兴」（三年不能起事），怎敢妄动？"
+        },
         translation: "将兵戎埋伏于草莽之中，登上高丘侦察，三年之久无法兴兵出击。",
         notes: {
           "伏戎于莽": "暗中埋伏兵力，心存异志，欲强夺六二之应",
@@ -1665,7 +1896,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "乘其墉，弗克攻，吉。",
-        xiaoxiang: "象曰：乘其墉，义弗克也。其吉，则困而反则也。",
+        xiaoxiang: {
+          original: "象曰：乘其墉，义弗克也。其吉，则困而反则也。",
+          translation: "「乘其墉」（攻上城墙），按义理不能取胜。其所以吉，是因困窘而能回归正道。"
+        },
         translation: "登上墙垣，却不能攻克，吉祥。",
         notes: {
           "乘其墉": "登上高墙，欲强攻夺取，指与九五争夺六二之应",
@@ -1676,7 +1910,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "同人，先号咷而后笑，大师克相遇。",
-        xiaoxiang: "象曰：同人之先，以中正也。大师相遇，言相克也。",
+        xiaoxiang: {
+          original: "象曰：同人之先，以中正也。大师相遇，言相克也。",
+          translation: "「同人之先」（同人先号啕），是中正之德所致。「大师相遇」，说的是终能相会、共克其难。"
+        },
         translation: "与人同心，先是大声哭泣，后来欢笑，经过大军克敌之后终得相遇。",
         notes: {
           "先号咷而后笑": "初遭阻隔，悲痛号哭；历经艰难终得相遇，转为欢笑",
@@ -1687,7 +1924,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "同人于郊，无悔。",
-        xiaoxiang: "象曰：同人于郊，志未得也。",
+        xiaoxiang: {
+          original: "象曰：同人于郊，志未得也。",
+          translation: "「同人于郊」（在郊外与人相同），是心志尚未得偿。"
+        },
         translation: "在郊野与人相合，没有悔恨。",
         notes: {
           "同人于郊": "郊野，介于野与邑之间；上九处卦之终，已出城郭，与人相合",
@@ -1738,7 +1978,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "无交害，匪咎，艰则无咎。",
-        xiaoxiang: "象曰：大有初九，无交害也。",
+        xiaoxiang: {
+          original: "象曰：大有初九，无交害也。",
+          translation: "大有初九，没有相交而生的祸害（独立无咎）。"
+        },
         translation: "没有交接中的祸害，不是过失，处事谨慎艰难则无过失。",
         notes: {
           "无交害": "初九处卦初，尚未与外部广泛交往，故无交往带来的祸害",
@@ -1748,7 +1991,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "大车以载，有攸往，无咎。",
-        xiaoxiang: "象曰：大车以载，积中不败也。",
+        xiaoxiang: {
+          original: "象曰：大车以载，积中不败也。",
+          translation: "「大车以载」，因为积蓄居中而不败。"
+        },
         translation: "用大车装载，前往有利，无过失。",
         notes: {
           "大车以载": "大车能负重载物；九二阳刚居中，才德兼备，能承载大任",
@@ -1758,7 +2004,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "公用亨于天子，小人弗克。",
-        xiaoxiang: "象曰：公用亨于天子，小人害也。",
+        xiaoxiang: {
+          original: "象曰：公用亨于天子，小人害也。",
+          translation: "「公用亨于天子」（王公受天子礼遇），小人则有害（无德承之）。"
+        },
         translation: "王公将丰盛的礼物献享于天子，小人则无法做到。",
         notes: {
           "公用亨于天子": "亨，献享；诸侯以礼享献天子，是大有之世君臣共享之象",
@@ -1768,7 +2017,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "匪其彭，无咎。",
-        xiaoxiang: "象曰：匪其彭，无咎，明辨晰也。",
+        xiaoxiang: {
+          original: "象曰：匪其彭，无咎，明辨晰也。",
+          translation: "「匪其彭，无咎」（不过分张扬而无咎），是因为明辨清晰。"
+        },
         translation: "不炫耀其丰盛，无过失。",
         notes: {
           "匪其彭": "彭，盛大；不以丰盛自夸炫耀，谦抑不骄",
@@ -1778,7 +2030,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "厥孚交如，威如，吉。",
-        xiaoxiang: "象曰：厥孚交如，信以发志也。威如之吉，易而无备也。",
+        xiaoxiang: {
+          original: "象曰：厥孚交如，信以发志也。威如之吉，易而无备也。",
+          translation: "「厥孚交如」（诚信交相相通），是以诚信发动心志。「威如之吉」（威严而吉祥），因平易而无戒备。"
+        },
         translation: "以诚信与众阳交往，又保持威严，吉祥。",
         notes: {
           "厥孚交如": "以诚信与众阳刚相交；六五柔中居尊，以信服众",
@@ -1789,7 +2044,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "自天祐之，吉，无不利。",
-        xiaoxiang: "象曰：大有上吉，自天祐也。",
+        xiaoxiang: {
+          original: "象曰：大有上吉，自天祐也。",
+          translation: "大有上爻之吉，是来自天的庇佑。"
+        },
         translation: "上天保佑，吉祥，无不有利。",
         notes: {
           "自天祐之": "上九处大有之极，能谦顺不骄，故获天佑",
@@ -1843,7 +2101,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "谦谦君子，用涉大川，吉。",
-        xiaoxiang: "象曰：谦谦君子，卑以自牧也。",
+        xiaoxiang: {
+          original: "象曰：谦谦君子，卑以自牧也。",
+          translation: "「谦谦君子」，是以谦卑自我修养（牧 = 养）。"
+        },
         translation: "谦之又谦的君子，可以涉越大河，吉祥。",
         notes: {
           "谦谦君子": "极度谦逊的君子；初六处卦初，谦而又谦，至为卑下",
@@ -1853,7 +2114,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "鸣谦，贞吉。",
-        xiaoxiang: "象曰：鸣谦贞吉，中心得也。",
+        xiaoxiang: {
+          original: "象曰：鸣谦贞吉，中心得也。",
+          translation: "「鸣谦贞吉」，是内心有得（谦发于中）。"
+        },
         translation: "谦德闻于外，守正吉祥。",
         notes: {
           "鸣谦": "谦德发扬于外，声誉远播；六二柔顺居中，谦德出于内心",
@@ -1863,7 +2127,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "劳谦，君子有终，吉。",
-        xiaoxiang: "象曰：劳谦君子，万民服也。",
+        xiaoxiang: {
+          original: "象曰：劳谦君子，万民服也。",
+          translation: "「劳谦君子」（功劳大却谦虚），万民因此心服。"
+        },
         translation: "有功劳而谦逊，君子能有好的终局，吉祥。",
         notes: {
           "劳谦": "有功劳而保持谦虚；九三是全卦唯一阳爻，居众阴之中，功高而愈谦",
@@ -1873,7 +2140,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "无不利，㧑谦。",
-        xiaoxiang: "象曰：无不利，㧑谦，不违则也。",
+        xiaoxiang: {
+          original: "象曰：无不利，㧑谦，不违则也。",
+          translation: "「无不利，㧑谦」（发挥谦德），是因为不违法则。"
+        },
         translation: "无不有利，发挥谦德。",
         notes: {
           "㧑谦": "㧑，挥扬、发挥；发挥谦德，推广谦道",
@@ -1883,7 +2153,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "不富以其邻，利用侵伐，无不利。",
-        xiaoxiang: "象曰：利用侵伐，征不服也。",
+        xiaoxiang: {
+          original: "象曰：利用侵伐，征不服也。",
+          translation: "「利用侵伐」，是为了讨伐不顺服者。"
+        },
         translation: "不以财富取悦邻国，有利于出兵征伐，无不有利。",
         notes: {
           "不富以其邻": "不以财富笼络邻邦，而以谦德感化；六五居尊以谦，邻国自附",
@@ -1893,7 +2166,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "鸣谦，利用行师，征邑国。",
-        xiaoxiang: "象曰：鸣谦，志未得也。可用行师，征邑国也。",
+        xiaoxiang: {
+          original: "象曰：鸣谦，志未得也。可用行师，征邑国也。",
+          translation: "「鸣谦」（鸣声以谦），是心志尚未得偿。可以行师，征伐自己邑国之乱。"
+        },
         translation: "谦德闻于外，有利于出兵征伐邑国。",
         notes: {
           "鸣谦": "谦德发扬在外；上六处卦终，谦道已著",
@@ -1947,7 +2223,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "鸣豫，凶。",
-        xiaoxiang: "象曰：初六鸣豫，志穷凶也。",
+        xiaoxiang: {
+          original: "象曰：初六鸣豫，志穷凶也。",
+          translation: "「初六鸣豫」（鸣声而欢愉），是心志已穷而招凶。"
+        },
         translation: "大声鸣叫表达喜悦，有凶险。",
         notes: {
           "鸣豫": "张扬喜悦，得意忘形；初六依附唯一阳爻九四，狐假虎威，沾沾自喜",
@@ -1957,7 +2236,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "介于石，不终日，贞吉。",
-        xiaoxiang: "象曰：不终日贞吉，以中正也。",
+        xiaoxiang: {
+          original: "象曰：不终日贞吉，以中正也。",
+          translation: "「不终日贞吉」（不终日便守正吉祥），是中正之德。"
+        },
         translation: "坚如磐石，不待终日即能察知吉凶，守正吉祥。",
         notes: {
           "介于石": "坚定如石，不为豫乐所动摇；六二居中正位，独立不倚",
@@ -1967,7 +2249,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "盱豫，悔，迟有悔。",
-        xiaoxiang: "象曰：盱豫有悔，位不当也。",
+        xiaoxiang: {
+          original: "象曰：盱豫有悔，位不当也。",
+          translation: "「盱豫有悔」（仰视奉承得欢愉而有悔），是位置不当。"
+        },
         translation: "仰视取悦于人而求喜悦，有悔恨；犹豫拖延更有悔恨。",
         notes: {
           "盱豫": "盱，仰视；仰望九四以求悦，谄媚依附",
@@ -1977,7 +2262,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "由豫，大有得，勿疑，朋盍簪。",
-        xiaoxiang: "象曰：由豫大有得，志大行也。",
+        xiaoxiang: {
+          original: "象曰：由豫大有得，志大行也。",
+          translation: "「由豫大有得」（由豫卦得志），是志向大行。"
+        },
         translation: "众人喜悦皆由此而来，大有收获，无须疑虑，朋友聚集而来。",
         notes: {
           "由豫": "豫乐之源；九四为全卦唯一阳爻，五阴皆附，众喜由此而发",
@@ -1987,7 +2275,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "贞疾，恒不死。",
-        xiaoxiang: "象曰：六五贞疾，乘刚也。恒不死，中未亡也。",
+        xiaoxiang: {
+          original: "象曰：六五贞疾，乘刚也。恒不死，中未亡也。",
+          translation: "「六五贞疾」（守正有疾），是乘凌于刚（九四）之上。「恒不死」（一直不死），因中位未亡。"
+        },
         translation: "守正以处疾患，长久不死。",
         notes: {
           "贞疾": "六五以柔乘九四之刚，受制于下，犹如有疾",
@@ -1997,7 +2288,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "冥豫，成有渝，无咎。",
-        xiaoxiang: "象曰：冥豫在上，何可长也。",
+        xiaoxiang: {
+          original: "象曰：冥豫在上，何可长也。",
+          translation: "「冥豫在上」（昏冥中欢愉），怎能长久？"
+        },
         translation: "沉迷于喜悦，若能改变则无过失。",
         notes: {
           "冥豫": "昏冥沉溺于豫乐，不知节制；上六处豫之极，沉迷已深",
@@ -2046,7 +2340,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "官有渝，贞吉。出门交有功。",
-        xiaoxiang: "象曰：官有渝，从正吉也。出门交有功，不失也。",
+        xiaoxiang: {
+          original: "象曰：官有渝，从正吉也。出门交有功，不失也。",
+          translation: "「官有渝」（职守变更），随从正道则吉。「出门交有功」，是不失正道。"
+        },
         translation: "所主持的事务有所变更，守正吉祥。出门广结交往，有功效。",
         notes: {
           "官有渝": "官，所主持之事；初九处随卦之始，能随时变通，不固执成见",
@@ -2056,7 +2353,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "系小子，失丈夫。",
-        xiaoxiang: "象曰：系小子，弗兼与也。",
+        xiaoxiang: {
+          original: "象曰：系小子，弗兼与也。",
+          translation: "「系小子」（专系于小子），不能两边都得（取舍分明）。"
+        },
         translation: "依附于小人，失去了大人。",
         notes: {
           "系小子": "六二随从初九（小子），弃应九五（丈夫）",
@@ -2066,7 +2366,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "系丈夫，失小子。随有求得，利居贞。",
-        xiaoxiang: "象曰：系丈夫，志舍下也。",
+        xiaoxiang: {
+          original: "象曰：系丈夫，志舍下也。",
+          translation: "「系丈夫」（专系于丈夫），是志向上而舍弃下方。"
+        },
         translation: "依附于大人，失去了小人。随顺则有求必得，有利于安居守正。",
         notes: {
           "系丈夫失小子": "六三随九四（丈夫），舍初九（小子），择善随从",
@@ -2076,7 +2379,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "随有获，贞凶。有孚在道，以明，何咎。",
-        xiaoxiang: "象曰：随有获，其义凶也。有孚在道，明功也。",
+        xiaoxiang: {
+          original: "象曰：随有获，其义凶也。有孚在道，明功也。",
+          translation: "「随有获」（随从而有所获），按义理是凶。「有孚在道」（诚信合道），便能彰明功业。"
+        },
         translation: "随顺而有所收获，守正则防凶。以诚信行正道，明白此理，有何过失？",
         notes: {
           "随有获贞凶": "九四阳刚近君，众阴随附，收获甚多，但有争权之嫌，须守正防凶",
@@ -2086,7 +2392,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "孚于嘉，吉。",
-        xiaoxiang: "象曰：孚于嘉吉，位正中也。",
+        xiaoxiang: {
+          original: "象曰：孚于嘉吉，位正中也。",
+          translation: "「孚于嘉吉」（诚信于美善而吉），是因为九五位居正中。"
+        },
         translation: "诚信于美善，吉祥。",
         notes: {
           "孚于嘉": "以诚信于美善之道；九五居中正尊位，随顺正道，诚信美善",
@@ -2096,7 +2405,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "拘系之，乃从维之。王用亨于西山。",
-        xiaoxiang: "象曰：拘系之，上穷也。",
+        xiaoxiang: {
+          original: "象曰：拘系之，上穷也。",
+          translation: "「拘系之」（拘系束缚），是因为上九已到穷尽。"
+        },
         translation: "拘留束缚，进而维系随从。王者在西山举行祭祀。",
         notes: {
           "拘系之乃从维之": "随道之极，至诚归附，如被拘系；随至深处，不可分离",
@@ -2149,7 +2461,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "干父之蛊，有子考，无咎，厉终吉。",
-        xiaoxiang: "象曰：干父之蛊，意承考也。",
+        xiaoxiang: {
+          original: "象曰：干父之蛊，意承考也。",
+          translation: "「干父之蛊」（救治父亲遗弊），意在承接父志。"
+        },
         translation: "治理父亲留下的弊政，有好儿子承父志，无过失，危厉之中终获吉祥。",
         notes: {
           "干父之蛊": "干，治理；承父之弊，改革修正；子能治父之积弊为孝",
@@ -2159,7 +2474,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "干母之蛊，不可贞。",
-        xiaoxiang: "象曰：干母之蛊，得中道也。",
+        xiaoxiang: {
+          original: "象曰：干母之蛊，得中道也。",
+          translation: "「干母之蛊」，是得到中道（九二刚柔得中）。"
+        },
         translation: "治理母亲留下的弊政，不可过于刚直。",
         notes: {
           "干母之蛊": "母道柔顺，纠正母亲之弊须委婉，不可刚猛",
@@ -2169,7 +2487,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "干父之蛊，小有悔，无大咎。",
-        xiaoxiang: "象曰：干父之蛊，终无咎也。",
+        xiaoxiang: {
+          original: "象曰：干父之蛊，终无咎也。",
+          translation: "「干父之蛊」，最终无过失。"
+        },
         translation: "治理父亲留下的弊政，稍有悔恨，但无大的过失。",
         notes: {
           "小有悔": "九三刚位过刚，改革或有失当，稍有悔恨",
@@ -2179,7 +2500,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "裕父之蛊，往见吝。",
-        xiaoxiang: "象曰：裕父之蛊，往未得也。",
+        xiaoxiang: {
+          original: "象曰：裕父之蛊，往未得也。",
+          translation: "「裕父之蛊」（宽缓救治父弊），前往未能得正（六四阴弱不济事）。"
+        },
         translation: "宽容放任父亲留下的弊政，前往则有所遗憾。",
         notes: {
           "裕父之蛊": "裕，宽纵；对积弊过于宽容放任，不加整治",
@@ -2189,7 +2513,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "干父之蛊，用誉。",
-        xiaoxiang: "象曰：干父之蛊，承以德也。",
+        xiaoxiang: {
+          original: "象曰：干父之蛊，承以德也。",
+          translation: "「干父之蛊」（六五），是以德继承父志。"
+        },
         translation: "治理父亲留下的弊政，能获得声誉。",
         notes: {
           "用誉": "能够获得声誉；六五居尊中，以德承继，治蛊有成，天下称誉",
@@ -2199,7 +2526,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "不事王侯，高尚其事。",
-        xiaoxiang: "象曰：不事王侯，志可则也。",
+        xiaoxiang: {
+          original: "象曰：不事王侯，志可则也。",
+          translation: "「不事王侯」（不仕事王侯），其志向可作楷模（清高可法）。"
+        },
         translation: "不侍奉王侯，高洁其志，超然世外。",
         notes: {
           "不事王侯": "上九处蛊卦之终，超脱事务，不求仕进",
@@ -2249,7 +2579,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "咸临，贞吉。",
-        xiaoxiang: "象曰：咸临贞吉，志行正也。",
+        xiaoxiang: {
+          original: "象曰：咸临贞吉，志行正也。",
+          translation: "「咸临贞吉」（感应而临之吉），是志向行于正道。"
+        },
         translation: "以感通之道临下，守正吉祥。",
         notes: {
           "咸临": "咸，感应；以真诚感应临下，非强制压迫",
@@ -2259,7 +2592,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "咸临，吉，无不利。",
-        xiaoxiang: "象曰：咸临吉无不利，未顺命也。",
+        xiaoxiang: {
+          original: "象曰：咸临吉无不利，未顺命也。",
+          translation: "「咸临吉无不利」，并非被动顺承命令（而是主动以阳临阴）。"
+        },
         translation: "以感通之道临下，吉祥，无不有利。",
         notes: {
           "咸临吉无不利": "九二刚中，感通临下，比初九更为吉祥",
@@ -2269,7 +2605,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "甘临，无攸利，既忧之，无咎。",
-        xiaoxiang: "象曰：甘临，位不当也。既忧之，咎不长也。",
+        xiaoxiang: {
+          original: "象曰：甘临，位不当也。既忧之，咎不长也。",
+          translation: "「甘临」（甜言以临），是位置不当。但既能忧惧反省，过失就不长久。"
+        },
         translation: "以甜言蜜语临下，无所有利，若能忧虑反省，则无过失。",
         notes: {
           "甘临": "以甜言蜜语、讨好方式临下，不诚不正",
@@ -2279,7 +2618,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "至临，无咎。",
-        xiaoxiang: "象曰：至临无咎，位当也。",
+        xiaoxiang: {
+          original: "象曰：至临无咎，位当也。",
+          translation: "「至临无咎」（亲至临之无过），是位置正当。"
+        },
         translation: "以至诚临下，无过失。",
         notes: {
           "至临": "至诚临下；六四柔顺正位，上承坤道，与初九相应",
@@ -2289,7 +2631,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "知临，大君之宜，吉。",
-        xiaoxiang: "象曰：大君之宜，行中之谓也。",
+        xiaoxiang: {
+          original: "象曰：大君之宜，行中之谓也。",
+          translation: "「大君之宜」（大君的合宜之处），就是说行中道。"
+        },
         translation: "以智慧临下，这是大君应有的风范，吉祥。",
         notes: {
           "知临": "以知人善任之道临下；六五居尊，知人用人，任贤而治",
@@ -2299,7 +2644,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "敦临，吉，无咎。",
-        xiaoxiang: "象曰：敦临之吉，志在内也。",
+        xiaoxiang: {
+          original: "象曰：敦临之吉，志在内也。",
+          translation: "「敦临之吉」（敦厚而临之吉），是志向在内。"
+        },
         translation: "以敦厚之道临下，吉祥，无过失。",
         notes: {
           "敦临": "以敦厚诚朴之道临下；上六处临卦之终，厚道临民",
@@ -2354,7 +2702,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "童观，小人无咎，君子吝。",
-        xiaoxiang: "象曰：初六童观，小人道也。",
+        xiaoxiang: {
+          original: "象曰：初六童观，小人道也。",
+          translation: "「初六童观」（孩童式的观察），是小人之道（见识浅薄）。"
+        },
         translation: "像孩童一样浅近地观看，对小人无过失，对君子则有所遗憾。",
         notes: {
           "童观": "如孩童观物，浅近而不深刻；初六处卦初，远离九五，所见有限",
@@ -2364,7 +2715,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "窥观，利女贞。",
-        xiaoxiang: "象曰：窥观女贞，亦可丑也。",
+        xiaoxiang: {
+          original: "象曰：窥观女贞，亦可丑也。",
+          translation: "「窥观女贞」（女子般偷看），也是可耻的（见识局限）。"
+        },
         translation: "从门缝中偷看，适合女子守正，但对君子则不足取。",
         notes: {
           "窥观": "从门缝中窥视，所见局限；六二内顺，所观不广",
@@ -2374,7 +2728,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "观我生，进退。",
-        xiaoxiang: "象曰：观我生进退，未失道也。",
+        xiaoxiang: {
+          original: "象曰：观我生进退，未失道也。",
+          translation: "「观我生进退」（观察自己得失而决进退），未失正道。"
+        },
         translation: "观察自己的行为，以决定进退。",
         notes: {
           "观我生": "观察自身的行为举止；六三处上下卦交界，进退之际",
@@ -2384,7 +2741,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "观国之光，利用宾于王。",
-        xiaoxiang: "象曰：观国之光，尚宾也。",
+        xiaoxiang: {
+          original: "象曰：观国之光，尚宾也。",
+          translation: "「观国之光」（观察国家光辉），是崇尚做国之上宾（贤人辅政）。"
+        },
         translation: "观察国家的文明风貌，有利于作为宾客觐见王者。",
         notes: {
           "观国之光": "观察王国的文明教化；六四近君，所观广阔，见国之盛德",
@@ -2394,7 +2754,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "观我生，君子无咎。",
-        xiaoxiang: "象曰：观我生，观民也。",
+        xiaoxiang: {
+          original: "象曰：观我生，观民也。",
+          translation: "「观我生」（观察自己），即是观察百姓（君者从民观己）。"
+        },
         translation: "观察自己推行的教化，君子则无过失。",
         notes: {
           "观我生": "九五居尊，「我生」指其推行的政教；观察自身施政效果",
@@ -2404,7 +2767,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "观其生，君子无咎。",
-        xiaoxiang: "象曰：观其生，志未平也。",
+        xiaoxiang: {
+          original: "象曰：观其生，志未平也。",
+          translation: "「观其生」（观察他人），是志向尚未平定（仍须慎察）。"
+        },
         translation: "观察其他人的行为，君子则无过失。",
         notes: {
           "观其生": "观察他人（九五）的行为；上九虽不在位，仍以道观天下",
@@ -2456,7 +2822,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "屦校灭趾，无咎。",
-        xiaoxiang: "象曰：屦校灭趾，不行也。",
+        xiaoxiang: {
+          original: "象曰：屦校灭趾，不行也。",
+          translation: "「屦校灭趾」（戴脚枷伤足），是为了使其不再恶行。"
+        },
         translation: "脚上戴着木枷掩住了脚趾，无过失。",
         notes: {
           "屦校灭趾": "屦，践踏；校，木枷；初犯小罪，施以足械，使其不能行恶",
@@ -2466,7 +2835,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "噬肤，灭鼻，无咎。",
-        xiaoxiang: "象曰：噬肤灭鼻，乘刚也。",
+        xiaoxiang: {
+          original: "象曰：噬肤灭鼻，乘刚也。",
+          translation: "「噬肤灭鼻」（咬肤至鼻），是因为乘凌阳刚（六二乘初九）。"
+        },
         translation: "咬嫩肉，连鼻子都陷没其中，无过失。",
         notes: {
           "噬肤灭鼻": "肤，柔软的皮肉；咬合容易，用力过猛连鼻子也陷入肉中",
@@ -2476,7 +2848,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "噬腊肉，遇毒，小吝，无咎。",
-        xiaoxiang: "象曰：遇毒，位不当也。",
+        xiaoxiang: {
+          original: "象曰：遇毒，位不当也。",
+          translation: "「遇毒」（咬到毒物），是位置不当（六三阴居阳位）。"
+        },
         translation: "咬干腊肉，遇到毒物，稍有困难，无大过失。",
         notes: {
           "噬腊肉遇毒": "腊肉坚韧，咬合困难，且遇到毒素；六三不中不正，执法遇阻",
@@ -2486,7 +2861,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "噬干胏，得金矢，利艰贞，吉。",
-        xiaoxiang: "象曰：利艰贞吉，未光也。",
+        xiaoxiang: {
+          original: "象曰：利艰贞吉，未光也。",
+          translation: "「利艰贞吉」（艰难守正则吉），是德性未能光大（须艰守）。"
+        },
         translation: "咬带骨的干肉，得到金属箭头，在艰难中守正则吉。",
         notes: {
           "噬干胏": "胏，带骨的肉；咬最坚硬的部分，喻断决最顽固的奸邪",
@@ -2497,7 +2875,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "噬干肉，得黄金，贞厉，无咎。",
-        xiaoxiang: "象曰：贞厉无咎，得当也。",
+        xiaoxiang: {
+          original: "象曰：贞厉无咎，得当也。",
+          translation: "「贞厉无咎」（守正虽危无过），是得到正当（六五用刑得宜）。"
+        },
         translation: "咬干肉，得到黄金，守正以防危厉，无过失。",
         notes: {
           "得黄金": "黄，中色；金，刚也；六五居中，执法以中正刚毅",
@@ -2507,7 +2888,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "何校灭耳，凶。",
-        xiaoxiang: "象曰：何校灭耳，聪不明也。",
+        xiaoxiang: {
+          original: "象曰：何校灭耳，聪不明也。",
+          translation: "「何校灭耳」（戴枷伤耳），是听闻不聪不明（屡犯不改）。"
+        },
         translation: "颈上戴着木枷掩没了耳朵，有凶险。",
         notes: {
           "何校灭耳": "何，荷担；颈上枷锁将耳朵掩没；大罪重枷，比初九足械更重",
@@ -2561,7 +2945,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "贲其趾，舍车而徒。",
-        xiaoxiang: "象曰：舍车而徒，义弗乘也。",
+        xiaoxiang: {
+          original: "象曰：舍车而徒，义弗乘也。",
+          translation: "「舍车而徒」（舍车而步行），按义理不应乘车（清廉自守）。"
+        },
         translation: "装饰其足趾，舍弃车乘而步行。",
         notes: {
           "贲其趾": "装饰足趾，以文饰自身；初九处贲卦之始，以正道为装饰",
@@ -2571,7 +2958,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "贲其须。",
-        xiaoxiang: "象曰：贲其须，与上兴也。",
+        xiaoxiang: {
+          original: "象曰：贲其须，与上兴也。",
+          translation: "「贲其须」（饰其胡须），是与在上者一同振兴。"
+        },
         translation: "装饰其须髯。",
         notes: {
           "贲其须": "须随颔动，喻六二柔顺随从九三；以附从上位为文饰",
@@ -2581,7 +2971,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "贲如，濡如，永贞吉。",
-        xiaoxiang: "象曰：永贞之吉，终莫之陵也。",
+        xiaoxiang: {
+          original: "象曰：永贞之吉，终莫之陵也。",
+          translation: "「永贞之吉」（长守正道之吉），是终无被欺凌之患。"
+        },
         translation: "文饰光润，润泽光亮，长久守正则吉。",
         notes: {
           "贲如濡如": "文饰润泽，光彩照人；九三居两柔之间，文饰最盛",
@@ -2591,7 +2984,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "贲如，皤如，白马翰如，匪寇婚媾。",
-        xiaoxiang: "象曰：六四当位，疑也。匪寇婚媾，终无尤也。",
+        xiaoxiang: {
+          original: "象曰：六四当位，疑也。匪寇婚媾，终无尤也。",
+          translation: "六四位置正当但有疑虑。「匪寇婚媾」（来者非寇而是求婚），最终无过失。"
+        },
         translation: "文饰素白，白马飞驰而来，不是寇敌而是来求婚的。",
         notes: {
           "皤如": "皤，白色；弃华饰而返朴素，以白为饰",
@@ -2601,7 +2997,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "贲于丘园，束帛戋戋，吝，终吉。",
-        xiaoxiang: "象曰：六五之吉，有喜也。",
+        xiaoxiang: {
+          original: "象曰：六五之吉，有喜也。",
+          translation: "六五的吉祥，是因为有喜事。"
+        },
         translation: "在丘园中文饰，礼物薄少，稍有遗憾，但终获吉祥。",
         notes: {
           "贲于丘园": "在郊野丘园中，以朴素之地为文饰；六五返朴归真",
@@ -2611,7 +3010,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "白贲，无咎。",
-        xiaoxiang: "象曰：白贲无咎，上得志也。",
+        xiaoxiang: {
+          original: "象曰：白贲无咎，上得志也。",
+          translation: "「白贲无咎」（白色装饰无华无过），是上位得志（绚烂归于平淡）。"
+        },
         translation: "以素白为文饰，无过失。",
         notes: {
           "白贲": "以素白无华为最高文饰；贲卦之终，绚烂归于平淡，返璞归真",
@@ -2663,7 +3065,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "剥床以足，蔑贞凶。",
-        xiaoxiang: "象曰：剥床以足，以灭下也。",
+        xiaoxiang: {
+          original: "象曰：剥床以足，以灭下也。",
+          translation: "「剥床以足」（剥蚀床的足），是从下方开始灭损。"
+        },
         translation: "从床脚开始剥蚀，蔑视正道则有凶险。",
         notes: {
           "剥床以足": "床从脚开始损坏；剥蚀从下部开始，阴气从下侵蚀阳气",
@@ -2673,7 +3078,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "剥床以辨，蔑贞凶。",
-        xiaoxiang: "象曰：剥床以辨，未有与也。",
+        xiaoxiang: {
+          original: "象曰：剥床以辨，未有与也。",
+          translation: "「剥床以辨」（剥蚀床的边架），是上下尚无援助。"
+        },
         translation: "从床的横档开始剥蚀，蔑视正道则有凶险。",
         notes: {
           "剥床以辨": "辨，床板横档；剥蚀蔓延至床的中部，阴气继续侵蚀",
@@ -2683,7 +3091,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "剥之，无咎。",
-        xiaoxiang: "象曰：剥之无咎，失上下也。",
+        xiaoxiang: {
+          original: "象曰：剥之无咎，失上下也。",
+          translation: "「剥之无咎」（剥而无咎），是因为脱离了上下群阴（独应上九阳）。"
+        },
         translation: "处于剥蚀之中，无过失。",
         notes: {
           "剥之无咎": "六三与上九有应，能与阳刚相连；在众阴中独与上阳相应",
@@ -2693,7 +3104,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "剥床以肤，凶。",
-        xiaoxiang: "象曰：剥床以肤，切近灾也。",
+        xiaoxiang: {
+          original: "象曰：剥床以肤，切近灾也。",
+          translation: "「剥床以肤」（剥及肌肤），灾祸已近。"
+        },
         translation: "剥蚀到床面（皮肤），有凶险。",
         notes: {
           "剥床以肤": "剥蚀已到床面，危及人身；阴气逼近上九阳爻，灾难迫近",
@@ -2703,7 +3117,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "贯鱼，以宫人宠，无不利。",
-        xiaoxiang: "象曰：以宫人宠，终无尤也。",
+        xiaoxiang: {
+          original: "象曰：以宫人宠，终无尤也。",
+          translation: "「以宫人宠」（如宫人受宠），最终无过失（柔顺有道）。"
+        },
         translation: "像串鱼一样统率众阴，如宫人受宠于上，无不有利。",
         notes: {
           "贯鱼以宫人宠": "六五率领众阴顺从上九，如宫人顺承君主；阴柔顺承阳刚",
@@ -2713,7 +3130,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "硕果不食，君子得舆，小人剥庐。",
-        xiaoxiang: "象曰：君子得舆，民所载也。小人剥庐，终不可用也。",
+        xiaoxiang: {
+          original: "象曰：君子得舆，民所载也。小人剥庐，终不可用也。",
+          translation: "「君子得舆」（君子得车），是百姓所拥戴。「小人剥庐」（小人剥及屋舍），最终不可用。"
+        },
         translation: "大果实不被吃掉，君子得到车舆，小人则剥毁自己的庐舍。",
         notes: {
           "硕果不食": "上九一阳独存，如大果实留种，阳气将有复生之机",
@@ -2770,7 +3190,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "不远复，无祗悔，元吉。",
-        xiaoxiang: "象曰：不远复，以修身也。",
+        xiaoxiang: {
+          original: "象曰：不远复，以修身也。",
+          translation: "「不远复」（不远便回归），是用以修身（错而能改）。"
+        },
         translation: "没走多远就回返，没有大的悔恨，至善吉祥。",
         notes: {
           "不远复": "迷途不远即知返；初九一阳复生，回归正道之始",
@@ -2780,7 +3203,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "休复，吉。",
-        xiaoxiang: "象曰：休复之吉，以下仁也。",
+        xiaoxiang: {
+          original: "象曰：休复之吉，以下仁也。",
+          translation: "「休复之吉」（美好回归之吉），是因为下从仁德（六二亲附初九）。"
+        },
         translation: "美善地回复，吉祥。",
         notes: {
           "休复": "休，美善；能向善而复，亲仁近善；六二与初九相比，下就于仁",
@@ -2790,7 +3216,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "频复，厉，无咎。",
-        xiaoxiang: "象曰：频复之厉，义无咎也。",
+        xiaoxiang: {
+          original: "象曰：频复之厉，义无咎也。",
+          translation: "「频复之厉」（频频复行有危），按义理无大过（屡错屡复，犹胜不复）。"
+        },
         translation: "屡次回复，处境危厉，但无过失。",
         notes: {
           "频复": "屡次失而复返，不能一次改正；六三不中不正，多有反复",
@@ -2800,7 +3229,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "中行独复。",
-        xiaoxiang: "象曰：中行独复，以从道也。",
+        xiaoxiang: {
+          original: "象曰：中行独复，以从道也。",
+          translation: "「中行独复」（居中行而独复），是为顺从大道。"
+        },
         translation: "在众阴中独自回复正道。",
         notes: {
           "中行独复": "身处众阴之中，独自返归正道；六四与初九有应，独能从道",
@@ -2810,7 +3242,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "敦复，无悔。",
-        xiaoxiang: "象曰：敦复无悔，中以自考也。",
+        xiaoxiang: {
+          original: "象曰：敦复无悔，中以自考也。",
+          translation: "「敦复无悔」（敦厚回归无悔），是以中道反躬自省。"
+        },
         translation: "敦厚地回复，无悔恨。",
         notes: {
           "敦复": "以敦厚之德回复正道；六五居中，厚道复正",
@@ -2820,7 +3255,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "迷复，凶，有灾眚。用行师，终有大败，以其国君凶，至于十年不克征。",
-        xiaoxiang: "象曰：迷复之凶，反君道也。",
+        xiaoxiang: {
+          original: "象曰：迷复之凶，反君道也。",
+          translation: "「迷复之凶」（迷失而归之凶），是违反君道。"
+        },
         translation: "迷途而不能回复，有凶险，有灾祸。若用兵出师，终将大败，国君也遭凶险，十年内无法再出征。",
         notes: {
           "迷复": "迷失正道而不知返；上六处复卦之终，远离初九，迷而不复",
@@ -2874,7 +3312,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "无妄往，吉。",
-        xiaoxiang: "象曰：无妄之往，得志也。",
+        xiaoxiang: {
+          original: "象曰：无妄之往，得志也。",
+          translation: "「无妄之往」（不妄行而往），是志向得偿。"
+        },
         translation: "以无妄之道前进，吉祥。",
         notes: {
           "无妄往": "以诚实无妄之道行事前进；初九阳刚，无妄之始，纯正而动",
@@ -2884,7 +3325,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "不耕获，不菑畲，则利有攸往。",
-        xiaoxiang: "象曰：不耕获，未富也。",
+        xiaoxiang: {
+          original: "象曰：不耕获，未富也。",
+          translation: "「不耕获」（不耕而想收获），是不为求富（顺其自然）。"
+        },
         translation: "不先耕作就想收获，不先开垦就想熟田，这样则有利于前进。",
         notes: {
           "不耕获不菑畲": "不刻意追求结果，自然耕作而不图收获；喻无妄之道，不预期功利",
@@ -2894,7 +3338,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "无妄之灾，或系之牛，行人之得，邑人之灾。",
-        xiaoxiang: "象曰：行人得牛，邑人灾也。",
+        xiaoxiang: {
+          original: "象曰：行人得牛，邑人灾也。",
+          translation: "「行人得牛」（路人得牛），是邑人之灾（无妄之灾）。"
+        },
         translation: "无端横来的灾祸，如牛被人拴系，路人得到了牛，邑人却遭受了灾祸。",
         notes: {
           "无妄之灾": "非因自身过失，而是横来之灾；六三不中不正，易遭无妄之灾",
@@ -2904,7 +3351,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "可贞，无咎。",
-        xiaoxiang: "象曰：可贞无咎，固有之也。",
+        xiaoxiang: {
+          original: "象曰：可贞无咎，固有之也。",
+          translation: "「可贞无咎」（守正可无过），是本来就该如此（守而非求）。"
+        },
         translation: "可以守正，无过失。",
         notes: {
           "可贞无咎": "九四阳刚居正，能守持正道，故无咎",
@@ -2914,7 +3364,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "无妄之疾，勿药有喜。",
-        xiaoxiang: "象曰：无妄之药，不可试也。",
+        xiaoxiang: {
+          original: "象曰：无妄之药，不可试也。",
+          translation: "「无妄之药」（无妄之时的药），不可妄试（病无妄不需药）。"
+        },
         translation: "无端横来的疾病，不用药自会痊愈，有喜事。",
         notes: {
           "无妄之疾": "非因自身过失引起的疾病；九五居中正，本无内疾",
@@ -2924,7 +3377,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "无妄行，有眚，无攸利。",
-        xiaoxiang: "象曰：无妄之行，穷之灾也。",
+        xiaoxiang: {
+          original: "象曰：无妄之行，穷之灾也。",
+          translation: "「无妄之行」（穷尽时再行），是穷极之灾。"
+        },
         translation: "以无妄之道前行，却有灾祸，无所有利。",
         notes: {
           "无妄行有眚": "上九处无妄之极，虽无妄但时已穷极，强行则有灾",
@@ -2978,7 +3434,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "有厉，利已。",
-        xiaoxiang: "象曰：有厉利已，不犯灾也。",
+        xiaoxiang: {
+          original: "象曰：有厉利已，不犯灾也。",
+          translation: "「有厉利已」（有危利于停止），是为了不冒灾祸。"
+        },
         translation: "有危厉，有利于停止（不前进）。",
         notes: {
           "有厉利已": "初九当受上艮阻止，强进则危，止则利；大畜之时，蓄而待时",
@@ -2988,7 +3447,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "舆说輹。",
-        xiaoxiang: "象曰：舆说輹，中无尤也。",
+        xiaoxiang: {
+          original: "象曰：舆说輹，中无尤也。",
+          translation: "「舆说輹」（车轴脱离），是中位（九二）不出过失。"
+        },
         translation: "车子脱落了车轴缚板。",
         notes: {
           "舆说輹": "輹，车轴与车厢之间的缚板；车轴脱缚，无法前行",
@@ -2998,7 +3460,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "良马逐，利艰贞，曰闲舆卫，利有攸往。",
-        xiaoxiang: "象曰：利有攸往，上合志也。",
+        xiaoxiang: {
+          original: "象曰：利有攸往，上合志也。",
+          translation: "「利有攸往」，是与上者合志（九三阳上行得应）。"
+        },
         translation: "良马奔驰，有利于艰难守正，每日练习驾车和防卫，有利于前进。",
         notes: {
           "良马逐": "九三与上九相应，阻力已去，如良马奔驰",
@@ -3008,7 +3473,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "童牛之牿，元吉。",
-        xiaoxiang: "象曰：六四元吉，有喜也。",
+        xiaoxiang: {
+          original: "象曰：六四元吉，有喜也。",
+          translation: "六四元吉，是有喜事（畜小害成功）。"
+        },
         translation: "给小牛安上木横，防其长大后触人，至善吉祥。",
         notes: {
           "童牛之牿": "牿，牛角上的横木；童牛初生即加横木，防患于未然",
@@ -3018,7 +3486,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "豮豕之牙，吉。",
-        xiaoxiang: "象曰：六五之吉，有庆也。",
+        xiaoxiang: {
+          original: "象曰：六五之吉，有庆也。",
+          translation: "六五的吉祥，是有大庆（畜大害成功）。"
+        },
         translation: "阉割了公猪的牙（去其凶性），吉祥。",
         notes: {
           "豮豕之牙": "豮，阉猪；阉割后公猪性情温顺，牙齿不伤人",
@@ -3028,7 +3499,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "何天之衢，亨。",
-        xiaoxiang: "象曰：何天之衢，道大行也。",
+        xiaoxiang: {
+          original: "象曰：何天之衢，道大行也。",
+          translation: "「何天之衢」（多么宽广的天道），是道路大行（畜极而通）。"
+        },
         translation: "身处通达天际的大道，亨通。",
         notes: {
           "何天之衢": "何，荷担；天衢，天际通衢大道；大畜之极，蓄极而通，大道畅行",
@@ -3080,7 +3554,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "舍尔灵龟，观我朵颐，凶。",
-        xiaoxiang: "象曰：观我朵颐，亦不足贵也。",
+        xiaoxiang: {
+          original: "象曰：观我朵颐，亦不足贵也。",
+          translation: "「观我朵颐」（看我贪婪嚼食），也不值得尊贵。"
+        },
         translation: "舍弃你那神灵之龟（自养之能），却羡慕我咀嚼食物，有凶险。",
         notes: {
           "灵龟": "龟不食而能自养，喻初九本有自养之能；初九阳刚，本可自立",
@@ -3090,7 +3567,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "颠颐，拂经，于丘颐，征凶。",
-        xiaoxiang: "象曰：六二征凶，行失类也。",
+        xiaoxiang: {
+          original: "象曰：六二征凶，行失类也。",
+          translation: "六二前行有凶，是行为失去同类（六二应六五，但同为阴）。"
+        },
         translation: "颠倒颐养之道，违背常规，到山丘上求食，前行则有凶险。",
         notes: {
           "颠颐": "颠倒颐养；六二本应下求初九，却上求上九，或弃近求远",
@@ -3100,7 +3580,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "拂颐，贞凶，十年勿用，无攸利。",
-        xiaoxiang: "象曰：十年勿用，道大悖也。",
+        xiaoxiang: {
+          original: "象曰：十年勿用，道大悖也。",
+          translation: "「十年勿用」（十年不被任用），是道大违逆。"
+        },
         translation: "违背颐养正道，守正也有凶，十年内不可有所作为，无所有利。",
         notes: {
           "拂颐贞凶": "六三不中不正，所求颐养违背正道，即使守正也凶",
@@ -3110,7 +3593,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "颠颐，吉。虎视眈眈，其欲逐逐，无咎。",
-        xiaoxiang: "象曰：颠颐之吉，上施光也。",
+        xiaoxiang: {
+          original: "象曰：颠颐之吉，上施光也。",
+          translation: "「颠颐之吉」（颠倒求养之吉），是上方施德光大。"
+        },
         translation: "颠倒颐养（向下求贤），吉祥。虎视眈眈，欲望专注，无过失。",
         notes: {
           "颠颐吉": "六四居上位，下求初九贤才以养天下，虽颠倒却是正确的",
@@ -3120,7 +3606,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "拂经，居贞吉，不可涉大川。",
-        xiaoxiang: "象曰：居贞之吉，顺以从上也。",
+        xiaoxiang: {
+          original: "象曰：居贞之吉，顺以从上也。",
+          translation: "「居贞之吉」（居守正道之吉），是顺从在上者（六五顺从上九）。"
+        },
         translation: "违背常规（以柔居尊），安居守正则吉，不可涉越大河。",
         notes: {
           "拂经居贞吉": "六五以柔居尊，虽非常规，但守正则吉；顺从上九（阳刚），依赖贤者",
@@ -3130,7 +3619,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "由颐，厉吉，利涉大川。",
-        xiaoxiang: "象曰：由颐厉吉，大有庆也。",
+        xiaoxiang: {
+          original: "象曰：由颐厉吉，大有庆也。",
+          translation: "「由颐厉吉」（由养之有危而吉），是大有庆事。"
+        },
         translation: "众人的颐养由此而来，虽危厉但吉，有利于涉越大河。",
         notes: {
           "由颐": "颐养之道由此而出；上九为全卦主爻，养道之源",
@@ -3182,7 +3674,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "藉用白茅，无咎。",
-        xiaoxiang: "象曰：藉用白茅，柔在下也。",
+        xiaoxiang: {
+          original: "象曰：藉用白茅，柔在下也。",
+          translation: "「藉用白茅」（衬以白茅），是柔顺居下（戒慎）。"
+        },
         translation: "用白茅草垫在下面，无过失。",
         notes: {
           "藉用白茅": "以白茅为垫，谨慎至极；初六处大过之始，以柔慎处非常之时",
@@ -3192,7 +3687,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "枯杨生稊，老夫得其女妻，无不利。",
-        xiaoxiang: "象曰：老夫女妻，过以相与也。",
+        xiaoxiang: {
+          original: "象曰：老夫女妻，过以相与也。",
+          translation: "「老夫女妻」（老夫娶少妻），是过分相结合（虽不当却能成）。"
+        },
         translation: "枯老的杨树又生出嫩芽，老翁娶年轻女子为妻，无不有利。",
         notes: {
           "枯杨生稊": "稊，嫩芽；枯老者得新生；九二阳刚得初六柔弱，重获生机",
@@ -3202,7 +3700,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "栋桡，凶。",
-        xiaoxiang: "象曰：栋桡之凶，不可以有辅也。",
+        xiaoxiang: {
+          original: "象曰：栋桡之凶，不可以有辅也。",
+          translation: "「栋桡之凶」（栋梁弯折之凶），不能有所辅助（独刚无应）。"
+        },
         translation: "屋脊弯曲，有凶险。",
         notes: {
           "栋桡凶": "九三过刚不中，强而无助，栋梁弯折，凶",
@@ -3212,7 +3713,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "栋隆，吉。有它吝。",
-        xiaoxiang: "象曰：栋隆之吉，不桡乎下也。",
+        xiaoxiang: {
+          original: "象曰：栋隆之吉，不桡乎下也。",
+          translation: "「栋隆之吉」（栋梁隆起之吉），是不被下方压弯。"
+        },
         translation: "屋脊隆起坚固，吉祥。若另有他求则有遗憾。",
         notes: {
           "栋隆": "隆，高起坚固；九四阳刚居柔位，与初六相得，栋梁坚固",
@@ -3222,7 +3726,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "枯杨生华，老妇得其士夫，无咎无誉。",
-        xiaoxiang: "象曰：枯杨生华，何可久也。老妇士夫，亦可丑也。",
+        xiaoxiang: {
+          original: "象曰：枯杨生华，何可久也。老妇士夫，亦可丑也。",
+          translation: "「枯杨生华」（枯杨开花），怎能长久？「老妇士夫」（老妇配少年），也可耻。"
+        },
         translation: "枯老的杨树开出花来，老妇嫁给年轻男子，无过失但也无荣誉。",
         notes: {
           "枯杨生华": "华而不实，回光返照；九五阳刚居尊，得上六柔弱，能开花但不能结果",
@@ -3232,7 +3739,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "过涉灭顶，凶，无咎。",
-        xiaoxiang: "象曰：过涉之凶，不可咎也。",
+        xiaoxiang: {
+          original: "象曰：过涉之凶，不可咎也。",
+          translation: "「过涉之凶」（涉水过深之凶），不可责怪（义所当为）。"
+        },
         translation: "过深涉水，水漫过头顶，有凶险，但无可指责。",
         notes: {
           "过涉灭顶凶": "大过之极，知不可为而为之，如过水灭顶，凶",
@@ -3287,7 +3797,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "习坎，入于坎窞，凶。",
-        xiaoxiang: "象曰：习坎入坎，失道凶也。",
+        xiaoxiang: {
+          original: "象曰：习坎入坎，失道凶也。",
+          translation: "「习坎入坎」（重险又入险），是失道之凶。"
+        },
         translation: "重重险难，陷入深坑之中，有凶险。",
         notes: {
           "坎窞": "坎中深穴，险中之险；初六处险卦之始，以阴柔入重险",
@@ -3297,7 +3810,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "坎有险，求小得。",
-        xiaoxiang: "象曰：求小得，未出中也。",
+        xiaoxiang: {
+          original: "象曰：求小得，未出中也。",
+          translation: "「求小得」（求小有所得），未能出险（仍居中位）。"
+        },
         translation: "险中有危险，但稍有所得。",
         notes: {
           "求小得": "九二阳刚居中，在险难中能有小的收获",
@@ -3307,7 +3823,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "来之坎坎，险且枕，入于坎窞，勿用。",
-        xiaoxiang: "象曰：来之坎坎，终无功也。",
+        xiaoxiang: {
+          original: "象曰：来之坎坎，终无功也。",
+          translation: "「来之坎坎」（来去皆险），最终无功。"
+        },
         translation: "前来后去皆是险难，险上加险，陷入深坑，不可有所作为。",
         notes: {
           "来之坎坎": "前进后退皆遇险；六三处两坎交界，进退皆险",
@@ -3317,7 +3836,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "樽酒簋贰，用缶，纳约自牖，终无咎。",
-        xiaoxiang: "象曰：樽酒簋贰，刚柔际也。",
+        xiaoxiang: {
+          original: "象曰：樽酒簋贰，刚柔际也。",
+          translation: "「樽酒簋贰」（一樽酒两簋食），是刚柔交际（六四与九五）。"
+        },
         translation: "一樽酒两簋食，用陶缶盛放，从窗户传进去，最终无过失。",
         notes: {
           "樽酒簋贰用缶": "礼物简单朴素；险难之时，以诚信简朴待上，不必奢华",
@@ -3327,7 +3849,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "坎不盈，祗既平，无咎。",
-        xiaoxiang: "象曰：坎不盈，中未大也。",
+        xiaoxiang: {
+          original: "象曰：坎不盈，中未大也。",
+          translation: "「坎不盈」（险陷未填满），是中位还未广大（九五尚有险）。"
+        },
         translation: "水坑尚未填满，但已经平定，无过失。",
         notes: {
           "坎不盈祗既平": "险难尚未完全消除，但已趋于平定；九五居中正，险中求平",
@@ -3337,7 +3862,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "系用徽纆，寘于丛棘，三岁不得，凶。",
-        xiaoxiang: "象曰：上六失道，凶三岁也。",
+        xiaoxiang: {
+          original: "象曰：上六失道，凶三岁也。",
+          translation: "上六失道，凶持续三年。"
+        },
         translation: "用绳索捆绑，关入荆棘丛中，三年不能脱身，有凶险。",
         notes: {
           "徽纆": "绳索；上六处险极，陷于最深的困境，被绳索缚于荆棘丛中",
@@ -3391,7 +3919,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "履错然，敬之，无咎。",
-        xiaoxiang: "象曰：履错之敬，以辟咎也。",
+        xiaoxiang: {
+          original: "象曰：履错之敬，以辟咎也。",
+          translation: "「履错之敬」（行履参差而敬慎），是为避免过失。"
+        },
         translation: "步伐交错纷乱，保持敬慎，无过失。",
         notes: {
           "履错然": "初九处离卦之始，步伐错乱，行事尚未稳定",
@@ -3401,7 +3932,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "黄离，元吉。",
-        xiaoxiang: "象曰：黄离元吉，得中道也。",
+        xiaoxiang: {
+          original: "象曰：黄离元吉，得中道也。",
+          translation: "「黄离元吉」（黄色之丽元吉），是得中道。"
+        },
         translation: "黄色的光明附丽，至善吉祥。",
         notes: {
           "黄离": "黄，中色；六二以柔中正之德附丽，是最佳的附丽之道",
@@ -3411,7 +3945,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "日昃之离，不鼓缶而歌，则大耋之嗟，凶。",
-        xiaoxiang: "象曰：日昃之离，何可久也。",
+        xiaoxiang: {
+          original: "象曰：日昃之离，何可久也。",
+          translation: "「日昃之离」（日已偏西的光明），怎能长久？"
+        },
         translation: "夕阳西下时的光明，若不鼓盆而歌（随遇而安），则老迈时嗟叹不已，有凶险。",
         notes: {
           "日昃之离": "昃，太阳偏西；九三处下卦之终，如日暮之光，盛极将衰",
@@ -3421,7 +3958,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "突如其来如，焚如，死如，弃如。",
-        xiaoxiang: "象曰：突如其来如，无所容也。",
+        xiaoxiang: {
+          original: "象曰：突如其来如，无所容也。",
+          translation: "「突如其来如」（突然到来），是无处容纳（来势汹汹）。"
+        },
         translation: "突然而来，焚烧一切，死亡，被遗弃。",
         notes: {
           "突如其来如": "九四以阳居阴，过于刚猛，如突然之火，无以为继",
@@ -3431,7 +3971,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "出涕沱若，戚嗟若，吉。",
-        xiaoxiang: "象曰：六五之吉，离王公也。",
+        xiaoxiang: {
+          original: "象曰：六五之吉，离王公也。",
+          translation: "六五的吉祥，是附丽于王公之位。"
+        },
         translation: "泪流满面，忧戚嗟叹，但最终吉祥。",
         notes: {
           "出涕沱若戚嗟若": "六五柔居尊位，忧患深重，涕泪交流；知忧则能谨慎",
@@ -3441,7 +3984,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "王用出征，有嘉折首，获匪其丑，无咎。",
-        xiaoxiang: "象曰：王用出征，以正邦也。",
+        xiaoxiang: {
+          original: "象曰：王用出征，以正邦也。",
+          translation: "「王用出征」，是为端正邦国。"
+        },
         translation: "君王出兵征伐，嘉美地折断首领，所俘获的不是同类的普通人，无过失。",
         notes: {
           "有嘉折首": "嘉，美善；斩断首恶，不株连无辜",
@@ -3493,7 +4039,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "咸其拇。",
-        xiaoxiang: "象曰：咸其拇，志在外也。",
+        xiaoxiang: {
+          original: "象曰：咸其拇，志在外也。",
+          translation: "「咸其拇」（感应于足拇），是志在向外。"
+        },
         translation: "感应在大拇趾。",
         notes: {
           "咸其拇": "感应刚开始，从最低处（拇趾）开始；初六处卦初，感应微弱",
@@ -3503,7 +4052,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "咸其腓，凶，居吉。",
-        xiaoxiang: "象曰：虽凶居吉，顺不害也。",
+        xiaoxiang: {
+          original: "象曰：虽凶居吉，顺不害也。",
+          translation: "虽有凶但居其位则吉，顺之则不受害。"
+        },
         translation: "感应在小腿肚，前进有凶险，安居则吉。",
         notes: {
           "咸其腓": "腓，小腿肚；感应上移至腓，腓随股动，被动感应",
@@ -3513,7 +4065,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "咸其股，执其随，往吝。",
-        xiaoxiang: "象曰：咸其股，亦不处也。志在随人，所执下也。",
+        xiaoxiang: {
+          original: "象曰：咸其股，亦不处也。志在随人，所执下也。",
+          translation: "「咸其股」（感应在股），也不能久处。志向只是随从他人，所守太低下。"
+        },
         translation: "感应在大腿，随人而动，前进有遗憾。",
         notes: {
           "咸其股执其随": "股随腰动，无自主之感；九三随上兑之欲动，志在随人",
@@ -3523,7 +4078,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "贞吉悔亡，憧憧往来，朋从尔思。",
-        xiaoxiang: "象曰：贞吉悔亡，未感害也。憧憧往来，未光大也。",
+        xiaoxiang: {
+          original: "象曰：贞吉悔亡，未感害也。憧憧往来，未光大也。",
+          translation: "「贞吉悔亡」，是因尚未受到伤害。「憧憧往来」（思绪纷乱往来），是德未光大。"
+        },
         translation: "守正吉祥悔恨消亡，思虑往来不定，朋友顺从你的思想。",
         notes: {
           "贞吉悔亡": "九四以感人心为职，守正则吉",
@@ -3533,7 +4091,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "咸其脢，无悔。",
-        xiaoxiang: "象曰：咸其脢，志末也。",
+        xiaoxiang: {
+          original: "象曰：咸其脢，志末也。",
+          translation: "「咸其脢」（感应在背），心志已到末梢。"
+        },
         translation: "感应在背脊，无悔恨。",
         notes: {
           "咸其脢": "脢，背脊；背脊感应，不动于情欲；九五居尊，感而不乱",
@@ -3543,7 +4104,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "咸其辅颊舌。",
-        xiaoxiang: "象曰：咸其辅颊舌，滕口说也。",
+        xiaoxiang: {
+          original: "象曰：咸其辅颊舌，滕口说也。",
+          translation: "「咸其辅颊舌」（感应到牙颊舌），不过是空口说说。"
+        },
         translation: "感应在两颊、嘴巴和舌头。",
         notes: {
           "咸其辅颊舌": "感应到了口舌；上六处感之极，只剩口舌之感，流于言辞",
@@ -3597,7 +4161,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "浚恒，贞凶，无攸利。",
-        xiaoxiang: "象曰：浚恒之凶，始求深也。",
+        xiaoxiang: {
+          original: "象曰：浚恒之凶，始求深也。",
+          translation: "「浚恒之凶」（深求恒久之凶），是开始就求得太深（揠苗助长）。"
+        },
         translation: "一开始就深求长久，守正也有凶险，无所有利。",
         notes: {
           "浚恒": "浚，深掘；初始即求过深的长久，急于求成",
@@ -3607,7 +4174,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "悔亡。",
-        xiaoxiang: "象曰：九二悔亡，能久中也。",
+        xiaoxiang: {
+          original: "象曰：九二悔亡，能久中也。",
+          translation: "「九二悔亡」，是能长久居中。"
+        },
         translation: "悔恨消亡。",
         notes: {
           "悔亡": "九二阳居阴位本有悔，但以刚中之德守恒，故悔亡",
@@ -3617,7 +4187,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "不恒其德，或承之羞，贞吝。",
-        xiaoxiang: "象曰：不恒其德，无所容也。",
+        xiaoxiang: {
+          original: "象曰：不恒其德，无所容也。",
+          translation: "「不恒其德」（德行无恒），便无处容身。"
+        },
         translation: "德行不能持久，或将招来羞辱，守正也有遗憾。",
         notes: {
           "不恒其德": "九三刚位过刚，德行时进时退，不能持久",
@@ -3627,7 +4200,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "田无禽。",
-        xiaoxiang: "象曰：久非其位，安得禽也。",
+        xiaoxiang: {
+          original: "象曰：久非其位，安得禽也。",
+          translation: "久居非己之位，怎能有所获？"
+        },
         translation: "田猎没有收获。",
         notes: {
           "田无禽": "九四以阳居阴，位置不当，如在不适合的地方猎而无获",
@@ -3637,7 +4213,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "恒其德，贞，妇人吉，夫子凶。",
-        xiaoxiang: "象曰：妇人贞吉，从一而终也。夫子制义，从妇凶也。",
+        xiaoxiang: {
+          original: "象曰：妇人贞吉，从一而终也。夫子制义，从妇凶也。",
+          translation: "「妇人贞吉」，是从一而终。男子立义，若从妇则凶。"
+        },
         translation: "守持德行长久，守正，对妇人吉，对男子凶。",
         notes: {
           "妇人吉夫子凶": "六五以柔从刚，恒守一道，妇道也；男子当从义制宜，不可一味顺从",
@@ -3647,7 +4226,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "振恒，凶。",
-        xiaoxiang: "象曰：振恒在上，大无功也。",
+        xiaoxiang: {
+          original: "象曰：振恒在上，大无功也。",
+          translation: "「振恒在上」（在上躁动求恒），是大无功效。"
+        },
         translation: "恒道振动不安，有凶险。",
         notes: {
           "振恒凶": "上六处恒之极，失去持久之道，动荡不安",
@@ -3698,7 +4280,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "遁尾，厉，勿用有攸往。",
-        xiaoxiang: "象曰：遁尾之厉，不往何灾也。",
+        xiaoxiang: {
+          original: "象曰：遁尾之厉，不往何灾也。",
+          translation: "「遁尾之厉」（落在最后退避之危），不前往，又有什么灾？"
+        },
         translation: "退隐落后于尾，处境危厉，不可前进有所作为。",
         notes: {
           "遁尾": "遁退落在最后，处于危险之尾；初六处遁卦之始，退而落后",
@@ -3708,7 +4293,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "执之用黄牛之革，莫之胜说。",
-        xiaoxiang: "象曰：执用黄牛，固志也。",
+        xiaoxiang: {
+          original: "象曰：执用黄牛，固志也。",
+          translation: "「执用黄牛」（用黄牛皮捆系），是为坚固心志。"
+        },
         translation: "用黄牛皮革紧紧捆住，无法解脱。",
         notes: {
           "执之用黄牛之革": "以黄牛皮（坚韧）束缚；六二与九五正应，被阳刚牢固执持",
@@ -3718,7 +4306,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "系遁，有疾厉，畜臣妾吉。",
-        xiaoxiang: "象曰：系遁之厉，有疾惫也。畜臣妾吉，不可大事也。",
+        xiaoxiang: {
+          original: "象曰：系遁之厉，有疾惫也。畜臣妾吉，不可大事也。",
+          translation: "「系遁之厉」（牵连而退之危），是有疾劳。「畜臣妾吉」（养臣妾吉），但不可成大事。"
+        },
         translation: "被牵系而不能退遁，有疾患危厉，但蓄养臣妾则吉。",
         notes: {
           "系遁有疾厉": "九三被下方两阴牵系，无法顺利退遁，处境危险",
@@ -3728,7 +4319,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "好遁，君子吉，小人否。",
-        xiaoxiang: "象曰：君子好遁，小人否也。",
+        xiaoxiang: {
+          original: "象曰：君子好遁，小人否也。",
+          translation: "君子能恰当退避，小人则不能。"
+        },
         translation: "适时退遁，君子吉祥，小人则不然。",
         notes: {
           "好遁": "适时而退，从容隐遁；九四阳刚，能知时善遁",
@@ -3738,7 +4332,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "嘉遁，贞吉。",
-        xiaoxiang: "象曰：嘉遁贞吉，以正志也。",
+        xiaoxiang: {
+          original: "象曰：嘉遁贞吉，以正志也。",
+          translation: "「嘉遁贞吉」（美善而退之吉），是端正心志。"
+        },
         translation: "美善地退遁，守正吉祥。",
         notes: {
           "嘉遁": "嘉美从容的退隐；九五居中正之位，退遁从容有节，最为美善",
@@ -3748,7 +4345,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "肥遁，无不利。",
-        xiaoxiang: "象曰：肥遁无不利，无所疑也。",
+        xiaoxiang: {
+          original: "象曰：肥遁无不利，无所疑也。",
+          translation: "「肥遁无不利」（从容而退无不利），是没有疑虑。"
+        },
         translation: "宽裕从容地退遁，无不有利。",
         notes: {
           "肥遁": "肥，宽裕从容；上九处遁之极，超然物外，无所牵系，退遁最为彻底",
@@ -3797,7 +4397,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "壮于趾，征凶，有孚。",
-        xiaoxiang: "象曰：壮于趾，其孚穷也。",
+        xiaoxiang: {
+          original: "象曰：壮于趾，其孚穷也。",
+          translation: "「壮于趾」（强壮在足），其诚信已到穷尽（妄动）。"
+        },
         translation: "壮在脚趾，前进有凶险，但有诚信。",
         notes: {
           "壮于趾": "壮在最下，如足趾之壮；初九处大壮之始，锐气初发",
@@ -3807,7 +4410,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "贞吉。",
-        xiaoxiang: "象曰：九二贞吉，以中也。",
+        xiaoxiang: {
+          original: "象曰：九二贞吉，以中也。",
+          translation: "九二贞吉，是因为居中。"
+        },
         translation: "守正吉祥。",
         notes: {
           "九二贞吉以中": "九二阳刚居中，以中道处大壮之时，不妄用其壮，故贞吉"
@@ -3816,7 +4422,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "小人用壮，君子用罔，贞厉。羝羊触藩，羸其角。",
-        xiaoxiang: "象曰：小人用壮，君子罔也。",
+        xiaoxiang: {
+          original: "象曰：小人用壮，君子罔也。",
+          translation: "小人用强壮，君子则不会（以德不以力）。"
+        },
         translation: "小人依仗刚壮行事，君子则以为无此必要，守正有危厉。公羊以角触篱笆，角被缠绕。",
         notes: {
           "小人用壮君子用罔": "小人凭壮冒进；君子虽有壮，以为不须如此用，宁可不用",
@@ -3826,7 +4435,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "贞吉，悔亡，藩决不羸，壮于大舆之輹。",
-        xiaoxiang: "象曰：藩决不羸，尚往也。",
+        xiaoxiang: {
+          original: "象曰：藩决不羸，尚往也。",
+          translation: "「藩决不羸」（藩篱破而不疲），是尚可前往。"
+        },
         translation: "守正吉祥，悔恨消亡，篱笆破开不再缠绕，在大车车轴处壮健。",
         notes: {
           "藩决不羸": "障碍已除，不再受缠；九四阳刚，处大壮之盛，以正行壮",
@@ -3836,7 +4448,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "丧羊于易，无悔。",
-        xiaoxiang: "象曰：丧羊于易，位不当也。",
+        xiaoxiang: {
+          original: "象曰：丧羊于易，位不当也。",
+          translation: "「丧羊于易」（在田畔失羊），是位置不当。"
+        },
         translation: "在边境失去了羊，无悔恨。",
         notes: {
           "丧羊于易": "易，边界；六五以柔居尊，失去壮性（羊），柔道处之",
@@ -3846,7 +4461,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "羝羊触藩，不能退，不能遂，无攸利，艰则吉。",
-        xiaoxiang: "象曰：不能退，不能遂，不详也。艰则吉，咎不长也。",
+        xiaoxiang: {
+          original: "象曰：不能退，不能遂，不详也。艰则吉，咎不长也。",
+          translation: "「不能退，不能遂」（既不能退也不能进），是不审慎。但艰守则吉，过失不会长久。"
+        },
         translation: "公羊撞篱笆，既不能退，也不能前进，无所有利，处事艰难则吉。",
         notes: {
           "不能退不能遂": "上六处大壮之极，陷入进退两难的困境",
@@ -3898,7 +4516,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "晋如，摧如，贞吉。罔孚，裕无咎。",
-        xiaoxiang: "象曰：晋如摧如，独行正也。裕无咎，未受命也。",
+        xiaoxiang: {
+          original: "象曰：晋如摧如，独行正也。裕无咎，未受命也。",
+          translation: "「晋如摧如」（前进受挫），是独自行正道。「裕无咎」（宽裕无过），是因尚未受任。"
+        },
         translation: "前进却又受阻，守正吉祥。不被信任，但宽裕自处则无过失。",
         notes: {
           "晋如摧如": "进而受阻，独守正道；初六处晋卦之始，前进受挫",
@@ -3908,7 +4529,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "晋如，愁如，贞吉。受兹介福，于其王母。",
-        xiaoxiang: "象曰：受兹介福，以中正也。",
+        xiaoxiang: {
+          original: "象曰：受兹介福，以中正也。",
+          translation: "「受兹介福」（受此大福），是以中正之德。"
+        },
         translation: "前进却忧愁，守正吉祥。从王母那里获得大福。",
         notes: {
           "晋如愁如": "前进但忧愁受阻；六二居中正，虽忧愁守正则吉",
@@ -3918,7 +4542,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "众允，悔亡。",
-        xiaoxiang: "象曰：众允之志，上行也。",
+        xiaoxiang: {
+          original: "象曰：众允之志，上行也。",
+          translation: "「众允之志」（众人信从之志），是上行之势。"
+        },
         translation: "众人信任，悔恨消亡。",
         notes: {
           "众允": "众人信任认可；六三以上行为志，得众阴之助，众望所归",
@@ -3928,7 +4555,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "晋如鼫鼠，贞厉。",
-        xiaoxiang: "象曰：鼫鼠贞厉，位不当也。",
+        xiaoxiang: {
+          original: "象曰：鼫鼠贞厉，位不当也。",
+          translation: "「鼫鼠贞厉」（鼫鼠般贪婪有危），是位置不当。"
+        },
         translation: "前进像硕鼠那样（贪而无能），守正有危厉。",
         notes: {
           "晋如鼫鼠": "鼫鼠贪鄙；九四以阳居阴，位不当，进而贪鄙，如鼫鼠之进",
@@ -3938,7 +4568,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "悔亡，失得勿恤，往吉无不利。",
-        xiaoxiang: "象曰：失得勿恤，往有庆也。",
+        xiaoxiang: {
+          original: "象曰：失得勿恤，往有庆也。",
+          translation: "「失得勿恤」（不忧得失），前往便有庆事。"
+        },
         translation: "悔恨消亡，不必忧虑得失，前进吉祥，无不有利。",
         notes: {
           "失得勿恤": "六五柔中居尊，无私而进，不以个人得失为念",
@@ -3948,7 +4581,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "晋其角，维用伐邑，厉吉无咎，贞吝。",
-        xiaoxiang: "象曰：维用伐邑，道未光也。",
+        xiaoxiang: {
+          original: "象曰：维用伐邑，道未光也。",
+          translation: "「维用伐邑」（只用以征伐自邑），是道未光大（须自治）。"
+        },
         translation: "前进到极致（如角之高），只适合征伐自己的城邑，危厉但吉，无大过失，但守正有所遗憾。",
         notes: {
           "晋其角": "晋进到最高处（角）；上九处晋之极，过于进取",
@@ -4001,7 +4637,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "明夷于飞，垂其翼。君子于行，三日不食。有攸往，主人有言。",
-        xiaoxiang: "象曰：君子于行，义不食也。",
+        xiaoxiang: {
+          original: "象曰：君子于行，义不食也。",
+          translation: "「君子于行」（君子在行道之时），按义理不接受食禄（明夷不食）。"
+        },
         translation: "明夷飞翔时低垂翅膀。君子在逃离途中，三日不食。前往之处，主人有怨言。",
         notes: {
           "明夷于飞垂其翼": "光明受伤，如鸟飞时翅膀低垂；初九阳刚，在暗昧之世受伤而遁",
@@ -4011,7 +4650,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "明夷，夷于左股，用拯马壮，吉。",
-        xiaoxiang: "象曰：六二之吉，顺以则也。",
+        xiaoxiang: {
+          original: "象曰：六二之吉，顺以则也。",
+          translation: "六二的吉祥，是顺从而合法则。"
+        },
         translation: "光明受伤，左腿受伤，用壮健的马来拯救，吉祥。",
         notes: {
           "夷于左股": "左腿受伤，行动受阻但未致命；六二受暗君伤害，未至根本",
@@ -4021,7 +4663,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "明夷于南狩，得其大首，不可疾贞。",
-        xiaoxiang: "象曰：南狩之志，乃大得也。",
+        xiaoxiang: {
+          original: "象曰：南狩之志，乃大得也。",
+          translation: "「南狩之志」（南方狩猎之志），是大有所得（得首恶）。"
+        },
         translation: "向南方出猎，捕获了大首领，不可急于守正。",
         notes: {
           "明夷于南狩得其大首": "南方光明之处，猎获暗昧之首；九三以阳刚出击，剪除祸首",
@@ -4031,7 +4676,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "入于左腹，获明夷之心，于出门庭。",
-        xiaoxiang: "象曰：入于左腹，获心意也。",
+        xiaoxiang: {
+          original: "象曰：入于左腹，获心意也。",
+          translation: "「入于左腹」（深入腹心之地），是获悉其心意。"
+        },
         translation: "深入腹地，得知明夷（暗主）的心意，从门庭中出走。",
         notes: {
           "入于左腹获明夷之心": "六四近君，洞察暗主之心，知其意图",
@@ -4041,7 +4689,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "箕子之明夷，利贞。",
-        xiaoxiang: "象曰：箕子之贞，明不可息也。",
+        xiaoxiang: {
+          original: "象曰：箕子之贞，明不可息也。",
+          translation: "「箕子之贞」（箕子的守正），光明不可熄灭。"
+        },
         translation: "箕子处于明夷之世的处世之道，有利于守持正道。",
         notes: {
           "箕子之明夷": "箕子处纣王暴政，佯狂为奴而保全正道；六五居暗主之近",
@@ -4051,7 +4702,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "不明，晦。初登于天，后入于地。",
-        xiaoxiang: "象曰：初登于天，照四国也。后入于地，失则也。",
+        xiaoxiang: {
+          original: "象曰：初登于天，照四国也。后入于地，失则也。",
+          translation: "起初登天（光明），照耀四国。后入于地（黑暗），便失其法则。"
+        },
         translation: "不明而晦暗。起初高登天际，后来堕入地下。",
         notes: {
           "初登于天后入于地": "上六是暗昧之主；初时高位照耀，后自毁其明，堕入黑暗",
@@ -4102,7 +4756,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "闲有家，悔亡。",
-        xiaoxiang: "象曰：闲有家，志未变也。",
+        xiaoxiang: {
+          original: "象曰：闲有家，志未变也。",
+          translation: "「闲有家」（防闲于家），是心志未变（防患未然）。"
+        },
         translation: "在家道建立之初就加以防范约束，悔恨消亡。",
         notes: {
           "闲有家": "闲，防范；在家道确立之初严加防范，防患于未然",
@@ -4112,7 +4769,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "无攸遂，在中馈，贞吉。",
-        xiaoxiang: "象曰：六二之吉，顺以巽也。",
+        xiaoxiang: {
+          original: "象曰：六二之吉，顺以巽也。",
+          translation: "六二的吉祥，是顺从而柔逊。"
+        },
         translation: "没有独自主张，在家中主持饮食，守正吉祥。",
         notes: {
           "无攸遂在中馈": "女子以主持家中饮食为正职，不擅自做主；六二柔顺居中",
@@ -4122,7 +4782,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "家人嗃嗃，悔厉，吉；妇子嘻嘻，终吝。",
-        xiaoxiang: "象曰：家人嗃嗃，未失也。妇子嘻嘻，失家节也。",
+        xiaoxiang: {
+          original: "象曰：家人嗃嗃，未失也。妇子嘻嘻，失家节也。",
+          translation: "「家人嗃嗃」（家人严厉），未失家道。「妇子嘻嘻」（妇女孩童嬉戏过度），是失家中节度。"
+        },
         translation: "家人严肃，有悔有危厉，但吉祥；妇孺嬉嬉，终有遗憾。",
         notes: {
           "嗃嗃": "严肃的样子；过严虽有悔厉，但终吉；家道宁严毋宽",
@@ -4132,7 +4795,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "富家，大吉。",
-        xiaoxiang: "象曰：富家大吉，顺在位也。",
+        xiaoxiang: {
+          original: "象曰：富家大吉，顺在位也。",
+          translation: "「富家大吉」（家富大吉），是顺承在位。"
+        },
         translation: "使家庭富裕，大为吉祥。",
         notes: {
           "富家大吉": "六四柔顺得位，辅助主持家务，使家道富足",
@@ -4142,7 +4808,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "王假有家，勿恤，吉。",
-        xiaoxiang: "象曰：王假有家，交相爱也。",
+        xiaoxiang: {
+          original: "象曰：王假有家，交相爱也。",
+          translation: "「王假有家」（王感至家），是上下交相敬爱。"
+        },
         translation: "君王治理家国，无需忧虑，吉祥。",
         notes: {
           "王假有家": "假，至；君王以王道治家，感化天下如治一家",
@@ -4152,7 +4821,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "有孚威如，终吉。",
-        xiaoxiang: "象曰：威如之吉，反身之谓也。",
+        xiaoxiang: {
+          original: "象曰：威如之吉，反身之谓也。",
+          translation: "「威如之吉」（威严之吉），是反躬自省（己正而后正人）。"
+        },
         translation: "以诚信立威严，最终吉祥。",
         notes: {
           "有孚威如": "诚信与威严并重；上九处家人之终，以诚信为本，威严辅之",
@@ -4205,7 +4877,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "悔亡，丧马勿逐，自复。见恶人，无咎。",
-        xiaoxiang: "象曰：见恶人，以辟咎也。",
+        xiaoxiang: {
+          original: "象曰：见恶人，以辟咎也。",
+          translation: "「见恶人」（见恶人不拒），是为避免过失。"
+        },
         translation: "悔恨消亡，失去了马不要追逐，自会回来。接见令人嫌恶之人，无过失。",
         notes: {
           "丧马勿逐自复": "睽违之时，强求难得，顺其自然反而自归；不执著则反得",
@@ -4215,7 +4890,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "遇主于巷，无咎。",
-        xiaoxiang: "象曰：遇主于巷，未失道也。",
+        xiaoxiang: {
+          original: "象曰：遇主于巷，未失道也。",
+          translation: "「遇主于巷」（在巷里遇见主人），未失正道。"
+        },
         translation: "在小巷中偶遇君主，无过失。",
         notes: {
           "遇主于巷": "睽违之时，不能正道相遇，委曲求全，在小巷偶遇",
@@ -4225,7 +4903,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "见舆曳，其牛掣，其人天且劓，无初有终。",
-        xiaoxiang: "象曰：见舆曳，位不当也。无初有终，遇刚也。",
+        xiaoxiang: {
+          original: "象曰：见舆曳，位不当也。无初有终，遇刚也。",
+          translation: "「见舆曳」（看到车被牵曳），是位置不当。「无初有终」（始无终有），是遇到刚（最终得正应）。"
+        },
         translation: "车被拖拉，牛被牵制，那人被黥额割鼻，但有终无始（终能相遇）。",
         notes: {
           "天且劓": "天，黥额；劓，割鼻；受刑之象，处境极为艰难",
@@ -4235,7 +4916,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "睽孤，遇元夫，交孚，厉无咎。",
-        xiaoxiang: "象曰：交孚无咎，志行也。",
+        xiaoxiang: {
+          original: "象曰：交孚无咎，志行也。",
+          translation: "「交孚无咎」（交相诚信无过），是志向得行。"
+        },
         translation: "孤立隔绝，遇到善良的男子，以诚信相交，虽危厉但无过失。",
         notes: {
           "睽孤": "因睽违而孤立无援；九四阳刚，处睽之际，处境孤立",
@@ -4245,7 +4929,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "悔亡，厥宗噬肤，往何咎。",
-        xiaoxiang: "象曰：厥宗噬肤，往有庆也。",
+        xiaoxiang: {
+          original: "象曰：厥宗噬肤，往有庆也。",
+          translation: "「厥宗噬肤」（其宗族噬肤之亲），前往有庆事。"
+        },
         translation: "悔恨消亡，同宗之人咬穿皮肤（紧密相合），前往有何过失。",
         notes: {
           "厥宗噬肤": "同宗（九二）如咬嫩肤般紧密合一；六五与九二相应，睽中相合",
@@ -4255,7 +4942,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "睽孤，见豕负涂，载鬼一车，先张之弧，后说之弧，匪寇婚媾，往遇雨则吉。",
-        xiaoxiang: "象曰：遇雨之吉，群疑亡也。",
+        xiaoxiang: {
+          original: "象曰：遇雨之吉，群疑亡也。",
+          translation: "「遇雨之吉」（遇雨之吉），是群疑消亡。"
+        },
         translation: "极度孤立，见到背着泥土的猪，一车满载鬼怪，先张弓欲射，后放下弓，其实不是强盗而是来求婚的，前往遇雨则吉祥。",
         notes: {
           "见豕负涂载鬼一车": "疑心生暗鬼，睽极多疑，将一切都看成妖魔鬼怪",
@@ -4311,7 +5001,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "往蹇，来誉。",
-        xiaoxiang: "象曰：往蹇来誉，宜待也。",
+        xiaoxiang: {
+          original: "象曰：往蹇来誉，宜待也。",
+          translation: "「往蹇来誉」（前往蹇难，归来得誉），适宜等待时机。"
+        },
         translation: "前往遇到蹇难，退来则获得称誉。",
         notes: {
           "往蹇来誉": "初六处蹇卦之始，知险而止，退而待时，反获称誉",
@@ -4321,7 +5014,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "王臣蹇蹇，匪躬之故。",
-        xiaoxiang: "象曰：王臣蹇蹇，终无尤也。",
+        xiaoxiang: {
+          original: "象曰：王臣蹇蹇，终无尤也。",
+          translation: "「王臣蹇蹇」（王臣艰难复艰难），最终无过失。"
+        },
         translation: "王臣历尽艰难，并非为了自身的缘故。",
         notes: {
           "王臣蹇蹇": "六二为正应九五，虽处蹇难，仍尽臣职奔赴",
@@ -4331,7 +5027,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "往蹇，来反。",
-        xiaoxiang: "象曰：往蹇来反，内喜之也。",
+        xiaoxiang: {
+          original: "象曰：往蹇来反，内喜之也。",
+          translation: "「往蹇来反」（前往蹇难，归来），内里欣喜（内卦有应）。"
+        },
         translation: "前往遇蹇难，退回来则受欢迎。",
         notes: {
           "往蹇来反": "九三知险而返，回归内卦群阴，反受欢迎",
@@ -4341,7 +5040,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "往蹇，来连。",
-        xiaoxiang: "象曰：往蹇来连，当位实也。",
+        xiaoxiang: {
+          original: "象曰：往蹇来连，当位实也。",
+          translation: "「往蹇来连」（前往蹇难，归来相连），是位置当且充实。"
+        },
         translation: "前往遇蹇难，退来则联合同志。",
         notes: {
           "往蹇来连": "六四退而联合九三，共同待机",
@@ -4351,7 +5053,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "大蹇，朋来。",
-        xiaoxiang: "象曰：大蹇朋来，以中节也。",
+        xiaoxiang: {
+          original: "象曰：大蹇朋来，以中节也。",
+          translation: "「大蹇朋来」（大险有友来助），是以中正之节。"
+        },
         translation: "处于大的蹇难之中，朋友来援。",
         notes: {
           "大蹇朋来": "九五居尊处大蹇，以中正之德感召，朋友自来相助",
@@ -4361,7 +5066,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "往蹇，来硕，吉。利见大人。",
-        xiaoxiang: "象曰：往蹇来硕，志在内也。利见大人，以从贵也。",
+        xiaoxiang: {
+          original: "象曰：往蹇来硕，志在内也。利见大人，以从贵也。",
+          translation: "「往蹇来硕」（前往蹇难，归来盛大），是志向在内。「利见大人」，是顺从尊贵。"
+        },
         translation: "前往遇蹇难，退来则有大的收获，吉祥。有利于见到大人。",
         notes: {
           "来硕": "退来则有硕大收获；上六处蹇极，退而与九五合，大有所得",
@@ -4415,7 +5123,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "无咎。",
-        xiaoxiang: "象曰：刚柔之际，义无咎也。",
+        xiaoxiang: {
+          original: "象曰：刚柔之际，义无咎也。",
+          translation: "刚柔交接之际（初六），按义理无过失。"
+        },
         translation: "无过失。",
         notes: {
           "无咎": "初六处解卦之始，险难初解，以柔应刚（九四），处际合宜",
@@ -4425,7 +5136,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "田获三狐，得黄矢，贞吉。",
-        xiaoxiang: "象曰：九二贞吉，得中道也。",
+        xiaoxiang: {
+          original: "象曰：九二贞吉，得中道也。",
+          translation: "九二贞吉，是得中道。"
+        },
         translation: "田猎获得三只狐狸，得到黄色箭矢，守正吉祥。",
         notes: {
           "田获三狐得黄矢": "三狐喻三阴小人；九二以中正之道剪除奸邪，得黄（中）矢（直）",
@@ -4435,7 +5149,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "负且乘，致寇至，贞吝。",
-        xiaoxiang: "象曰：负且乘，亦可丑也。自我致戎，又谁咎也。",
+        xiaoxiang: {
+          original: "象曰：负且乘，亦可丑也。自我致戎，又谁咎也。",
+          translation: "「负且乘」（背负又骑乘），也可耻。自己招致兵戎，还能怪谁？"
+        },
         translation: "背负重物却乘坐车辇，必然招来盗寇，守正也有遗憾。",
         notes: {
           "负且乘": "小人占据君子之位；六三阴柔乘九二之刚，位不当",
@@ -4445,7 +5162,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "解而拇，朋至斯孚。",
-        xiaoxiang: "象曰：解而拇，未当位也。",
+        xiaoxiang: {
+          original: "象曰：解而拇，未当位也。",
+          translation: "「解而拇」（解开你的拇指），是位置未当（六四去小人）。"
+        },
         translation: "解除与初六（拇）的纠缠，朋友（六三）到来，诚信可期。",
         notes: {
           "解而拇": "拇，初六；九四解去不当的纠缠（初六），转与正应（六三）相合",
@@ -4455,7 +5175,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "君子维有解，吉，有孚于小人。",
-        xiaoxiang: "象曰：君子有解，小人退也。",
+        xiaoxiang: {
+          original: "象曰：君子有解，小人退也。",
+          translation: "君子有所解（明辨），小人便退避。"
+        },
         translation: "君子能够解脱，吉祥，对小人也能取信。",
         notes: {
           "君子维有解": "六五以中正居尊，能解除险难",
@@ -4465,7 +5188,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "公用射隼于高墉之上，获之，无不利。",
-        xiaoxiang: "象曰：公用射隼，以解悖也。",
+        xiaoxiang: {
+          original: "象曰：公用射隼，以解悖也。",
+          translation: "「公用射隼」（王公射隼），是为解除悖逆。"
+        },
         translation: "王公在高墙上射击鹰隼，将其射获，无不有利。",
         notes: {
           "射隼于高墉之上": "隼喻奸佞小人；上六处解之极，以决断之力彻底清除祸患",
@@ -4518,7 +5244,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "已事遄往，无咎，酌损之。",
-        xiaoxiang: "象曰：已事遄往，尚合志也。",
+        xiaoxiang: {
+          original: "象曰：已事遄往，尚合志也。",
+          translation: "「已事遄往」（事毕速往），是上下合志。"
+        },
         translation: "事情办完后迅速前往（助六四），无过失，斟酌损益。",
         notes: {
           "已事遄往": "遄，迅速；初九损己益上，事毕即往助六四",
@@ -4528,7 +5257,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "利贞，征凶，弗损益之。",
-        xiaoxiang: "象曰：九二利贞，中以为志也。",
+        xiaoxiang: {
+          original: "象曰：九二利贞，中以为志也。",
+          translation: "九二利贞，是以中道为志。"
+        },
         translation: "有利于守正，前进有凶，不损自己反而益于人。",
         notes: {
           "弗损益之": "不必刻意损己，以中道守正自然有益于上；九二居中，守中即是益上",
@@ -4538,7 +5270,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "三人行，则损一人；一人行，则得其友。",
-        xiaoxiang: "象曰：一人行，三则疑也。",
+        xiaoxiang: {
+          original: "象曰：一人行，三则疑也。",
+          translation: "一人独行（专心），三人则疑（杂乱）。"
+        },
         translation: "三人同行，会减少一人；一人独行，会得到朋友。",
         notes: {
           "三人行则损一人": "损卦原本三阳，损一成两阳；物极则损，过多反失",
@@ -4548,7 +5283,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "损其疾，使遄有喜，无咎。",
-        xiaoxiang: "象曰：损其疾，亦可喜也。",
+        xiaoxiang: {
+          original: "象曰：损其疾，亦可喜也。",
+          translation: "「损其疾」（减损其病），也是可喜的。"
+        },
         translation: "减损其疾患，使（初九）迅速来助而有喜，无过失。",
         notes: {
           "损其疾": "六四以柔居正，减损自身的毛病（疾）",
@@ -4558,7 +5296,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "或益之十朋之龟，弗克违，元吉。",
-        xiaoxiang: "象曰：六五元吉，自上祐也。",
+        xiaoxiang: {
+          original: "象曰：六五元吉，自上祐也。",
+          translation: "六五元吉，是来自上天的庇佑。"
+        },
         translation: "有人以价值十朋之龟来馈赠，无法推辞，至善吉祥。",
         notes: {
           "十朋之龟": "十朋，最贵重的龟；无法推辞的厚礼；六五居尊，损而受益",
@@ -4568,7 +5309,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "弗损益之，无咎，贞吉，利有攸往，得臣无家。",
-        xiaoxiang: "象曰：弗损益之，大得志也。",
+        xiaoxiang: {
+          original: "象曰：弗损益之，大得志也。",
+          translation: "「弗损益之」（不损反益），是大得志。"
+        },
         translation: "不损而反益，无过失，守正吉祥，有利于前进，得到臣民而无私家之念。",
         notes: {
           "弗损益之": "上九处损之极，损极则益；不损自益，损道已极而转为益",
@@ -4622,7 +5366,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "利用为大作，元吉，无咎。",
-        xiaoxiang: "象曰：元吉无咎，下不厚事也。",
+        xiaoxiang: {
+          original: "象曰：元吉无咎，下不厚事也。",
+          translation: "「元吉无咎」，是不令下位之人担当过重之事。"
+        },
         translation: "有利于从事大的事业，至善吉祥，无过失。",
         notes: {
           "利用为大作": "初九受上益，可以承担大事业；益时，下受上益，力量大增",
@@ -4632,7 +5379,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "或益之十朋之龟，弗克违，永贞吉。王用享于帝，吉。",
-        xiaoxiang: "象曰：或益之，自外来也。",
+        xiaoxiang: {
+          original: "象曰：或益之，自外来也。",
+          translation: "「或益之」（有人增益），是外来之福。"
+        },
         translation: "有人以价值十朋之龟来馈赠，无法推辞，长久守正吉祥。君王用以祭祀上帝，吉祥。",
         notes: {
           "或益之十朋之龟": "意外获得大益；六二居中正，上下皆益之",
@@ -4642,7 +5392,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "益之用凶事，无咎。有孚中行，告公用圭。",
-        xiaoxiang: "象曰：益用凶事，固有之也。",
+        xiaoxiang: {
+          original: "象曰：益用凶事，固有之也。",
+          translation: "「益用凶事」（用以救凶），本来就该如此。"
+        },
         translation: "在凶险之事中得到益助，无过失。有诚信走中道，告知公上以圭玉。",
         notes: {
           "益之用凶事": "六三处险，在凶事中得益；逆境中求益，以诚信告公",
@@ -4652,7 +5405,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "中行，告公从，利用为依迁国。",
-        xiaoxiang: "象曰：告公从，以益志也。",
+        xiaoxiang: {
+          original: "象曰：告公从，以益志也。",
+          translation: "「告公从」（告知王公而获从），是以益人之志。"
+        },
         translation: "走中道，告知公上而被采纳，有利于凭借（上位）迁都建国。",
         notes: {
           "告公从": "六四近君，以中道建言被采纳；处益时近君献策，上从其议",
@@ -4662,7 +5418,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "有孚惠心，勿问元吉。有孚惠我德。",
-        xiaoxiang: "象曰：有孚惠心，勿问之矣。惠我德，大得志也。",
+        xiaoxiang: {
+          original: "象曰：有孚惠心，勿问之矣。惠我德，大得志也。",
+          translation: "「有孚惠心」（诚信而怀仁心），不必问就知。「惠我德」（施恩于我之德），是大得志。"
+        },
         translation: "以诚信施惠于人，毋庸置疑是至善吉祥。以诚信施惠，人们感念我的德行。",
         notes: {
           "有孚惠心": "以真诚的爱心施惠；九五居中正，以诚信益下，不问而自然元吉",
@@ -4672,7 +5431,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "莫益之，或击之，立心勿恒，凶。",
-        xiaoxiang: "象曰：莫益之，偏辞也。或击之，自外来也。",
+        xiaoxiang: {
+          original: "象曰：莫益之，偏辞也。或击之，自外来也。",
+          translation: "「莫益之」（无人增益），是偏私之言。「或击之」（有人攻击），是外来之患。"
+        },
         translation: "没有人来益助，甚至有人来攻击，立志不能持久，有凶险。",
         notes: {
           "莫益之或击之": "上九处益之极，益满则损，反遭攻击；益极转损",
@@ -4728,7 +5490,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "壮于前趾，往不胜，为咎。",
-        xiaoxiang: "象曰：不胜而往，咎也。",
+        xiaoxiang: {
+          original: "象曰：不胜而往，咎也。",
+          translation: "不能胜任就前往，是过失。"
+        },
         translation: "脚趾强壮而妄进，前往不能取胜，有过失。",
         notes: {
           "壮于前趾": "初九锐气过盛，如脚趾之壮，妄自前进",
@@ -4738,7 +5503,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "惕号，莫夜有戎，勿恤。",
-        xiaoxiang: "象曰：有戎勿恤，得中道也。",
+        xiaoxiang: {
+          original: "象曰：有戎勿恤，得中道也。",
+          translation: "「有戎勿恤」（有兵不必忧），是得中道。"
+        },
         translation: "警惕呼号，夜半有敌兵来袭，不必忧虑。",
         notes: {
           "惕号": "保持警惕并呼号警戒；九二居中，居安思危",
@@ -4748,7 +5516,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "壮于頄，有凶，君子夬夬，独行遇雨，若濡有愠，无咎。",
-        xiaoxiang: "象曰：君子夬夬，终无咎也。",
+        xiaoxiang: {
+          original: "象曰：君子夬夬，终无咎也。",
+          translation: "「君子夬夬」（君子果决），最终无过失。"
+        },
         translation: "颧骨强壮（刚决外露），有凶险。君子坚决决断，独行时遇雨，被淋湿而有些不快，无过失。",
         notes: {
           "壮于頄": "頄，颧骨；刚决之气外露，有凶；九三与上六有应，处境微妙",
@@ -4758,7 +5529,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "臀无肤，其行次且，牵羊悔亡，闻言不信。",
-        xiaoxiang: "象曰：其行次且，位不当也。闻言不信，聪不明也。",
+        xiaoxiang: {
+          original: "象曰：其行次且，位不当也。闻言不信，聪不明也。",
+          translation: "「其行次且」（行事不顺），是位置不当。「闻言不信」，是听闻不聪明。"
+        },
         translation: "臀部没有皮肤，行走迟疑，牵着羊则悔恨消亡，听到劝言却不相信。",
         notes: {
           "臀无肤其行次且": "九四以阳居阴，位不当，如臀部受伤无法正常行走",
@@ -4768,7 +5542,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "苋陆夬夬，中行无咎。",
-        xiaoxiang: "象曰：中行无咎，中未光也。",
+        xiaoxiang: {
+          original: "象曰：中行无咎，中未光也。",
+          translation: "「中行无咎」（行中道无过），是中位未能光大。"
+        },
         translation: "如苋草一样果断决去，走中道无过失。",
         notes: {
           "苋陆夬夬": "苋草柔脆，易于决断；九五决去上六之阴，果断迅速",
@@ -4778,7 +5555,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "无号，终有凶。",
-        xiaoxiang: "象曰：无号之凶，终不可长也。",
+        xiaoxiang: {
+          original: "象曰：无号之凶，终不可长也。",
+          translation: "「无号之凶」（无可呼号之凶），最终不可长久。"
+        },
         translation: "无处呼号，终有凶险。",
         notes: {
           "无号终有凶": "上六是唯一阴爻，处众阳决去之极，无处求援，终遭凶",
@@ -4832,7 +5612,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "系于金柅，贞吉，有攸往，见凶，羸豕孚蹢躅。",
-        xiaoxiang: "象曰：系于金柅，柔道牵也。",
+        xiaoxiang: {
+          original: "象曰：系于金柅，柔道牵也。",
+          translation: "「系于金柅」（系在金属车止），是柔道被牵制。"
+        },
         translation: "系于金属车止，守正吉祥，若前往则遇凶。瘦弱的猪不安分地踯躅。",
         notes: {
           "系于金柅": "柅，车止；以金属车止固定初六（一阴），防其蔓延",
@@ -4842,7 +5625,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "包有鱼，无咎，不利宾。",
-        xiaoxiang: "象曰：包有鱼，义不及宾也。",
+        xiaoxiang: {
+          original: "象曰：包有鱼，义不及宾也。",
+          translation: "「包有鱼」（厨房有鱼），按义理不及宾客。"
+        },
         translation: "包裹中有鱼，无过失，不利于让宾客享用。",
         notes: {
           "包有鱼": "鱼喻初六（阴）；九二掌控初六，包而有之",
@@ -4852,7 +5638,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "臀无肤，其行次且，厉，无大咎。",
-        xiaoxiang: "象曰：其行次且，行未牵也。",
+        xiaoxiang: {
+          original: "象曰：其行次且，行未牵也。",
+          translation: "「其行次且」（行不顺利），行动未受牵制（自我犹豫）。"
+        },
         translation: "臀部没有皮肤，行走迟疑，有危厉，但无大的过失。",
         notes: {
           "臀无肤其行次且": "九三阳刚欲与初六相遇，但受阻，行走迟疑",
@@ -4862,7 +5651,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "包无鱼，起凶。",
-        xiaoxiang: "象曰：无鱼之凶，远民也。",
+        xiaoxiang: {
+          original: "象曰：无鱼之凶，远民也。",
+          translation: "「无鱼之凶」（无鱼之凶），是远离百姓。"
+        },
         translation: "包裹中没有鱼，起来有凶险。",
         notes: {
           "包无鱼起凶": "九四失去对初六（阴）的掌控，包中无鱼；失民则凶",
@@ -4872,7 +5664,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "以杞包瓜，含章，有陨自天。",
-        xiaoxiang: "象曰：九五含章，中正也。有陨自天，志不舍命也。",
+        xiaoxiang: {
+          original: "象曰：九五含章，中正也。有陨自天，志不舍命也。",
+          translation: "九五含蓄文采，是中正之德。「有陨自天」（自天而降），是志向不舍弃天命。"
+        },
         translation: "以杞树叶包裹瓜，内含文采，有美好如天降。",
         notes: {
           "以杞包瓜": "杞，高大之树；以高处包裹低处（瓜）；九五以中正包容初六之阴",
@@ -4882,7 +5677,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "姤其角，吝，无咎。",
-        xiaoxiang: "象曰：姤其角，上穷吝也。",
+        xiaoxiang: {
+          original: "象曰：姤其角，上穷吝也。",
+          translation: "「姤其角」（相遇于角），是上九穷尽而困。"
+        },
         translation: "相遇在角（最高处），有遗憾，但无过失。",
         notes: {
           "姤其角": "上九处姤之极，如角之高，与阴相遇已处穷极",
@@ -4935,7 +5733,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "有孚不终，乃乱乃萃，若号，一握为笑，勿恤，往无咎。",
-        xiaoxiang: "象曰：乃乱乃萃，其志乱也。",
+        xiaoxiang: {
+          original: "象曰：乃乱乃萃，其志乱也。",
+          translation: "「乃乱乃萃」（既乱且聚），是其志已乱。"
+        },
         translation: "有诚信但不能坚持到底，以致混乱，又聚合，若呼号，一握手便笑逐颜开，无需忧虑，前往无过失。",
         notes: {
           "有孚不终乃乱乃萃": "初六与九四相应，但中间受阻，聚散无定，志乱",
@@ -4945,7 +5746,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "引吉，无咎，孚乃利用禴。",
-        xiaoxiang: "象曰：引吉无咎，中未变也。",
+        xiaoxiang: {
+          original: "象曰：引吉无咎，中未变也。",
+          translation: "「引吉无咎」（引导而吉），是中位未变。"
+        },
         translation: "被引导则吉，无过失，以诚信参与禴祭则有利。",
         notes: {
           "引吉": "被九五引导聚合则吉；六二居中，被上位引导归聚",
@@ -4955,7 +5759,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "萃如嗟如，无攸利，往无咎，小吝。",
-        xiaoxiang: "象曰：往无咎，上巽也。",
+        xiaoxiang: {
+          original: "象曰：往无咎，上巽也。",
+          translation: "「往无咎」，是与上柔顺相合。"
+        },
         translation: "想聚合又嗟叹，无所有利，前往无过失，稍有遗憾。",
         notes: {
           "萃如嗟如": "六三想聚无正应，处境尴尬，嗟叹不已",
@@ -4965,7 +5772,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "大吉，无咎。",
-        xiaoxiang: "象曰：大吉无咎，位不当也。",
+        xiaoxiang: {
+          original: "象曰：大吉无咎，位不当也。",
+          translation: "「大吉无咎」（大吉才无过），是位置本不当（须大吉方可弥补）。"
+        },
         translation: "大为吉祥，无过失。",
         notes: {
           "位不当也": "九四以阳居阴，位不当，本有咎；但能聚众奉上（九五），故大吉无咎",
@@ -4975,7 +5785,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "萃有位，无咎，匪孚，元永贞，悔亡。",
-        xiaoxiang: "象曰：萃有位，志未光也。",
+        xiaoxiang: {
+          original: "象曰：萃有位，志未光也。",
+          translation: "「萃有位」（聚而有位），但志向未能光大。"
+        },
         translation: "在位聚合，无过失，若有人不信任，要以至善、长久、守正感化，悔恨消亡。",
         notes: {
           "匪孚": "有人不信任；九五居尊聚众，仍有未能信服者",
@@ -4985,7 +5798,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "赍咨涕洟，无咎。",
-        xiaoxiang: "象曰：赍咨涕洟，未安上也。",
+        xiaoxiang: {
+          original: "象曰：赍咨涕洟，未安上也。",
+          translation: "「赍咨涕洟」（叹息流泪），是不能安居上位。"
+        },
         translation: "叹息哭泣，泪流满面，无过失。",
         notes: {
           "赍咨涕洟": "感叹哭泣；上六处萃之终，无所归聚，孤立哀泣",
@@ -5036,7 +5852,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "允升，大吉。",
-        xiaoxiang: "象曰：允升大吉，上合志也。",
+        xiaoxiang: {
+          original: "象曰：允升大吉，上合志也。",
+          translation: "「允升大吉」（信从而升大吉），是与上合志。"
+        },
         translation: "诚信上升，大为吉祥。",
         notes: {
           "允升": "以诚信顺道上升；初六处升卦之始，诚信得九二之助",
@@ -5046,7 +5865,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "孚乃利用禴，无咎。",
-        xiaoxiang: "象曰：九二之孚，有喜也。",
+        xiaoxiang: {
+          original: "象曰：九二之孚，有喜也。",
+          translation: "九二的诚信，是有喜事。"
+        },
         translation: "以诚信参与禴祭，无过失。",
         notes: {
           "孚乃利用禴": "禴，简单的春祭；以诚信行简朴之礼，比奢华更有力量",
@@ -5056,7 +5878,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "升虚邑。",
-        xiaoxiang: "象曰：升虚邑，无所疑也。",
+        xiaoxiang: {
+          original: "象曰：升虚邑，无所疑也。",
+          translation: "「升虚邑」（升入空邑），是没有疑虑（畅通无阻）。"
+        },
         translation: "升入空虚的城邑。",
         notes: {
           "升虚邑": "升入无阻之地，畅通无阻；九三阳刚，升进顺畅如入空邑",
@@ -5066,7 +5891,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "王用亨于岐山，吉，无咎。",
-        xiaoxiang: "象曰：王用亨于岐山，顺事也。",
+        xiaoxiang: {
+          original: "象曰：王用亨于岐山，顺事也。",
+          translation: "「王用亨于岐山」（王在岐山祭祀），是顺承之事。"
+        },
         translation: "君王在岐山举行祭祀，吉祥，无过失。",
         notes: {
           "王用亨于岐山": "岐山，文王兴业之地；六四以柔顺处升，如文王顺天应人",
@@ -5076,7 +5904,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "贞吉，升阶。",
-        xiaoxiang: "象曰：贞吉升阶，大得志也。",
+        xiaoxiang: {
+          original: "象曰：贞吉升阶，大得志也。",
+          translation: "「贞吉升阶」（守正吉而登阶），是大得志。"
+        },
         translation: "守正吉祥，循阶而升。",
         notes: {
           "升阶": "循阶梯上升，有序而进；六五居尊，以中正循序渐进",
@@ -5086,7 +5917,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "冥升，利于不息之贞。",
-        xiaoxiang: "象曰：冥升在上，消不富也。",
+        xiaoxiang: {
+          original: "象曰：冥升在上，消不富也。",
+          translation: "「冥升在上」（昏冥之升），是消减不能富。"
+        },
         translation: "昏昧地上升，有利于不停息地守正。",
         notes: {
           "冥升": "昏昧无度地上升，不知节止；上六处升之极，升而不已",
@@ -5139,7 +5973,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "臀困于株木，入于幽谷，三岁不觌。",
-        xiaoxiang: "象曰：入于幽谷，幽不明也。",
+        xiaoxiang: {
+          original: "象曰：入于幽谷，幽不明也。",
+          translation: "「入于幽谷」（陷入幽谷），是昏暗不明。"
+        },
         translation: "臀部被株木困住，进入幽暗的山谷，三年不见天日。",
         notes: {
           "臀困于株木": "初六处困卦之始，以阴柔处困底，如臀困于树根",
@@ -5149,7 +5986,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "困于酒食，朱绂方来，利用享祀，征凶，无咎。",
-        xiaoxiang: "象曰：困于酒食，中有庆也。",
+        xiaoxiang: {
+          original: "象曰：困于酒食，中有庆也。",
+          translation: "「困于酒食」（困于宴乐），但居中有喜庆（虽困而正）。"
+        },
         translation: "在酒食中受困（安逸之困），朱色绂带的大夫将来访，有利于祭祀，前征则凶，无过失。",
         notes: {
           "困于酒食": "九二阳刚居中，处困中有所依，反困于安逸",
@@ -5159,7 +5999,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "困于石，据于蒺藜，入于其宫，不见其妻，凶。",
-        xiaoxiang: "象曰：据于蒺藜，乘刚也。入于其宫不见其妻，不祥也。",
+        xiaoxiang: {
+          original: "象曰：据于蒺藜，乘刚也。入于其宫不见其妻，不祥也。",
+          translation: "「据于蒺藜」（坐在蒺藜上），是乘凌阳刚。「入于其宫不见其妻」（回家不见妻），是不吉利。"
+        },
         translation: "被巨石困住，坐在蒺藜上，进入自己的宫室，却见不到妻子，有凶险。",
         notes: {
           "困于石据于蒺藜": "六三不中不正，上下皆阳，进退皆困，处境最惨",
@@ -5169,7 +6012,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "来徐徐，困于金车，吝，有终。",
-        xiaoxiang: "象曰：来徐徐，志在下也。虽不当位，有与也。",
+        xiaoxiang: {
+          original: "象曰：来徐徐，志在下也。虽不当位，有与也。",
+          translation: "「来徐徐」（缓缓而来），是志在下方。虽不当位，但有人相助。"
+        },
         translation: "前来迟迟，被金车所困，有遗憾，但终有好结果。",
         notes: {
           "来徐徐": "九四欲下应初六，但受阻迟疑",
@@ -5179,7 +6025,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "劓刖，困于赤绂，乃徐有说，利用祭祀。",
-        xiaoxiang: "象曰：劓刖，志未得也。乃徐有说，以中直也。利用祭祀，受福也。",
+        xiaoxiang: {
+          original: "象曰：劓刖，志未得也。乃徐有说，以中直也。利用祭祀，受福也。",
+          translation: "「劓刖」（受刑），是志向尚未得。「乃徐有说」（缓缓而脱），是以中正刚直。「利用祭祀」（利于诚敬祭祀），是为受福。"
+        },
         translation: "受到劓刑和刖刑，被赤色绂带所困，慢慢地得到解说，有利于祭祀。",
         notes: {
           "劓刖": "受鼻刑和足刑；九五虽居尊，但上下皆受阴柔所困",
@@ -5189,7 +6038,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "困于葛藟，于臲卼，曰动悔有悔，征吉。",
-        xiaoxiang: "象曰：困于葛藟，未当也。动悔有悔，吉行也。",
+        xiaoxiang: {
+          original: "象曰：困于葛藟，未当也。动悔有悔，吉行也。",
+          translation: "「困于葛藟」（被藤蔓所困），是位置未当。「动悔有悔」（动则有悔），但敢于行动则吉。"
+        },
         translation: "被葛藤缠绕，处于动荡不安之中，说动则有悔恨，但最终征行则吉。",
         notes: {
           "困于葛藟于臲卼": "葛藟缠身，处境不稳；上六处困之极，缠绕最深",
@@ -5243,7 +6095,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "井泥不食，旧井无禽。",
-        xiaoxiang: "象曰：井泥不食，下也。旧井无禽，时舍也。",
+        xiaoxiang: {
+          original: "象曰：井泥不食，下也。旧井无禽，时舍也。",
+          translation: "「井泥不食」（井浊不能饮），是位置最下。「旧井无禽」（旧井无人取），是被时势抛弃。"
+        },
         translation: "井底淤泥无法饮用，废弃的旧井连禽鸟都不来。",
         notes: {
           "井泥不食": "初六处井最下，如淤泥积底，无法取用",
@@ -5253,7 +6108,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "井谷射鲋，瓮敝漏。",
-        xiaoxiang: "象曰：井谷射鲋，无与也。",
+        xiaoxiang: {
+          original: "象曰：井谷射鲋，无与也。",
+          translation: "「井谷射鲋」（井底射小鱼），是上下无援。"
+        },
         translation: "井中向小鱼射水，水瓮破漏。",
         notes: {
           "井谷射鲋": "井水向小鱼流去，浪费才能；九二阳刚有才，但无人援引",
@@ -5263,7 +6121,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "井渫不食，为我心恻，可用汲，王明，并受其福。",
-        xiaoxiang: "象曰：井渫不食，行恻也。求王明，受福也。",
+        xiaoxiang: {
+          original: "象曰：井渫不食，行恻也。求王明，受福也。",
+          translation: "「井渫不食」（井已淘清而不饮），令行人恻然。「求王明」（求王明察），是为受福。"
+        },
         translation: "井水清洁却无人饮用，令人心中悲伤，可以用来汲水，若王者明智，则众人共受其福。",
         notes: {
           "井渫不食": "井已清澈却不被使用；九三阳刚有才，位不当，待君王明察",
@@ -5273,7 +6134,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "井甃，无咎。",
-        xiaoxiang: "象曰：井甃无咎，修井也。",
+        xiaoxiang: {
+          original: "象曰：井甃无咎，修井也。",
+          translation: "「井甃无咎」（井砌石无过），是为修井。"
+        },
         translation: "修缮井壁，无过失。",
         notes: {
           "井甃": "甃，砖砌井壁；修整井壁，使井坚固耐用",
@@ -5283,7 +6147,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "井洌，寒泉食。",
-        xiaoxiang: "象曰：寒泉之食，中正也。",
+        xiaoxiang: {
+          original: "象曰：寒泉之食，中正也。",
+          translation: "「寒泉之食」（清凉泉水可饮），是中正之德。"
+        },
         translation: "井水清洌，甘寒泉水可供饮用。",
         notes: {
           "井洌寒泉食": "九五居中正，如清洌甘泉，可供众人饮用",
@@ -5293,7 +6160,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "井收勿幕，有孚元吉。",
-        xiaoxiang: "象曰：元吉在上，大成也。",
+        xiaoxiang: {
+          original: "象曰：元吉在上，大成也。",
+          translation: "元吉在上爻（井卦上六），是大成（井道功成）。"
+        },
         translation: "井水可以汲取，不要加盖，以诚信广施，至善吉祥。",
         notes: {
           "井收勿幕": "幕，遮盖；井已完善，当广开取用，不加遮蔽",
@@ -5349,7 +6219,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "巩用黄牛之革。",
-        xiaoxiang: "象曰：巩用黄牛，不可以有为也。",
+        xiaoxiang: {
+          original: "象曰：巩用黄牛，不可以有为也。",
+          translation: "「巩用黄牛」（用黄牛皮固守），是不可妄动。"
+        },
         translation: "用黄牛皮革加以巩固。",
         notes: {
           "巩用黄牛之革": "初九处革卦之始，时机未熟，当固守以待，不可轻动",
@@ -5359,7 +6232,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "己日乃革之，征吉，无咎。",
-        xiaoxiang: "象曰：己日革之，行有嘉也。",
+        xiaoxiang: {
+          original: "象曰：己日革之，行有嘉也。",
+          translation: "「己日革之」（己日变革），行动会有美好结果。"
+        },
         translation: "经过一段时间进行变革，出征吉祥，无过失。",
         notes: {
           "己日乃革之": "待时机成熟再行变革；六二居中正，变革审时度势",
@@ -5369,7 +6245,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "征凶，贞厉，革言三就，有孚。",
-        xiaoxiang: "象曰：革言三就，又何之矣。",
+        xiaoxiang: {
+          original: "象曰：革言三就，又何之矣。",
+          translation: "「革言三就」（变革之言三次审定），还有什么可说的（决心已定）。"
+        },
         translation: "前进有凶险，守正有危厉，变革之言三次得到证实，方有诚信。",
         notes: {
           "革言三就": "变革主张三次得到印证；革命之言须反复验证，不可轻信一人之说",
@@ -5379,7 +6258,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "悔亡，有孚改命，吉。",
-        xiaoxiang: "象曰：改命之吉，信志也。",
+        xiaoxiang: {
+          original: "象曰：改命之吉，信志也。",
+          translation: "「改命之吉」（改命之吉），是信于其志。"
+        },
         translation: "悔恨消亡，以诚信改变命令，吉祥。",
         notes: {
           "有孚改命": "以诚信推行变革；九四近君，以诚信行革命之事",
@@ -5389,7 +6271,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "大人虎变，未占有孚。",
-        xiaoxiang: "象曰：大人虎变，其文炳也。",
+        xiaoxiang: {
+          original: "象曰：大人虎变，其文炳也。",
+          translation: "「大人虎变」（大人如虎之变），其文采焕发光明。"
+        },
         translation: "大人如猛虎变化（革新），不必占卜便已获得信任。",
         notes: {
           "大人虎变": "虎变，如虎纹灿烂分明；大人推行变革，成效卓著，焕然一新",
@@ -5399,7 +6284,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "君子豹变，小人革面，征凶，居贞吉。",
-        xiaoxiang: "象曰：君子豹变，其文蔚也。小人革面，顺以从君也。",
+        xiaoxiang: {
+          original: "象曰：君子豹变，其文蔚也。小人革面，顺以从君也。",
+          translation: "「君子豹变」（君子如豹之变），其文采美盛。「小人革面」（小人改换面目），是顺从君主。"
+        },
         translation: "君子如豹子变化（小革新），小人只改变面貌（表面顺从），前进有凶，安居守正则吉。",
         notes: {
           "君子豹变": "君子的革新，如豹纹精致，小于虎变但也可观",
@@ -5453,7 +6341,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "鼎颠趾，利出否，得妾以其子，无咎。",
-        xiaoxiang: "象曰：鼎颠趾，未悖也。利出否，以从贵也。",
+        xiaoxiang: {
+          original: "象曰：鼎颠趾，未悖也。利出否，以从贵也。",
+          translation: "「鼎颠趾」（鼎倒翻足），尚未违背正道。「利出否」（利于倒出污秽），是顺从尊贵（去恶从贤）。"
+        },
         translation: "鼎的足倒转，有利于倒出（鼎中）污秽之物，得到妾以生子，无过失。",
         notes: {
           "鼎颠趾": "鼎足倒转，看似反常但有其用；初六在下，倒鼎以除旧",
@@ -5463,7 +6354,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "鼎有实，我仇有疾，不我能即，吉。",
-        xiaoxiang: "象曰：鼎有实，慎所之也。我仇有疾，终无尤也。",
+        xiaoxiang: {
+          original: "象曰：鼎有实，慎所之也。我仇有疾，终无尤也。",
+          translation: "「鼎有实」（鼎有实物），须谨慎所往。「我仇有疾」（我对头有病），最终无过失。"
+        },
         translation: "鼎中有食物，我的对手有疾病，不能来接近我，吉祥。",
         notes: {
           "鼎有实": "九二阳刚居中，鼎中充实，有才有德",
@@ -5473,7 +6367,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "鼎耳革，其行塞，雉膏不食，方雨亏悔，终吉。",
-        xiaoxiang: "象曰：鼎耳革，失其义也。",
+        xiaoxiang: {
+          original: "象曰：鼎耳革，失其义也。",
+          translation: "「鼎耳革」（鼎耳变形），是失其正义。"
+        },
         translation: "鼎耳改变了（脱落），行动受阻，美味的野鸡膏脂无法享用，等到阴阳调和下雨，悔恨渐消，终获吉祥。",
         notes: {
           "鼎耳革其行塞": "九三位不当，鼎耳变革，提鼎之耳失效，美食无法取用",
@@ -5483,7 +6380,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "鼎折足，覆公餗，其形渥，凶。",
-        xiaoxiang: "象曰：覆公餗，信如何也。",
+        xiaoxiang: {
+          original: "象曰：覆公餗，信如何也。",
+          translation: "「覆公餗」（打翻王公的食物），还有什么可信的？"
+        },
         translation: "鼎足折断，倾覆了王公的美食，形状污秽，有凶险。",
         notes: {
           "鼎折足覆公餗": "餗，鼎中食物；九四才力不足以担重任，致鼎折足、食物倾覆",
@@ -5493,7 +6393,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "鼎黄耳金铉，利贞。",
-        xiaoxiang: "象曰：鼎黄耳，中以为实也。",
+        xiaoxiang: {
+          original: "象曰：鼎黄耳，中以为实也。",
+          translation: "「鼎黄耳」（鼎有黄色之耳），是以中道为实。"
+        },
         translation: "鼎有黄色耳朵（中正）和金属提梁，有利于守持正道。",
         notes: {
           "鼎黄耳金铉": "黄耳，中正之耳；金铉，坚固提梁；六五柔中居尊，以中正持鼎",
@@ -5503,7 +6406,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "鼎玉铉，大吉，无不利。",
-        xiaoxiang: "象曰：玉铉在上，刚柔节也。",
+        xiaoxiang: {
+          original: "象曰：玉铉在上，刚柔节也。",
+          translation: "「玉铉在上」（玉铉在上爻），是刚柔有节。"
+        },
         translation: "鼎有玉质提梁，大为吉祥，无不有利。",
         notes: {
           "鼎玉铉": "玉铉，温润而坚；上九处鼎之终，以刚柔相济之德持鼎",
@@ -5554,7 +6460,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "震来虩虩，后笑言哑哑，吉。",
-        xiaoxiang: "象曰：震来虩虩，恐致福也。笑言哑哑，后有则也。",
+        xiaoxiang: {
+          original: "象曰：震来虩虩，恐致福也。笑言哑哑，后有则也。",
+          translation: "「震来虩虩」（震雷至而恐惧），恐惧反招福。「笑言哑哑」（嬉笑应对），之后能立法则。"
+        },
         translation: "雷声到来令人惊恐，之后谈笑如故，吉祥。",
         notes: {
           "恐致福也": "因惧怕而得福；知恐惧则反省修德，故能得福",
@@ -5564,7 +6473,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "震来厉，亿丧贝，跻于九陵，勿逐，七日得。",
-        xiaoxiang: "象曰：震来厉，乘刚也。",
+        xiaoxiang: {
+          original: "象曰：震来厉，乘刚也。",
+          translation: "「震来厉」（震雷至而危），是乘凌于刚（六二乘初九）。"
+        },
         translation: "雷声到来有危厉，丢失了大量财货，登上高陵，不要追逐，七日之后自会得回。",
         notes: {
           "亿丧贝跻于九陵": "遭受大损失而登高避险；六二乘初九之刚，遭震危厉",
@@ -5574,7 +6486,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "震苏苏，震行无眚。",
-        xiaoxiang: "象曰：震苏苏，位不当也。",
+        xiaoxiang: {
+          original: "象曰：震苏苏，位不当也。",
+          translation: "「震苏苏」（震雷麻木），是位置不当。"
+        },
         translation: "雷声令人蹒跚，在震动中前行则无灾祸。",
         notes: {
           "震苏苏": "苏苏，蹒跚不稳之貌；六三不中不正，处震中行路不稳",
@@ -5584,7 +6499,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "震遂泥。",
-        xiaoxiang: "象曰：震遂泥，未光也。",
+        xiaoxiang: {
+          original: "象曰：震遂泥，未光也。",
+          translation: "「震遂泥」（震坠于泥），是德性未光。"
+        },
         translation: "雷声陷入泥淖。",
         notes: {
           "震遂泥": "震动陷入泥中；九四处两坎（上下震之间），阳刚陷于阴柔之中",
@@ -5594,7 +6512,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "震往来厉，亿无丧，有事。",
-        xiaoxiang: "象曰：震往来厉，危行也。其事在中，大无丧也。",
+        xiaoxiang: {
+          original: "象曰：震往来厉，危行也。其事在中，大无丧也。",
+          translation: "「震往来厉」（震雷往来皆危），是危险之行。但其事居中，大无丧失。"
+        },
         translation: "雷声往来有危厉，估计不会丧失，有事务可处理。",
         notes: {
           "亿无丧": "估计不会丧失；六五居中，虽往来危厉，以中道处之，大无丧",
@@ -5604,7 +6525,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "震索索，视矍矍，征凶。震不于其躬，于其邻，无咎。婚媾有言。",
-        xiaoxiang: "象曰：震索索，中未得也。虽凶无咎，畏邻戒也。",
+        xiaoxiang: {
+          original: "象曰：震索索，中未得也。虽凶无咎，畏邻戒也。",
+          translation: "「震索索」（震雷颤颤），是中道未得。虽凶无过，因警戒邻者（吸取教训）。"
+        },
         translation: "雷声令人惶恐张皇，前征有凶。雷声不在自身，而在邻近处，无过失。婚姻有言语纠纷。",
         notes: {
           "震索索视矍矍": "上六处震极，惊恐至极，六神无主；震极而惶乱",
@@ -5656,7 +6580,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "艮其趾，无咎，利永贞。",
-        xiaoxiang: "象曰：艮其趾，未失正也。",
+        xiaoxiang: {
+          original: "象曰：艮其趾，未失正也。",
+          translation: "「艮其趾」（止于足趾），是未失正道。"
+        },
         translation: "止于脚趾，无过失，有利于长久守正。",
         notes: {
           "艮其趾": "从脚趾处止住，在行动之初知止；初六处艮卦之始，知止于未动之前",
@@ -5666,7 +6593,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "艮其腓，不拯其随，其心不快。",
-        xiaoxiang: "象曰：不拯其随，未退听也。",
+        xiaoxiang: {
+          original: "象曰：不拯其随，未退听也。",
+          translation: "「不拯其随」（不能救随从），是因为不退而听命。"
+        },
         translation: "止于小腿肚，无法救助随从（九三），心中不快。",
         notes: {
           "艮其腓不拯其随": "腓随股动，六二欲止但九三（随）不听；欲止上行者而力不从",
@@ -5676,7 +6606,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "艮其限，列其夤，厉熏心。",
-        xiaoxiang: "象曰：艮其限，危熏心也。",
+        xiaoxiang: {
+          original: "象曰：艮其限，危熏心也。",
+          translation: "「艮其限」（止于腰部），是危险熏心。"
+        },
         translation: "止于腰部，撕裂了脊肉，危险熏灼于心。",
         notes: {
           "艮其限": "限，腰部；九三处上下卦之界，强行止住腰部，上下断裂",
@@ -5686,7 +6619,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "艮其身，无咎。",
-        xiaoxiang: "象曰：艮其身，止诸躬也。",
+        xiaoxiang: {
+          original: "象曰：艮其身，止诸躬也。",
+          translation: "「艮其身」（止于身），是止于自身（自我反省）。"
+        },
         translation: "止于身体，无过失。",
         notes: {
           "艮其身": "止于全身，自我约束；六四以柔居上卦，能止其身",
@@ -5696,7 +6632,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "艮其辅，言有序，悔亡。",
-        xiaoxiang: "象曰：艮其辅，以中正也。",
+        xiaoxiang: {
+          original: "象曰：艮其辅，以中正也。",
+          translation: "「艮其辅」（止于颊辅），是以中正之德。"
+        },
         translation: "止于颊骨（管住口舌），言语有序，悔恨消亡。",
         notes: {
           "艮其辅言有序": "辅，面颊；约束口舌，言语有节有序；六五居中正，言必有序",
@@ -5706,7 +6645,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "敦艮，吉。",
-        xiaoxiang: "象曰：敦艮之吉，以厚终也。",
+        xiaoxiang: {
+          original: "象曰：敦艮之吉，以厚终也。",
+          translation: "「敦艮之吉」（敦厚而止之吉），是以厚德善终。"
+        },
         translation: "敦厚地止，吉祥。",
         notes: {
           "敦艮吉": "以敦厚之德止于正道；上九处艮之终，止道圆满，敦厚终结",
@@ -5759,7 +6701,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "鸿渐于干，小子厉，有言，无咎。",
-        xiaoxiang: "象曰：小子之厉，义无咎也。",
+        xiaoxiang: {
+          original: "象曰：小子之厉，义无咎也。",
+          translation: "「小子之厉」（小子之危），按义理无过。"
+        },
         translation: "鸿雁渐进到水边，小人有危厉，虽有非议，但无过失。",
         notes: {
           "鸿渐于干": "鸿雁渐次飞到岸边；渐进之初，初六处低位，循序而进",
@@ -5769,7 +6714,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "鸿渐于磐，饮食衎衎，吉。",
-        xiaoxiang: "象曰：饮食衎衎，不素饱也。",
+        xiaoxiang: {
+          original: "象曰：饮食衎衎，不素饱也。",
+          translation: "「饮食衎衎」（饮食和悦），不是徒然吃饱。"
+        },
         translation: "鸿雁渐进到磐石上，饮食安乐，吉祥。",
         notes: {
           "鸿渐于磐": "磐石，稳固之处；六二渐进至安稳之地",
@@ -5779,7 +6727,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "鸿渐于陆，夫征不复，妇孕不育，凶，利御寇。",
-        xiaoxiang: "象曰：夫征不复，离群丑也。妇孕不育，失其道也。利用御寇，顺相保也。",
+        xiaoxiang: {
+          original: "象曰：夫征不复，离群丑也。妇孕不育，失其道也。利用御寇，顺相保也。",
+          translation: "「夫征不复」（丈夫出征不归），是离群可耻。「妇孕不育」（妇怀孕不养），是失去其道。「利用御寇」（利于御寇），是顺势相保。"
+        },
         translation: "鸿雁渐进到陆地，丈夫出征不归，妇人怀孕却无法养育，有凶险，有利于抵御外敌。",
         notes: {
           "夫征不复妇孕不育": "九三过刚冒进，离群而行，致家道失序",
@@ -5789,7 +6740,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "鸿渐于木，或得其桷，无咎。",
-        xiaoxiang: "象曰：或得其桷，顺以巽也。",
+        xiaoxiang: {
+          original: "象曰：或得其桷，顺以巽也。",
+          translation: "「或得其桷」（或得到平木），是顺从而逊。"
+        },
         translation: "鸿雁渐进到树上，或许找到平坦的树枝栖息，无过失。",
         notes: {
           "或得其桷": "桷，平坦的树枝；鸿雁在树上找到适当栖处；六四柔顺处上卦",
@@ -5799,7 +6753,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "鸿渐于陵，妇三岁不孕，终莫之胜，吉。",
-        xiaoxiang: "象曰：终莫之胜吉，得所愿也。",
+        xiaoxiang: {
+          original: "象曰：终莫之胜吉，得所愿也。",
+          translation: "「终莫之胜吉」（最终无人能胜之吉），是得偿所愿。"
+        },
         translation: "鸿雁渐进到高陵，妇人三年不孕，但终究无人能胜，吉祥。",
         notes: {
           "妇三岁不孕": "九五与六二相应，中有九三六四阻隔，暂时不能相合",
@@ -5809,7 +6766,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "鸿渐于逵，其羽可用为仪，吉。",
-        xiaoxiang: "象曰：其羽可用为仪吉，不可乱也。",
+        xiaoxiang: {
+          original: "象曰：其羽可用为仪吉，不可乱也。",
+          translation: "「其羽可用为仪吉」（其羽可作仪饰），是不可错乱（尊卑有序）。"
+        },
         translation: "鸿雁渐进到云路，其羽毛可用作仪典装饰，吉祥。",
         notes: {
           "鸿渐于逵": "逵，云路高空；上九处渐之终，渐进至高空，超然物外",
@@ -5861,7 +6821,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "归妹以娣，跛能履，征吉。",
-        xiaoxiang: "象曰：归妹以娣，以恒也。跛能履吉，相承也。",
+        xiaoxiang: {
+          original: "象曰：归妹以娣，以恒也。跛能履吉，相承也。",
+          translation: "「归妹以娣」（嫁妹以姊妹陪嫁），是恒常之礼。「跛能履吉」（跛能行而吉），是相互承接。"
+        },
         translation: "以媵妾身份出嫁，如跛者尚能行走，前进吉祥。",
         notes: {
           "归妹以娣": "娣，随嫁的妹妹；以妾媵身份嫁人，守本分",
@@ -5871,7 +6834,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "眇能视，利幽人之贞。",
-        xiaoxiang: "象曰：利幽人之贞，未变常也。",
+        xiaoxiang: {
+          original: "象曰：利幽人之贞，未变常也。",
+          translation: "「利幽人之贞」（利于幽静之人守正），是未变常道。"
+        },
         translation: "眼睛有毛病尚能看见，有利于隐居之人守正。",
         notes: {
           "眇能视": "眇，一目；虽目力有限仍能视物，喻处境有限仍尽职",
@@ -5881,7 +6847,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "归妹以须，反归以娣。",
-        xiaoxiang: "象曰：归妹以须，未当也。",
+        xiaoxiang: {
+          original: "象曰：归妹以须，未当也。",
+          translation: "「归妹以须」（嫁妹而需等待），是位置未当。"
+        },
         translation: "以须嫁人（等待），反而以媵妾身份出嫁。",
         notes: {
           "归妹以须": "须，等待；原本以为身份高贵，结果反以妾媵出嫁",
@@ -5891,7 +6860,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "归妹愆期，迟归有时。",
-        xiaoxiang: "象曰：愆期之志，有待而行也。",
+        xiaoxiang: {
+          original: "象曰：愆期之志，有待而行也。",
+          translation: "「愆期之志」（延期之志），是要等待时机而行。"
+        },
         translation: "出嫁超过了期限，推迟出嫁是等待时机。",
         notes: {
           "归妹愆期": "超过婚期仍未出嫁；九四以阳居阴，待正应而迟",
@@ -5901,7 +6873,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "帝乙归妹，其君之袂，不如其娣之袂良，月几望，吉。",
-        xiaoxiang: "象曰：帝乙归妹，不如其娣之袂良也，其位在中，以贵行也。",
+        xiaoxiang: {
+          original: "象曰：帝乙归妹，不如其娣之袂良也，其位在中，以贵行也。",
+          translation: "「帝乙归妹」（帝乙嫁妹），其衣袖不如陪嫁的姊妹华美，但位居中位，以尊贵之德而行。"
+        },
         translation: "帝乙嫁出妹妹，正妻的衣袖不如陪嫁妹妹的衣袖华美，月近望日，吉祥。",
         notes: {
           "帝乙归妹": "帝乙，商王；以帝女身份下嫁，地位高贵而衣饰朴素",
@@ -5911,7 +6886,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "女承筐无实，士刲羊无血，无攸利。",
-        xiaoxiang: "象曰：上六无实，承虚筐也。",
+        xiaoxiang: {
+          original: "象曰：上六无实，承虚筐也。",
+          translation: "上六阴无实质，承接的只是空筐。"
+        },
         translation: "女子端着空篮子，男子宰羊却无血，无所有利。",
         notes: {
           "女承筐无实士刲羊无血": "婚礼徒有形式而无实质；上六处归妹之终，婚姻徒具外表",
@@ -5965,7 +6943,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "遇其配主，虽旬无咎，往有尚。",
-        xiaoxiang: "象曰：虽旬无咎，过旬灾也。",
+        xiaoxiang: {
+          original: "象曰：虽旬无咎，过旬灾也。",
+          translation: "「虽旬无咎」（虽十日无过），过了十日便有灾。"
+        },
         translation: "遇到相匹配的主人，即使同等级也无过失，前往有嘉奖。",
         notes: {
           "遇其配主": "初九与九四相遇，两阳相配，同志相遇于丰盛之时",
@@ -5975,7 +6956,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "丰其蔀，日中见斗，往得疑疾，有孚发若，吉。",
-        xiaoxiang: "象曰：有孚发若，信以发志也。",
+        xiaoxiang: {
+          original: "象曰：有孚发若，信以发志也。",
+          translation: "「有孚发若」（诚信而发动），是以诚信激发心志。"
+        },
         translation: "丰大的遮蔽，日中时见到北斗，前往会遭到猜疑，以诚信发明心志，吉祥。",
         notes: {
           "丰其蔀日中见斗": "蔀，遮蔽；阳被阴蔽，虽日中而如见北斗；六二受上阴遮蔽",
@@ -5985,7 +6969,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "丰其沛，日中见沫，折其右肱，无咎。",
-        xiaoxiang: "象曰：丰其沛，不可大事也。折其右肱，终不可用也。",
+        xiaoxiang: {
+          original: "象曰：丰其沛，不可大事也。折其右肱，终不可用也。",
+          translation: "「丰其沛」（丰盛却昏暗），不可成大事。「折其右肱」（折断右臂），最终不可用。"
+        },
         translation: "大雨滂沱般的遮蔽，日中时见到小星，折断了右臂，无过失。",
         notes: {
           "丰其沛日中见沫": "遮蔽更重，见细小之星；九三处上下卦交界，光明受重蔽",
@@ -5995,7 +6982,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "丰其蔀，日中见斗，遇其夷主，吉。",
-        xiaoxiang: "象曰：丰其蔀，位不当也。日中见斗，幽不明也。遇其夷主，吉行也。",
+        xiaoxiang: {
+          original: "象曰：丰其蔀，位不当也。日中见斗，幽不明也。遇其夷主，吉行也。",
+          translation: "「丰其蔀」（丰盛却被遮蔽），是位置不当。「日中见斗」（日中见星斗），是昏暗不明。「遇其夷主」（遇到平等之主），是吉祥之行。"
+        },
         translation: "丰大的遮蔽，日中时见到北斗，遇到同等的主人，吉祥。",
         notes: {
           "遇其夷主": "夷，同等；九四遇初九，同等阳刚相遇合力",
@@ -6005,7 +6995,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "来章，有庆誉，吉。",
-        xiaoxiang: "象曰：六五之吉，有庆也。",
+        xiaoxiang: {
+          original: "象曰：六五之吉，有庆也。",
+          translation: "六五的吉祥，是有大庆（畜大害成功）。"
+        },
         translation: "迎来文明光彩，有喜庆和荣誉，吉祥。",
         notes: {
           "来章": "迎来光明文采；六五以柔中居尊，虚心延揽贤才",
@@ -6015,7 +7008,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "丰其屋，蔀其家，窥其户，阒其无人，三岁不觌，凶。",
-        xiaoxiang: "象曰：丰其屋，天际翔也。窥其户，阒其无人，自藏也。",
+        xiaoxiang: {
+          original: "象曰：丰其屋，天际翔也。窥其户，阒其无人，自藏也。",
+          translation: "「丰其屋」（屋宇丰大），如飞翔于天际。「窥其户，阒其无人」（窥其门，空无一人），是自藏避世。"
+        },
         translation: "丰大其屋宇，遮蔽其家庭，窥其门户，寂静无人，三年不见人影，有凶险。",
         notes: {
           "丰其屋蔀其家": "外表高大而内部空虚；上六处丰极，以自大遮蔽，闭塞孤立",
@@ -6066,7 +7062,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "旅琐琐，斯其所取灾。",
-        xiaoxiang: "象曰：旅琐琐，志穷灾也。",
+        xiaoxiang: {
+          original: "象曰：旅琐琐，志穷灾也。",
+          translation: "「旅琐琐」（旅行琐琐），是志向已穷而招灾。"
+        },
         translation: "旅途中行为卑琐猥陋，这是自取灾祸。",
         notes: {
           "旅琐琐": "琐琐，猥陋卑小；旅途中斤斤计较、行为猥琐",
@@ -6076,7 +7075,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "旅即次，怀其资，得童仆贞。",
-        xiaoxiang: "象曰：得童仆贞，终无尤也。",
+        xiaoxiang: {
+          original: "象曰：得童仆贞，终无尤也。",
+          translation: "「得童仆贞」（得童仆守正），最终无过。"
+        },
         translation: "旅人到达住所，怀有财资，得到忠实的童仆。",
         notes: {
           "旅即次": "即，到达；次，旅舍；旅人安顿于适当处所",
@@ -6086,7 +7088,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "旅焚其次，丧其童仆，贞厉。",
-        xiaoxiang: "象曰：旅焚其次，亦以伤矣。以旅与下，其义丧也。",
+        xiaoxiang: {
+          original: "象曰：旅焚其次，亦以伤矣。以旅与下，其义丧也。",
+          translation: "「旅焚其次」（旅人馆所被焚），也是伤痛。「以旅与下」（旅人对待下属），按义理也是丧失。"
+        },
         translation: "旅人住所被焚，失去了童仆，守正有危厉。",
         notes: {
           "旅焚其次丧其童仆": "九三过刚不中，旅途中争强，导致住所被焚，童仆离散",
@@ -6096,7 +7101,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "旅于处，得其资斧，我心不快。",
-        xiaoxiang: "象曰：旅于处，未得位也。得其资斧，心未快也。",
+        xiaoxiang: {
+          original: "象曰：旅于处，未得位也。得其资斧，心未快也。",
+          translation: "「旅于处」（旅而暂处），未得到正位。「得其资斧」（得其资财兵器），但内心未快。"
+        },
         translation: "旅人暂时安身，得到财物和斧头，但心中不快。",
         notes: {
           "得其资斧": "得到财物和工具，物质有所保障；九四虽有所得，但位不当",
@@ -6106,7 +7114,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "射雉，一矢亡，终以誉命。",
-        xiaoxiang: "象曰：终以誉命，上逮也。",
+        xiaoxiang: {
+          original: "象曰：终以誉命，上逮也。",
+          translation: "「终以誉命」（终得美誉之命），是上方所及（六五受上九眷顾）。"
+        },
         translation: "射猎野鸡，一箭射失，最终获得荣誉和使命。",
         notes: {
           "射雉一矢亡": "射而不中，一箭虚发；六五柔中，旅途中有所失",
@@ -6116,7 +7127,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "鸟焚其巢，旅人先笑后号咷，丧牛于易，凶。",
-        xiaoxiang: "象曰：以旅在上，其义焚也。丧牛于易，终莫之闻也。",
+        xiaoxiang: {
+          original: "象曰：以旅在上，其义焚也。丧牛于易，终莫之闻也。",
+          translation: "「以旅在上」（旅人居上位），按义理也要焚毁。「丧牛于易」（在田畔失牛），最终无人听闻。"
+        },
         translation: "鸟巢被焚毁，旅人先笑后大哭，在边境丧失了牛，有凶险。",
         notes: {
           "鸟焚其巢": "上九处旅之极，无所安身，如巢被焚；骄而失居",
@@ -6167,7 +7181,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "进退，利武人之贞。",
-        xiaoxiang: "象曰：进退，志疑也。利武人之贞，志治也。",
+        xiaoxiang: {
+          original: "象曰：进退，志疑也。利武人之贞，志治也。",
+          translation: "「进退」（进退不定），是志向有疑。「利武人之贞」（利于武人之正），是志在治理。"
+        },
         translation: "进退不定，有利于武人守正。",
         notes: {
           "进退志疑": "初六以柔处巽始，进退不定；过于谦顺则优柔寡断",
@@ -6177,7 +7194,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "巽在床下，用史巫纷若，吉，无咎。",
-        xiaoxiang: "象曰：纷若之吉，得中也。",
+        xiaoxiang: {
+          original: "象曰：纷若之吉，得中也。",
+          translation: "「纷若之吉」（纷乱而吉），是得中道。"
+        },
         translation: "谦顺到在床下，用史官巫师频频祭祷，吉祥，无过失。",
         notes: {
           "巽在床下": "极度谦顺，如处床下；以至诚谦逊祈求神灵",
@@ -6187,7 +7207,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "频巽，吝。",
-        xiaoxiang: "象曰：频巽之吝，志穷也。",
+        xiaoxiang: {
+          original: "象曰：频巽之吝，志穷也。",
+          translation: "「频巽之吝」（频频柔顺之吝），是志向已穷。"
+        },
         translation: "频繁谦顺，有遗憾。",
         notes: {
           "频巽吝": "反复谦顺，失去原则；过于谦顺无主见，志向穷陋",
@@ -6197,7 +7220,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "悔亡，田获三品。",
-        xiaoxiang: "象曰：田获三品，有功也。",
+        xiaoxiang: {
+          original: "象曰：田获三品，有功也。",
+          translation: "「田获三品」（田猎得三种猎物），是有功效。"
+        },
         translation: "悔恨消亡，田猎获得三种猎物。",
         notes: {
           "田获三品": "六四柔顺近君，以谦顺辅佐，获得三类功绩",
@@ -6207,7 +7233,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "贞吉，悔亡，无不利。无初有终，先庚三日，后庚三日，吉。",
-        xiaoxiang: "象曰：九五之吉，位正中也。",
+        xiaoxiang: {
+          original: "象曰：九五之吉，位正中也。",
+          translation: "九五之吉，是位居正中。"
+        },
         translation: "守正吉祥，悔恨消亡，无不有利。开始时不顺，后来得终，事前三日准备，事后三日检验，吉祥。",
         notes: {
           "无初有终": "开始不顺，但终有好结果；九五居中正，以巽顺行事",
@@ -6217,7 +7246,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "巽在床下，丧其资斧，贞凶。",
-        xiaoxiang: "象曰：巽在床下，上穷也。丧其资斧，正乎凶也。",
+        xiaoxiang: {
+          original: "象曰：巽在床下，上穷也。丧其资斧，正乎凶也。",
+          translation: "「巽在床下」（柔顺到床下），是上九穷困。「丧其资斧」（失其资财兵器），是正于凶。"
+        },
         translation: "谦顺到在床下，丧失了财物和斧头，守正也有凶险。",
         notes: {
           "巽在床下": "上九处巽极，谦顺过度；以极谦处上位，丧失权威",
@@ -6268,7 +7300,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "和兑，吉。",
-        xiaoxiang: "象曰：和兑之吉，行未疑也。",
+        xiaoxiang: {
+          original: "象曰：和兑之吉，行未疑也。",
+          translation: "「和兑之吉」（和悦而喜），是行为未受质疑。"
+        },
         translation: "和顺地喜悦，吉祥。",
         notes: {
           "和兑吉": "以和顺之道喜悦，无私无偏；初九处兑卦之始，以正道悦人",
@@ -6278,7 +7313,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "孚兑，吉，悔亡。",
-        xiaoxiang: "象曰：孚兑之吉，信志也。",
+        xiaoxiang: {
+          original: "象曰：孚兑之吉，信志也。",
+          translation: "「孚兑之吉」（诚信而喜），是诚信于志。"
+        },
         translation: "以诚信喜悦，吉祥，悔恨消亡。",
         notes: {
           "孚兑吉": "以诚信为喜悦之本；九二刚中，以诚信处悦道，悔亡吉",
@@ -6288,7 +7326,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "来兑，凶。",
-        xiaoxiang: "象曰：来兑之凶，位不当也。",
+        xiaoxiang: {
+          original: "象曰：来兑之凶，位不当也。",
+          translation: "「来兑之凶」（来取悦人之凶），是位置不当。"
+        },
         translation: "来求悦人，有凶险。",
         notes: {
           "来兑凶": "主动去讨好他人；六三不中不正，以谄媚求悦，失正道",
@@ -6298,7 +7339,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "商兑未宁，介疾有喜。",
-        xiaoxiang: "象曰：九四之喜，有庆也。",
+        xiaoxiang: {
+          original: "象曰：九四之喜，有庆也。",
+          translation: "九四之喜，是有庆事。"
+        },
         translation: "权衡斟酌喜悦之道而未能安定，拒绝疾（六三之媚）则有喜悦。",
         notes: {
           "商兑未宁": "九四处两兑之间，上下皆有引诱，权衡考量",
@@ -6308,7 +7352,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "孚于剥，有厉。",
-        xiaoxiang: "象曰：孚于剥，位正当也。",
+        xiaoxiang: {
+          original: "象曰：孚于剥，位正当也。",
+          translation: "「孚于剥」（信于剥夺者），是位置正当（须警惕）。"
+        },
         translation: "诚信于剥蚀之人（上六），有危厉。",
         notes: {
           "孚于剥": "九五以诚信信任上六之阴，有被剥蚀之危",
@@ -6318,7 +7365,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "引兑。",
-        xiaoxiang: "象曰：上六引兑，未光也。",
+        xiaoxiang: {
+          original: "象曰：上六引兑，未光也。",
+          translation: "上六引人为悦，是其德未光大。"
+        },
         translation: "引诱（他人来）喜悦。",
         notes: {
           "引兑": "引诱别人来求悦；上六处兑极，以阴柔引诱众阳，谄媚之极",
@@ -6370,7 +7420,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "用拯马壮，吉。",
-        xiaoxiang: "象曰：初六之吉，顺也。",
+        xiaoxiang: {
+          original: "象曰：初六之吉，顺也。",
+          translation: "初六之吉，是因为柔顺。"
+        },
         translation: "用壮健的马来拯救，吉祥。",
         notes: {
           "用拯马壮吉": "初六处涣卦之始，涣散刚起，用壮马（九二）迅速救援",
@@ -6380,7 +7433,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "涣奔其机，悔亡。",
-        xiaoxiang: "象曰：涣奔其机，得愿也。",
+        xiaoxiang: {
+          original: "象曰：涣奔其机，得愿也。",
+          translation: "「涣奔其机」（涣散时奔向几案依靠），是得偿所愿。"
+        },
         translation: "涣散时奔赴依靠，悔恨消亡。",
         notes: {
           "涣奔其机": "机，凭借；九二处涣，迅速奔向可依靠之处（初六）",
@@ -6390,7 +7446,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "涣其躬，无悔。",
-        xiaoxiang: "象曰：涣其躬，志在外也。",
+        xiaoxiang: {
+          original: "象曰：涣其躬，志在外也。",
+          translation: "「涣其躬」（涣散其身），是志在外（散小成大）。"
+        },
         translation: "涣散其身（放弃私心），无悔恨。",
         notes: {
           "涣其躬": "消散自身的私欲执念；六三以无私应上，舍身奉上",
@@ -6400,7 +7459,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "涣其群，元吉。涣有丘，匪夷所思。",
-        xiaoxiang: "象曰：涣其群元吉，光大也。",
+        xiaoxiang: {
+          original: "象曰：涣其群元吉，光大也。",
+          translation: "「涣其群元吉」（涣散其群元吉），是光大之德。"
+        },
         translation: "消散其私党，至善吉祥。消散凝聚成小丘，是常人想不到的。",
         notes: {
           "涣其群元吉": "解散私党，大公无私；六四近君，以无私消散朋党，元吉",
@@ -6410,7 +7472,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "涣汗其大号，涣王居，无咎。",
-        xiaoxiang: "象曰：王居无咎，正位也。",
+        xiaoxiang: {
+          original: "象曰：王居无咎，正位也。",
+          translation: "「王居无咎」（王居中央无过），是位置正当。"
+        },
         translation: "颁布如汗水般广散的大命令，消散（朋党），安处王位，无过失。",
         notes: {
           "涣汗其大号": "涣，散；汗，如汗出不收；颁布大号令广布天下，以正道聚涣",
@@ -6420,7 +7485,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "涣其血，去逖出，无咎。",
-        xiaoxiang: "象曰：涣其血，远害也。",
+        xiaoxiang: {
+          original: "象曰：涣其血，远害也。",
+          translation: "「涣其血」（涣散其血），是远离祸害。"
+        },
         translation: "消散流血（危险），远离离去，无过失。",
         notes: {
           "涣其血去逖出": "血，伤害；消除危险，远离凶险之地；上九处涣极，能远害而出",
@@ -6472,7 +7540,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "不出户庭，无咎。",
-        xiaoxiang: "象曰：不出户庭，知通塞也。",
+        xiaoxiang: {
+          original: "象曰：不出户庭，知通塞也。",
+          translation: "「不出户庭」（不出门户），是知道通达与阻塞之机。"
+        },
         translation: "不出家门庭院，无过失。",
         notes: {
           "不出户庭": "初九处节卦之始，知节止，不轻率外出",
@@ -6482,7 +7553,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "不出门庭，凶。",
-        xiaoxiang: "象曰：不出门庭凶，失时极也。",
+        xiaoxiang: {
+          original: "象曰：不出门庭凶，失时极也。",
+          translation: "「不出门庭凶」（不出门有凶），是失去时机至极。"
+        },
         translation: "不出大门庭院，有凶险。",
         notes: {
           "不出门庭凶": "九二当行而不行，错失时机；过度节制，当动不动，失时",
@@ -6492,7 +7566,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "不节若，则嗟若，无咎。",
-        xiaoxiang: "象曰：不节之嗟，又谁咎也。",
+        xiaoxiang: {
+          original: "象曰：不节之嗟，又谁咎也。",
+          translation: "「不节之嗟」（不节制的叹息），又能怪谁？"
+        },
         translation: "不知节制，就会嗟叹后悔，无过失。",
         notes: {
           "不节若则嗟若": "六三不中不正，不知节制，以致嗟叹",
@@ -6502,7 +7579,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "安节，亨。",
-        xiaoxiang: "象曰：安节之亨，承上道也。",
+        xiaoxiang: {
+          original: "象曰：安节之亨，承上道也。",
+          translation: "「安节之亨」（安然守节而亨通），是承接上者之道。"
+        },
         translation: "安然节制，亨通。",
         notes: {
           "安节亨": "以安然平静之心节制，不强制自苦；六四柔顺承上，安于节道",
@@ -6512,7 +7592,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "甘节，吉，往有尚。",
-        xiaoxiang: "象曰：甘节之吉，居位中也。",
+        xiaoxiang: {
+          original: "象曰：甘节之吉，居位中也。",
+          translation: "「甘节之吉」（甘于节制之吉），是居于中位。"
+        },
         translation: "甘美的节制，吉祥，前往有嘉奖。",
         notes: {
           "甘节吉": "以甘美之道节制，使人乐于遵守；九五居中正，节道美善",
@@ -6522,7 +7605,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "苦节，贞凶，悔亡。",
-        xiaoxiang: "象曰：苦节贞凶，其道穷也。",
+        xiaoxiang: {
+          original: "象曰：苦节贞凶，其道穷也。",
+          translation: "「苦节贞凶」（苦于节制之凶），是其道已穷。"
+        },
         translation: "苦涩的节制，守正也有凶险，但悔恨消亡。",
         notes: {
           "苦节贞凶": "上六处节极，节制过苦，无法长守；强制节制有悖人性",
@@ -6575,7 +7661,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "虞吉，有它不燕。",
-        xiaoxiang: "象曰：初九虞吉，志未变也。",
+        xiaoxiang: {
+          original: "象曰：初九虞吉，志未变也。",
+          translation: "「初九虞吉」（虑而吉），是志向未变（专一）。"
+        },
         translation: "专心有所准备则吉，有别的想法则不安。",
         notes: {
           "虞吉": "虞，安虑；专心守正，诚信不二则吉",
@@ -6585,7 +7674,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "鸣鹤在阴，其子和之；我有好爵，吾与尔靡之。",
-        xiaoxiang: "象曰：其子和之，中心愿也。",
+        xiaoxiang: {
+          original: "象曰：其子和之，中心愿也。",
+          translation: "「其子和之」（小鸟相和），是发自内心所愿。"
+        },
         translation: "鹤在树荫中鸣叫，幼鹤与之应和；我有美酒，我与你同享。",
         notes: {
           "鸣鹤在阴其子和之": "诚信之鸣，同类自然呼应；九二内诚，自然感召同志",
@@ -6595,7 +7687,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "得敌，或鼓或罢，或泣或歌。",
-        xiaoxiang: "象曰：或鼓或罢，位不当也。",
+        xiaoxiang: {
+          original: "象曰：或鼓或罢，位不当也。",
+          translation: "「或鼓或罢」（或鼓或停），是位置不当。"
+        },
         translation: "遇到对手，或鼓进或停止，或哭泣或歌唱。",
         notes: {
           "得敌": "六三遇到对立面（上九），进退不定",
@@ -6605,7 +7700,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "月几望，马匹亡，无咎。",
-        xiaoxiang: "象曰：马匹亡，绝类上也。",
+        xiaoxiang: {
+          original: "象曰：马匹亡，绝类上也。",
+          translation: "「马匹亡」（失去同类的马），是断绝同类而上从。"
+        },
         translation: "月近望日，马匹离去，无过失。",
         notes: {
           "月几望": "月将圆满；六四处巽下，诚信日臻圆满",
@@ -6615,7 +7713,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "有孚挛如，无咎。",
-        xiaoxiang: "象曰：有孚挛如，位正当也。",
+        xiaoxiang: {
+          original: "象曰：有孚挛如，位正当也。",
+          translation: "「有孚挛如」（诚信牵连），是位置正当。"
+        },
         translation: "以诚信紧密相连，无过失。",
         notes: {
           "有孚挛如": "挛，紧密相连；九五居中正，以诚信紧密联结上下",
@@ -6625,7 +7726,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "翰音登于天，贞凶。",
-        xiaoxiang: "象曰：翰音登天，何可长也。",
+        xiaoxiang: {
+          original: "象曰：翰音登天，何可长也。",
+          translation: "「翰音登天」（鸡声传至天），怎能长久？"
+        },
         translation: "鸡鸣之音高登于天，守正也有凶险。",
         notes: {
           "翰音登于天": "翰音，鸡鸣；鸡鸣之声上达天际，虚声高鸣而无实质",
@@ -6679,7 +7783,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "飞鸟以凶。",
-        xiaoxiang: "象曰：飞鸟以凶，不可如何也。",
+        xiaoxiang: {
+          original: "象曰：飞鸟以凶，不可如何也。",
+          translation: "「飞鸟以凶」（鸟飞而凶），是无可奈何。"
+        },
         translation: "飞鸟因（高飞）而遭凶险。",
         notes: {
           "飞鸟以凶": "初六处小过之始，轻举妄动如鸟高飞，反遭凶",
@@ -6689,7 +7796,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "过其祖，遇其妣，不及其君，遇其臣，无咎。",
-        xiaoxiang: "象曰：不及其君，臣不可过也。",
+        xiaoxiang: {
+          original: "象曰：不及其君，臣不可过也。",
+          translation: "「不及其君」（不及其君），是臣下不可超过君主。"
+        },
         translation: "越过祖父，遇到祖母，未及君王，遇到大臣，无过失。",
         notes: {
           "过其祖遇其妣": "越过刚爻而就近柔爻；六二以柔顺道，越九三就六五",
@@ -6699,7 +7809,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "弗过防之，从或戕之，凶。",
-        xiaoxiang: "象曰：从或戕之，凶如何也。",
+        xiaoxiang: {
+          original: "象曰：从或戕之，凶如何也。",
+          translation: "「从或戕之」（顺从中或被伤害），凶险又奈何？"
+        },
         translation: "不稍加防范，跟随的人或许会伤害他，有凶险。",
         notes: {
           "弗过防之": "九三阳刚，不知稍加防范",
@@ -6709,7 +7822,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "无咎，弗过遇之，往厉必戒，勿用永贞。",
-        xiaoxiang: "象曰：弗过遇之，位不当也。往厉必戒，终不可长也。",
+        xiaoxiang: {
+          original: "象曰：弗过遇之，位不当也。往厉必戒，终不可长也。",
+          translation: "「弗过遇之」（不超过遇之），是位置不当。「往厉必戒」（前往有危必戒备），最终不可长久。"
+        },
         translation: "无过失，不过分去遇合，前往有危厉必须警戒，不可长久坚持（此道）。",
         notes: {
           "弗过遇之": "不过分求合；九四以阳居阴，位不当，不过分求合则无咎",
@@ -6719,7 +7835,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "密云不雨，自我西郊，公弋取彼在穴。",
-        xiaoxiang: "象曰：密云不雨，已上也。",
+        xiaoxiang: {
+          original: "象曰：密云不雨，已上也。",
+          translation: "「密云不雨」（密云不下雨），是已经过高（阴气太盛）。"
+        },
         translation: "乌云密布却不下雨，从我的西郊而来，王公用箭射取在穴中的鸟。",
         notes: {
           "密云不雨": "六五阴柔居尊，位高而才力不足，如云密而不能成雨",
@@ -6729,7 +7848,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "弗遇过之，飞鸟离之，凶，是谓灾眚。",
-        xiaoxiang: "象曰：弗遇过之，已亢也。",
+        xiaoxiang: {
+          original: "象曰：弗遇过之，已亢也。",
+          translation: "「弗遇过之」（不遇而越过），已经亢极。"
+        },
         translation: "没有遇合而过于越轨，飞鸟陷入网罗，有凶险，这叫做灾祸。",
         notes: {
           "飞鸟离之凶": "上六处小过之极，高飞不知止，陷入网罗",
@@ -6781,7 +7903,10 @@ export const hexagrams = [
       {
         position: "初九",
         original: "曳其轮，濡其尾，无咎。",
-        xiaoxiang: "象曰：曳其轮，义无咎也。",
+        xiaoxiang: {
+          original: "象曰：曳其轮，义无咎也。",
+          translation: "「曳其轮」（拉曳其车轮），按义理无过。"
+        },
         translation: "拖住车轮，打湿了尾巴，无过失。",
         notes: {
           "曳其轮": "拖住车轮，控制前进速度；初九处既济之始，知节制不妄进",
@@ -6791,7 +7916,10 @@ export const hexagrams = [
       {
         position: "六二",
         original: "妇丧其茀，勿逐，七日得。",
-        xiaoxiang: "象曰：七日得，以中道也。",
+        xiaoxiang: {
+          original: "象曰：七日得，以中道也。",
+          translation: "「七日得」（七日而得），是以中道。"
+        },
         translation: "妇人失去车帘，不必追逐，七日之后自会得回。",
         notes: {
           "妇丧其茀": "茀，遮蔽车帘；六二居中，暂时失去遮蔽",
@@ -6801,7 +7929,10 @@ export const hexagrams = [
       {
         position: "九三",
         original: "高宗伐鬼方，三年克之，小人勿用。",
-        xiaoxiang: "象曰：三年克之，惫也。",
+        xiaoxiang: {
+          original: "象曰：三年克之，惫也。",
+          translation: "「三年克之」（三年才克），是疲惫之极。"
+        },
         translation: "高宗征伐鬼方，三年后克胜，不可任用小人。",
         notes: {
           "高宗伐鬼方三年克之": "大功告成须历三年之久；既济之功，历尽艰辛而成",
@@ -6811,7 +7942,10 @@ export const hexagrams = [
       {
         position: "六四",
         original: "繻有衣袽，终日戒。",
-        xiaoxiang: "象曰：终日戒，有所疑也。",
+        xiaoxiang: {
+          original: "象曰：终日戒，有所疑也。",
+          translation: "「终日戒」（整日戒备），是有所疑虑。"
+        },
         translation: "有丝绸却用破布（堵漏），整日警戒。",
         notes: {
           "繻有衣袽": "以破旧之物堵塞漏洞；六四处既济之中，防患于未然",
@@ -6821,7 +7955,10 @@ export const hexagrams = [
       {
         position: "九五",
         original: "东邻杀牛，不如西邻之禴祭，实受其福。",
-        xiaoxiang: "象曰：东邻杀牛，不如西邻之时也；实受其福，吉大来也。",
+        xiaoxiang: {
+          original: "象曰：东邻杀牛，不如西邻之时也；实受其福，吉大来也。",
+          translation: "「东邻杀牛」（东邻杀牛祭），不如西邻按时简祭；实际受福者，是大吉之至。"
+        },
         translation: "东邻杀牛大祭，不如西邻简单的禴祭，实际上反而受到福祉。",
         notes: {
           "东邻杀牛不如西邻之禴祭": "诚意胜于形式；既济时，以诚心简朴之祭胜于铺张奢华",
@@ -6831,7 +7968,10 @@ export const hexagrams = [
       {
         position: "上六",
         original: "濡其首，厉。",
-        xiaoxiang: "象曰：濡其首厉，何可久也。",
+        xiaoxiang: {
+          original: "象曰：濡其首厉，何可久也。",
+          translation: "「濡其首厉」（沾湿其头之危），怎能长久？"
+        },
         translation: "头部被水湿透，有危厉。",
         notes: {
           "濡其首厉": "上六处既济之极，如渡河至终而头部入水，危厉",
@@ -6885,7 +8025,10 @@ export const hexagrams = [
       {
         position: "初六",
         original: "濡其尾，吝。",
-        xiaoxiang: "象曰：濡其尾，亦不知极也。",
+        xiaoxiang: {
+          original: "象曰：濡其尾，亦不知极也。",
+          translation: "「濡其尾」（沾湿其尾），也是不知尽头。"
+        },
         translation: "打湿了尾巴，有遗憾。",
         notes: {
           "濡其尾吝": "初六以阴柔处未济之始，急于求进，尾被水湿",
@@ -6895,7 +8038,10 @@ export const hexagrams = [
       {
         position: "九二",
         original: "曳其轮，贞吉。",
-        xiaoxiang: "象曰：九二贞吉，中以行正也。",
+        xiaoxiang: {
+          original: "象曰：九二贞吉，中以行正也。",
+          translation: "九二贞吉，是以中道行正。"
+        },
         translation: "拖住车轮，守正则吉。",
         notes: {
           "曳其轮贞吉": "九二阳刚居中，知节制，拖住不妄进",
@@ -6905,7 +8051,10 @@ export const hexagrams = [
       {
         position: "六三",
         original: "未济，征凶，利涉大川。",
-        xiaoxiang: "象曰：未济征凶，位不当也。",
+        xiaoxiang: {
+          original: "象曰：未济征凶，位不当也。",
+          translation: "「未济征凶」（未济而征凶），是位置不当。"
+        },
         translation: "尚未完成，前征有凶险，有利于涉越大河。",
         notes: {
           "未济征凶": "六三处未济之中，位不当，急于征进则凶",
@@ -6915,7 +8064,10 @@ export const hexagrams = [
       {
         position: "九四",
         original: "贞吉，悔亡，震用伐鬼方，三年有赏于大国。",
-        xiaoxiang: "象曰：贞吉悔亡，志行也。",
+        xiaoxiang: {
+          original: "象曰：贞吉悔亡，志行也。",
+          translation: "「贞吉悔亡」，是志向得行。"
+        },
         translation: "守正吉祥，悔恨消亡，奋力征伐鬼方，三年后获得大国的赏赐。",
         notes: {
           "震用伐鬼方三年有赏": "以奋发之力从事艰难大事，历经三年终成",
@@ -6925,7 +8077,10 @@ export const hexagrams = [
       {
         position: "六五",
         original: "贞吉，无悔，君子之光，有孚，吉。",
-        xiaoxiang: "象曰：君子之光，其晖吉也。",
+        xiaoxiang: {
+          original: "象曰：君子之光，其晖吉也。",
+          translation: "君子之光，其辉煌之吉。"
+        },
         translation: "守正吉祥，无悔恨，君子的光辉，有诚信，吉祥。",
         notes: {
           "君子之光有孚吉": "六五柔中居尊，以诚信文明处未济，光辉照人",
@@ -6935,7 +8090,10 @@ export const hexagrams = [
       {
         position: "上九",
         original: "有孚于饮酒，无咎。濡其首，有孚失是。",
-        xiaoxiang: "象曰：饮酒濡首，亦不知节也。",
+        xiaoxiang: {
+          original: "象曰：饮酒濡首，亦不知节也。",
+          translation: "「饮酒濡首」（饮酒至沾湿头），也是不知节制。"
+        },
         translation: "以诚信饮酒（庆祝），无过失。但若饮酒至头部被湿（醉），则诚信有失。",
         notes: {
           "有孚于饮酒无咎": "未济将成，以诚信之心庆贺，适度则无咎",
@@ -6945,6 +8103,5 @@ export const hexagrams = [
     ]
   }
 ];
-
 export const getHexagramById = (id) => hexagrams.find(h => h.id === id);
 export const getHexagramByBinary = (binary) => hexagrams.find(h => h.binary === binary);

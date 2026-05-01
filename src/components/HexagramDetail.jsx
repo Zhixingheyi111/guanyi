@@ -178,7 +178,7 @@ const S = {
     background: 'var(--ink)',
     borderRadius: '1px',
   },
-  // 小象、白话等小标签
+  // 小象、白话等小标签（保留为旧用途；新结构用 subSection*）
   subLabel: {
     display: 'inline-block',
     fontSize: '0.7rem',
@@ -190,6 +190,34 @@ const S = {
     border: '1px solid var(--paper-edge)',
     borderRadius: '2px',
     background: 'var(--paper)',
+  },
+  // 爻内分区（爻辞·周公 / 小象·孔子）
+  subSectionHeader: {
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: 'var(--space-2)',
+    marginTop: 'var(--space-3)',
+    marginBottom: 'var(--space-2)',
+    paddingBottom: 'var(--space-1)',
+    borderBottom: '1px dashed var(--paper-edge)',
+  },
+  subSectionTitle: {
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    fontWeight: 500,
+    letterSpacing: 'var(--track-xwide)',
+  },
+  subSectionAuthor: {
+    fontSize: '0.7rem',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-normal)',
+    fontStyle: 'italic',
+  },
+  // 爻内分隔（爻辞 ↔ 小象 之间）
+  yaoInnerDivider: {
+    height: 0,
+    borderTop: '1px solid var(--paper-edge)',
+    margin: 'var(--space-4) calc(-1 * var(--space-4))',
   },
 };
 
@@ -223,6 +251,13 @@ function SingleYaoDiagram({ position }) {
       <div style={S.singleYaoHalf} />
     </div>
   );
+}
+
+// 兼容老 string 格式与新 {original, translation} 对象格式
+function unwrapXiaoxiang(x) {
+  if (!x) return null;
+  if (typeof x === 'string') return { original: x, translation: null };
+  return x;
 }
 
 // ── 主组件 ─────────────────────────────────────────────────────────────────
@@ -308,28 +343,43 @@ export default function HexagramDetail({ hexagramId, onBack }) {
       {/* 六爻详解 */}
       <div style={S.section}>
         <div style={S.sectionTitle}>六　爻　详　解</div>
-        {hexagram.yaoci.map((yao, i) => (
-          <div key={i} style={S.yaoBlock}>
-            <div style={S.yaoTitle}>
-              <span style={S.yaoPosition}>{yao.position}</span>
-              <SingleYaoDiagram position={yao.position} />
+        {hexagram.yaoci.map((yao, i) => {
+          const xx = unwrapXiaoxiang(yao.xiaoxiang);
+          return (
+            <div key={i} style={S.yaoBlock}>
+              <div style={S.yaoTitle}>
+                <span style={S.yaoPosition}>{yao.position}</span>
+                <SingleYaoDiagram position={yao.position} />
+              </div>
+
+              {/* 爻辞 · 周公 */}
+              <div style={S.subSectionHeader}>
+                <span style={S.subSectionTitle}>爻辞</span>
+                <span style={S.subSectionAuthor}>· 周公</span>
+              </div>
+              <p style={S.original}>{yao.original}</p>
+              {yao.translation && (
+                <p style={S.translation}>{yao.translation}</p>
+              )}
+              <NotesList notes={yao.notes} />
+
+              {/* 小象 · 孔子 */}
+              {xx?.original && (
+                <>
+                  <div style={S.yaoInnerDivider} />
+                  <div style={S.subSectionHeader}>
+                    <span style={S.subSectionTitle}>小象</span>
+                    <span style={S.subSectionAuthor}>· 孔子</span>
+                  </div>
+                  <p style={S.classicText}>{xx.original}</p>
+                  {xx.translation && (
+                    <p style={S.translation}>{xx.translation}</p>
+                  )}
+                </>
+              )}
             </div>
-            <p style={S.original}>{yao.original}</p>
-            {yao.xiaoxiang && (
-              <>
-                <div style={S.subLabel}>小象</div>
-                <p style={{ ...S.classicText, margin: '0 0 0.5rem' }}>{yao.xiaoxiang}</p>
-              </>
-            )}
-            {yao.translation && (
-              <>
-                <div style={S.subLabel}>白话</div>
-                <p style={{ ...S.translation, margin: '0 0 0.5rem' }}>{yao.translation}</p>
-              </>
-            )}
-            <NotesList notes={yao.notes} />
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 我的笔记 */}
