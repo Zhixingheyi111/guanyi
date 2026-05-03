@@ -1,39 +1,48 @@
-// Claude API 调用模块
-// 封装对 Anthropic API 的请求，实现五层卦象的易经解读
+// LLM API 调用模块（OpenRouter 路由 DeepSeek-V3 免费档，OpenAI 兼容协议）
+// 封装对上游 API 的请求，实现五层卦象的易经解读
 
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/messages`;
-const MODEL   = 'claude-sonnet-4-6';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/chat/completions`;
+// 模型 ID 来自 https://openrouter.ai/models ，:free 后缀代表免费档（有限速）
+// 想换模型只改这一行。中文古文场景候选：
+//   'z-ai/glm-4.5-air:free'                       智谱 GLM-4.5-Air，中文最强（首选）
+//   'qwen/qwen3-next-80b-a3b-instruct:free'       阿里 Qwen3-Next 80B
+//   'tencent/hy3-preview:free'                    腾讯混元 3
+//   'minimax/minimax-m2.5:free'                   MiniMax
+const MODEL   = 'z-ai/glm-4.5-air:free';
 
 // Tool schema：全部拍平为顶级 string 字段
 // 历史教训：嵌套 object 时模型会把子对象序列化成畸形 JSON 字符串塞进来
 const INTERPRETATION_TOOL = {
-  name: 'yijing_interpret',
-  description: '输出五层卦象的易经解读与综合建议',
-  input_schema: {
-    type: 'object',
-    properties: {
-      benGuaInterpretation:  { type: 'string', description: '本卦解读：当下处境' },
-      zongGuaInterpretation: { type: 'string', description: '综卦解读：对方视角/另一面' },
-      cuoGuaInterpretation:  { type: 'string', description: '错卦解读：欠缺与互补' },
-      huGuaInterpretation:   { type: 'string', description: '互卦解读：内在结构' },
-      bianGuaInterpretation: { type: 'string', description: '变卦解读：发展趋势。若无动爻则可省略' },
-      adviceCurrentAction:   { type: 'string', description: '综合建议 - 当下应做' },
-      adviceWarnings:        { type: 'string', description: '综合建议 - 需要警惕' },
-      adviceSupplement:      { type: 'string', description: '综合建议 - 需要补足' },
-      adviceFutureDirection: { type: 'string', description: '综合建议 - 未来走向' },
+  type: 'function',
+  function: {
+    name: 'yijing_interpret',
+    description: '输出五层卦象的易经解读与综合建议',
+    parameters: {
+      type: 'object',
+      properties: {
+        benGuaInterpretation:  { type: 'string', description: '本卦解读：当下处境' },
+        zongGuaInterpretation: { type: 'string', description: '综卦解读：对方视角/另一面' },
+        cuoGuaInterpretation:  { type: 'string', description: '错卦解读：欠缺与互补' },
+        huGuaInterpretation:   { type: 'string', description: '互卦解读：内在结构' },
+        bianGuaInterpretation: { type: 'string', description: '变卦解读：发展趋势。若无动爻则可省略' },
+        adviceCurrentAction:   { type: 'string', description: '综合建议 - 当下应做' },
+        adviceWarnings:        { type: 'string', description: '综合建议 - 需要警惕' },
+        adviceSupplement:      { type: 'string', description: '综合建议 - 需要补足' },
+        adviceFutureDirection: { type: 'string', description: '综合建议 - 未来走向' },
+      },
+      required: [
+        'benGuaInterpretation',
+        'zongGuaInterpretation',
+        'cuoGuaInterpretation',
+        'huGuaInterpretation',
+        'adviceCurrentAction',
+        'adviceWarnings',
+        'adviceSupplement',
+        'adviceFutureDirection',
+      ],
     },
-    required: [
-      'benGuaInterpretation',
-      'zongGuaInterpretation',
-      'cuoGuaInterpretation',
-      'huGuaInterpretation',
-      'adviceCurrentAction',
-      'adviceWarnings',
-      'adviceSupplement',
-      'adviceFutureDirection',
-    ],
   },
 };
 
@@ -246,7 +255,9 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }],
         tools: [INTERPRETATION_TOOL],
-        tool_choice: { type: 'tool', name: 'yijing_interpret' },
+        // GLM-4.5-Air 等部分免费模型不接受强制 tool_choice，只能 'auto'
+        // 配合 prompt 里"必须通过工具返回"的指令，模型基本都会调用工具
+        tool_choice: 'auto',
       },
       {
         headers: {
@@ -259,13 +270,33 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
     handleApiError(error);
   }
 
-  // 从 tool_use 块提取结构化结果（无需 JSON.parse）
-  const toolUse = response.data.content.find(block => block.type === 'tool_use');
-  console.log('[Claude tool_use]', toolUse);
-  if (!toolUse || !toolUse.input) {
+  // 从 tool_calls 提取结构化结果（OpenAI 风格：arguments 是 JSON 字符串）
+  const message  = response.data.choices?.[0]?.message;
+  const toolCall = message?.tool_calls?.[0];
+  console.log('[LLM tool_call]', toolCall);
+  console.log('[LLM content]',  message?.content);
+
+  let input;
+  if (toolCall?.function?.arguments) {
+    try {
+      input = JSON.parse(toolCall.function.arguments);
+    } catch {
+      throw new Error('解读失败：tool arguments JSON 解析失败');
+    }
+  } else if (message?.content) {
+    // 兜底：模型没走工具，但可能直接吐了 JSON 文本（带或不带 ```json 代码块）
+    const text = message.content;
+    const fenced = text.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+    const raw    = fenced ? fenced[1] : text.match(/\{[\s\S]*\}/)?.[0];
+    if (!raw) throw new Error('解读失败：返回中未找到 JSON');
+    try {
+      input = JSON.parse(raw);
+    } catch {
+      throw new Error('解读失败：content JSON 解析失败');
+    }
+  } else {
     throw new Error('解读失败：返回格式异常');
   }
-  const input = toolUse.input;
 
   // 把扁平的 advice* 字段重组回前端期望的嵌套结构
   const comprehensiveAdvice = {

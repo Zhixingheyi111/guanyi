@@ -1,10 +1,12 @@
-// 学习聊天 API：向 Claude 请教单卦相关问题
+// 学习聊天 API：向 LLM 请教单卦相关问题（OpenRouter 路由 DeepSeek-V3 免费档，OpenAI 兼容协议）
 // 与 claudeApi.js 完全独立，不共享代码，避免耦合
 
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/messages`;
-const MODEL   = 'claude-sonnet-4-6';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/chat/completions`;
+// 模型 ID 来自 https://openrouter.ai/models ，:free 后缀代表免费档（有限速）
+// 改模型见 claudeApi.js 顶部注释
+const MODEL   = 'z-ai/glm-4.5-air:free';
 
 // ── Prompt 构建 ─────────────────────────────────────────────────────────────
 
@@ -139,7 +141,9 @@ export async function sendStudyMessage({ hexagram, history, userMessage }) {
   if (!appSecret) throw new Error('密钥配置错误');
 
   const systemPrompt = buildSystemPrompt(hexagram);
+  // OpenAI 风格：system 进入 messages 第一条
   const messages = [
+    { role: 'system', content: systemPrompt },
     ...history,
     { role: 'user', content: userMessage },
   ];
@@ -151,7 +155,6 @@ export async function sendStudyMessage({ hexagram, history, userMessage }) {
       {
         model: MODEL,
         max_tokens: 2048,
-        system: systemPrompt,
         messages,
       },
       {
@@ -165,10 +168,10 @@ export async function sendStudyMessage({ hexagram, history, userMessage }) {
     handleApiError(error);
   }
 
-  // 纯文本回复：取第一个 text block
-  const textBlock = response.data.content.find(b => b.type === 'text');
-  if (!textBlock || !textBlock.text) {
+  // 纯文本回复：OpenAI 风格 choices[0].message.content
+  const text = response.data.choices?.[0]?.message?.content;
+  if (!text) {
     throw new Error('回复格式异常');
   }
-  return textBlock.text;
+  return text;
 }
