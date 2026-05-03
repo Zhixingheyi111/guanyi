@@ -90,6 +90,14 @@ const S = {
     marginTop: 'var(--space-2)',
     marginBottom: 'var(--space-5)',
   },
+  // 卷首引语：水墨分隔线之下、tab 之上的引文
+  epigraph: {
+    textAlign: 'center',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-whisper)',
+    letterSpacing: 'var(--track-wide)',
+    margin: '0 0 var(--space-5)',
+  },
   error: {
     color: 'var(--vermilion-deep)',
     fontSize: '0.9rem',
@@ -359,6 +367,9 @@ export default function App() {
 
           {/* 水墨分隔线 */}
           <InkSeparator />
+
+          {/* 卷首引语 */}
+          <p style={S.epigraph}>天行健，君子以自强不息</p>
 
           {/* 模式导航 */}
           <Navigation currentMode={mode} onModeChange={handleModeChange} />
