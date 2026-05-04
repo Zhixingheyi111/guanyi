@@ -1,16 +1,14 @@
-// LLM API 调用模块（OpenRouter 路由 DeepSeek-V3 免费档，OpenAI 兼容协议）
+// LLM API 调用模块（DeepSeek 直连，OpenAI 兼容协议）
 // 封装对上游 API 的请求，实现五层卦象的易经解读
 
 import axios from 'axios';
 
 const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/chat/completions`;
-// 模型 ID 来自 https://openrouter.ai/models ，:free 后缀代表免费档（有限速）
-// 想换模型只改这一行。中文古文场景候选：
-//   'z-ai/glm-4.5-air:free'                       智谱 GLM-4.5-Air，中文最强（首选）
-//   'qwen/qwen3-next-80b-a3b-instruct:free'       阿里 Qwen3-Next 80B
-//   'tencent/hy3-preview:free'                    腾讯混元 3
-//   'minimax/minimax-m2.5:free'                   MiniMax
-const MODEL   = 'z-ai/glm-4.5-air:free';
+// 模型 ID 来自 https://platform.deepseek.com/api-docs/pricing/
+// 想换模型只改这一行。候选：
+//   'deepseek-chat'        DeepSeek-V3 通用版（首选，中文古文表现稳）
+//   'deepseek-reasoner'    DeepSeek-R1 推理版（更慢更贵，本场景不需要）
+const MODEL   = 'deepseek-chat';
 
 // Tool schema：全部拍平为顶级 string 字段
 // 历史教训：嵌套 object 时模型会把子对象序列化成畸形 JSON 字符串塞进来

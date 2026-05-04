@@ -1,10 +1,12 @@
 // guanyi-proxy：Cloudflare Worker 薄代理
-// 职责：把前端请求透传给 OpenRouter API，隐藏 API key，加 CORS 白名单 + 共享 secret 防护
+// 职责：把前端请求透传给 DeepSeek API，隐藏 API key，加 CORS 白名单 + 共享 secret 防护
 
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions';
 
 const ALLOWED_ORIGINS = [
   'https://guanyi.pages.dev',
+  'https://guanyi.me',
+  'https://www.guanyi.me',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
@@ -62,14 +64,11 @@ export default {
 
     let upstream;
     try {
-      upstream = await fetch(OPENROUTER_URL, {
+      upstream = await fetch(DEEPSEEK_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${env.OPENROUTER_API_KEY}`,
+          'Authorization': `Bearer ${env.DEEPSEEK_API_KEY}`,
           'content-type': 'application/json',
-          // OpenRouter 推荐的归因 header（可选，不影响功能）
-          'HTTP-Referer': 'https://guanyi.pages.dev',
-          'X-Title': 'Guanyi (观易)',
         },
         body,
       });

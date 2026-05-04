@@ -1,12 +1,11 @@
-// 学习聊天 API：向 LLM 请教单卦相关问题（OpenRouter 路由 DeepSeek-V3 免费档，OpenAI 兼容协议）
+// 学习聊天 API：向 LLM 请教单卦相关问题（DeepSeek 直连，OpenAI 兼容协议）
 // 与 claudeApi.js 完全独立，不共享代码，避免耦合
 
 import axios from 'axios';
 
 const API_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/chat/completions`;
-// 模型 ID 来自 https://openrouter.ai/models ，:free 后缀代表免费档（有限速）
 // 改模型见 claudeApi.js 顶部注释
-const MODEL   = 'z-ai/glm-4.5-air:free';
+const MODEL   = 'deepseek-chat';
 
 // ── Prompt 构建 ─────────────────────────────────────────────────────────────
 

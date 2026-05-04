@@ -1,3 +1,7 @@
 name = "guanyi-proxy"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "api.guanyi.me", custom_domain = true }
+]
