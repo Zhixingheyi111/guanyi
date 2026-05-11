@@ -1,6 +1,7 @@
 // 占卜模式容器：灵签（最轻）/ 梅花（轻）/ 铜钱（中） 三个子标签
 // 由轻到重排列。各方法的具体起卦实现在子组件里（Phase 1.2-1.4）。
 import { useState } from 'react';
+import MeiHua from './fortune/MeiHua';
 
 const S = {
   tabs: {
@@ -87,7 +88,10 @@ export default function Fortune() {
         ))}
       </div>
 
-      <Placeholder title={current.label.replace('　', '')} hint={current.desc} />
+      {tab === 'meihua'
+        ? <MeiHua />
+        : <Placeholder title={current.label.replace('　', '')} hint={current.desc} />
+      }
     </div>
   );
 }
