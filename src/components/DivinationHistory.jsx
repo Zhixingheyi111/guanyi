@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { getDivinationRecords, deleteDivinationRecord } from '../utils/storage';
 
 const S = {
@@ -137,17 +137,18 @@ function formatTimestamp(ts) {
 }
 
 export default function DivinationHistory({ onView }) {
-  const [open, setOpen]       = useState(false);
-  const [records, setRecords] = useState(() => getDivinationRecords());
-
-  useEffect(() => {
-    if (open) setRecords(getDivinationRecords());
-  }, [open]);
+  const [open, setOpen] = useState(false);
+  // 用 nonce 触发刷新，避免在 effect 里 setState（React 19 严格模式不喜欢）
+  // open 变化时 useMemo 也会重算，确保打开抽屉总能看到最新记录
+  const [refreshNonce, setRefreshNonce] = useState(0);
+  // open + refreshNonce 是"刷新键"而非真实数据依赖，故意触发重算
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const records = useMemo(() => getDivinationRecords(), [open, refreshNonce]);
 
   const handleDelete = (id) => {
     if (!window.confirm('删除这条起卦记录？此操作不可撤销。')) return;
     deleteDivinationRecord(id);
-    setRecords(getDivinationRecords());
+    setRefreshNonce(n => n + 1);
   };
 
   const count = records.length;

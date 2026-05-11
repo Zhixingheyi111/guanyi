@@ -50,7 +50,11 @@ export default function NoteEditor({
   const hintTimer    = useRef(null);
   const pendingValue = useRef(null);
   const onSaveRef    = useRef(onSave);
-  onSaveRef.current  = onSave;
+
+  // 用 effect 同步最新的 onSave，避免在 render 中 mutate ref（React 19 严格模式禁止）
+  useEffect(() => {
+    onSaveRef.current = onSave;
+  }, [onSave]);
 
   const handleChange = (e) => {
     const v = e.target.value;
