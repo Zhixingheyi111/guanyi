@@ -13,7 +13,7 @@ description: Commit pending changes (if any) and push current branch to Forgejo 
    - **绝不**使用 `git add -A`，按文件名添加
 3. `git push forgejo claude/naughty-booth-4d532f`
 4. `git ls-remote forgejo claude/naughty-booth-4d532f` — 验证最新 commit hash 在远端可见
-5. 在 `PROGRESS.md` 顶部加一条时间戳记录（用 `date` 取当前时间）
+5. 在 `PROGRESS.md` 顶部加一条时间戳记录。**时间格式必须 HH:MM TZ**：`date "+%Y-%m-%d %H:%M %Z"`
 6. 报告：commit hash、Forgejo 验证结果、PROGRESS.md 更新摘要
 
 ## 安全约束

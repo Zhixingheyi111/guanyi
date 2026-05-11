@@ -41,7 +41,7 @@
 
 ## 备份就位
 - [ ] worktree 分支已 push 到 forgejo（最新 commit hash 可见）
-- [ ] LESSONS.md 是否需新增条目（本期是否有失败值得记录）
+- [ ] ERROR_LOG.md 是否需新增条目（本期是否有失败值得记录）
 
 ## 用户验收（最后一步）
 - [ ] **用户明确说"可以 merge"**
@@ -69,4 +69,4 @@ git push origin --tags         # 把 phase tag 也推上去
 如果生产环境出问题：
 1. 立即 `git revert -m 1 <merge-commit>` （revert merge commit，保留代码历史）
 2. `git push origin main`（再次部署，回到上一个稳定版）
-3. 在 LESSONS.md 记录这次回滚和原因
+3. 在 ERROR_LOG.md 记录这次回滚和原因

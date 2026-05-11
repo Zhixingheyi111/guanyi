@@ -6,7 +6,7 @@
 > - **PROJECT.md** = 当前阶段、4 期路线、安全约束、动态进度（本文件）
 > - **CHANGELOG.md** = 版本化变更记录（每个 Phase 一个 entry）
 > - **PROGRESS.md** = 时间线工作日志
-> - **LESSONS.md** = 失败和教训（确保同样的错误不发生第二次）
+> - **ERROR_LOG.md** = 失败和教训（确保同样的错误不发生第二次）
 > - **SOURCES.md** = 数据来源声明
 > - **docs/PRE_MERGE_CHECKLIST.md** = 合并到 main 前必走清单
 > - **docs/MOBILE_TEST_SOP.md** = 手机端测试流程
@@ -33,7 +33,9 @@
 | 改 worker/ | ⚠️ 仅必要 + 告知 | 一期不需要改 |
 | .env / API key | ❌ 永不进 git | 任何场景 |
 | 写单元测试 | ❌ 不写 | CLAUDE.md 规定 |
-| 失败发生时 | ⚠️ 必须 `/log-failure` | 写入 LESSONS.md，确保不再犯 |
+| 失败发生时 | ⚠️ 必须 `/log-error` | 写入 ERROR_LOG.md，确保不再犯 |
+| 写任何日志/变更条目 | ⚠️ 必须含 `HH:MM TZ` | 不能只写日期；用 `date "+%Y-%m-%d %H:%M %Z"` |
+| ACTION_ITEMS.md | ⚠️ 一次只一个 🔄 | 完成后立即移到"已完成" + 写完成时间 |
 
 ---
 
@@ -43,7 +45,7 @@
 |---|---|
 | `/backup` | 任何时候做进度备份（commit + push forgejo） |
 | `/checkpoint` | 每个 Phase 完成时（lint+build+commit+tag+push） |
-| `/log-failure` | 失败发生时（写 LESSONS.md + 防范机制） |
+| `/log-error` | 失败发生时（写 ERROR_LOG.md + 防范机制） |
 | `/premerge` | Phase 4，merge to main 前（走完整 checklist） |
 
 ---
@@ -76,9 +78,9 @@
 
 - [x] 0.5.1 SessionStart hook 注入当前时间
 - [ ] 0.5.2 扩展 PROJECT.md 全 4 期（本文件）
-- [ ] 0.5.3 创建 CHANGELOG.md / LESSONS.md / PROGRESS.md / SOURCES.md
+- [ ] 0.5.3 创建 CHANGELOG.md / ERROR_LOG.md / PROGRESS.md / SOURCES.md
 - [ ] 0.5.4 创建 docs/PRE_MERGE_CHECKLIST.md / MOBILE_TEST_SOP.md / decisions/
-- [ ] 0.5.5 创建 4 个 slash command: /backup /checkpoint /log-failure /premerge
+- [ ] 0.5.5 创建 4 个 slash command: /backup /checkpoint /log-error /premerge
 - [ ] 0.5.6 commit + tag `v0.0.1-governance` + push forgejo
 
 ---
@@ -298,7 +300,7 @@
 | `PROJECT.md` | 本文件 - 当前进度与安全约束 |
 | `CHANGELOG.md` | 版本化变更日志 |
 | `PROGRESS.md` | 时间线工作日志 |
-| `LESSONS.md` | 失败教训库 |
+| `ERROR_LOG.md` | 失败教训库 |
 | `SOURCES.md` | 数据来源声明 |
 | `docs/PRE_MERGE_CHECKLIST.md` | merge to main 前必走清单 |
 | `docs/MOBILE_TEST_SOP.md` | 手机端测试流程 |

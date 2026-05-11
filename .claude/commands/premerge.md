@@ -27,7 +27,7 @@ description: Run the full pre-merge-to-main checklist before deploying to GitHub
 7. **生产出问题怎么办**：
    - **不要 hotfix 到 main**
    - 立即 `git revert -m 1 <merge-commit>` 回滚
-   - 在 LESSONS.md 记录原因
+   - 在 ERROR_LOG.md 记录原因
    - 回到 worktree 分支修复后重走 `/premerge`
 
 ## 安全约束

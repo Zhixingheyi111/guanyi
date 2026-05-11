@@ -17,10 +17,11 @@ description: End-of-phase ritual — verify, commit, tag, backup. Args = phase n
    - 跑 `npm run build`，**必须通过**
    - 任一失败：停止，报告问题，不要"修了再 commit"——先让用户知道
 
-3. **更新文档**
-   - `CHANGELOG.md`：加新版本条目（含日期、所有变更、文件清单）
-   - `PROGRESS.md`：在顶部加 session 进度记录
-   - `PROJECT.md` "当前任务"区块：标记完成 + 设置下一个 Phase
+3. **更新文档**（**所有时间戳必须 HH:MM TZ**：`date "+%Y-%m-%d %H:%M %Z"`）
+   - `CHANGELOG.md`：加新版本条目，header 含 `vX.Y.Z - YYYY-MM-DD HH:MM TZ - 标题`
+   - `PROGRESS.md`：在顶部加 session 进度记录，header 同样含 HH:MM TZ
+   - `PROJECT.md` "当前任务"区块：标记完成 + 设置下一个 Phase + 更新"当前时间最后更新"
+   - `ACTION_ITEMS.md`：把当前 Phase 的 actions 移到"已完成" + 加完成时间
 
 4. **Commit**
    - 用 conventional commit 格式：`chore(release): Phase X 完成 → vX.Y.Z`

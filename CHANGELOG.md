@@ -2,18 +2,27 @@
 
 观易 App 版本变更记录。每次完成 Phase 后添加新版本条目。遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
-格式：`[版本号] - YYYY-MM-DD - 标题`，分 Added / Changed / Removed / Fixed / Security 五类。
+格式：`[版本号] - YYYY-MM-DD HH:MM TZ - 标题`，分 Added / Changed / Removed / Fixed / Security 五类。
+
+**所有版本必须有 HH:MM TZ**（不能只写日期）。获取：`date "+%Y-%m-%d %H:%M %Z"`
 
 ---
 
 ## [Unreleased]
 
-### Phase 1（占卜模块 + 易经对话升级，进行中）
-待启动。
+### v0.0.2-governance（待 commit，2026-05-10 21:28 CDT 起）
+- Renamed `LESSONS.md` → `ERROR_LOG.md`（更直白）
+- 新增 `ACTION_ITEMS.md`（当前 sprint 实际在做的事，与 PROJECT.md 远期分离）
+- 新增 3 个真 skill（`.claude/skills/` 下，按上下文自动触发）：error-logger / safe-backup / phase-checkpoint
+- Renamed slash command `/log-failure` → `/log-error`
+- 所有 tracking 文件强制 `HH:MM TZ` 时间戳（不能只写日期）
+- 补全 E001 / CHANGELOG 历史 entry 的时间字段
+
+### Phase 1（占卜模块 + 易经对话升级，待启动）
 
 ---
 
-## [v0.0.1-governance] - 2026-05-10 - 治理系统建立
+## [v0.0.1-governance] - 2026-05-10 16:43 CDT - 治理系统建立 v1
 
 ### Added
 - `PROJECT.md` 跨 session 总控文件（含全 4 期路线图）
@@ -36,7 +45,7 @@
 
 ---
 
-## [v0.0.0-initial] - 2026-04 (估)
+## [v0.0.0-initial] - 2026-04 (具体时间未记录，回溯估算)
 
 初始易经 App 状态：
 - 蓍草问道模式（18 次取草模拟 + 五层卦象 + AI 解读）
