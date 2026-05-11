@@ -47,16 +47,21 @@
 
 ### 不能做的
 1. 不装额外依赖
-2. 不 git push
+2. 不 push 到 GitHub origin（任何分支，main 自动部署 GitHub Pages）
 3. 不写单元测试
 4. 不重试超过2次
 5. 不执行 rm -rf、git reset --hard 等不可逆命令
 6. 不把 API key 写进任何代码文件
 7. 不部署到生产环境（除非我明确要求）
 
+### 备份是允许的
+- ✅ push 到 `forgejo` remote（nexus.xinle.biz/git/ailearnandgrowth/guanyi）作为进度备份，不触发任何部署
+- ❌ push 到 `origin`（GitHub）需用户明确批准
+
 ### 关键提醒
 ⚠️ API key 只能在 .env 文件，绝不进 git，绝不写进代码
 ⚠️ 部署前必须先讨论 API key 保护方案
 
 ## 当前阶段
-项目初始化完成。下一步：建立64卦数据库。
+**每次工作开始前，先读 [`PROJECT.md`](PROJECT.md)** 了解当前 Phase、任务进度、待办事项。
+PROJECT.md 是动态进度文件，CLAUDE.md（本文件）是不变的核心规则。
