@@ -13,19 +13,21 @@
 
 ### 🔄 进行中
 
-无（v0.0.2-governance 已 commit + push 后会清空）
+无
+
+### ⚠️ 阻塞项（Phase 1.11 /checkpoint 之前必修）
+
+#### B1 — 修 React 19 Hooks lint 错误
+- **添加时间：** 2026-05-10 21:38 CDT
+- **来源：** ERROR_LOG E002
+- **责任人：** Claude（修代码）；用户（确认行为是否变化）
+- **影响范围：**
+  - `src/components/DivinationHistory.jsx:144`（`react-hooks/set-state-in-effect`）
+  - `src/components/NoteEditor.jsx:53`（`react-hooks/refs`）
+- **为什么阻塞：** lint 不通过，`/checkpoint` 拒绝打 v0.1.0 tag
+- **何时修：** 建议在 A5 完成后、Phase 1.11 之前；或者发现行为问题随时修
 
 ### 📋 待做（按顺序）
-
-#### A1 — Phase 1.1：占卜 tab 路由 + Fortune.jsx 骨架
-- **添加时间：** 2026-05-10 21:28 CDT
-- **责任人：** Claude
-- **预计：** 单 session 完成
-- **细节：**
-  - 改 `src/App.jsx` mode 加 `'fortune'`
-  - 改 `src/components/Navigation.jsx` 加第 3 个 tab "占卜"
-  - 新 `src/components/Fortune.jsx` 容器骨架（含 sub-tab 但不实现 3 种方法）
-- **完成后：** `/backup`，更新本文件状态
 
 #### A2 — Phase 1.2：梅花易数实现
 - **添加时间：** 2026-05-10 21:28 CDT
@@ -66,11 +68,11 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-10 21:38 CDT | A1 | Phase 1.1 占卜 tab 路由 + Fortune.jsx 骨架（commit 07674e2，build ✅，lint 有 pre-existing E002） |
+| 2026-05-10 21:31 CDT | DONE-0.5b | 治理系统 v0.0.2（ERROR_LOG/ACTION_ITEMS/3 skills/时间戳）+ push forgejo |
 | 2026-05-10 16:43 CDT | DONE-Phase 0.5 | 治理系统 v0.0.1 完成 + push forgejo |
 | 2026-05-10 16:43 CDT | DONE-Phase 0.6 | Forgejo 备份验证可见 |
 | 2026-05-10 16:30 CDT | DONE-Phase 0.5 | Forgejo remote 添加 + 首次 push |
-| 2026-05-10 16:20 CDT | DONE-Phase 0.4 | PROJECT.md + CLAUDE.md 创建 |
-| 2026-05-10 16:00 CDT | DONE-Phase 0.3 | 用户在 Forgejo 创建空 repo |
 
 完整历史见 `PROGRESS.md` 和 `CHANGELOG.md`。
 

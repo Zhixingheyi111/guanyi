@@ -21,7 +21,24 @@
 
 ---
 
-## E001 — 2026-05-10 16:23 CDT — Forgejo MCP 没有创建 repo 的工具
+## E002 — 2026-05-10 21:38 CDT — npm run lint 有 2 个 pre-existing React Hooks 错误
+
+**现象**：A1 完成后跑 `npm run lint`，报 2 个 error：
+- `src/components/DivinationHistory.jsx:144` — `react-hooks/set-state-in-effect`（在 effect 里直接 setState）
+- `src/components/NoteEditor.jsx:53` — `react-hooks/refs`（render 期间 mutate ref）
+
+**根因**：项目已升级到 React 19.2，`eslint-plugin-react-hooks` 新版加入了这两条规则。代码本身没变，是规则变严格了。这两个文件 A1 没动过。
+
+**教训**：升级框架/lint 配置后，一定先跑一遍 lint 把 baseline 摸清，否则后续任何 PR 都会被 pre-existing 错误污染、责任难分。
+
+**防范机制**：
+- ACTION_ITEMS.md 加阻塞项 **B1：修 React Hooks lint 错误**，必须在 Phase 1.11 `/checkpoint` 之前完成（否则 lint 卡住，Phase 1 无法 tag）
+- 未来所有 framework 升级 commit 必须含一个 lint baseline 步骤
+- 不在本 commit 里偷修这两个 bug —— 保持 A1 scope 干净
+
+---
+
+
 
 **现象**：在策划自动化备份流程时，假定 Forgejo MCP 能创建空 repo，结果工具列表里只有 list/search 类的 read 工具和 issue/PR/wiki/release 的写工具，**没有** `create_repository`。
 

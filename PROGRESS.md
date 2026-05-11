@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-05-10 21:38 CDT — A1 / Phase 1.1 完成：占卜 tab 骨架
+
+**做了什么：**
+- `src/App.jsx`：import Fortune；mode 加 `'fortune'` 分支
+- `src/components/Navigation.jsx`：加第 3 个 tab 按钮 "占卜"
+- `src/components/Fortune.jsx`（新建，~80 行）：容器 + 3 sub-tab（灵签/梅花/铜钱），各放 "此功能即将开放" 占位
+- commit `07674e2` `feat(fortune): add tab routing + Fortune container skeleton (Phase 1.1)`
+
+**验证：**
+- `npm run build` ✅ 通过（629 kB bundle，跟之前一样）
+- `npm run lint` ⚠️ 有 2 个 pre-existing error（DivinationHistory.jsx + NoteEditor.jsx，React 19 新规则），A1 没动这两个文件 → 记录为 E002
+
+**新增阻塞项：**
+- B1：修 React 19 Hooks lint 错误（Phase 1.11 /checkpoint 之前必修）
+
+**下一步：**
+- A2 / Phase 1.2 — 梅花易数实现（输入两个数 → 出本卦+动爻）
+
+---
+
 ## 2026-05-10 21:28 CDT — Phase 0.5b 治理系统加固
 
 **用户要求**：明确"project plan / action item / error log / skills"四类必须在 repo 内；每条日志/变更必须有时间戳。
