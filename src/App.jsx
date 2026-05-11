@@ -3,6 +3,7 @@ import Divination from './components/Divination';
 import Reading from './components/Reading';
 import Navigation from './components/Navigation';
 import Study from './components/Study';
+import Fortune from './components/Fortune';
 import Bagua from './components/Bagua';
 import Seal from './components/Seal';
 import { generateHexagram } from './utils/divination';
@@ -174,7 +175,7 @@ function InkSeparator() {
 }
 
 export default function App() {
-  // 模式：divination（问道）/ study（学易）
+  // 模式：divination（问道）/ study（学易）/ fortune（占卜）
   const [mode, setMode] = useState('divination');
 
   // 问道模式的原有状态
@@ -268,6 +269,10 @@ export default function App() {
   const renderContent = () => {
     if (mode === 'study') {
       return <Study />;
+    }
+
+    if (mode === 'fortune') {
+      return <Fortune />;
     }
 
     if (viewingHistoryId) {

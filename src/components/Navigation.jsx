@@ -1,4 +1,4 @@
-// 顶部模式导航：问道 / 学易
+// 顶部模式导航：问道 / 学易 / 占卜
 
 const S = {
   nav: {
@@ -44,6 +44,9 @@ export default function Navigation({ currentMode, onModeChange }) {
       </button>
       <button style={btnStyle('study')} onClick={() => onModeChange('study')}>
         学易
+      </button>
+      <button style={btnStyle('fortune')} onClick={() => onModeChange('fortune')}>
+        占卜
       </button>
     </nav>
   );
