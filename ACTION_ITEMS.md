@@ -29,11 +29,6 @@
 
 ### 📋 待做（按顺序）
 
-#### A2 — Phase 1.2：梅花易数实现
-- **添加时间：** 2026-05-10 21:28 CDT
-- **责任人：** Claude
-- **依赖：** A1 完成
-
 #### A3 — Phase 1.3：铜钱起卦 + 摇动画
 - **添加时间：** 2026-05-10 21:28 CDT
 - **责任人：** Claude
@@ -68,6 +63,7 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-10 21:53 CDT | A2 | Phase 1.2 梅花易数（数字+时间起卦，commit f5cef17，build ✅，lint 0 new） |
 | 2026-05-10 21:38 CDT | A1 | Phase 1.1 占卜 tab 路由 + Fortune.jsx 骨架（commit 07674e2，build ✅，lint 有 pre-existing E002） |
 | 2026-05-10 21:31 CDT | DONE-0.5b | 治理系统 v0.0.2（ERROR_LOG/ACTION_ITEMS/3 skills/时间戳）+ push forgejo |
 | 2026-05-10 16:43 CDT | DONE-Phase 0.5 | 治理系统 v0.0.1 完成 + push forgejo |

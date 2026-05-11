@@ -6,6 +6,31 @@
 
 ---
 
+## 2026-05-10 21:53 CDT — A2 / Phase 1.2 完成：梅花易数
+
+**做了什么：**
+- 新建 `src/utils/meiHua.js`（~110 行）：
+  - 数字起卦：上=num1%8、下=num2%8、动=(num1+num2)%6（0 取 max）
+  - 时间起卦：年支=(年-4)%12+1、时支=hour 映射 1-12，公历月日
+  - 返回 `{ binary, variantBinary, changingPositions[0-indexed], upperBagua, lowerBagua, changingPositionName }`
+  - 八卦数：1乾 2兑 3离 4震 5巽 6坎 7艮 8坤
+- 新建 `src/components/fortune/MeiHua.jsx`（~280 行）：
+  - 双模式 UI（数字 / 时间），宣纸墨韵
+  - 结果展示：本卦 + 卦辞 + 上下卦 + 动爻 + 变卦 + AI 解读占位
+  - 淡入动画
+- 改 `src/components/Fortune.jsx`：meihua sub-tab 渲染 `<MeiHua />` 取代占位
+- commit `f5cef17`
+
+**验证：**
+- 算法手测：1,1→乾；8,1→地天泰；时间起卦正常
+- `npm run build` ✅
+- `npm run lint` ⚠️ 仍 2 个 E002 pre-existing，A2 引入 0 个新错误
+
+**下一步：**
+- A3 / Phase 1.3 — 铜钱起卦（摇 6 次三枚铜钱动画）
+
+---
+
 ## 2026-05-10 21:38 CDT — A1 / Phase 1.1 完成：占卜 tab 骨架
 
 **做了什么：**
