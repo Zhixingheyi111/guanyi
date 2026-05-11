@@ -21,6 +21,33 @@
 
 ---
 
+## E003 — 2026-05-10 22:02 CDT — Dev server 端口冲突导致用户看到旧代码
+
+**现象**：A2 完成后让用户用 `http://localhost:5173/` 测试，用户报"没看到占卜"。core 是 worktree 代码已正确包含占卜 tab，build 也通过，但浏览器显示旧 UI。
+
+**根因**：
+- 用户的另一个 vite 进程（PID 30327, cwd=主仓库 `/Users/dz/Documents/Yijing App (Claude Code)`）已在 `localhost:5173` LISTEN，serving 主仓库 main 分支的旧代码（无占卜 tab）
+- 我用 `npm run dev -- --host` 启动新 vite，绑 `*:5173`（所有接口）。**两个进程同时在 5173，但绑的 socket 不同**：
+  - 旧 vite: `localhost:5173` (IPv6 loopback)
+  - 新 vite: `*:5173` (catch-all)
+- `http://localhost:5173/` 命中旧 vite → 用户看到主仓库代码
+- `http://192.168.1.6:5173/` 命中新 vite → worktree 代码
+- 我两个 URL 都给了用户，但用户点了 localhost → 看到旧版
+
+**教训**：
+1. 启 dev server 前必须检查目标端口是否被占用（`lsof -i :PORT -sTCP:LISTEN`）
+2. 给用户的 URL 必须**无歧义**指向我启的服务，不能假设 localhost 等于我启的
+3. worktree 工作流下，**永远用非默认端口**（5199 等），避免和用户在主仓库的并行 dev 冲突
+4. 启动后立即 curl 验证 serving 的代码版本对（看 fileName 路径或注释）
+
+**防范机制**：
+- ✅ 已切到端口 5199，验证 fileName 路径来自 worktree
+- 📋 在 docs/MOBILE_TEST_SOP.md 加一节"启动 dev server 前必做的检查"
+- 📋 提议建一个 `/dev` slash command：自动选空闲端口 + 启动 + curl 验证 + 报告 URL（候选，待用户确认）
+- 📋 ACTION_ITEMS.md 加 B2：更新 MOBILE_TEST_SOP
+
+---
+
 ## E002 — 2026-05-10 21:38 CDT — npm run lint 有 2 个 pre-existing React Hooks 错误
 
 **现象**：A1 完成后跑 `npm run lint`，报 2 个 error：

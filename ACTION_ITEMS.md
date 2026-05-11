@@ -27,6 +27,15 @@
 - **为什么阻塞：** lint 不通过，`/checkpoint` 拒绝打 v0.1.0 tag
 - **何时修：** 建议在 A5 完成后、Phase 1.11 之前；或者发现行为问题随时修
 
+#### B2 — 更新 MOBILE_TEST_SOP 加 dev server 启动前检查
+- **添加时间：** 2026-05-10 22:02 CDT
+- **来源：** ERROR_LOG E003
+- **责任人：** Claude
+- **要做的事：**
+  1. `docs/MOBILE_TEST_SOP.md` 加一节"启动前检查"：lsof 看端口 / 默认用 5199 等非默认端口 / curl 验证 fileName 路径是 worktree
+  2. 提议给用户：是否要建 `/dev` slash command 自动化整个流程
+- **何时做：** 不阻塞 Phase 1，可在 A3 之后处理
+
 ### 📋 待做（按顺序）
 
 #### A3 — Phase 1.3：铜钱起卦 + 摇动画
