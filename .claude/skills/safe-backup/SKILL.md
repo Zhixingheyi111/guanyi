@@ -57,3 +57,4 @@ Backup current work to Forgejo. **Never touches GitHub.**
 - **Never** use `git add -A` or `git add .` — always specify files.
 - If push fails: do NOT retry blindly. Diagnose (auth issue? network? wrong branch?), report, possibly invoke error-logger skill.
 - All timestamps must include HH:MM TZ.
+- **Never pipe verification commands** (`npm run lint`, `npm run build`, tests) through `tail`/`head` before checking exit code. Pipes mask failures. See ERROR_LOG E005.

@@ -27,7 +27,7 @@
 - **为什么阻塞：** lint 不通过，`/checkpoint` 拒绝打 v0.1.0 tag
 - **何时修：** 建议在 A5 完成后、Phase 1.11 之前；或者发现行为问题随时修
 
-#### B3 — checkpoint command/skill 强制独立运行 lint+build（不走 pipe）
+#### ✅ B3 (DONE 2026-05-11 19:42 CDT) — checkpoint command/skill 强制独立运行 lint+build
 - **添加时间：** 2026-05-11 19:37 CDT
 - **来源：** ERROR_LOG E005
 - **责任人：** Claude
@@ -37,7 +37,7 @@
   3. 同步更新 `.claude/skills/safe-backup/SKILL.md`
 - **何时做：** 与 B2 一起处理
 
-#### B2 — 更新 MOBILE_TEST_SOP 加 dev server 启动前检查
+#### ✅ B2 (DONE 2026-05-11 19:42 CDT) — 更新 MOBILE_TEST_SOP 加 dev server 启动前检查
 - **添加时间：** 2026-05-10 22:02 CDT
 - **来源：** ERROR_LOG E003
 - **责任人：** Claude

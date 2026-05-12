@@ -19,8 +19,11 @@ End-of-phase release ritual. The args (`$ARGUMENTS`) should be the phase number 
    - If ANY are still 📋 or 🔄: STOP, list incomplete items, don't proceed.
 
 3. **Code quality** (must pass; if not, STOP and report):
-   - `npm run lint`
-   - `npm run build`
+   - Run `npm run lint` **directly, not through any pipe** (no `| tail`, no `| head`).
+     A pipe's exit code = last command in pipe, which masks lint failure.
+     See ERROR_LOG E005.
+   - Verify rc=0 explicitly with `echo "rc=$?"` after the command.
+   - Same for `npm run build`.
    - Failed lint/build means we DON'T tag a release. Fix first, or invoke error-logger if root cause unclear.
 
 4. **Update tracking files** (with timestamp from step 1):

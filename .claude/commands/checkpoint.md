@@ -12,10 +12,12 @@ description: End-of-phase ritual — verify, commit, tag, backup. Args = phase n
    - 读 `PROJECT.md`，确认当前 Phase 所有子任务都已 ✅
    - 如果还有未完成项：停止，列出未完成项，不进入后续步骤
 
-2. **代码质量**
-   - 跑 `npm run lint`，**必须通过**
-   - 跑 `npm run build`，**必须通过**
-   - 任一失败：停止，报告问题，不要"修了再 commit"——先让用户知道
+2. **代码质量（严禁用 pipe 截输出，参见 E005）**
+   - 跑 `npm run lint`（**独立运行，不要用 `| tail` 或 `| head`，否则 exit code 会被吞**）
+   - 看 `echo "rc=$?"` 必须为 0
+   - 跑 `npm run build`（同样独立）
+   - 看 `echo "rc=$?"` 必须为 0
+   - 任一非 0：停止，报告问题。不要把 lint/build 命令塞进 `&&` 链里，那会让失败混进 commit
 
 3. **更新文档**（**所有时间戳必须 HH:MM TZ**：`date "+%Y-%m-%d %H:%M %Z"`）
    - `CHANGELOG.md`：加新版本条目，header 含 `vX.Y.Z - YYYY-MM-DD HH:MM TZ - 标题`
