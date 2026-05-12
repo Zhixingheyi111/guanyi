@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { generateByNumbers, generateByTime } from '../../utils/meiHua';
 import { getHexagramIdByBinary } from '../../data/hexagramIndex';
 import { getHexagramById } from '../../data/hexagrams';
+import QuickReading from './QuickReading';
 
 const S = {
   intro: {
@@ -164,14 +165,31 @@ const S = {
     verticalAlign: 'middle',
     color: 'var(--ink)',
   },
-  aiPlaceholder: {
+  questionLabel: {
+    display: 'block',
     textAlign: 'center',
-    color: 'var(--ink-whisper)',
     fontSize: 'var(--text-sm)',
-    padding: 'var(--space-4)',
-    border: '1px dashed var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    letterSpacing: 'var(--track-wide)',
+    marginBottom: 'var(--space-2)',
+  },
+  questionInput: {
+    display: 'block',
+    width: '100%',
+    maxWidth: '420px',
+    margin: '0 auto var(--space-5)',
+    padding: '0.6rem 0.9rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
     borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-5)',
+    color: 'var(--ink)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.7,
+    boxSizing: 'border-box',
+    outline: 'none',
+    resize: 'vertical',
+    minHeight: '60px',
   },
   resetBtn: {
     display: 'block',
@@ -222,6 +240,7 @@ export default function MeiHua() {
   const [mode, setMode] = useState('numbers');  // 'numbers' | 'time'
   const [num1, setNum1] = useState('');
   const [num2, setNum2] = useState('');
+  const [question, setQuestion] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -230,6 +249,7 @@ export default function MeiHua() {
     setError(null);
     setNum1('');
     setNum2('');
+    // 不清空 question：允许同一问题反复起卦
   };
 
   const castNumbers = () => {
@@ -255,6 +275,7 @@ export default function MeiHua() {
   if (result) {
     const benId     = getHexagramIdByBinary(result.binary);
     const variantId = getHexagramIdByBinary(result.variantBinary);
+    const ben       = benId ? getHexagramById(benId) : null;
     const variant   = variantId ? getHexagramById(variantId) : null;
 
     return (
@@ -284,9 +305,17 @@ export default function MeiHua() {
           </div>
         )}
 
-        <div style={S.aiPlaceholder}>
-          AI 针对你的问题的解读 · 即将上线
-        </div>
+        {ben && (
+          <QuickReading
+            scenario={{
+              method: 'meihua',
+              benHex: ben,
+              changingPositions: result.changingPositions,
+              variantHex: variant,
+            }}
+            question={question}
+          />
+        )}
 
         <button style={S.resetBtn} onClick={reset}>
           重新起卦
@@ -301,6 +330,16 @@ export default function MeiHua() {
         梅花易数 · 邵雍传<br />
         心动则占，数即是象
       </div>
+
+      <label style={S.questionLabel} htmlFor="meihua-question">心中所惑（可选）</label>
+      <textarea
+        id="meihua-question"
+        style={S.questionInput}
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        placeholder="问什么..."
+        rows={2}
+      />
 
       <div style={S.modeRow}>
         <button

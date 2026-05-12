@@ -3,6 +3,7 @@
 // 数据当前为 5 签原型，100 签完整数据待补（见 src/data/lingqian.js 注释）。
 import { useState, useRef } from 'react';
 import { pickRandomSign, LEVEL_COLOR, LINGQIAN_PROTOTYPE } from '../../data/lingqian';
+import QuickReading from './QuickReading';
 
 const SHAKE_MS = 1400;
 
@@ -270,9 +271,10 @@ export default function LingQian() {
           </div>
         )}
 
-        <div style={S.aiPlaceholder}>
-          AI 针对你的问题的解读 · 即将上线
-        </div>
+        <QuickReading
+          scenario={{ method: 'lingqian', sign }}
+          question={question}
+        />
 
         <button style={S.resetBtn} onClick={reset}>
           再求一签

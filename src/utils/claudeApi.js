@@ -194,6 +194,161 @@ ${guaBlock}
 4. 通过 yijing_interpret 工具返回结构化结果。综合建议的四个维度分别填入 adviceCurrentAction / adviceWarnings / adviceSupplement / adviceFutureDirection 这四个独立字段`;
 }
 
+// ── 占卜（梅花/铜钱/灵签）的轻量解读 ───────────────────────────────────────
+
+const FORTUNE_TOOL = {
+  type: 'function',
+  function: {
+    name: 'fortune_interpret',
+    description: '针对用户问题给出占卜的精简建议',
+    parameters: {
+      type: 'object',
+      properties: {
+        coreAdvice: { type: 'string', description: '核心建议，120字以内，紧扣用户问题' },
+        yi:         { type: 'string', description: '宜：一句话，具体可行' },
+        ji:         { type: 'string', description: '忌：一句话，明确警示' },
+      },
+      required: ['coreAdvice', 'yi', 'ji'],
+    },
+  },
+};
+
+function buildFortunePrompt(scenario, question) {
+  const q = (question || '').trim() || '（用户未明示问题，请就当下境况通言之）';
+
+  if (scenario.method === 'lingqian') {
+    const s = scenario.sign;
+    return `你是一位通晓签解之道的解签者。针对来求签者的问题，结合签意给出简练有古意的建议。
+
+来求签者的问题：${q}
+
+抽得：第${s.id}签 · ${s.level}签 · ${s.title}
+签诗：
+${s.poem.join('\n')}
+传统解读：${s.interpretation}
+仙机：${s.advice}
+
+请通过工具 fortune_interpret 返回三个字段。要求：
+- coreAdvice：120字以内，围绕"用户的具体问题"给针对性回应。不要复述签诗或传统解读，给一个具体的认知或行动指引。
+- yi：一句话，具体可行。
+- ji：一句话，明确警示。
+
+风格：含蓄、温和、有古意。不用"你应该/不应该"等指令性词语；避免空话套话。`;
+  }
+
+  // meihua / tongqian: hexagram-based
+  const methodName = scenario.method === 'meihua' ? '梅花易数' : '铜钱起卦';
+  const ben = scenario.benHex;
+  const cps = scenario.changingPositions || [];
+  const variant = scenario.variantHex;
+
+  let yaoBlock = '';
+  if (cps.length > 0 && ben?.yaoci) {
+    const lines = cps
+      .map(i => {
+        const y = ben.yaoci[i];
+        return y ? `  ${y.position}：${y.original}（${y.translation || ''}）` : '';
+      })
+      .filter(Boolean)
+      .join('\n');
+    yaoBlock = `\n动爻：\n${lines}`;
+  }
+
+  return `你是一位精通${methodName}的占卜师。针对来问询者的问题，结合卦象给出简练有古意的建议。
+
+来问询者的问题：${q}
+
+起卦方法：${methodName}
+本卦：${ben.name}（${ben.symbol}）
+卦辞：${ben.guaci.original}
+卦辞释义：${ben.guaci.translation || ''}${yaoBlock}
+${variant ? `变卦：${variant.name}（${variant.symbol}）` : '六爻无动 · 静卦'}
+
+请通过工具 fortune_interpret 返回三个字段。要求：
+- coreAdvice：120字以内，围绕"用户的具体问题"给针对性回应。不要重复卦辞原文，给一个具体的认知或行动指引。
+- yi：一句话，具体可行。
+- ji：一句话，明确警示。
+
+风格：含蓄、温和、有古意。不用"你应该/不应该"等指令性词语；避免空话套话。`;
+}
+
+/**
+ * 调用 DeepSeek 获取占卜解读（轻量版，相对 interpretHexagrams 五层解读更短）
+ *
+ * @param {{
+ *   scenario: {
+ *     method: 'meihua' | 'tongqian' | 'lingqian',
+ *     // hexagram methods:
+ *     benHex?: object,
+ *     changingPositions?: number[],
+ *     variantHex?: object | null,
+ *     // sign method:
+ *     sign?: object,
+ *   },
+ *   question: string,
+ * }} input
+ *
+ * @returns {Promise<{ coreAdvice: string, yi: string, ji: string }>}
+ */
+export async function interpretFortune({ scenario, question }) {
+  const appSecret = import.meta.env.VITE_APP_SECRET;
+  if (!appSecret) throw new Error('密钥配置错误');
+
+  const prompt = buildFortunePrompt(scenario, question);
+
+  let response;
+  try {
+    response = await axios.post(
+      API_URL,
+      {
+        model: MODEL,
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: prompt }],
+        tools: [FORTUNE_TOOL],
+        tool_choice: 'auto',
+      },
+      {
+        headers: {
+          'x-app-secret': appSecret,
+          'content-type': 'application/json',
+        },
+      }
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+
+  const message = response.data.choices?.[0]?.message;
+  const toolCall = message?.tool_calls?.[0];
+
+  let parsed;
+  if (toolCall?.function?.arguments) {
+    try {
+      parsed = JSON.parse(toolCall.function.arguments);
+    } catch {
+      throw new Error('解读失败：tool arguments JSON 解析失败');
+    }
+  } else if (message?.content) {
+    const text = message.content;
+    const fenced = text.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+    const raw = fenced ? fenced[1] : text.match(/\{[\s\S]*\}/)?.[0];
+    if (!raw) throw new Error('解读失败：返回中未找到 JSON');
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      throw new Error('解读失败：content JSON 解析失败');
+    }
+  } else {
+    throw new Error('解读失败：返回格式异常');
+  }
+
+  return {
+    coreAdvice: parsed.coreAdvice || '',
+    yi: parsed.yi || '',
+    ji: parsed.ji || '',
+  };
+}
+
 // ── 错误处理 ─────────────────────────────────────────────────────────────────
 
 function handleApiError(error) {

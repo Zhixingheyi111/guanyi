@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { castTongQian } from '../../utils/tongQian';
 import { getHexagramIdByBinary } from '../../data/hexagramIndex';
 import { getHexagramById } from '../../data/hexagrams';
+import QuickReading from './QuickReading';
 
 const REVEAL_INTERVAL_MS = 1200;
 const POSITION_NAMES = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
@@ -155,14 +156,31 @@ const S = {
     verticalAlign: 'middle',
     color: 'var(--ink)',
   },
-  aiPlaceholder: {
+  questionLabel: {
+    display: 'block',
     textAlign: 'center',
-    color: 'var(--ink-whisper)',
     fontSize: 'var(--text-sm)',
-    padding: 'var(--space-4)',
-    border: '1px dashed var(--paper-edge)',
+    color: 'var(--ink-soft)',
+    letterSpacing: 'var(--track-wide)',
+    marginBottom: 'var(--space-2)',
+  },
+  questionInput: {
+    display: 'block',
+    width: '100%',
+    maxWidth: '420px',
+    margin: '0 auto var(--space-5)',
+    padding: '0.6rem 0.9rem',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
     borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-5)',
+    color: 'var(--ink)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-base)',
+    lineHeight: 1.7,
+    boxSizing: 'border-box',
+    outline: 'none',
+    resize: 'vertical',
+    minHeight: '60px',
   },
   resetBtn: {
     display: 'block',
@@ -221,6 +239,7 @@ export default function TongQian() {
   const [phase, setPhase] = useState('idle'); // idle | casting | done
   const [revealedYaos, setRevealedYaos] = useState([]); // 0-6
   const [result, setResult] = useState(null);
+  const [question, setQuestion] = useState('');
   const timerRef = useRef(null);
 
   const reset = () => {
@@ -231,6 +250,7 @@ export default function TongQian() {
     setPhase('idle');
     setRevealedYaos([]);
     setResult(null);
+    // 保留 question
   };
 
   const start = () => {
@@ -269,6 +289,15 @@ export default function TongQian() {
           铜钱起卦 · 火珠林<br />
           三钱六摇，问询所惑
         </div>
+        <label style={S.questionLabel} htmlFor="tongqian-question">心中所惑（可选）</label>
+        <textarea
+          id="tongqian-question"
+          style={S.questionInput}
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="问什么..."
+          rows={2}
+        />
         <button style={S.startBtn} onClick={start}>
           开　始
         </button>
@@ -339,9 +368,17 @@ export default function TongQian() {
               </div>
             )}
 
-            <div style={S.aiPlaceholder}>
-              AI 针对你的问题的解读 · 即将上线
-            </div>
+            {ben && (
+              <QuickReading
+                scenario={{
+                  method: 'tongqian',
+                  benHex: ben,
+                  changingPositions: result.changingPositions,
+                  variantHex: variant,
+                }}
+                question={question}
+              />
+            )}
 
             <button style={S.resetBtn} onClick={reset}>
               重新起卦
