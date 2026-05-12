@@ -13,7 +13,7 @@
 
 ### 🔄 进行中
 
-无
+无（Phase 1 完成 v0.1.0-fortune-and-dialogue at 2026-05-11 20:06 CDT，等用户验收）
 
 ### ⚠️ 阻塞项（Phase 1.11 /checkpoint 之前必修）
 
@@ -48,7 +48,21 @@
 
 ### 📋 待做（按顺序）
 
-#### A3 — Phase 1.3：铜钱起卦 + 摇动画
+#### U2 — 用户验收 Phase 1
+- **添加时间：** 2026-05-11 20:06 CDT
+- **要做的事：** 用 dev server (http://localhost:5199/) 试占卜 3 法 + 学易选段对话；OK → 说"通过"开 Phase 2，否则告诉我问题
+- **责任人：** 用户
+
+#### U3 — Forgejo 服务恢复后通知我，一次 push 所有积累 commits
+- **添加时间：** 2026-05-11 20:06 CDT
+- **要做的事：** 在 nexus.xinle.biz 后台看 disk usage / 日志，或等服务自愈
+- **责任人：** 用户
+
+#### Phase 2 启动需要的用户决策（暂搁置）
+- 9 部经典每部的原文/翻译/注释来源（SOURCES.md 中待补的字段）
+- 灵签 100 签数据来源（公版 vs 用户提供）
+
+#### A3 — Phase 1.3：铜钱起卦 + 摇动画（DEPRECATED，已完成）
 - **添加时间：** 2026-05-10 21:28 CDT
 - **责任人：** Claude
 - **依赖：** A1 完成
@@ -82,6 +96,14 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-11 20:06 CDT | **Phase 1** | v0.1.0-fortune-and-dialogue tag（10 commits 累积，Forgejo 等服务恢复） |
+| 2026-05-11 20:00 CDT | Phase 1.9-1.10 | useTextSelection + SelectionPopover + HexagramDetail (commit 5d8a308) |
+| 2026-05-11 19:55 CDT | Phase 1.6-1.8 | studyChat persona 化 + 4 位作者 + UI (commit 0d75fc5) |
+| 2026-05-11 19:42 CDT | B2+B3 | MOBILE_TEST_SOP + checkpoint/skills 强制独立 lint (commit f1413ac) |
+| 2026-05-11 19:35 CDT | A5 | interpretFortune + QuickReading (commit 167ac38) |
+| 2026-05-11 19:32 CDT | A4 | 观音灵签 5 签原型 (commit 9fe7cce → 196b87a 清 dead code) |
+| 2026-05-11 19:25 CDT | A3 | 铜钱起卦 + 摇钱动画 (commit f5cef17) |
+| 2026-05-11 19:20 CDT | B1 | React 19 hooks lint 错修复 (commit 0b3fe6c) |
 | 2026-05-10 21:53 CDT | A2 | Phase 1.2 梅花易数（数字+时间起卦，commit f5cef17，build ✅，lint 0 new） |
 | 2026-05-10 21:38 CDT | A1 | Phase 1.1 占卜 tab 路由 + Fortune.jsx 骨架（commit 07674e2，build ✅，lint 有 pre-existing E002） |
 | 2026-05-10 21:31 CDT | DONE-0.5b | 治理系统 v0.0.2（ERROR_LOG/ACTION_ITEMS/3 skills/时间戳）+ push forgejo |

@@ -31,6 +31,33 @@
 
 ---
 
+## 2026-05-11 20:06 CDT — 🎯 Phase 1 完成 (v0.1.0-fortune-and-dialogue)
+
+**用户授权自主执行**（"全部执行，不需要 allow"）后一段连续工作：
+
+**完成的 Action：**
+- B1：修 React 19 hooks lint 错（DivinationHistory + NoteEditor）— commit 0b3fe6c
+- A3：铜钱起卦 + 摇钱动画 — commit f5cef17
+- A4：观音灵签 5 签原型 — commit 9fe7cce
+- A5：interpretFortune AI prompt + QuickReading 共用组件 — commit 167ac38
+- B2+B3：MOBILE_TEST_SOP + checkpoint/skills 强制独立 lint/build — commit f1413ac
+- Phase 1.6-1.8：studyChat persona 化 + 4 位作者 + UI 切换器 — commit 0d75fc5
+- Phase 1.9-1.10：useTextSelection + SelectionPopover + HexagramDetail 接入 — commit 5d8a308
+- Phase 1.11：CHANGELOG / PROGRESS / PROJECT / ACTION_ITEMS 更新 + tag v0.1.0
+
+**记录的错误：**
+- E003：dev server 端口冲突（5173 上有用户另一个 vite，serving 主仓库代码）
+- E004：Forgejo push 失败（server-side unpacker error，从 19:31 起持续到 20:06）
+- E005：`lint | tail && commit` pipe 吞 exit code，dead code 进了 commit 9fe7cce
+
+**Forgejo 备份状态：** 仍 unpacker error，本期所有 commit 仅在本地。需要用户在 nexus.xinle.biz 后台查 disk usage / Forgejo logs，或服务恢复后我可以一次性 push 所有累积的 commits + tags（v0.0.2-governance 已 push，v0.1.0 待 push）。
+
+**下一步：**
+- 等用户人工验收 Phase 1
+- 验收后再开 Phase 2（9 部经典扩展）—— src/data/* 录入需要用户单独确认每部书的来源
+
+---
+
 ## 2026-05-10 21:38 CDT — A1 / Phase 1.1 完成：占卜 tab 骨架
 
 **做了什么：**

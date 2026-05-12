@@ -285,10 +285,13 @@
 
 # 当前任务（动态更新区）
 
-**阶段：** Phase 0.5 进行中
-**正在做：** 创建 tracking files + slash commands
-**下一步：** commit + tag `v0.0.1-governance` + push forgejo → 启动 Phase 1.1
-**当前时间最后更新：** 2026-05-10 16:43 CDT
+**阶段：** ✅ Phase 1 完成（v0.1.0-fortune-and-dialogue），等待用户验收
+**已完成：** A1-A5 占卜模块 + Phase 1.6-1.10 对话升级 + B1/B2/B3 修复
+**下一步（取决于用户）：**
+- 验收通过 → 进入 Phase 2（9 部经典扩展，**src/data 录入需用户确认数据来源**）
+- 发现问题 → /log-error 记录 + 修复
+**Forgejo 备份：** ⚠️ unpacker error 持续中（E004），本期 commits 仅在本地（v0.0.2-governance 之后的所有 commit）
+**当前时间最后更新：** 2026-05-11 20:06 CDT
 
 ---
 
