@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import MeiHua from './fortune/MeiHua';
 import TongQian from './fortune/TongQian';
+import LingQian from './fortune/LingQian';
 
 const S = {
   tabs: {
@@ -91,7 +92,7 @@ export default function Fortune() {
 
       {tab === 'meihua' && <MeiHua />}
       {tab === 'tongqian' && <TongQian />}
-      {tab === 'lingqian' && <Placeholder title={current.label.replace('　', '')} hint={current.desc} />}
+      {tab === 'lingqian' && <LingQian />}
     </div>
   );
 }
