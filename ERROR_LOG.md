@@ -21,6 +21,42 @@
 
 ---
 
+## E005 — 2026-05-11 19:37 CDT — `lint | tail && commit` 让 lint error 漏过，dead code 进了 commit `9fe7cce`
+
+**现象**：A4 完成时跑命令链 `npm run lint 2>&1 | tail -3 && npm run build && git commit ...`。lint 实际有 1 error（`Fortune.jsx` 里 `current` 变量 + `Placeholder` 函数因 sub-tab 全部接真组件后变成 dead code），但 commit 9fe7cce 还是成功了。
+
+**根因**：`npm run lint | tail` 中 `tail` 的 exit code（0）覆盖了 `lint` 的 exit code（1）。`&&` 看到 0 就继续往下跑 build + commit。Bash 默认不开 `pipefail`，pipe 链的 exit code 取最后一个命令的，前面失败会被吞。
+
+**教训**：
+- `set -o pipefail` 不是默认行为；用 `cmd | tail && next` 写脚本时，`next` 永远会跑，无论 cmd 成败
+- 验证步骤（lint/build/test）必须**先看 exit code**再决定是否继续；不能依赖 tail 截屏的"看起来还行"
+- A4 commit 9fe7cce 现在包含 dead code（已通过 follow-up commit 修复，但 git 历史里残留一个 dirty commit）
+
+**防范机制**：
+- ✅ 已 fix Fortune.jsx 删除 `current`/`Placeholder` dead code，lint 现在 rc=0
+- 📋 更新 `.claude/commands/checkpoint.md` 和 `.claude/skills/phase-checkpoint/SKILL.md`：**所有 lint/build 命令必须独立运行，不进 pipe，且必须显式检查 exit code**（写"`if ! npm run lint; then ...`"或不带 pipe）
+- 📋 加 ACTION_ITEMS B3：更新 checkpoint command + skill 强制 pipefail 模式
+
+---
+
+## E004 — 2026-05-11 19:31 CDT — Forgejo push 失败（server-side unpacker error）
+
+**现象**：B1 commit `0b3fe6c` 后 `git push forgejo` 第一次超时（"Failed to connect ... port 443"），第二次收到 `unpacker error` / `remote rejected`。Curl 同主机 HTTPS 返回 200，说明主机可达，是 git 服务端拒绝接收对象。
+
+**根因**：服务端 unpacker error 通常意味着 Forgejo 服务器端无法 unpack push 来的 packfile。常见原因：磁盘满 / 用户配额 / repo 损坏 / 临时故障。客户端没法修。
+
+**教训**：
+- 远端 backup 不可保 100% 在线，**本地 commit 才是 source of truth**
+- 服务端错误（"remote rejected" 不同于网络错误）不要无限重试，最多 2 次
+- 一旦 forgejo 不可用，应**继续本地 commit**，定期重试 push；不要停下来等
+
+**防范机制**：
+- 本次：先继续 A3/A4/A5 等本地工作，每个 commit 后试 push 一次；最终汇报 forgejo 状态
+- 长期：考虑加第二个备份 remote（GitLab/CodeBerg），单点风险大
+- 短期：建议用户在 nexus.xinle.biz 后台看 disk usage / Forgejo 日志（用户可做的事）
+
+---
+
 ## E003 — 2026-05-10 22:02 CDT — Dev server 端口冲突导致用户看到旧代码
 
 **现象**：A2 完成后让用户用 `http://localhost:5173/` 测试，用户报"没看到占卜"。core 是 worktree 代码已正确包含占卜 tab，build 也通过，但浏览器显示旧 UI。
