@@ -1,10 +1,73 @@
-// 学习聊天：向经典问学
+// 学习聊天：向经典问学，与四位作者对话
 import { useState, useRef, useEffect } from 'react';
-import { sendStudyMessage } from '../utils/studyChat';
+import { sendStudyMessage, PERSONAS, DEFAULT_PERSONA } from '../utils/studyChat';
+
+const PERSONA_ORDER = ['confucius', 'wenwang', 'shaoyong', 'zhuxi'];
 
 const S = {
   container: {
     marginTop: 'var(--space-2)',
+  },
+  personaRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 'var(--space-2)',
+    marginBottom: 'var(--space-3)',
+    flexWrap: 'wrap',
+  },
+  personaBtn: {
+    padding: '0.35rem 0.8rem',
+    background: 'var(--paper)',
+    border: '1px solid var(--paper-edge)',
+    color: 'var(--ink-light)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
+    cursor: 'pointer',
+    borderRadius: 'var(--radius-md)',
+    minHeight: '36px',
+    transition: 'all 0.2s ease',
+  },
+  personaBtnActive: {
+    background: 'var(--ink)',
+    color: 'var(--paper)',
+    borderColor: 'var(--ink)',
+  },
+  personaLabel: {
+    textAlign: 'center',
+    fontSize: 'var(--text-xs)',
+    color: 'var(--ink-whisper)',
+    letterSpacing: 'var(--track-wide)',
+    marginBottom: 'var(--space-3)',
+  },
+  focusBadge: {
+    margin: '0 0 var(--space-3)',
+    padding: '0.4rem 0.7rem',
+    background: 'var(--paper-deep)',
+    borderLeft: '3px solid var(--vermilion)',
+    borderRadius: 'var(--radius-sm)',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-soft)',
+    lineHeight: 1.6,
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 'var(--space-2)',
+  },
+  focusBadgeLabel: {
+    fontSize: 'var(--text-xs)',
+    color: 'var(--vermilion)',
+    letterSpacing: 'var(--track-xwide)',
+    flexShrink: 0,
+    paddingTop: '2px',
+  },
+  focusBadgeClear: {
+    background: 'transparent',
+    border: 'none',
+    color: 'var(--ink-light)',
+    cursor: 'pointer',
+    fontSize: 'var(--text-xs)',
+    marginLeft: 'auto',
+    flexShrink: 0,
   },
   messages: {
     display: 'flex',
@@ -121,7 +184,20 @@ export default function StudyChat({ hexagram }) {
   const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState(null);
+  const [persona, setPersona] = useState(DEFAULT_PERSONA);
+  // selectedText 是 Phase 1.10 的接口槽位；1.10 会通过 imperative handle 暴露写入方法
+  const [selectedText, setSelectedText] = useState(null);
   const messagesEndRef        = useRef(null);
+
+  const handlePersonaChange = (id) => {
+    if (id === persona) return;
+    setPersona(id);
+    setHistory([]);
+    setError(null);
+    setSelectedText(null);
+  };
+
+  const clearFocus = () => setSelectedText(null);
 
   // 新消息到来时滚动到聊天底部；空状态下不滚，避免打开卦详情就被拽到页尾
   useEffect(() => {
@@ -145,8 +221,12 @@ export default function StudyChat({ hexagram }) {
         hexagram,
         history,
         userMessage: text,
+        persona,
+        selectedText,
       });
       setHistory(prev => [...prev, { role: 'assistant', content: reply }]);
+      // 一次发问后清焦点，下条消息自由问
+      setSelectedText(null);
     } catch (err) {
       setError(err.message || '请求失败');
     } finally {
@@ -161,11 +241,46 @@ export default function StudyChat({ hexagram }) {
     }
   };
 
+  const currentPersona = PERSONAS[persona];
+
   return (
     <div style={S.container}>
+      <div style={S.personaRow} role="tablist" aria-label="选择与之对话的作者">
+        {PERSONA_ORDER.map(id => {
+          const p = PERSONAS[id];
+          return (
+            <button
+              key={id}
+              role="tab"
+              aria-selected={persona === id}
+              style={{
+                ...S.personaBtn,
+                ...(persona === id ? S.personaBtnActive : null),
+              }}
+              onClick={() => handlePersonaChange(id)}
+            >
+              {p.name}
+            </button>
+          );
+        })}
+      </div>
+      <div style={S.personaLabel}>
+        当下对话：{currentPersona.fullName}（{currentPersona.era}）
+      </div>
+
+      {selectedText && (
+        <div style={S.focusBadge}>
+          <span style={S.focusBadgeLabel}>针对</span>
+          <span>「{selectedText}」</span>
+          <button style={S.focusBadgeClear} onClick={clearFocus} aria-label="取消针对">
+            取消
+          </button>
+        </div>
+      )}
+
       <div style={S.messages}>
         {history.length === 0 && !loading && (
-          <div style={S.hint}>对{hexagram.name}卦有什么疑问？向经典问学</div>
+          <div style={S.hint}>对{hexagram.name}卦有什么疑问？请{currentPersona.name}说一说</div>
         )}
         {history.map((msg, i) => (
           <div
