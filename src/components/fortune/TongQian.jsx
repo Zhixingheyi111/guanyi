@@ -237,7 +237,7 @@ function YaoRow({ index, yao, isCasting }) {
 
 export default function TongQian() {
   const [phase, setPhase] = useState('idle'); // idle | casting | done
-  const [revealedYaos, setRevealedYaos] = useState([]); // 0-6
+  const [progress, setProgress] = useState(0); // 0..6，已揭示的爻数；i===progress 表示该爻正在摇
   const [result, setResult] = useState(null);
   const [question, setQuestion] = useState('');
   const timerRef = useRef(null);
@@ -248,7 +248,7 @@ export default function TongQian() {
       timerRef.current = null;
     }
     setPhase('idle');
-    setRevealedYaos([]);
+    setProgress(0);
     setResult(null);
     // 保留 question
   };
@@ -256,13 +256,15 @@ export default function TongQian() {
   const start = () => {
     const full = castTongQian();
     setResult(full);
-    setRevealedYaos([]);
+    setProgress(0);
     setPhase('casting');
 
+    // 用 progress 计数代替 append 模式：单 source of truth = result.yaos[i] 直接渲染
+    // 避免之前 setRevealedYaos 多次 append 可能漏最后一次的问题（E006）
     let i = 0;
     timerRef.current = setInterval(() => {
-      setRevealedYaos(prev => [...prev, full.yaos[i]]);
       i++;
+      setProgress(i);
       if (i >= 6) {
         clearInterval(timerRef.current);
         timerRef.current = null;
@@ -275,8 +277,8 @@ export default function TongQian() {
   const renderYaoColumn = () => {
     const rows = [];
     for (let i = 0; i < 6; i++) {
-      const yao = revealedYaos[i];
-      const isCasting = phase === 'casting' && i === revealedYaos.length;
+      const yao = result && i < progress ? result.yaos[i] : null;
+      const isCasting = phase === 'casting' && i === progress;
       rows.push(<YaoRow key={i} index={i} yao={yao} isCasting={isCasting} />);
     }
     return rows;

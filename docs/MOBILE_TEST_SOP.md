@@ -4,6 +4,21 @@
 
 ---
 
+## Worktree 初次启动前必做（避免 E006 类问题）
+
+```bash
+# .env 是 gitignored，git worktree add 不会带；从主仓库复制
+[ -f .env ] || cp "/Users/dz/Documents/Yijing App (Claude Code)/.env" .env
+
+# 验证关键 vars 已定义（不打印 value）
+grep -c "^VITE_APP_SECRET=." .env  # 应为 1
+grep -c "^VITE_API_BASE_URL=." .env # 应为 1
+```
+
+如果 `.env` 还没复制就启动 dev server，所有 LLM 调用会报"密钥配置错误"。
+
+---
+
 ## 启动 dev server 前必做（避免 E003 类问题）
 
 worktree 工作流下，主仓库上可能已有 vite 在跑。两者同时跑 5173 会让用户连 localhost 看到错版本。
