@@ -2,6 +2,7 @@
 // 由轻到重排列。各方法的具体起卦实现在子组件里（Phase 1.2-1.4）。
 import { useState } from 'react';
 import MeiHua from './fortune/MeiHua';
+import TongQian from './fortune/TongQian';
 
 const S = {
   tabs: {
@@ -88,10 +89,9 @@ export default function Fortune() {
         ))}
       </div>
 
-      {tab === 'meihua'
-        ? <MeiHua />
-        : <Placeholder title={current.label.replace('　', '')} hint={current.desc} />
-      }
+      {tab === 'meihua' && <MeiHua />}
+      {tab === 'tongqian' && <TongQian />}
+      {tab === 'lingqian' && <Placeholder title={current.label.replace('　', '')} hint={current.desc} />}
     </div>
   );
 }
