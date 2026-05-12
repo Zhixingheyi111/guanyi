@@ -1,5 +1,5 @@
 // 学习聊天：向经典问学，与四位作者对话
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { sendStudyMessage, PERSONAS, DEFAULT_PERSONA } from '../utils/studyChat';
 
 const PERSONA_ORDER = ['confucius', 'wenwang', 'shaoyong', 'zhuxi'];
@@ -178,16 +178,33 @@ const S = {
   },
 };
 
-export default function StudyChat({ hexagram }) {
+const StudyChat = forwardRef(function StudyChat({ hexagram }, ref) {
   // key 绑定 hexagram.id，切换卦时组件会 remount，history 自动重置
   const [history, setHistory] = useState([]);
   const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState(null);
   const [persona, setPersona] = useState(DEFAULT_PERSONA);
-  // selectedText 是 Phase 1.10 的接口槽位；1.10 会通过 imperative handle 暴露写入方法
   const [selectedText, setSelectedText] = useState(null);
   const messagesEndRef        = useRef(null);
+  const rootRef               = useRef(null);
+
+  // Phase 1.10：暴露 focusOn 给父组件，让 SelectionPopover 点击后能控制本组件
+  useImperativeHandle(ref, () => ({
+    focusOn({ persona: p, selectedText: t }) {
+      if (p && PERSONAS[p] && p !== persona) {
+        setPersona(p);
+        setHistory([]);
+        setError(null);
+      }
+      if (t) setSelectedText(t);
+      // 滚到聊天框
+      requestAnimationFrame(() => {
+        rootRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    },
+    getCurrentPersonaName: () => PERSONAS[persona]?.name || PERSONAS[DEFAULT_PERSONA].name,
+  }), [persona]);
 
   const handlePersonaChange = (id) => {
     if (id === persona) return;
@@ -244,7 +261,7 @@ export default function StudyChat({ hexagram }) {
   const currentPersona = PERSONAS[persona];
 
   return (
-    <div style={S.container}>
+    <div style={S.container} ref={rootRef}>
       <div style={S.personaRow} role="tablist" aria-label="选择与之对话的作者">
         {PERSONA_ORDER.map(id => {
           const p = PERSONAS[id];
@@ -328,4 +345,6 @@ export default function StudyChat({ hexagram }) {
       </div>
     </div>
   );
-}
+});
+
+export default StudyChat;

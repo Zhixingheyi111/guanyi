@@ -1,8 +1,11 @@
 // 单卦详情页：完整经典原文 + 卦笔记 + 问学
+import { useRef } from 'react';
 import { getHexagramById } from '../data/hexagrams';
 import { getHexagramNote, saveHexagramNote } from '../utils/storage';
 import StudyChat from './StudyChat';
 import NoteEditor from './NoteEditor';
+import SelectionPopover from './SelectionPopover';
+import { useTextSelection } from '../hooks/useTextSelection';
 
 const S = {
   backButton: {
@@ -264,6 +267,15 @@ function unwrapXiaoxiang(x) {
 
 export default function HexagramDetail({ hexagramId, onBack }) {
   const hexagram = getHexagramById(hexagramId);
+  const contentRef = useRef(null);
+  const chatRef    = useRef(null);
+  const [selection, clearSelection] = useTextSelection(contentRef);
+
+  const handleAskAbout = (text) => {
+    chatRef.current?.focusOn({ selectedText: text });
+    clearSelection();
+  };
+
   if (!hexagram) {
     return (
       <div>
@@ -279,6 +291,9 @@ export default function HexagramDetail({ hexagramId, onBack }) {
     <div>
       <button style={S.backButton} onClick={onBack}>← 返回六十四卦</button>
 
+      <SelectionPopover selection={selection} label="问 这一句" onAsk={handleAskAbout} />
+
+      <div ref={contentRef}>
       {/* 卦象头部 */}
       <div style={S.header}>
         <div style={S.nameRow}>
@@ -382,6 +397,8 @@ export default function HexagramDetail({ hexagramId, onBack }) {
         })}
       </div>
 
+      </div>{/* contentRef 关闭 */}
+
       {/* 我的笔记 */}
       <div style={S.section}>
         <div style={S.sectionTitle}>我　的　笔　记</div>
@@ -397,7 +414,7 @@ export default function HexagramDetail({ hexagramId, onBack }) {
       {/* 问学 */}
       <div style={S.section}>
         <div style={S.sectionTitle}>问　学</div>
-        <StudyChat hexagram={hexagram} />
+        <StudyChat ref={chatRef} hexagram={hexagram} />
       </div>
 
       {/* 底部返回按钮 */}
