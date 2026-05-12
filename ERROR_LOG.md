@@ -21,6 +21,47 @@
 
 ---
 
+## E007 — 2026-05-11 21:08 CDT — 占卜 prompt 有 positive bias + Worker CORS 不认 port 5199
+
+用户验收 Phase 1 时一并报两问题：
+
+### 7a. Worker CORS 不认 5199 端口，AI 全部网络异常
+
+**现象**：三种占卜模式 AI 解读都报 "网络异常，请检查连接"。
+
+**根因**：`worker/src/index.js` 第 6-15 行 `ALLOWED_ORIGINS = ['localhost:5173/5174/5175', + GH Pages]`。我为避开 E003 端口冲突挑了 5199 启 dev server，但 Worker 不在白名单 → CORS preflight 失败 → 浏览器拦截 → axios `!error.response` → "网络异常"。
+
+**教训**：换 dev server 端口要先看 Worker 白名单。worktree 工作流默认应该用 Worker 白名单里的端口。
+
+**防范机制**：
+- ✅ 已切到 port 5175（在白名单）
+- 📋 docs/MOBILE_TEST_SOP.md 加一节：dev port 必须在 Worker `ALLOWED_ORIGINS` 列表里（当前 5173/5174/5175），或者更新 Worker
+- 📋 长期建议：让 Worker 接受所有 localhost:* 端口（regex），免去这个约束
+
+### 7b. AI 占卜解读有 positive bias（用户问"是不是每次都是非常好的结果"）
+
+**现象**：用户怀疑占卜 AI 解读总是偏正面、不诚实呈现凶卦。
+
+**根因**：我设计的 prompt：
+1. 风格指令是"含蓄、温和、有古意" → 模型理解为"温和" = 不说凶
+2. 强制 yi + ji 都给 → 即使大凶卦也有 yi（"具体可行"），让结果看着平衡
+3. 没有显式判断 valence 的指令 → 模型默认"帮人"倾向 = 倾向正面
+4. 算法层公平（铜钱 64 卦各 1/64，灵签 5 签均匀），所以 bias 完全在 AI 解读层
+
+**教训**：
+- LLM 默认有 "helpfulness bias"（避免负面、提供安慰），与传统占卜"遇凶不讳"的诚实美德相反
+- 想让 AI 在占卜场景诚实，必须**显式反向训练**：告诉它"诚实优先"、"廉价反转禁用"、"宁让人难受片刻"
+- 卦象本身是中性处境描述，吉凶是 AI 的判断和措辞决定的
+
+**防范机制**：
+- ✅ 改 prompt：加 "诚实优先 / 古之占者遇凶不讳" 节、显式 valence 字段（大吉/小吉/中性/小凶/大凶）、tool schema 强制返回 valence
+- ✅ QuickReading UI 加 valence 徽章，让吉凶一眼可见
+- ✅ 给出"偏吉/偏凶卦"参考分类列表，告诉模型常见 mapping
+- ✅ 修正 yi/ji 在凶卦/吉卦时的角色（凶卦的 yi = 暂止/退/守，吉卦的 ji = 勿骄/勿急）
+- 📋 后续可以加一个"统计 valence 分布"的开发模式调试器，跑 100 次占卜看 valence 是否合理覆盖
+
+---
+
 ## E006 — 2026-05-11 20:51 CDT — Worktree 缺 .env + 铜钱起卦 6 爻只显示 5 爻
 
 用户 Phase 1 验收时报两个 bug，一并修：

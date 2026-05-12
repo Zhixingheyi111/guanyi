@@ -3,6 +3,14 @@
 import { useState, useEffect } from 'react';
 import { interpretFortune } from '../../utils/claudeApi';
 
+const VALENCE_COLOR = {
+  '大吉': 'var(--vermilion-deep)',
+  '小吉': 'var(--vermilion)',
+  '中性': 'var(--ink-soft)',
+  '小凶': 'var(--ink)',
+  '大凶': 'var(--ink-deep, var(--ink))',
+};
+
 const S = {
   wrap: {
     padding: 'var(--space-4)',
@@ -12,12 +20,26 @@ const S = {
     marginBottom: 'var(--space-5)',
     animation: 'quickreading-fade-in 0.5s ease',
   },
+  headerRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--space-3)',
+    marginBottom: 'var(--space-3)',
+    flexWrap: 'wrap',
+  },
   label: {
     fontSize: 'var(--text-xs)',
     color: 'var(--vermilion)',
     letterSpacing: 'var(--track-xwide)',
-    marginBottom: 'var(--space-2)',
     textTransform: 'uppercase',
+  },
+  valenceBadge: {
+    padding: '0.2rem 0.6rem',
+    border: '1px solid currentColor',
+    borderRadius: 'var(--radius-sm)',
+    fontSize: 'var(--text-sm)',
+    fontWeight: 500,
+    letterSpacing: 'var(--track-wide)',
   },
   coreAdvice: {
     fontSize: 'var(--text-base)',
@@ -133,12 +155,18 @@ export default function QuickReading({ scenario, question }) {
     );
   }
 
-  const { coreAdvice, yi, ji } = state.data;
+  const { coreAdvice, yi, ji, valence } = state.data;
+  const valenceColor = VALENCE_COLOR[valence] || 'var(--ink-soft)';
 
   return (
     <div style={S.wrap}>
       <style>{ANIM}</style>
-      <div style={S.label}>AI · 占　解</div>
+      <div style={S.headerRow}>
+        <div style={S.label}>AI · 占　解</div>
+        {valence && (
+          <div style={{ ...S.valenceBadge, color: valenceColor }}>{valence}</div>
+        )}
+      </div>
       <div style={S.coreAdvice}>{coreAdvice}</div>
       <div style={S.yijiRow}>
         {yi && (

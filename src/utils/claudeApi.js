@@ -204,21 +204,36 @@ const FORTUNE_TOOL = {
     parameters: {
       type: 'object',
       properties: {
-        coreAdvice: { type: 'string', description: '核心建议，120字以内，紧扣用户问题' },
-        yi:         { type: 'string', description: '宜：一句话，具体可行' },
-        ji:         { type: 'string', description: '忌：一句话，明确警示' },
+        valence: {
+          type: 'string',
+          enum: ['大吉', '小吉', '中性', '小凶', '大凶'],
+          description: '此卦/签对所问之事的吉凶倾向。诚实判断，不粉饰也不夸张。',
+        },
+        coreAdvice: { type: 'string', description: '核心建议，140字以内，紧扣用户问题。首句应反映 valence。' },
+        yi:         { type: 'string', description: '宜：一句话。凶卦时常为"暂止/退/守/省"等保守动作。' },
+        ji:         { type: 'string', description: '忌：一句话。吉卦时常为"勿骄/勿急/勿过度"等节制提醒。' },
       },
-      required: ['coreAdvice', 'yi', 'ji'],
+      required: ['valence', 'coreAdvice', 'yi', 'ji'],
     },
   },
 };
+
+const HONESTY_DOCTRINE = `
+诚实优先（"古之占者，遇凶不讳"）：
+- 先在心里判断此卦/签对所问之事的吉凶倾向，填入 valence 字段。
+- 若为 大凶 / 小凶（如否、剥、坎、明夷、蹇、困等卦，或下下/中下签），**必须直陈警示，不得粉饰**。coreAdvice 首句应明示困境，避免"机遇也藏在其中"这类廉价反转。
+- 若为 大吉 / 小吉，可以传达祥和，但仍要点出潜在风险（易经讲消长：亢龙有悔、否极泰来都是同一道理）。
+- 中性卦则客观平实，不夸大不悲观。
+- 宁可让来询问者"难受片刻、清醒长久"，也不要给虚假安慰。
+- AI 的"帮助本能"在此应该让位于占者的诚实：能帮人最多的，是真话。
+`.trim();
 
 function buildFortunePrompt(scenario, question) {
   const q = (question || '').trim() || '（用户未明示问题，请就当下境况通言之）';
 
   if (scenario.method === 'lingqian') {
     const s = scenario.sign;
-    return `你是一位通晓签解之道的解签者。针对来求签者的问题，结合签意给出简练有古意的建议。
+    return `你是一位通晓签解之道的解签者。针对来求签者的问题，结合签意给出诚实有古意的解读。
 
 来求签者的问题：${q}
 
@@ -228,12 +243,17 @@ ${s.poem.join('\n')}
 传统解读：${s.interpretation}
 仙机：${s.advice}
 
-请通过工具 fortune_interpret 返回三个字段。要求：
-- coreAdvice：120字以内，围绕"用户的具体问题"给针对性回应。不要复述签诗或传统解读，给一个具体的认知或行动指引。
-- yi：一句话，具体可行。
-- ji：一句话，明确警示。
+${HONESTY_DOCTRINE}
 
-风格：含蓄、温和、有古意。不用"你应该/不应该"等指令性词语；避免空话套话。`;
+——签的等级（${s.level}签）已经明示吉凶大方向，你的 valence 应与其一致，但允许"上吉签遇上不合时宜的问题"等具体情境调整。
+
+请通过工具 fortune_interpret 返回四个字段：
+- valence：${s.level}签对此问题的吉凶判断（大吉/小吉/中性/小凶/大凶 之一）
+- coreAdvice：140字以内。首句明示吉凶倾向。其余围绕用户问题给针对性认知；不复述签诗或传统解读。
+- yi：一句话，具体可行
+- ji：一句话，明确警示
+
+风格：含蓄但不含糊。可以温和，不能敷衍。不用"你应该/不应该"等指令性词语。`;
   }
 
   // meihua / tongqian: hexagram-based
@@ -254,7 +274,7 @@ ${s.poem.join('\n')}
     yaoBlock = `\n动爻：\n${lines}`;
   }
 
-  return `你是一位精通${methodName}的占卜师。针对来问询者的问题，结合卦象给出简练有古意的建议。
+  return `你是一位精通${methodName}的占卜师。针对来问询者的问题，结合卦象给出诚实有古意的解读。
 
 来问询者的问题：${q}
 
@@ -264,12 +284,20 @@ ${s.poem.join('\n')}
 卦辞释义：${ben.guaci.translation || ''}${yaoBlock}
 ${variant ? `变卦：${variant.name}（${variant.symbol}）` : '六爻无动 · 静卦'}
 
-请通过工具 fortune_interpret 返回三个字段。要求：
-- coreAdvice：120字以内，围绕"用户的具体问题"给针对性回应。不要重复卦辞原文，给一个具体的认知或行动指引。
-- yi：一句话，具体可行。
-- ji：一句话，明确警示。
+${HONESTY_DOCTRINE}
 
-风格：含蓄、温和、有古意。不用"你应该/不应该"等指令性词语；避免空话套话。`;
+——参考分类（不绝对，仅供 valence 倾向）：
+- 偏吉：乾、坤（贞静）、谦、临、泰、大有、咸、恒、损、益、夬、晋、归妹、丰、既济、复 等
+- 偏凶：否、剥、坎、明夷、蹇、困、噬嗑（下爻）、贲、师（动盘）、革（过急）等
+- 多数卦象其实在 中性 与 小吉/小凶 之间，动爻、变卦决定具体走向
+
+请通过工具 fortune_interpret 返回四个字段：
+- valence：此卦对此问题的吉凶判断（大吉/小吉/中性/小凶/大凶 之一）
+- coreAdvice：140字以内。首句明示吉凶倾向（如"此卦警示困境"或"此卦小吉，但..."）。其余围绕用户问题给针对性认知，不复述卦辞。
+- yi：一句话。凶卦时偏保守动作（暂止/退/守/省/不前）。
+- ji：一句话。吉卦时仍要给（勿骄/勿急/勿过度）。
+
+风格：含蓄但不含糊。可以温和，不能敷衍。不用"你应该/不应该"等指令性词语。`;
 }
 
 /**
@@ -343,6 +371,7 @@ export async function interpretFortune({ scenario, question }) {
   }
 
   return {
+    valence: parsed.valence || '中性',
     coreAdvice: parsed.coreAdvice || '',
     yi: parsed.yi || '',
     ji: parsed.ji || '',
