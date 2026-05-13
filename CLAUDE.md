@@ -15,9 +15,14 @@
 - 部署：GitHub Pages
 
 ## 核心原则
-1. 事实和解读分离：卦名、卦符、卦辞、爻辞从本地数据库读取，AI 只负责解读分析
-2. AI 不生成卦符卦名原文：避免混淆错误
-3. src/data/ 修改前必须问我：核心资产
+1. 事实和解读分离：经文原文（卦辞/爻辞/经典文段）从本地数据库读取，AI 只负责解读分析
+2. AI 不生成原文：避免混淆错误
+3. **src/data/ 自治添加经典数据**（用户 2026-05-12 授权）：
+   - 经文原文：必须用公版（公元 1923 年前作品，无版权风险）
+   - 翻译/注释：自录或基于公版古注（朱熹、王弼、郭象等），不抄现代版权译注
+   - 每条数据在 `SOURCES.md` 标明：原文版本、翻译来源（自录/某古注）、是否商用
+   - **若没把握来源是否公版，stop 问用户**
+   - 修改现有数据（如 hexagrams.js）仍需问
 
 ## 数据结构（src/data/hexagrams.js）
 
@@ -43,13 +48,19 @@
 - `.claude/settings.local.json` 设了 `defaultMode: "bypassPermissions"` + 通配 allow
 - 只有 `deny` 列表里的操作（rm -rf, git push origin, git reset --hard, sudo, npm install 等）才会被 harness 阻止
 - **必须停下来问用户的场景（这些是 hard rules，自治也不能跨过）：**
-  1. 修改 `src/data/*` 任何文件（核心资产，每次单独问）
-  2. push 到 GitHub `origin`（任何分支，触发生产部署）
-  3. merge 到 main 分支
-  4. 安装新依赖（CLAUDE.md 规定）
-  5. 不可逆操作（rm -rf 等）
-  6. 真正模糊的产品决策（不是技术细节）
-  7. 用户主动说"等等"或者明确否决了某做法
+  1. **修改现有 src/data/* 文件**（hexagrams.js 等 v0.1.0 已有的数据，每次单独问）
+  2. **添加经典数据但来源版权不确定**（哪怕一句话）
+  3. push 到 GitHub `origin`（任何分支，触发生产部署）
+  4. merge 到 main 分支
+  5. 安装新依赖（CLAUDE.md 规定）
+  6. 不可逆操作（rm -rf 等）
+  7. 真正模糊的产品决策（不是技术细节）
+  8. 用户主动说"等等"或者明确否决了某做法
+
+- **可以自治做的（用户 2026-05-12 扩展授权）：**
+  - 新增 `src/data/classics/*.js`（公版经典原文）
+  - 写经典翻译（自录）+ 注释（自录或公版古注引用）
+  - 更新 `SOURCES.md` 标明来源（每条数据必须可追溯）
 - **不需要停下来问的：** 日常 bash、edit、write、commit、push forgejo、跑 lint/build、读文件、改 tracking 文件、修 bug、log error
 - 失败时**自己 /log-error 记录后继续**，不要等用户决定，除非碰到上面 hard rules
 
