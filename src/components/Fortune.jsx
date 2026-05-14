@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import MeiHua from './fortune/MeiHua';
 import TongQian from './fortune/TongQian';
+import DivinationMethodCards from './fortune/DivinationMethodCards';
 
 const S = {
   tabs: {
@@ -45,6 +46,8 @@ export default function Fortune({ shicaoSlot }) {
 
   return (
     <div>
+      <DivinationMethodCards />
+
       <div style={S.tabs} role="tablist">
         {TABS.map(t => (
           <button

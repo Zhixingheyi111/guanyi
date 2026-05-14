@@ -6,6 +6,35 @@
 
 ---
 
+## 2026-05-14 00:00 CDT — Phase 易经-A1 完成：占卜顶部 3 种方法导读卡
+
+**做了什么：**
+- 新建 `src/components/fortune/DivinationMethodCards.jsx`（~200 行）：
+  - 3 张并列小卡（蓍草 / 梅花 / 铜钱），每卡含 name + tagline + duration
+  - 点击展开 → 显示方法 / 何时该用 / 概率（或体用）/ 来历 4 个区块
+  - 再点击 → 收起
+  - 内联 CSS-in-JS，使用 tokens：朱砂色强调展开卡左边、宣纸色背景、宋体字
+  - 移动端：grid auto-fit minmax(170px) 自动堆叠
+- 改 `src/components/Fortune.jsx`：sub-tabs 之上嵌入 `<DivinationMethodCards />`
+
+**方法内容来源：**
+- 蓍草：《系辞·上》大衍五十之数 + 四营成易概率（自录）
+- 梅花：邵雍《梅花易数》传统（自录，含体用关系基础）
+- 铜钱：《火珠林》三钱法（自录）
+- 全部公版来源，无现代版权译注引用
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0
+- 视觉/交互测试待 dev server 启动
+
+**下一步：**
+- A2：lessons.js 增 3 课（蓍草揲蓍法 / 铜钱起卦 / 梅花易数），与导读卡形成"快速了解 vs 系统学习"两层
+- A3：梅花体用分析模块（导读卡已介绍体用概念，A3 在算法+UI 真正实现）
+- A4：复盘机制（核心护城河）
+
+---
+
 ## 2026-05-13 23:55 CDT — Phase 易经-A0 完成：删灵签 + 顶层 2 mode 重构
 
 **做了什么：**

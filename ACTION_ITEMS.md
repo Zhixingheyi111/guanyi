@@ -17,8 +17,8 @@
 - **添加时间：** 2026-05-13 23:55 CDT
 - **来源：** plan `/Users/dz/.claude/plans/app-cwd-users-dz-documents-yijing-warm-owl.md`
 - **进度：**
-  - ✅ A0：删灵签 + 2 mode 重构（commit pending，本 session）
-  - 📋 A1：占卜顶部 3 种方法导读卡
+  - ✅ A0：删灵签 + 2 mode 重构（commit 8de3454）
+  - ✅ A1：占卜顶部 3 种方法导读卡（commit pending）
   - 📋 A2：lessons.js 增 3 课占卜方法
   - 📋 A3：梅花体用分析模块
   - 📋 A4：复盘机制（占完→事后追问）（**护城河**）
@@ -104,6 +104,7 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-14 00:00 CDT | **A1** | 占卜顶部 3 种方法导读卡（蓍草/梅花/铜钱），可展开方法+何时用+概率+来历 |
 | 2026-05-13 23:55 CDT | **A0** | 删灵签 + 顶层 mode 3→2（占卜/学易）+ 蓍草并入占卜 sub-tab；修 build（注释 daxue import） |
 | 2026-05-11 20:06 CDT | **Phase 1** | v0.1.0-fortune-and-dialogue tag（10 commits 累积，Forgejo 等服务恢复） |
 | 2026-05-11 20:00 CDT | Phase 1.9-1.10 | useTextSelection + SelectionPopover + HexagramDetail (commit 5d8a308) |
