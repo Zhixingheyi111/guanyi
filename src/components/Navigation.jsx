@@ -1,4 +1,5 @@
-// 顶部模式导航：问道 / 学易 / 占卜
+// 顶部模式导航：占卜 / 学易（2026-05-13 起从 3 mode 合并为 2 mode）
+// 占卜内含 3 sub-tab：蓍草（庄重）/ 梅花（轻便）/ 铜钱（日常）；灵签已删
 
 const S = {
   nav: {
@@ -40,13 +41,10 @@ export default function Navigation({ currentMode, onModeChange }) {
   return (
     <nav style={S.nav} aria-label="模式切换">
       <button style={btnStyle('divination')} onClick={() => onModeChange('divination')}>
-        问道
+        占卜
       </button>
       <button style={btnStyle('study')} onClick={() => onModeChange('study')}>
         学易
-      </button>
-      <button style={btnStyle('fortune')} onClick={() => onModeChange('fortune')}>
-        占卜
       </button>
     </nav>
   );

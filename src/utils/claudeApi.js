@@ -194,7 +194,7 @@ ${guaBlock}
 4. 通过 yijing_interpret 工具返回结构化结果。综合建议的四个维度分别填入 adviceCurrentAction / adviceWarnings / adviceSupplement / adviceFutureDirection 这四个独立字段`;
 }
 
-// ── 占卜（梅花/铜钱/灵签）的轻量解读 ───────────────────────────────────────
+// ── 占卜（梅花/铜钱）的轻量解读 ───────────────────────────────────────
 
 const FORTUNE_TOOL = {
   type: 'function',
@@ -230,31 +230,6 @@ const HONESTY_DOCTRINE = `
 
 function buildFortunePrompt(scenario, question) {
   const q = (question || '').trim() || '（用户未明示问题，请就当下境况通言之）';
-
-  if (scenario.method === 'lingqian') {
-    const s = scenario.sign;
-    return `你是一位通晓签解之道的解签者。针对来求签者的问题，结合签意给出诚实有古意的解读。
-
-来求签者的问题：${q}
-
-抽得：第${s.id}签 · ${s.level}签 · ${s.title}
-签诗：
-${s.poem.join('\n')}
-传统解读：${s.interpretation}
-仙机：${s.advice}
-
-${HONESTY_DOCTRINE}
-
-——签的等级（${s.level}签）已经明示吉凶大方向，你的 valence 应与其一致，但允许"上吉签遇上不合时宜的问题"等具体情境调整。
-
-请通过工具 fortune_interpret 返回四个字段：
-- valence：${s.level}签对此问题的吉凶判断（大吉/小吉/中性/小凶/大凶 之一）
-- coreAdvice：140字以内。首句明示吉凶倾向。其余围绕用户问题给针对性认知；不复述签诗或传统解读。
-- yi：一句话，具体可行
-- ji：一句话，明确警示
-
-风格：含蓄但不含糊。可以温和，不能敷衍。不用"你应该/不应该"等指令性词语。`;
-  }
 
   // meihua / tongqian: hexagram-based
   const methodName = scenario.method === 'meihua' ? '梅花易数' : '铜钱起卦';
@@ -305,13 +280,10 @@ ${HONESTY_DOCTRINE}
  *
  * @param {{
  *   scenario: {
- *     method: 'meihua' | 'tongqian' | 'lingqian',
- *     // hexagram methods:
- *     benHex?: object,
+ *     method: 'meihua' | 'tongqian',
+ *     benHex: object,
  *     changingPositions?: number[],
  *     variantHex?: object | null,
- *     // sign method:
- *     sign?: object,
  *   },
  *   question: string,
  * }} input

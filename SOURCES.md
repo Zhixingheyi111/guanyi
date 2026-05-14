@@ -39,9 +39,10 @@
 ### 词条 (`src/data/glossary.js`)
 - 自录
 
-### 观音灵签 (`src/data/lingqian.js`) — Phase 1 prototype
-- 5 签为 prototype，文字为概括性表达，非历代任何一个传世版本
-- 100 签完整数据待 Phase 后期定来源（公版民间通行版本 vs 用户提供）
+### 观音灵签 — **已删除（2026-05-13）**
+- 用户决策"以易经为主"，灵签是道+佛混合，与产品定位偏离
+- 文件 `src/data/lingqian.js` 和 `src/components/fortune/LingQian.jsx` 已移除
+- 占卜模块当前 3 种：蓍草 / 梅花 / 铜钱（均《周易》系传统）
 
 ---
 

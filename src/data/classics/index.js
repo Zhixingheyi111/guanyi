@@ -1,11 +1,14 @@
 // 经典书架索引：动态聚合 src/data/classics/*.js
 // 单本数据按 _schema.md 约定
+//
+// Phase 2 经典扩展整体暂停（用户 2026-05-13 决策："以易经为主，占卜为辅"）。
+// schema 容器保留作未来扩展骨架。一旦恢复，把对应书的 .js 加回 BOOKS 即可。
 
-import daxue from './daxue';
+// import daxue from './daxue';  // Phase 2.0d 暂停
 
 // 顺序 = 书架默认展示顺序
 const BOOKS = [
-  daxue,
+  // daxue,  // Phase 2.0d 暂停
   // 后续添加：
   // zhongyong, lunyu, mengzi,
   // daodejing, zhuangzi,

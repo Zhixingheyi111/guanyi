@@ -10,7 +10,30 @@
 
 ## [Unreleased]
 
-（Phase 1 已完成；下个版本 v0.2.0-classics-9 在 Phase 2 启动后开始累积）
+Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
+
+### A0 — 2026-05-13 23:55 CDT — 删灵签 + 顶层 mode 重构
+
+**用户决策（2026-05-13）**：以易经为主、占卜为辅，其他经典暂搁；Phase 2 经典扩展整体暂停。
+
+#### Removed
+- `src/data/lingqian.js` — 灵签 5 签原型数据
+- `src/components/fortune/LingQian.jsx` — 灵签 UI 组件
+- `src/utils/claudeApi.js` 中 `lingqian` 解读分支（约 25 行）
+- Navigation 顶层 `问道` / `占卜` 按钮（合并为单 `占卜`）
+
+#### Changed
+- 顶层 mode 3 → 2：`占卜` / `学易`
+- 原"问道"（蓍草起卦）合并入"占卜"模式的 `蓍草` sub-tab
+- `Fortune.jsx` 重构为占卜模式容器：3 sub-tab（蓍草 / 梅花 / 铜钱）
+- `App.jsx`：抽出 `buildShicaoSlot()`，将原"问道"渲染逻辑作为蓍草 sub-tab 内容传入 `Fortune`
+- `src/data/classics/index.js`：临时注释 daxue import（Phase 2 暂停，schema 容器保留作未来扩展）
+- `SOURCES.md` / `ACTION_ITEMS.md` / `PROJECT.md` 同步更新
+
+#### Rationale
+- 灵签是道+佛混合，与"以易经为主"产品定位偏离
+- 3 mode 减为 2 mode：架构更清晰，蓍草作为最庄重占卜方式仍保留独立 sub-tab
+- 灵签 100 签数据来源决策（原 ACTION_ITEM U1）取消
 
 ---
 

@@ -1,9 +1,9 @@
-// 占卜模式容器：灵签（最轻）/ 梅花（轻）/ 铜钱（中） 三个子标签
-// 由轻到重排列。
+// 占卜模式容器：蓍草（最庄重）/ 梅花（轻便）/ 铜钱（日常） 三个 sub-tab
+// 蓍草工作流（输入问题 → 5 层卦象 → AI 解读）由 App.jsx 顶层管 state，
+// 这里通过 shicaoSlot prop 嵌入为 sub-tab 内容。
 import { useState } from 'react';
 import MeiHua from './fortune/MeiHua';
 import TongQian from './fortune/TongQian';
-import LingQian from './fortune/LingQian';
 
 const S = {
   tabs: {
@@ -35,13 +35,13 @@ const S = {
 };
 
 const TABS = [
-  { id: 'lingqian', label: '灵　签' },
+  { id: 'shicao',   label: '蓍　草' },
   { id: 'meihua',   label: '梅　花' },
   { id: 'tongqian', label: '铜　钱' },
 ];
 
-export default function Fortune() {
-  const [tab, setTab] = useState('lingqian');
+export default function Fortune({ shicaoSlot }) {
+  const [tab, setTab] = useState('shicao');
 
   return (
     <div>
@@ -62,7 +62,7 @@ export default function Fortune() {
         ))}
       </div>
 
-      {tab === 'lingqian' && <LingQian />}
+      {tab === 'shicao'   && shicaoSlot}
       {tab === 'meihua'   && <MeiHua />}
       {tab === 'tongqian' && <TongQian />}
     </div>

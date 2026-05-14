@@ -285,13 +285,20 @@
 
 # 当前任务（动态更新区）
 
-**阶段：** ✅ Phase 1 完成（v0.1.0-fortune-and-dialogue），等待用户验收
-**已完成：** A1-A5 占卜模块 + Phase 1.6-1.10 对话升级 + B1/B2/B3 修复
-**下一步（取决于用户）：**
-- 验收通过 → 进入 Phase 2（9 部经典扩展，**src/data 录入需用户确认数据来源**）
-- 发现问题 → /log-error 记录 + 修复
-**Forgejo 备份：** ⚠️ unpacker error 持续中（E004），本期 commits 仅在本地（v0.0.2-governance 之后的所有 commit）
-**当前时间最后更新：** 2026-05-11 20:06 CDT
+**阶段：** 🔄 Phase 易经-A 进行中（plan: `/Users/dz/.claude/plans/app-cwd-users-dz-documents-yijing-warm-owl.md`）
+**产品方向（2026-05-13 用户决策）：** 以易经为主，占卜为辅。Phase 2 经典扩展暂停。完全免费 + 纯前端无账号 + 限频 + 缓存。
+**已完成：**
+- v0.1.0-fortune-and-dialogue（10 commits）
+- A0：删灵签 + 2 mode 重构（占卜/学易，蓍草进占卜 sub-tab）
+**下一步：**
+- A1：占卜顶部 3 种方法导读卡
+- A2：lessons.js 增 3 课占卜方法
+- A3：梅花体用分析模块
+- A4：复盘机制（核心护城河）
+- B：日历 + 每日仪式
+- C：Worker 限频 + 缓存
+**Forgejo 备份：** ⚠️ unpacker error 持续中（E004），本期 commits 仅在本地
+**当前时间最后更新：** 2026-05-13 23:55 CDT
 
 ---
 

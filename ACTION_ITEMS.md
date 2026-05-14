@@ -13,7 +13,16 @@
 
 ### 🔄 进行中
 
-无（Phase 1 完成 v0.1.0-fortune-and-dialogue at 2026-05-11 20:06 CDT，等用户验收）
+#### Phase 易经-A · 占卜模块整治
+- **添加时间：** 2026-05-13 23:55 CDT
+- **来源：** plan `/Users/dz/.claude/plans/app-cwd-users-dz-documents-yijing-warm-owl.md`
+- **进度：**
+  - ✅ A0：删灵签 + 2 mode 重构（commit pending，本 session）
+  - 📋 A1：占卜顶部 3 种方法导读卡
+  - 📋 A2：lessons.js 增 3 课占卜方法
+  - 📋 A3：梅花体用分析模块
+  - 📋 A4：复盘机制（占完→事后追问）（**护城河**）
+- **责任人：** Claude
 
 ### ⚠️ 阻塞项（Phase 1.11 /checkpoint 之前必修）
 
@@ -58,9 +67,11 @@
 - **要做的事：** 在 nexus.xinle.biz 后台看 disk usage / 日志，或等服务自愈
 - **责任人：** 用户
 
-#### Phase 2 启动需要的用户决策（暂搁置）
-- 9 部经典每部的原文/翻译/注释来源（SOURCES.md 中待补的字段）
-- 灵签 100 签数据来源（公版 vs 用户提供）
+#### Phase 2 经典扩展 — **整体暂停**（用户 2026-05-13 决策）
+- 用户决策："以易经为主，占卜为辅，其他书暂搁"
+- schema 容器（`src/data/classics/_schema.md` + `index.js`）保留作未来扩展骨架
+- 大学数据录入（2.0d）已暂停，daxue import 在 index.js 中临时注释
+- 灵签 100 签数据来源 → **❌ 取消**（灵签整体删除）
 
 #### A3 — Phase 1.3：铜钱起卦 + 摇动画（DEPRECATED，已完成）
 - **添加时间：** 2026-05-10 21:28 CDT
@@ -85,10 +96,7 @@
 
 ## 用户待做
 
-#### U1 — 确认观音灵签 100 签数据来源
-- **添加时间：** 2026-05-10 21:28 CDT
-- **要做的事：** 决定用公版民间通行版本，还是你提供数据
-- **影响：** Phase 1.4 灵签从 5 签原型扩到 100 签的时机
+#### ~~U1~~ — ❌ 取消（2026-05-13）— 灵签整体删除，无需 100 签数据
 
 ---
 
@@ -96,6 +104,7 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-13 23:55 CDT | **A0** | 删灵签 + 顶层 mode 3→2（占卜/学易）+ 蓍草并入占卜 sub-tab；修 build（注释 daxue import） |
 | 2026-05-11 20:06 CDT | **Phase 1** | v0.1.0-fortune-and-dialogue tag（10 commits 累积，Forgejo 等服务恢复） |
 | 2026-05-11 20:00 CDT | Phase 1.9-1.10 | useTextSelection + SelectionPopover + HexagramDetail (commit 5d8a308) |
 | 2026-05-11 19:55 CDT | Phase 1.6-1.8 | studyChat persona 化 + 4 位作者 + UI (commit 0d75fc5) |

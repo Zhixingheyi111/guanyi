@@ -175,7 +175,8 @@ function InkSeparator() {
 }
 
 export default function App() {
-  // 模式：divination（问道）/ study（学易）/ fortune（占卜）
+  // 模式：divination（占卜，含蓍草/梅花/铜钱 3 sub-tab）/ study（学易）
+  // 2026-05-13 起从 3 mode 合并为 2 mode：原"问道"=蓍草进入占卜 sub-tab，灵签删除
   const [mode, setMode] = useState('divination');
 
   // 问道模式的原有状态
@@ -266,15 +267,8 @@ export default function App() {
     }
   };
 
-  const renderContent = () => {
-    if (mode === 'study') {
-      return <Study />;
-    }
-
-    if (mode === 'fortune') {
-      return <Fortune />;
-    }
-
+  // 蓍草 sub-tab 内容（提交问题 / 5 层卦象 / Reading / 历史详情）
+  const buildShicaoSlot = () => {
     if (viewingHistoryId) {
       const record = getDivinationRecord(viewingHistoryId);
       if (!record) {
@@ -337,6 +331,15 @@ export default function App() {
         onViewHistory={setViewingHistoryId}
       />
     );
+  };
+
+  const renderContent = () => {
+    if (mode === 'study') {
+      return <Study />;
+    }
+
+    // mode === 'divination'：占卜模式（蓍草 / 梅花 / 铜钱）
+    return <Fortune shicaoSlot={buildShicaoSlot()} />;
   };
 
   return (

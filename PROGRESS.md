@@ -6,6 +6,35 @@
 
 ---
 
+## 2026-05-13 23:55 CDT — Phase 易经-A0 完成：删灵签 + 顶层 2 mode 重构
+
+**做了什么：**
+- 修 build：注释 `src/data/classics/index.js:4` 的 `import daxue from './daxue'` + 第 8 行 `daxue,`（Phase 2 经典扩展暂停后该 import 不再有效）
+- 删 `src/data/lingqian.js` + `src/components/fortune/LingQian.jsx`
+- 重写 `src/components/Fortune.jsx`（71 行）：3 sub-tab `蓍草 / 梅花 / 铜钱`；接受 `shicaoSlot` prop 嵌入蓍草工作流
+- 改 `src/App.jsx`：mode 状态机注释更新；抽出 `buildShicaoSlot()` 把原"问道"渲染逻辑作为 slot 传入 `<Fortune>`；删除 `mode === 'fortune'` 分支
+- 改 `src/components/Navigation.jsx`：3 个按钮（问道/学易/占卜）合并为 2 个（占卜/学易）
+- 改 `src/utils/claudeApi.js`：`buildFortunePrompt` 删 lingqian 分支（约 25 行）；jsdoc 入参 type 收窄到 `'meihua' | 'tongqian'`
+- 更新 `SOURCES.md` / `ACTION_ITEMS.md` / `PROJECT.md` / `CHANGELOG.md`
+
+**用户决策（plan 阶段确认）：**
+- 以易经为主，占卜为辅；其他经典（Phase 2）整体暂停（schema 容器保留作未来扩展骨架）
+- 删灵签：道+佛混合，与"以易为主"定位偏离
+- 顶层 mode 合并为 2：占卜 / 学易；占卜内 3 sub-tab（蓍草最庄重 / 梅花轻便 / 铜钱日常）
+- 完全免费 + 纯前端无账号 + 限频 + 缓存（C 阶段在 Worker 实现）
+- 限频规则：蓍草日 1 次（"再三渎"伦理）/ 占卜池日 5 次 / 学易池日 20 次 / 学完 1 课 +2 次占卜额度（核心引流机制）
+
+**验证：**
+- `npm run lint` rc=0（独立运行，E005 纪律）
+- `npm run build` rc=0，模块数 101→99
+- 视觉测试待 dev server 启动
+
+**下一步：**
+- A1：占卜顶部 3 种方法导读卡（蓍草/梅花/铜钱 概览）
+- A2：lessons.js 增 3 课（蓍草揲蓍法 / 铜钱起卦 / 梅花易数）
+
+---
+
 ## 2026-05-10 21:53 CDT — A2 / Phase 1.2 完成：梅花易数
 
 **做了什么：**
