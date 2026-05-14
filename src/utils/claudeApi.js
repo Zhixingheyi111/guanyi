@@ -498,3 +498,110 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
     comprehensiveAdvice,
   };
 }
+
+// ── 占卜复盘反思（Phase 易经-A4）────────────────────────────────────────────
+
+/**
+ * 让 AI 综合"原卦 + 原问 + 用户后续描述 + 自评"做一次复盘反思。
+ *
+ * 这是占卜后 7/30 天的"事后回看"——给用户呈现"卦象当时说了什么、事情后来怎样了、
+ * 两者之间的真实对应关系"。是任何 AI 占卜对手都没做的差异化，是"准"的护城河。
+ *
+ * @param {{
+ *   record: {                            // 原占卜记录
+ *     question: string,
+ *     method?: string,                   // shicao/meihua/tongqian
+ *     benGua?: object,                   // 蓍草五层卦象
+ *     bianGua?: object,
+ *     interpretation?: object,           // 原 AI 解读
+ *     // 或 meihua/tongqian 的简版字段
+ *     hexName?: string,
+ *     coreAdvice?: string,
+ *     timestamp: number,
+ *   },
+ *   userReply: string,                   // 用户描述"那件事后来怎样了"
+ *   selfRating: number,                  // 1-5
+ *   daysElapsed: number,                 // 距占卜过去多少天
+ * }} input
+ *
+ * @returns {Promise<string>}  AI 反思文本（300-500 字）
+ */
+export async function reflectFortune({ record, userReply, selfRating, daysElapsed }) {
+  const appSecret = import.meta.env.VITE_APP_SECRET;
+  if (!appSecret) throw new Error('密钥配置错误');
+
+  const ratingLabel = ['', '完全不准', '不太准', '部分应验', '较准', '非常准'][selfRating] || '未评';
+
+  // 提取原卦信息（兼容蓍草五层 + 简版梅花/铜钱）
+  let originalGua = '（无）';
+  let originalReading = '';
+  if (record.benGua?.name) {
+    originalGua = `${record.benGua.name}（${record.benGua.symbol}）`;
+    if (record.bianGua?.name) {
+      originalGua += ` → 变 ${record.bianGua.name}`;
+    }
+  } else if (record.hexName) {
+    originalGua = record.hexName;
+  }
+
+  if (record.interpretation?.comprehensiveAdvice?.currentAction) {
+    originalReading = record.interpretation.comprehensiveAdvice.currentAction;
+  } else if (record.coreAdvice) {
+    originalReading = record.coreAdvice;
+  }
+
+  const prompt = `你是一位通晓《周易》的占者，正在与来询者一起做一次事后的复盘反思。
+
+# 原占卜（${daysElapsed} 天前）
+- 问的事：${record.question || '（未明示）'}
+- 起的卦：${originalGua}
+- 当时建议：${originalReading || '（无记录）'}
+
+# 来询者今日的描述
+"${userReply}"
+
+# 来询者对原卦的自评
+${selfRating}/5 — ${ratingLabel}
+
+---
+
+请用 300-500 字做一次反思，包含三个层次：
+
+1. **对照**：卦象当时所说与事后真实发生的事，有哪些对应？哪些没对应？要诚实——不应验就承认不应验，不要硬扯。
+
+2. **解释**：如果有对应，是哪一爻/哪一句卦辞最切中？如果没对应，可能是当时解读偏差、还是事情走向出了卦象之外的可能？
+
+3. **学到什么**：这次复盘，对来询者关于"如何使用占卜"有什么启发？例如：什么时候卦象准、什么时候不准、如何提问、如何理解爻辞等。
+
+风格要求：
+- 诚实优先。不应验的卦坦然承认，不为占卜辩护。
+- 用中文自然段，3-4 段，每段 2-4 句。
+- 不用 Markdown，不用列表。
+- 称呼来询者用"你"或不称呼。自称"我"或不自称。
+- 不重复用户已写的内容；从"看见"出发说"我所见的"。
+- 收尾给一句具体的"下次该如何用占卜"的小建议（不超 15 字）。`;
+
+  let response;
+  try {
+    response = await axios.post(
+      API_URL,
+      {
+        model: MODEL,
+        max_tokens: 800,
+        messages: [{ role: 'user', content: prompt }],
+      },
+      {
+        headers: {
+          'x-app-secret': appSecret,
+          'content-type': 'application/json',
+        },
+      }
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+
+  const text = response.data.choices?.[0]?.message?.content;
+  if (!text) throw new Error('回复格式异常');
+  return text.trim();
+}

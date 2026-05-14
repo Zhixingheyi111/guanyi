@@ -6,6 +6,59 @@
 
 ---
 
+## 2026-05-14 00:32 CDT — Phase 易经-A4 完成：复盘机制（核心护城河）
+
+**做了什么：**
+
+### 数据层
+- 改 `src/utils/storage.js`：
+  - 新增 `updateDivinationFollowUp(id, followUp)`：保存复盘信息
+  - 新增 `getPendingReviewRecords(now)`：返回待复盘记录（7-30 天和 30+ 天）
+  - 新增 `getDivinationStats(daysAgo, now)`：统计准确度分布（"上个月 5 卦准了 3 个"）
+  - followUp 字段结构：`{askedAt, userReply, selfRating(1-5), aiReflection, reviewedAt}`
+
+### AI 层
+- 改 `src/utils/claudeApi.js`：
+  - 新增 `reflectFortune({record, userReply, selfRating, daysElapsed})` 函数
+  - prompt 设计：3 层结构（对照 / 解释 / 学到什么）+ 诚实优先（不应验就承认不应验）+ 收尾"下次该如何用占卜"小建议
+  - 兼容蓍草五层卦象 + 梅花/铜钱简版字段
+
+### UI 层
+- 新建 `src/components/divination/ReviewPrompt.jsx`（~230 行）：
+  - 4 阶段状态机：editing → loading → reflecting / error
+  - 文本框（"那件事后来怎样了"）+ 1-5 星自评
+  - "请 AI 反思一下"按钮 → 调 `reflectFortune` → 显示 AI 文本
+  - "保存此次复盘" / "暂不保存" / 错误时"不要 AI 反思，仅保存"
+- 改 `src/components/DivinationHistory.jsx`：
+  - 每条记录加 ageDays 计算（基于 currentTime 快照，避免 render 阶段 Date.now()）
+  - 占卜 ≥ 7 天且未复盘 → 朱砂"复盘 · N 天前"按钮
+  - 已复盘 → 金色"已复盘 N/5"徽章
+  - 点击复盘按钮 → inline 展开 ReviewPrompt（不弹 modal）
+  - 复盘提交 → `updateDivinationFollowUp` + 刷新
+
+**React 19 hooks/purity 处理：**
+- `Date.now()` 不能在 render 阶段调
+- 用 `useState(() => Date.now())` initializer 在 mount 时调一次
+- event handler（handleToggle / handleDelete / handleReviewSubmit）内 setCurrentTime(Date.now()) 更新
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0；bundle 737 KB（+9 KB 含 ReviewPrompt UI + reflectFortune）
+- 视觉/交互测试待 dev server 启动
+
+**护城河价值：**
+- 这是任何 AI 占卜对手（卦语 AI、知命阁等）都没做的差异化
+- 长期累积 → "我的占卜日记"，用户能看见"准 vs 不准"的真实统计
+- 反向训练用户：从"问完即丢"到"看见真实对应"——把占卜从一次性娱乐变成长期学习
+- 与限频规则配合：日 1 次蓍草、5 次占卜 → 鼓励"少而精" + 复盘机制鼓励"问完看后续"
+
+**下一步：**
+- 一个补丁后续可考虑：占卜后 7/30 天首页弹"上次问 X 那件事怎样了"（plan 里 A4 后半，本 session 未做）
+- B：日历 + 每日仪式（节气×卦、农历×爻、占卜历、打卡历）
+- C：Worker 限频 + 缓存
+
+---
+
 ## 2026-05-14 00:09 CDT — Phase 易经-A3 完成：梅花体用分析模块
 
 **做了什么：**

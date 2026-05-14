@@ -12,6 +12,41 @@
 
 Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
 
+### A4 — 2026-05-14 00:32 CDT — 复盘机制（核心护城河）
+
+#### Added
+
+**数据层 (`src/utils/storage.js`)**
+- `updateDivinationFollowUp(id, followUp)` — 保存复盘信息
+- `getPendingReviewRecords(now)` — 返回 7-30 天 / 30+ 天待复盘记录
+- `getDivinationStats(daysAgo, now)` — 准确度分布统计
+- followUp 字段：`{askedAt, userReply, selfRating(1-5), aiReflection, reviewedAt}`
+
+**AI 层 (`src/utils/claudeApi.js`)**
+- `reflectFortune({record, userReply, selfRating, daysElapsed})` 函数
+- prompt 三层：对照（卦象 vs 真实）/ 解释（哪一爻切中或为何不应验）/ 学到什么
+- 诚实优先（不应验就承认）+ 收尾"下次该如何用占卜"小建议
+- 兼容蓍草五层 + 梅花/铜钱简版
+
+**UI 层**
+- `src/components/divination/ReviewPrompt.jsx`（新，~230 行）：
+  4 阶段（editing/loading/reflecting/error）+ 自评 1-5 + AI 反思显示
+- `src/components/DivinationHistory.jsx`：
+  · 占卜 ≥ 7 天未复盘 → 朱砂"复盘 · N 天前"按钮
+  · 已复盘 → 金色"已复盘 N/5"徽章
+  · Inline 展开 ReviewPrompt（不弹 modal）
+
+#### Rationale
+任何 AI 占卜对手（卦语 AI、知命阁等）都没做"复盘"。这是观易的护城河：
+长期累积形成"我的占卜日记"，用户看到"准 vs 不准"的真实统计，把占卜
+从一次性娱乐变成长期学习。配合限频规则（蓍草日 1 次）和"再三渎"伦理。
+
+#### Technical Notes
+- React 19 hooks/purity rule：`Date.now()` 不能在 render 阶段调。
+  解决：`useState(() => Date.now())` initializer + event handler 内更新。
+
+---
+
 ### A3 — 2026-05-14 00:09 CDT — 梅花体用分析模块
 
 #### Added
