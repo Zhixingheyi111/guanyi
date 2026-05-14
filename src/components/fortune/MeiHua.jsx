@@ -159,6 +159,87 @@ const S = {
     fontSize: 'var(--text-sm)',
     letterSpacing: 'var(--track-wide)',
   },
+  // 体用分析卡片
+  tiyongCard: {
+    padding: 'var(--space-4)',
+    background: 'var(--paper-soft)',
+    border: '1px solid var(--paper-edge)',
+    borderLeft: '3px solid var(--vermilion)',
+    borderRadius: 'var(--radius-md)',
+    marginBottom: 'var(--space-4)',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-soft)',
+    lineHeight: 1.85,
+  },
+  tiyongTitle: {
+    fontSize: 'var(--text-sm)',
+    fontWeight: 500,
+    color: 'var(--vermilion-deep)',
+    letterSpacing: 'var(--track-wide)',
+    marginBottom: 'var(--space-2)',
+  },
+  tiyongRow: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    gap: 'var(--space-3)',
+    flexWrap: 'wrap',
+    marginBottom: 'var(--space-3)',
+    paddingBottom: 'var(--space-3)',
+    borderBottom: '1px dashed var(--paper-edge)',
+  },
+  tiyongSlot: {
+    textAlign: 'center',
+    flex: '1 1 auto',
+    minWidth: '110px',
+  },
+  tiyongRole: {
+    fontSize: 'var(--text-xs)',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-xwide)',
+    marginBottom: 'var(--space-1)',
+  },
+  tiyongBaguaSymbol: {
+    fontSize: 'var(--text-2xl)',
+    color: 'var(--ink)',
+    lineHeight: 1,
+  },
+  tiyongBaguaName: {
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
+    marginTop: 'var(--space-1)',
+  },
+  tiyongElement: {
+    fontSize: 'var(--text-xs)',
+    color: 'var(--ink-light)',
+    marginTop: 'var(--space-1)',
+  },
+  tiyongRelation: {
+    textAlign: 'center',
+    fontSize: 'var(--text-base)',
+    color: 'var(--ink)',
+    letterSpacing: 'var(--track-wide)',
+    fontWeight: 500,
+    marginBottom: 'var(--space-2)',
+  },
+  tiyongNature: {
+    display: 'inline-block',
+    padding: '0.15rem 0.5rem',
+    marginLeft: 'var(--space-2)',
+    background: 'var(--vermilion)',
+    color: 'var(--paper)',
+    fontSize: 'var(--text-xs)',
+    borderRadius: 'var(--radius-sm)',
+    letterSpacing: 'var(--track-wide)',
+    verticalAlign: 'middle',
+  },
+  tiyongMeaning: {
+    textAlign: 'center',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-soft)',
+    fontStyle: 'italic',
+    lineHeight: 1.8,
+  },
   variantSymbol: {
     fontSize: '2rem',
     marginRight: 'var(--space-2)',
@@ -305,6 +386,31 @@ export default function MeiHua() {
           </div>
         )}
 
+        {result.tiyong && (
+          <div style={S.tiyongCard}>
+            <div style={S.tiyongTitle}>体用之论</div>
+            <div style={S.tiyongRow}>
+              <div style={S.tiyongSlot}>
+                <div style={S.tiyongRole}>体 · 我</div>
+                <div style={S.tiyongBaguaSymbol}>{result.tiyong.tiBagua.symbol}</div>
+                <div style={S.tiyongBaguaName}>{result.tiyong.tiBagua.name}</div>
+                <div style={S.tiyongElement}>{result.tiyong.tiBagua.elementName}</div>
+              </div>
+              <div style={S.tiyongSlot}>
+                <div style={S.tiyongRole}>用 · 事</div>
+                <div style={S.tiyongBaguaSymbol}>{result.tiyong.yongBagua.symbol}</div>
+                <div style={S.tiyongBaguaName}>{result.tiyong.yongBagua.name}</div>
+                <div style={S.tiyongElement}>{result.tiyong.yongBagua.elementName}</div>
+              </div>
+            </div>
+            <div style={S.tiyongRelation}>
+              {result.tiyong.relationLabel}
+              <span style={S.tiyongNature}>{result.tiyong.nature}</span>
+            </div>
+            <div style={S.tiyongMeaning}>{result.tiyong.meaning}</div>
+          </div>
+        )}
+
         {ben && (
           <QuickReading
             scenario={{
@@ -312,6 +418,7 @@ export default function MeiHua() {
               benHex: ben,
               changingPositions: result.changingPositions,
               variantHex: variant,
+              tiyong: result.tiyong,
             }}
             question={question}
           />

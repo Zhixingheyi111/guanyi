@@ -12,6 +12,31 @@
 
 Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
 
+### A3 — 2026-05-14 00:09 CDT — 梅花体用分析模块
+
+#### Added
+- `src/utils/meiHua.js`：
+  - 八卦五行映射（乾兑金 / 震巽木 / 坎水 / 离火 / 坤艮土）
+  - `analyzeTiyong(upperNum, lowerNum, changingIndex)` 函数：体用判定 + 5 种生克关系（体生用耗 / 用生体得 / 体克用胜 / 用克体难 / 比和稳）+ 一句白话 meaning
+- `src/components/fortune/MeiHua.jsx`：
+  - 体用分析卡片（朱砂左 border）：体 / 用 两栏含八卦+五行；关系标签+性质徽章；一句解释
+  - tiyong 传入 QuickReading scenario
+
+#### Changed
+- `src/utils/claudeApi.js` buildFortunePrompt 的 meihua 分支：
+  - 新增 tiyongBlock 把体用信息加入 prompt
+  - coreAdvice 要求：梅花卦明确利用体用关系做针对性认知
+  - valence 参考：增加梅花体用对吉凶的影响说明
+
+#### Rationale
+A2 第 12 课讲了体用理论，A3 在算法 + UI 真正实现。
+让梅花占卜从"上下卦+动爻"升级到"体用+生克"——这是梅花区别于
+蓍草/铜钱的灵魂所在，《梅花易数》整本书有一半内容在讲体用。
+AI 解读也能基于体用关系给出针对性建议（"用克体，事压我"），
+而不再泛泛"此卦如何"。
+
+---
+
 ### A2 — 2026-05-14 00:05 CDT — lessons.js 增 3 课占卜方法详解
 
 #### Added

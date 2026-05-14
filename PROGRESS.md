@@ -6,6 +6,44 @@
 
 ---
 
+## 2026-05-14 00:09 CDT — Phase 易经-A3 完成：梅花体用分析模块
+
+**做了什么：**
+- 改 `src/utils/meiHua.js`（+~110 行）：
+  - 新增 `BAGUA_ELEMENT` 映射：乾兑→金、震巽→木、坎→水、离→火、坤艮→土
+  - 新增 `ELEMENT_NAMES` 中文表
+  - 新增 `GENERATES` / `OVERCOMES` 五行生克常量
+  - 新增 `analyzeTiyong(upperNum, lowerNum, changingIndex)` 函数：
+    - 动爻 index < 3 → 在下卦 → yong=下卦、ti=上卦
+    - 动爻 index ≥ 3 → 在上卦 → yong=上卦、ti=下卦
+    - 判 5 种关系：体生用（耗）/ 用生体（得）/ 体克用（胜）/ 用克体（难）/ 比和（稳）
+    - 返回 {tiPosition, yongPosition, tiBagua, yongBagua, relation, relationLabel, nature, meaning}
+  - 改 `buildResult`：附加 tiyong 字段到返回；为 upper/lowerBagua 加 element/elementName
+- 改 `src/components/fortune/MeiHua.jsx`（+~95 行 style + ~30 行 JSX）：
+  - 新增体用分析卡片（带朱砂左 border）
+  - 显示：体（我）/ 用（事）两栏，含八卦符号 + 名 + 五行
+  - 关系标签 + 朱砂色性质徽章（耗/得/胜/难/稳）
+  - 一句白话解释
+  - 把 tiyong 传给 QuickReading 的 scenario
+- 改 `src/utils/claudeApi.js` buildFortunePrompt 中 meihua 分支：
+  - 新增 tiyongBlock：在 prompt 中传入体用信息（含每种关系下 AI 应当强调的方向）
+  - 修改 coreAdvice 要求：梅花卦明确利用体用关系
+  - 修改 valence 参考：增加梅花体用对吉凶的影响说明
+
+**算法手测：**
+- 例 1：上=乾(金) + 下=离(火) + 动初爻 → yong=离(火)、ti=乾(金)；火克金 → 用克体（难）✓
+- 例 2：上=兑(金) + 下=艮(土) + 动四爻 → yong=兑(金)、ti=艮(土)；土生金 → 体生用（耗）✓
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0；bundle 728 KB（+5 KB tiyong 逻辑+UI）
+- 视觉测试待 dev server 启动
+
+**下一步：**
+- A4：复盘机制（核心护城河）—— 占卜历史 + 7/30 天追问 + 用户自评 + AI 综合反思
+
+---
+
 ## 2026-05-14 00:05 CDT — Phase 易经-A2 完成：lessons.js 增 3 课占卜方法详解
 
 **做了什么：**

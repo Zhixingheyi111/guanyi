@@ -236,6 +236,7 @@ function buildFortunePrompt(scenario, question) {
   const ben = scenario.benHex;
   const cps = scenario.changingPositions || [];
   const variant = scenario.variantHex;
+  const tiyong = scenario.tiyong;  // 仅梅花有
 
   let yaoBlock = '';
   if (cps.length > 0 && ben?.yaoci) {
@@ -249,6 +250,24 @@ function buildFortunePrompt(scenario, question) {
     yaoBlock = `\n动爻：\n${lines}`;
   }
 
+  // 梅花体用块（仅当 method=meihua 且有 tiyong 信息时附加）
+  let tiyongBlock = '';
+  if (scenario.method === 'meihua' && tiyong) {
+    tiyongBlock = `
+体用之论（梅花易数核心）：
+  体（我）：${tiyong.tiBagua.name}（${tiyong.tiBagua.symbol}，五行属${tiyong.tiBagua.elementName}）
+  用（事）：${tiyong.yongBagua.name}（${tiyong.yongBagua.symbol}，五行属${tiyong.yongBagua.elementName}）
+  关系：${tiyong.relationLabel} → ${tiyong.nature}（${tiyong.meaning}）
+
+  请在 coreAdvice 中明确利用这层体用关系给出针对性认知：
+  - 体生用（耗）：提醒所问之事会消耗"我"的精力/资源，须问是否值得
+  - 用生体（得）：所问之事会带来助益，可乘势
+  - 体克用（胜）："我"能主导事，但需出力——评估是否有此余力
+  - 用克体（难）：所问之事会压制"我"，须警惕、防御或避让
+  - 比和（稳）：体用同行无显著消长，主稳定持守
+`;
+  }
+
   return `你是一位精通${methodName}的占卜师。针对来问询者的问题，结合卦象给出诚实有古意的解读。
 
 来问询者的问题：${q}
@@ -258,17 +277,17 @@ function buildFortunePrompt(scenario, question) {
 卦辞：${ben.guaci.original}
 卦辞释义：${ben.guaci.translation || ''}${yaoBlock}
 ${variant ? `变卦：${variant.name}（${variant.symbol}）` : '六爻无动 · 静卦'}
-
+${tiyongBlock}
 ${HONESTY_DOCTRINE}
 
 ——参考分类（不绝对，仅供 valence 倾向）：
 - 偏吉：乾、坤（贞静）、谦、临、泰、大有、咸、恒、损、益、夬、晋、归妹、丰、既济、复 等
 - 偏凶：否、剥、坎、明夷、蹇、困、噬嗑（下爻）、贲、师（动盘）、革（过急）等
-- 多数卦象其实在 中性 与 小吉/小凶 之间，动爻、变卦决定具体走向
+- 多数卦象其实在 中性 与 小吉/小凶 之间，动爻、变卦决定具体走向${tiyong ? '\n- 梅花的 valence 还要参考体用关系：用克体偏凶、体生用偏耗、用生体偏得、体克用居中略向胜、比和居中略稳' : ''}
 
 请通过工具 fortune_interpret 返回四个字段：
 - valence：此卦对此问题的吉凶判断（大吉/小吉/中性/小凶/大凶 之一）
-- coreAdvice：140字以内。首句明示吉凶倾向（如"此卦警示困境"或"此卦小吉，但..."）。其余围绕用户问题给针对性认知，不复述卦辞。
+- coreAdvice：140字以内。首句明示吉凶倾向（如"此卦警示困境"或"此卦小吉，但..."）。${tiyong ? '梅花卦请明确利用体用关系（如"用克体，事压我"），不复述卦辞。' : '其余围绕用户问题给针对性认知，不复述卦辞。'}
 - yi：一句话。凶卦时偏保守动作（暂止/退/守/省/不前）。
 - ji：一句话。吉卦时仍要给（勿骄/勿急/勿过度）。
 

@@ -43,7 +43,115 @@ const BAGUA_SYMBOLS = {
   5: '☴', 6: '☵', 7: '☶', 8: '☷',
 };
 
+// 先天八卦对应五行（梅花易数体用论的基础）
+//   乾、兑：金  ｜  震、巽：木  ｜  坎：水  ｜  离：火  ｜  坤、艮：土
+const BAGUA_ELEMENT = {
+  1: 'metal', 2: 'metal',  // 乾 兑
+  3: 'fire',                // 离
+  4: 'wood',  5: 'wood',   // 震 巽
+  6: 'water',               // 坎
+  7: 'earth', 8: 'earth',  // 艮 坤
+};
+
+const ELEMENT_NAMES = {
+  metal: '金', wood: '木', water: '水', fire: '火', earth: '土',
+};
+
 const POSITION_NAMES = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
+
+// 五行生克关系
+//   生：木→火→土→金→水→木
+//   克：木→土→水→火→金→木
+const GENERATES = {
+  wood: 'fire', fire: 'earth', earth: 'metal', metal: 'water', water: 'wood',
+};
+const OVERCOMES = {
+  wood: 'earth', earth: 'water', water: 'fire', fire: 'metal', metal: 'wood',
+};
+
+/**
+ * 判定体用关系
+ *
+ * 梅花易数核心：动爻所在卦为"用"（所问之事），不动卦为"体"（问卦者自己）。
+ * 体用之间的五行生克决定吉凶倾向。
+ *
+ * @param {number} upperNum - 上卦先天数 1-8
+ * @param {number} lowerNum - 下卦先天数 1-8
+ * @param {number} changingIndex - 动爻 0-indexed（0=初爻在下卦最下）
+ * @returns {{
+ *   tiPosition: 'upper'|'lower',
+ *   yongPosition: 'upper'|'lower',
+ *   tiBagua: {num, name, symbol, element, elementName},
+ *   yongBagua: {num, name, symbol, element, elementName},
+ *   relation: 'tiSheng-yong'|'yongSheng-ti'|'tiKe-yong'|'yongKe-ti'|'bihe',
+ *   relationLabel: '体生用'|'用生体'|'体克用'|'用克体'|'比和',
+ *   nature: '耗'|'得'|'胜'|'难'|'稳',
+ *   meaning: string,  // 一句白话解释
+ * }}
+ */
+export function analyzeTiyong(upperNum, lowerNum, changingIndex) {
+  // 动爻在下卦（0-2）还是上卦（3-5）
+  const yongPosition = changingIndex < 3 ? 'lower' : 'upper';
+  const tiPosition   = yongPosition === 'lower' ? 'upper' : 'lower';
+
+  const yongNum = yongPosition === 'lower' ? lowerNum : upperNum;
+  const tiNum   = tiPosition === 'lower' ? lowerNum : upperNum;
+
+  const yongElement = BAGUA_ELEMENT[yongNum];
+  const tiElement   = BAGUA_ELEMENT[tiNum];
+
+  // 判定关系
+  let relation, relationLabel, nature, meaning;
+  if (tiElement === yongElement) {
+    relation = 'bihe';
+    relationLabel = '比和';
+    nature = '稳';
+    meaning = '体用同行，气类相近，主稳定持守';
+  } else if (GENERATES[tiElement] === yongElement) {
+    relation = 'tiSheng-yong';
+    relationLabel = '体生用';
+    nature = '耗';
+    meaning = '我助事而泄气，主耗损、付出多于回报';
+  } else if (GENERATES[yongElement] === tiElement) {
+    relation = 'yongSheng-ti';
+    relationLabel = '用生体';
+    nature = '得';
+    meaning = '事助我而得益，主获利、外来助力';
+  } else if (OVERCOMES[tiElement] === yongElement) {
+    relation = 'tiKe-yong';
+    relationLabel = '体克用';
+    nature = '胜';
+    meaning = '我能克制事，主能控、可成但需用力';
+  } else {
+    relation = 'yongKe-ti';
+    relationLabel = '用克体';
+    nature = '难';
+    meaning = '事克我而受困，主阻滞、外力压身';
+  }
+
+  return {
+    tiPosition,
+    yongPosition,
+    tiBagua: {
+      num: tiNum,
+      name: BAGUA_NAMES[tiNum],
+      symbol: BAGUA_SYMBOLS[tiNum],
+      element: tiElement,
+      elementName: ELEMENT_NAMES[tiElement],
+    },
+    yongBagua: {
+      num: yongNum,
+      name: BAGUA_NAMES[yongNum],
+      symbol: BAGUA_SYMBOLS[yongNum],
+      element: yongElement,
+      elementName: ELEMENT_NAMES[yongElement],
+    },
+    relation,
+    relationLabel,
+    nature,
+    meaning,
+  };
+}
 
 // n mod max，但 0 取 max（梅花易数的传统约定）
 function modOrMax(n, max) {
@@ -60,6 +168,7 @@ function buildResult(method, inputs, upperNum, lowerNum, changingPos1Based) {
   const binary = BAGUA_BINARY[lowerNum] + BAGUA_BINARY[upperNum];
   const changingIndex = changingPos1Based - 1;
   const variantBinary = flipBit(binary, changingIndex);
+  const tiyong = analyzeTiyong(upperNum, lowerNum, changingIndex);
 
   return {
     method,
@@ -68,16 +177,21 @@ function buildResult(method, inputs, upperNum, lowerNum, changingPos1Based) {
       num: upperNum,
       name: BAGUA_NAMES[upperNum],
       symbol: BAGUA_SYMBOLS[upperNum],
+      element: BAGUA_ELEMENT[upperNum],
+      elementName: ELEMENT_NAMES[BAGUA_ELEMENT[upperNum]],
     },
     lowerBagua: {
       num: lowerNum,
       name: BAGUA_NAMES[lowerNum],
       symbol: BAGUA_SYMBOLS[lowerNum],
+      element: BAGUA_ELEMENT[lowerNum],
+      elementName: ELEMENT_NAMES[BAGUA_ELEMENT[lowerNum]],
     },
     binary,
     variantBinary,
     changingPositions: [changingIndex],     // 0-indexed，与现有 divination.js 约定一致
     changingPositionName: POSITION_NAMES[changingIndex],
+    tiyong,                                  // 体用分析（梅花易数特有）
   };
 }
 
