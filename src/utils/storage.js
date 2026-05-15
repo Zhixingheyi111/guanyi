@@ -199,7 +199,9 @@ export function isLessonRead(lessonId) {
 // 同一日同一爻第二次进入 App 不再调 AI——降本 + 加速。
 // 不主动清理：localStorage 5MB 容量、每条 ~200 字节，可存几千日。
 
-const DAILY_YAO_PREFIX = `${KEY_PREFIX}daily-yao-reading:`;
+// v2 schema：从 plain string 升级为 { observation, hintType, hint } 对象
+// 旧 v1 缓存被忽略（key 不同自然废弃）
+const DAILY_YAO_PREFIX = `${KEY_PREFIX}daily-yao-reading-v2:`;
 
 function dailyYaoKey(date, hexId, yaoIndex) {
   const pad = (n) => String(n).padStart(2, '0');
@@ -209,9 +211,11 @@ function dailyYaoKey(date, hexId, yaoIndex) {
 
 export function getCachedDailyYaoReading(date, hexId, yaoIndex) {
   const v = safeGet(dailyYaoKey(date, hexId, yaoIndex));
-  return typeof v === 'string' ? v : null;
+  if (!v || typeof v !== 'object') return null;
+  if (!v.observation || !v.hint) return null;
+  return v;
 }
 
-export function setCachedDailyYaoReading(date, hexId, yaoIndex, text) {
-  return safeSet(dailyYaoKey(date, hexId, yaoIndex), text);
+export function setCachedDailyYaoReading(date, hexId, yaoIndex, reading) {
+  return safeSet(dailyYaoKey(date, hexId, yaoIndex), reading);
 }

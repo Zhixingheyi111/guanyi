@@ -606,30 +606,57 @@ ${selfRating}/5 — ${ratingLabel}
   return text.trim();
 }
 
-// ── 每日一爻 AI 小解（Phase 易经-B4 之后补）─────────────────────────────────
+// ── 每日一爻 AI 小解（Phase 易经-B4）────────────────────────────────────────
+
+const DAILY_YAO_TOOL = {
+  type: 'function',
+  function: {
+    name: 'daily_yao_interpret',
+    description: '生成今日一爻的现代场景观象解读',
+    parameters: {
+      type: 'object',
+      properties: {
+        observation: {
+          type: 'string',
+          description: '60-90 字现代场景的观象小解。不是占卜，是借此爻意境照见今日普遍处境。用日常语境（工作、关系、心境），避免纯古文措辞。',
+        },
+        hintType: {
+          type: 'string',
+          enum: ['宜', '忌'],
+          description: '本爻意境在今日的导向：偏吉/和顺/进取的爻 → 宜；偏凶/警示/退守的爻 → 忌',
+        },
+        hint: {
+          type: 'string',
+          description: '8-14 字的"今日宜 X"或"今日忌 Y"的具体动作建议。要具体可行，不要空话。',
+        },
+      },
+      required: ['observation', 'hintType', 'hint'],
+    },
+  },
+};
 
 /**
- * 给"今日一爻"生成 60-90 字现代场景的小解读。
+ * 给"今日一爻"生成结构化解读：observation（小解）+ hintType（宜/忌）+ hint（具体建议）。
  *
  * 不是占卜（不结合用户问题），是"易经如镜"的日常观象——
  * 看一爻象在今日的处境里如何照见自身。
  *
  * @param {{
- *   hex: object,             // 来自 hexagrams.js 的卦数据
- *   yaoIndex: number,        // 0-5
- *   yaoOriginal: string,     // 爻辞原文
- *   yaoTranslation?: string, // 爻辞白话
- *   jieqiName?: string,      // 当前节气（可空）
+ *   hex: object,
+ *   yaoIndex: number,
+ *   yaoOriginal: string,
+ *   yaoTranslation?: string,
+ *   jieqiName?: string,
  * }} input
  *
- * @returns {Promise<string>}
+ * @returns {Promise<{ observation: string, hintType: '宜'|'忌', hint: string }>}
  */
 export async function interpretDailyYao({ hex, yaoIndex, yaoOriginal, yaoTranslation, jieqiName }) {
   const appSecret = import.meta.env.VITE_APP_SECRET;
   if (!appSecret) throw new Error('密钥配置错误');
 
   const position = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'][yaoIndex];
-  const prompt = `你是一位通晓《周易》的占者，正在为今日"日历一爻"写一句小解。
+  const prompt = `你是一位通晓《周易》的占者，为今日"日历一爻"写观象小解。
 
 # 今日所观
 - 卦象：${hex.name}（${hex.symbol}）
@@ -639,17 +666,22 @@ ${yaoTranslation ? `- 释义：${yaoTranslation}` : ''}
 ${jieqiName ? `- 节气：${jieqiName}` : ''}
 
 # 任务
-用 60-90 字写一段"今日观象小解"：
+通过工具 daily_yao_interpret 返回三个字段：
 
-- **不是占卜**——不是给某人某事算吉凶，而是借此爻在今日的隐喻，照见当下普遍处境。
-- **现代场景**——用日常语境（工作、关系、心境等），避免"小人""君子"这类纯古文措辞。
-- **简洁而有节制**——不过度阐释，一两句直入要害即可。
-- **结尾给一句 8 字以内的"今日宜"或"今日忌"小提示**，与本爻意境呼应。
+**observation**（60-90 字）
+- 借此爻意境照见今日普遍处境，不是给具体人算吉凶
+- 用现代场景：工作、人际、心境、节奏感等
+- 避免"君子""小人"等纯古文，但可承爻辞内涵
+- 1-2 句直入要害；不要复述爻辞
 
-风格要求：
-- 中文自然段，1-2 段，每段 1-2 句
-- 不用 Markdown、不用列表、不用引号
-- 不自称"我"或"占者"——直接陈述`;
+**hintType**（必填 enum）
+- 此爻意境是偏导向"进取/和顺"→ "宜"
+- 此爻意境是偏导向"警示/退守/反思"→ "忌"
+
+**hint**（8-14 字）
+- 紧扣 hintType：宜 → 具体可行的当下动作；忌 → 具体要避免的当下动作
+- 不空话："宜静"太空，"宜稍等一日再决断"更好
+- 不夸大："忌万事不顺"太悲，"忌强求他人回应"更准`;
 
   let response;
   try {
@@ -657,8 +689,10 @@ ${jieqiName ? `- 节气：${jieqiName}` : ''}
       API_URL,
       {
         model: MODEL,
-        max_tokens: 300,
+        max_tokens: 400,
         messages: [{ role: 'user', content: prompt }],
+        tools: [DAILY_YAO_TOOL],
+        tool_choice: 'auto',
       },
       {
         headers: {
@@ -671,7 +705,37 @@ ${jieqiName ? `- 节气：${jieqiName}` : ''}
     handleApiError(error);
   }
 
-  const text = response.data.choices?.[0]?.message?.content;
-  if (!text) throw new Error('回复格式异常');
-  return text.trim();
+  // 解析 tool call 或 fallback 到 content JSON
+  const message = response.data.choices?.[0]?.message;
+  if (!message) throw new Error('回复格式异常');
+
+  let parsed;
+  if (message.tool_calls?.[0]?.function?.arguments) {
+    try {
+      parsed = JSON.parse(message.tool_calls[0].function.arguments);
+    } catch {
+      throw new Error('解读失败：tool_calls arguments JSON 解析失败');
+    }
+  } else if (typeof message.content === 'string') {
+    const text = message.content;
+    const fenced = text.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+    const raw    = fenced ? fenced[1] : text.match(/\{[\s\S]*\}/)?.[0];
+    if (!raw) throw new Error('解读失败：未找到 JSON');
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      throw new Error('解读失败：content JSON 解析失败');
+    }
+  } else {
+    throw new Error('解读失败：返回格式异常');
+  }
+
+  if (!parsed.observation || !parsed.hintType || !parsed.hint) {
+    throw new Error('解读失败：字段缺失');
+  }
+  return {
+    observation: String(parsed.observation).trim(),
+    hintType:    parsed.hintType === '忌' ? '忌' : '宜',
+    hint:        String(parsed.hint).trim(),
+  };
 }
