@@ -314,8 +314,9 @@ export default function Calendar({ onJumpToHexagram }) {
           const hasLes = showLesson     && lessonByDay.has(dKey);
 
           // 每日爻（仅在 showYao 开时显示；空间不够，只显示卦名首字）
+          // 未来日期不剧透——"今日一爻"是每天打开 App 才揭晓的仪式
           let yaoLabel = '';
-          if (showYao && cell.currentMonth) {
+          if (showYao && cell.currentMonth && dKey <= todayKey) {
             const { hexagramId } = getDailyYao(cell.date);
             const hex = getHexagramById(hexagramId);
             if (hex) yaoLabel = hex.name[0];
@@ -397,7 +398,10 @@ function Toggle({ on, onChange, dot, label }) {
 }
 
 function DayDetailPanel({ date, divinations, lessons, onJumpToHexagram, onClose }) {
-  const isToday = formatDateKey(date) === formatDateKey(new Date());
+  const todayKey = formatDateKey(new Date());
+  const thisKey = formatDateKey(date);
+  const isToday = thisKey === todayKey;
+  const isFuture = thisKey > todayKey;  // 未来日不显示每日一爻
   const jq = isJieqiDay(date);
   const { hexagramId, yaoIndex } = getDailyYao(date);
   const hex = getHexagramById(hexagramId);
@@ -480,10 +484,10 @@ function DayDetailPanel({ date, divinations, lessons, onJumpToHexagram, onClose 
         </div>
       )}
 
-      {/* 易经今日一爻 */}
-      {hex && (
+      {/* 易经今日一爻（未来日子不剧透） */}
+      {hex && !isFuture && (
         <div style={{ ...S.detailRow, paddingTop: '0.4em', borderTop: '1px dashed var(--paper-edge)' }}>
-          <span style={{ color: 'var(--ink-light)', marginRight: '0.4em' }}>今日一爻</span>
+          <span style={{ color: 'var(--ink-light)', marginRight: '0.4em' }}>{isToday ? '今日一爻' : '当日一爻'}</span>
           {onJumpToHexagram ? (
             <button
               type="button"
