@@ -12,6 +12,36 @@
 
 Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
 
+### B4 — 2026-05-14 22:30 CDT — DailyDigest 今日卡片
+
+#### Added
+- `src/components/calendar/DailyDigest.jsx`（~190 行）：
+  · 日期 + 当前节气（节气日含"今日"徽章）
+  · 今日一爻（卦符 + 卦名 + 爻位 + 爻辞原文）
+  · 学习进度（"上次读到"或"建议从"+"继续/开始"按钮）
+
+#### Changed
+- `src/App.jsx` 在 Navigation 之下嵌入 `<DailyDigest />`
+- onJumpToLesson 实现：切到 study mode
+
+#### Rationale
+打开 App 第一眼看到"今日仪式"——节气、一爻、上次学到。
+给用户"每天打开一次"的理由，零 AI 调用、纯静态数据驱动。
+
+---
+
+### B1+B2 — 2026-05-14 22:25 CDT — 节气×卦象 + 每日一爻 数据层
+
+#### Added
+- `src/data/jieqi.js`：24 节气 × 12 消息卦完整映射（卦气说），含 30-60 字解读
+- `src/data/dailyYao.js`：公历 → 384 爻索引算法，384 天循环
+
+#### Rationale
+为 Phase 易经-B 的日历/卡片功能准备数据基础。
+全部公版自录，无现代版权译注引用。
+
+---
+
 ### A4 — 2026-05-14 00:32 CDT — 复盘机制（核心护城河）
 
 #### Added

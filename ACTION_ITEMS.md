@@ -21,8 +21,13 @@
   - ✅ A1：占卜顶部 3 种方法导读卡（commit deaf478）
   - ✅ A2：lessons.js 增 3 课占卜方法（commit 3468f4f）
   - ✅ A3：梅花体用分析模块（commit 93b5583）
-  - ✅ A4：复盘机制核心（占卜后 ≥7 天可手动复盘 + AI 反思）（commit pending）
-  - 📋 A4 后半（延后）：占卜后 7/30 天首页主动弹追问
+  - ✅ A4：复盘机制核心（commit 0bc2432）
+  - ✅ A polish：蓍草 sub-tab intro 加（commit c81ad4a）
+  - ✅ B1+B2：jieqi.js + dailyYao.js 数据层（commit 2f3ba23）
+  - ✅ B4：DailyDigest 今日卡片（commit 44e4ff8）
+  - 📋 B3：Calendar 4 种 overlay 月历视图（**下个 session**）
+  - 📋 A4 后半（延后）：占卜后 7/30 天首页主动弹追问（依赖 B3 首页骨架）
+  - 📋 C：Worker 限频 + 缓存
 - **责任人：** Claude
 
 ### ⚠️ 阻塞项（Phase 1.11 /checkpoint 之前必修）
@@ -105,6 +110,9 @@
 
 | 时间 | ID | 内容 |
 |---|---|---|
+| 2026-05-14 22:30 CDT | **B4** | DailyDigest 今日卡片（节气+一爻+学习进度，挂全局 mode 之上）|
+| 2026-05-14 22:25 CDT | **B1+B2** | jieqi.js（24 节气×12 消息卦）+ dailyYao.js（384 爻日历算法）|
+| 2026-05-14 00:45 CDT | **A polish** | 蓍草 sub-tab intro（与梅花/铜钱对齐）|
 | 2026-05-14 00:32 CDT | **A4** | 复盘机制护城河（storage 数据层 + reflectFortune AI + ReviewPrompt UI + DivinationHistory 集成）|
 | 2026-05-14 00:09 CDT | **A3** | 梅花体用分析模块（8 卦五行 + 5 种生克 + UI 卡片 + AI prompt 注入）|
 | 2026-05-14 00:05 CDT | **A2** | lessons.js 增 3 课占卜方法详解（蓍草大衍数+四营、金钱卦火珠林、梅花体用）|

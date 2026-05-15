@@ -6,6 +6,46 @@
 
 ---
 
+## 2026-05-14 22:30 CDT — Phase 易经-B4 完成：DailyDigest 今日卡片（commit 44e4ff8）
+
+**做了什么：**
+- 新建 `src/components/calendar/DailyDigest.jsx`（~190 行）：
+  - 顶部：日期（"5月14日"）+ 当前节气（如"立夏 后 9 天"），节气日 → 朱砂"今日"徽章
+  - 中段：今日一爻（卦符 + 卦名 + 爻位 + 爻辞原文，金色左 border 引用框）
+  - 底部：学习进度（"上次读到：第 N 课"or"建议从：第 1 课"+"继续/开始 →"按钮）
+- 改 `src/App.jsx`：在 Navigation 之下、renderContent 之上嵌入 `<DailyDigest />`
+- onJumpToLesson 实现：切到 study mode
+
+**为什么先做 B4 而不是 B3：**
+- B4 工程量小（~190 行），B1+B2 数据立即落地为可见效果
+- 用户打开 App 第一眼就有"今日仪式"
+- B3 月历视图（2-3 sessions）作为下个 session 独立做
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0
+- curl 验证 dev server 已 serving 新代码
+
+---
+
+## 2026-05-14 22:25 CDT — Phase 易经-B1+B2 完成：节气×卦象 + 每日一爻 数据层（commit 2f3ba23）
+
+**做了什么：**
+- 新建 `src/data/jieqi.js`：24 节气 × 12 消息卦完整映射（汉代孟喜、京房"卦气说"）
+  - 每月一辟卦对应该月中气（复/临/泰/大壮/夬/乾/姤/遁/否/观/剥/坤）
+  - 节气前半 transition / 后半 main，各配 30-60 字解读
+  - 工具函数：getCurrentJieqi / isJieqiDay / getJieqiDatesInYear / getJieqiByName
+- 新建 `src/data/dailyYao.js`：公历日期 → 384 爻索引（64 卦 × 6 爻）
+  - 384 天循环（约 1 年 19 天）
+  - UTC 天数计算避免时区漂移
+  - 工具函数：getDailyYao / formatYaoName（"九二"/"六三"等）/ getDailyYaosInRange
+
+**内容来源：** 全部公版自录（《周易·序卦传》《系辞》+ 朱熹《周易本义》），无现代版权译注引用。
+
+**验证：** lint rc=0、build rc=0。
+
+---
+
 ## 2026-05-14 00:45 CDT — Polish · 蓍草 sub-tab intro（commit af23ad7）
 
 视觉验收期间用户报：蓍草下没有 intro，与梅花/铜钱不一致。
