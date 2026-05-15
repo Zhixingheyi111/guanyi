@@ -6,6 +6,15 @@
 
 ---
 
+## 2026-05-14 00:45 CDT — Polish · 蓍草 sub-tab intro（commit af23ad7）
+
+视觉验收期间用户报：蓍草下没有 intro，与梅花/铜钱不一致。
+- 改 `src/components/Divination.jsx`：wrapper 顶部加 intro（与 MeiHua 同款样式）
+- 文案"蓍草揲数 · 大衍之数 / 心有大事 · 一日一占"——对仗梅花"邵雍传"和铜钱"火珠林"
+- 顺带 commit 了 `.claude/launch.json`（preview tool 配置）
+
+---
+
 ## 2026-05-14 00:32 CDT — Phase 易经-A4 完成：复盘机制（核心护城河）
 
 **做了什么：**

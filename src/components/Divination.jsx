@@ -8,6 +8,13 @@ const S = {
     flexDirection: 'column',
     gap: 'var(--space-6)',
   },
+  intro: {
+    textAlign: 'center',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-whisper)',
+    letterSpacing: 'var(--track-wide)',
+    lineHeight: 1.8,
+  },
   inputBlock: {
     display: 'flex',
     flexDirection: 'column',
@@ -120,6 +127,11 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
           .guanyi-bagua-ready { animation: none; }
         }
       `}</style>
+
+      <div style={S.intro}>
+        蓍草揲数 · 大衍之数<br />
+        心有大事 · 一日一占
+      </div>
 
       <DivinationHistory onView={onViewHistory} />
 
