@@ -154,6 +154,7 @@ const S = {
     fontSize: 'var(--text-sm)',
     color: 'var(--ink)',
     lineHeight: 1.9,
+    whiteSpace: 'pre-wrap',
     letterSpacing: '0.01em',
   },
   aiReadingLabel: {
@@ -162,35 +163,10 @@ const S = {
     letterSpacing: 'var(--track-xwide)',
     marginBottom: '0.4rem',
   },
-  aiObservation: {
-    whiteSpace: 'pre-wrap',
-    marginBottom: 'var(--space-3)',
-  },
-  aiHintRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 'var(--space-2)',
-    paddingTop: 'var(--space-2)',
-    borderTop: '1px dashed var(--paper-edge)',
-  },
-  aiHintBadge: {
-    display: 'inline-block',
-    padding: '0.1rem 0.55rem',
-    background: 'var(--vermilion)',
-    color: 'var(--paper)',
-    borderRadius: 'var(--radius-sm)',
-    fontSize: 'var(--text-xs)',
-    letterSpacing: 'var(--track-xwide)',
+  aiHintLine: {
+    marginTop: '0.8em',
+    color: 'var(--vermilion-deep)',
     fontWeight: 500,
-  },
-  aiHintBadgeJi: {
-    background: 'var(--vermilion-deep)',
-  },
-  aiHintText: {
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink)',
-    fontWeight: 500,
-    letterSpacing: '0.01em',
   },
   aiError: {
     fontSize: 'var(--text-xs)',
@@ -311,15 +287,9 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
         {aiReading ? (
           <div style={S.aiReading}>
             <div style={S.aiReadingLabel}>占者观象</div>
-            <div style={S.aiObservation}>{aiReading.observation}</div>
-            <div style={S.aiHintRow}>
-              <span style={{
-                ...S.aiHintBadge,
-                ...(aiReading.hintType === '忌' ? S.aiHintBadgeJi : null),
-              }}>
-                今日{aiReading.hintType}
-              </span>
-              <span style={S.aiHintText}>{aiReading.hint}</span>
+            {aiReading.observation}
+            <div style={S.aiHintLine}>
+              今日{aiReading.hintType}：{aiReading.hint}
             </div>
           </div>
         ) : aiLoading ? (
