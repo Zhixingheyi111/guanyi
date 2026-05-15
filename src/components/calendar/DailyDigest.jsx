@@ -54,6 +54,24 @@ const S = {
     letterSpacing: '0.05em',
     fontWeight: 'normal',
   },
+  calendarBtn: {
+    padding: '0.35rem 0.8rem',
+    background: 'var(--paper)',
+    border: '1px solid var(--vermilion)',
+    color: 'var(--vermilion)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-xs)',
+    letterSpacing: 'var(--track-wide)',
+    cursor: 'pointer',
+    borderRadius: 'var(--radius-md)',
+    minHeight: '30px',
+    whiteSpace: 'nowrap',
+    marginLeft: 'auto',
+  },
+  calendarBtnActive: {
+    background: 'var(--vermilion)',
+    color: 'var(--paper)',
+  },
   yaoSection: {
     marginBottom: 'var(--space-3)',
   },
@@ -261,6 +279,18 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
             : daysSinceStart > 0 && <span style={{ marginLeft: '0.4rem', color: 'var(--ink-light)' }}>后 {daysSinceStart} 天</span>
           }
         </span>
+        {onToggleCalendar && (
+          <button
+            type="button"
+            style={{
+              ...S.calendarBtn,
+              ...(calendarOpen ? S.calendarBtnActive : null),
+            }}
+            onClick={onToggleCalendar}
+          >
+            {calendarOpen ? '收起整月 ▴' : '看整月 ▾'}
+          </button>
+        )}
       </div>
 
       <div style={S.yaoSection}>
@@ -327,14 +357,6 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
               {lastRead ? '继续' : '开始'} →
             </button>
           </span>
-        </div>
-      )}
-
-      {onToggleCalendar && (
-        <div style={{ ...S.progressLine, textAlign: 'right' }}>
-          <button style={S.progressLink} onClick={onToggleCalendar}>
-            {calendarOpen ? '收起整月 ▴' : '看整月 ▾'}
-          </button>
         </div>
       )}
     </div>
