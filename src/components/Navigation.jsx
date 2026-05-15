@@ -1,5 +1,7 @@
-// 顶部模式导航：占卜 / 学易（2026-05-13 起从 3 mode 合并为 2 mode）
-// 占卜内含 3 sub-tab：蓍草（庄重）/ 梅花（轻便）/ 铜钱（日常）；灵签已删
+// 顶部模式导航：今日 / 占卜 / 学易
+//  - 今日：DailyDigest（节气/农历/干支/今日一爻/AI 解读/学习进度）+ Calendar 月历
+//  - 占卜：含 3 sub-tab——蓍草（庄重）/ 梅花（轻便）/ 铜钱（日常）
+//  - 学易：入门 9 课 + 占卜方法 3 课 + 词典 + 64 卦
 
 const S = {
   nav: {
@@ -40,6 +42,9 @@ export default function Navigation({ currentMode, onModeChange }) {
 
   return (
     <nav style={S.nav} aria-label="模式切换">
+      <button style={btnStyle('today')} onClick={() => onModeChange('today')}>
+        今日
+      </button>
       <button style={btnStyle('divination')} onClick={() => onModeChange('divination')}>
         占卜
       </button>

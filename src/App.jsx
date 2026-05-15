@@ -177,9 +177,9 @@ function InkSeparator() {
 }
 
 export default function App() {
-  // 模式：divination（占卜，含蓍草/梅花/铜钱 3 sub-tab）/ study（学易）
-  // 2026-05-13 起从 3 mode 合并为 2 mode：原"问道"=蓍草进入占卜 sub-tab，灵签删除
-  const [mode, setMode] = useState('divination');
+  // 模式：today（今日：节气/农历/一爻/学习进度+月历）/ divination / study
+  // 2026-05-15 起加 today 顶层 mode，把 DailyDigest+Calendar 从全局移入
+  const [mode, setMode] = useState('today');
 
   // 问道模式的原有状态
   const [question, setQuestion]         = useState('');
@@ -198,8 +198,8 @@ export default function App() {
   // 用 { hexagramId, ts } 触发 Study 组件 key 变化 → unmount + 新 mount 用 initial 值
   const [studyDeepLink, setStudyDeepLink] = useState(null);
 
-  // 月历展开（默认折叠；DailyDigest 的"看整月 →"切换）
-  const [calendarOpen, setCalendarOpen] = useState(false);
+  // 月历展开（在 today mode 内默认展开；其他 mode 不渲染月历）
+  const [calendarOpen, setCalendarOpen] = useState(true);
 
   const reset = () => {
     setQuestion('');
@@ -349,6 +349,22 @@ export default function App() {
   };
 
   const renderContent = () => {
+    if (mode === 'today') {
+      return (
+        <>
+          <DailyDigest
+            onJumpToLesson={() => setMode('study')}
+            onJumpToHexagram={handleJumpToHexagram}
+            calendarOpen={calendarOpen}
+            onToggleCalendar={() => setCalendarOpen(v => !v)}
+          />
+          {calendarOpen && (
+            <Calendar onJumpToHexagram={handleJumpToHexagram} />
+          )}
+        </>
+      );
+    }
+
     if (mode === 'study') {
       // key={ts} 让每次 deep link 重新 mount Study，使 initialHexagramId 生效
       const studyKey = studyDeepLink?.ts || 'default';
@@ -398,19 +414,6 @@ export default function App() {
 
           {/* 模式导航 */}
           <Navigation currentMode={mode} onModeChange={handleModeChange} />
-
-          {/* 月历展开时放在 DailyDigest 之上：作为整月视野，DailyDigest 仍在下面提供"今日详情" */}
-          {calendarOpen && (
-            <Calendar onJumpToHexagram={handleJumpToHexagram} />
-          )}
-
-          {/* 今日卡片：节气 + 一爻 + 学习进度 */}
-          <DailyDigest
-            onJumpToLesson={() => setMode('study')}
-            onJumpToHexagram={handleJumpToHexagram}
-            calendarOpen={calendarOpen}
-            onToggleCalendar={() => setCalendarOpen(v => !v)}
-          />
 
           {error && <div style={S.error}>{error}</div>}
 
