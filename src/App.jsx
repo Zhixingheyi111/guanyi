@@ -7,6 +7,7 @@ import Fortune from './components/Fortune';
 import Bagua from './components/Bagua';
 import Seal from './components/Seal';
 import DailyDigest from './components/calendar/DailyDigest';
+import Calendar from './components/calendar/Calendar';
 import { generateHexagram } from './utils/divination';
 import { calculateTransformations } from './utils/transformations';
 import { getHexagramIdByBinary } from './data/hexagramIndex';
@@ -196,6 +197,9 @@ export default function App() {
   // 学易 deep link：DailyDigest 点击"今日一爻"卦名时跳到该卦详情
   // 用 { hexagramId, ts } 触发 Study 组件 key 变化 → unmount + 新 mount 用 initial 值
   const [studyDeepLink, setStudyDeepLink] = useState(null);
+
+  // 月历展开（默认折叠；DailyDigest 的"看整月 →"切换）
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const reset = () => {
     setQuestion('');
@@ -399,7 +403,13 @@ export default function App() {
           <DailyDigest
             onJumpToLesson={() => setMode('study')}
             onJumpToHexagram={handleJumpToHexagram}
+            calendarOpen={calendarOpen}
+            onToggleCalendar={() => setCalendarOpen(v => !v)}
           />
+
+          {calendarOpen && (
+            <Calendar onJumpToHexagram={handleJumpToHexagram} />
+          )}
 
           {error && <div style={S.error}>{error}</div>}
 

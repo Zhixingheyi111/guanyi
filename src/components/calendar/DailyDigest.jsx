@@ -201,7 +201,7 @@ function findLastReadLesson() {
   return readLessons.reduce((max, l) => (l.order > max.order ? l : max), readLessons[0]);
 }
 
-export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
+export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendarOpen, onToggleCalendar }) {
   // mount 时算一次：Date.now() 在 useState initializer 中允许
   const [now] = useState(() => new Date());
   const { jieqi, daysSinceStart } = getCurrentJieqi(now);
@@ -327,6 +327,14 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
               {lastRead ? '继续' : '开始'} →
             </button>
           </span>
+        </div>
+      )}
+
+      {onToggleCalendar && (
+        <div style={{ ...S.progressLine, textAlign: 'right' }}>
+          <button style={S.progressLink} onClick={onToggleCalendar}>
+            {calendarOpen ? '收起整月 ▴' : '看整月 ▾'}
+          </button>
         </div>
       )}
     </div>

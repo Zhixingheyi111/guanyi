@@ -176,17 +176,45 @@ export function saveHexagramNote(hexagramId, note) {
 }
 
 // ---------- 入门课程进度 ----------
+//
+// 存储格式向前兼容：
+//   v1: ['lesson-id-1', 'lesson-id-2', ...]      （仅 id，旧版）
+//   v2: [{ id, readAt: timestamp }, ...]          （Phase 易经-B3 加打卡日历后）
+// 读取函数同时处理两种格式。新写入一律 v2。
 
-// 返回一个已读课程 id 的 Set
-export function getLessonsRead() {
+function readLessonsRaw() {
   const v = safeGet(LESSONS_READ_KEY);
-  return new Set(Array.isArray(v) ? v : []);
+  if (!Array.isArray(v)) return [];
+  return v.map(item => {
+    if (typeof item === 'string') return { id: item, readAt: null };
+    if (item && typeof item === 'object' && item.id) return item;
+    return null;
+  }).filter(Boolean);
+}
+
+// 返回一个已读课程 id 的 Set（保持原 API 不变；isLessonRead 等不受影响）
+export function getLessonsRead() {
+  return new Set(readLessonsRaw().map(x => x.id));
+}
+
+// 新 API（Phase 易经-B3）：返回 [{ id, readAt }] 数组
+// 用于日历"学习打卡"overlay
+export function getLessonReadRecords() {
+  return readLessonsRaw();
 }
 
 export function markLessonRead(lessonId) {
-  const set = getLessonsRead();
-  set.add(lessonId);
-  return safeSet(LESSONS_READ_KEY, Array.from(set));
+  const existing = readLessonsRaw();
+  // 已存在的不重复加，但若旧条目 readAt=null 可以补一个时间戳
+  const idx = existing.findIndex(x => x.id === lessonId);
+  if (idx >= 0) {
+    if (existing[idx].readAt == null) {
+      existing[idx].readAt = Date.now();
+    }
+    return safeSet(LESSONS_READ_KEY, existing);
+  }
+  existing.push({ id: lessonId, readAt: Date.now() });
+  return safeSet(LESSONS_READ_KEY, existing);
 }
 
 export function isLessonRead(lessonId) {
