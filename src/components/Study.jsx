@@ -43,13 +43,14 @@ const TABS = [
   { id: 'grid',     label: '卦　目' },
 ];
 
-export default function Study() {
-  // 当前子标签
-  const [tab, setTab] = useState('lessons');
+export default function Study({ initialHexagramId = null }) {
+  // 当前子标签——若有 initialHexagramId（来自外部 deep link，如 DailyDigest 跳转），
+  // 默认进入"卦目"sub-tab 并直接打开该卦详情
+  const [tab, setTab] = useState(initialHexagramId != null ? 'grid' : 'lessons');
   // 详情视图的 id；任一非 null 时，显示对应详情页而非 tabs
   const [lessonId, setLessonId]     = useState(null);
   const [termId, setTermId]         = useState(null);
-  const [hexagramId, setHexagramId] = useState(null);
+  const [hexagramId, setHexagramId] = useState(initialHexagramId);
 
   // 跨 tab 跳转：从课程里点词条，词条的返回应回到课程而非词典
   // 所以记录是谁打开了详情，返回时用对应的"返回目标"

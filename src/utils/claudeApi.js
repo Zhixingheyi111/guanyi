@@ -605,3 +605,73 @@ ${selfRating}/5 — ${ratingLabel}
   if (!text) throw new Error('回复格式异常');
   return text.trim();
 }
+
+// ── 每日一爻 AI 小解（Phase 易经-B4 之后补）─────────────────────────────────
+
+/**
+ * 给"今日一爻"生成 60-90 字现代场景的小解读。
+ *
+ * 不是占卜（不结合用户问题），是"易经如镜"的日常观象——
+ * 看一爻象在今日的处境里如何照见自身。
+ *
+ * @param {{
+ *   hex: object,             // 来自 hexagrams.js 的卦数据
+ *   yaoIndex: number,        // 0-5
+ *   yaoOriginal: string,     // 爻辞原文
+ *   yaoTranslation?: string, // 爻辞白话
+ *   jieqiName?: string,      // 当前节气（可空）
+ * }} input
+ *
+ * @returns {Promise<string>}
+ */
+export async function interpretDailyYao({ hex, yaoIndex, yaoOriginal, yaoTranslation, jieqiName }) {
+  const appSecret = import.meta.env.VITE_APP_SECRET;
+  if (!appSecret) throw new Error('密钥配置错误');
+
+  const position = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'][yaoIndex];
+  const prompt = `你是一位通晓《周易》的占者，正在为今日"日历一爻"写一句小解。
+
+# 今日所观
+- 卦象：${hex.name}（${hex.symbol}）
+- 爻位：${position}
+- 爻辞：${yaoOriginal}
+${yaoTranslation ? `- 释义：${yaoTranslation}` : ''}
+${jieqiName ? `- 节气：${jieqiName}` : ''}
+
+# 任务
+用 60-90 字写一段"今日观象小解"：
+
+- **不是占卜**——不是给某人某事算吉凶，而是借此爻在今日的隐喻，照见当下普遍处境。
+- **现代场景**——用日常语境（工作、关系、心境等），避免"小人""君子"这类纯古文措辞。
+- **简洁而有节制**——不过度阐释，一两句直入要害即可。
+- **结尾给一句 8 字以内的"今日宜"或"今日忌"小提示**，与本爻意境呼应。
+
+风格要求：
+- 中文自然段，1-2 段，每段 1-2 句
+- 不用 Markdown、不用列表、不用引号
+- 不自称"我"或"占者"——直接陈述`;
+
+  let response;
+  try {
+    response = await axios.post(
+      API_URL,
+      {
+        model: MODEL,
+        max_tokens: 300,
+        messages: [{ role: 'user', content: prompt }],
+      },
+      {
+        headers: {
+          'x-app-secret': appSecret,
+          'content-type': 'application/json',
+        },
+      }
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+
+  const text = response.data.choices?.[0]?.message?.content;
+  if (!text) throw new Error('回复格式异常');
+  return text.trim();
+}

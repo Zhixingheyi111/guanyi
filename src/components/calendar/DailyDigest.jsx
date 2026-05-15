@@ -1,11 +1,17 @@
 // 今日卡片：节气 + 今日一爻 + 学习进度
 // 全局每日仪式区，在 Navigation 之上，所有 mode 都能看见
 // 数据来源：jieqi.js + dailyYao.js + lessons.js + storage.js
+import { useState } from 'react';
 import { getCurrentJieqi, isJieqiDay } from '../../data/jieqi';
 import { getDailyYao, formatYaoName } from '../../data/dailyYao';
 import { getHexagramById } from '../../data/hexagrams';
 import { lessons } from '../../data/lessons';
-import { getLessonsRead } from '../../utils/storage';
+import {
+  getLessonsRead,
+  getCachedDailyYaoReading,
+  setCachedDailyYaoReading,
+} from '../../utils/storage';
+import { interpretDailyYao } from '../../utils/claudeApi';
 
 const S = {
   card: {
@@ -79,6 +85,28 @@ const S = {
     padding: '0.5rem 0.8rem',
     margin: '0.5rem 0',
   },
+  translationBox: {
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-light)',
+    lineHeight: 1.8,
+    fontStyle: 'italic',
+    paddingLeft: '0.5rem',
+    margin: '0.3rem 0',
+    letterSpacing: '0.01em',
+  },
+  hexLink: {
+    background: 'none',
+    border: 'none',
+    padding: 0,
+    color: 'inherit',
+    cursor: 'pointer',
+    font: 'inherit',
+    textAlign: 'inherit',
+    textDecoration: 'underline',
+    textUnderlineOffset: '4px',
+    textDecorationStyle: 'dotted',
+    textDecorationColor: 'var(--ink-whisper)',
+  },
   progressLine: {
     fontSize: 'var(--text-sm)',
     color: 'var(--ink-soft)',
@@ -96,6 +124,50 @@ const S = {
     letterSpacing: 'var(--track-wide)',
     textDecoration: 'underline',
     textUnderlineOffset: '3px',
+  },
+  // AI 小解相关
+  aiButtonRow: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: 'var(--space-2)',
+  },
+  aiButton: {
+    padding: '0.35rem 0.85rem',
+    background: 'transparent',
+    border: '1px solid var(--vermilion)',
+    color: 'var(--vermilion)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-xs)',
+    letterSpacing: 'var(--track-wide)',
+    cursor: 'pointer',
+    borderRadius: 'var(--radius-md)',
+    minHeight: '32px',
+  },
+  aiButtonDisabled: { opacity: 0.5, cursor: 'wait' },
+  aiReading: {
+    background: 'var(--paper)',
+    border: '1px solid var(--paper-edge)',
+    borderLeft: '3px solid var(--vermilion)',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-3) var(--space-4)',
+    marginTop: 'var(--space-3)',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink)',
+    lineHeight: 1.9,
+    whiteSpace: 'pre-wrap',
+    letterSpacing: '0.01em',
+  },
+  aiReadingLabel: {
+    fontSize: 'var(--text-xs)',
+    color: 'var(--ink-light)',
+    letterSpacing: 'var(--track-xwide)',
+    marginBottom: '0.4rem',
+  },
+  aiError: {
+    fontSize: 'var(--text-xs)',
+    color: 'var(--vermilion-deep)',
+    marginTop: '0.4rem',
+    textAlign: 'right',
   },
 };
 
@@ -119,8 +191,9 @@ function findLastReadLesson() {
   return readLessons.reduce((max, l) => (l.order > max.order ? l : max), readLessons[0]);
 }
 
-export default function DailyDigest({ onJumpToLesson }) {
-  const now = new Date();
+export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
+  // mount 时算一次：Date.now() 在 useState initializer 中允许
+  const [now] = useState(() => new Date());
   const { jieqi, daysSinceStart } = getCurrentJieqi(now);
   const isJieqi = isJieqiDay(now);
 
@@ -129,15 +202,43 @@ export default function DailyDigest({ onJumpToLesson }) {
 
   let yaoName = '?';
   let yaoOriginal = '';
+  let yaoTranslation = '';
   if (hex) {
     yaoName = formatYaoName(hex.binary || '000000', yaoIndex);
     const yao = hex.yaoci?.[yaoIndex];
-    if (yao) yaoOriginal = yao.original || '';
+    if (yao) {
+      yaoOriginal = yao.original || '';
+      yaoTranslation = yao.translation || '';
+    }
   }
 
   const lastRead = findLastReadLesson();
   const nextLesson = findNextLesson();
   const progressTarget = lastRead || nextLesson;
+
+  // AI 小解：mount 时读缓存，按钮触发调 API
+  const [aiReading, setAiReading] = useState(() =>
+    hex ? getCachedDailyYaoReading(now, hexagramId, yaoIndex) : null
+  );
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(null);
+
+  const handleAskAi = async () => {
+    if (!hex) return;
+    setAiLoading(true);
+    setAiError(null);
+    try {
+      const text = await interpretDailyYao({
+        hex, yaoIndex, yaoOriginal, yaoTranslation, jieqiName: jieqi.name,
+      });
+      setAiReading(text);
+      setCachedDailyYaoReading(now, hexagramId, yaoIndex, text);
+    } catch (e) {
+      setAiError(e.message || 'AI 解读暂未取得');
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   return (
     <div style={S.card}>
@@ -156,7 +257,17 @@ export default function DailyDigest({ onJumpToLesson }) {
         <div style={S.yaoLabel}>今日一爻</div>
         {hex && (
           <div style={S.yaoLine}>
-            <span style={S.yaoHex}>{hex.symbol} {hex.name}</span>
+            {onJumpToHexagram ? (
+              <button
+                style={{ ...S.hexLink, ...S.yaoHex }}
+                onClick={() => onJumpToHexagram(hexagramId)}
+                title={`去学易看 ${hex.name}卦`}
+              >
+                {hex.symbol} {hex.name}
+              </button>
+            ) : (
+              <span style={S.yaoHex}>{hex.symbol} {hex.name}</span>
+            )}
             <span style={{ color: 'var(--ink-light)', margin: '0 0.4em' }}>·</span>
             <span>{yaoName}</span>
           </div>
@@ -164,6 +275,31 @@ export default function DailyDigest({ onJumpToLesson }) {
         {yaoOriginal && (
           <div style={S.meaningBox}>{yaoOriginal}</div>
         )}
+        {yaoTranslation && (
+          <div style={S.translationBox}>{yaoTranslation}</div>
+        )}
+
+        {aiReading ? (
+          <div style={S.aiReading}>
+            <div style={S.aiReadingLabel}>占者观象</div>
+            {aiReading}
+          </div>
+        ) : aiLoading ? (
+          <div style={{ ...S.aiReading, fontStyle: 'italic', color: 'var(--ink-light)' }}>
+            占者正在观此爻于今日之象……
+          </div>
+        ) : (
+          <div style={S.aiButtonRow}>
+            <button
+              style={{ ...S.aiButton, ...(aiLoading ? S.aiButtonDisabled : null) }}
+              onClick={handleAskAi}
+              disabled={aiLoading}
+            >
+              请 AI 一解 →
+            </button>
+          </div>
+        )}
+        {aiError && <div style={S.aiError}>{aiError}</div>}
       </div>
 
       {progressTarget && onJumpToLesson && (

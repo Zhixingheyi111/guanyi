@@ -193,6 +193,10 @@ export default function App() {
   const [viewingHistoryId, setViewingHistoryId] = useState(null);
   const [currentRecordId,  setCurrentRecordId]  = useState(null);
 
+  // 学易 deep link：DailyDigest 点击"今日一爻"卦名时跳到该卦详情
+  // 用 { hexagramId, ts } 触发 Study 组件 key 变化 → unmount + 新 mount 用 initial 值
+  const [studyDeepLink, setStudyDeepLink] = useState(null);
+
   const reset = () => {
     setQuestion('');
     setHexagrams(null);
@@ -334,9 +338,17 @@ export default function App() {
     );
   };
 
+  const handleJumpToHexagram = (id) => {
+    setStudyDeepLink({ hexagramId: id, ts: Date.now() });
+    setMode('study');
+    setViewingHistoryId(null);
+  };
+
   const renderContent = () => {
     if (mode === 'study') {
-      return <Study />;
+      // key={ts} 让每次 deep link 重新 mount Study，使 initialHexagramId 生效
+      const studyKey = studyDeepLink?.ts || 'default';
+      return <Study key={studyKey} initialHexagramId={studyDeepLink?.hexagramId} />;
     }
 
     // mode === 'divination'：占卜模式（蓍草 / 梅花 / 铜钱）
@@ -384,7 +396,10 @@ export default function App() {
           <Navigation currentMode={mode} onModeChange={handleModeChange} />
 
           {/* 今日卡片：节气 + 一爻 + 学习进度。挂在所有 mode content 之上 */}
-          <DailyDigest onJumpToLesson={() => setMode('study')} />
+          <DailyDigest
+            onJumpToLesson={() => setMode('study')}
+            onJumpToHexagram={handleJumpToHexagram}
+          />
 
           {error && <div style={S.error}>{error}</div>}
 

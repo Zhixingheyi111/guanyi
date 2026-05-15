@@ -192,3 +192,26 @@ export function markLessonRead(lessonId) {
 export function isLessonRead(lessonId) {
   return getLessonsRead().has(lessonId);
 }
+
+// ---------- 每日一爻 AI 小解缓存（Phase 易经-B4 后续）----------
+//
+// key 格式：guanyi:daily-yao-reading:YYYY-MM-DD:hexId.yaoIndex
+// 同一日同一爻第二次进入 App 不再调 AI——降本 + 加速。
+// 不主动清理：localStorage 5MB 容量、每条 ~200 字节，可存几千日。
+
+const DAILY_YAO_PREFIX = `${KEY_PREFIX}daily-yao-reading:`;
+
+function dailyYaoKey(date, hexId, yaoIndex) {
+  const pad = (n) => String(n).padStart(2, '0');
+  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  return `${DAILY_YAO_PREFIX}${dateStr}:${hexId}.${yaoIndex}`;
+}
+
+export function getCachedDailyYaoReading(date, hexId, yaoIndex) {
+  const v = safeGet(dailyYaoKey(date, hexId, yaoIndex));
+  return typeof v === 'string' ? v : null;
+}
+
+export function setCachedDailyYaoReading(date, hexId, yaoIndex, text) {
+  return safeSet(dailyYaoKey(date, hexId, yaoIndex), text);
+}
