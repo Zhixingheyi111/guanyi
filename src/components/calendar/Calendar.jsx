@@ -10,6 +10,7 @@ import { isJieqiDay } from '../../data/jieqi';
 import { getDailyYao, formatYaoName } from '../../data/dailyYao';
 import { getHexagramById } from '../../data/hexagrams';
 import { getDivinationRecords, getLessonReadRecords } from '../../utils/storage';
+import { getLunarDayLabel, getLunarInfo } from '../../utils/lunar';
 
 const S = {
   card: {
@@ -122,6 +123,16 @@ const S = {
     fontWeight: 500,
   },
   dayNum: { fontSize: 'var(--text-sm)', lineHeight: 1 },
+  lunarDay: {
+    fontSize: '0.62rem',
+    color: 'var(--ink-light)',
+    lineHeight: 1,
+    letterSpacing: 0,
+  },
+  lunarMonthFirst: {
+    color: 'var(--vermilion-deep)',
+    fontWeight: 500,
+  },
   jieqiTag: {
     fontSize: '0.6rem',
     color: 'var(--vermilion)',
@@ -324,6 +335,16 @@ export default function Calendar({ onJumpToHexagram }) {
               aria-label={`${cell.date.getMonth() + 1}月${cell.date.getDate()}日`}
             >
               <span style={S.dayNum}>{cell.date.getDate()}</span>
+              {cell.currentMonth && (() => {
+                const lunarLabel = getLunarDayLabel(cell.date);
+                const isMonthFirst = lunarLabel.endsWith('月');
+                return (
+                  <span style={{
+                    ...S.lunarDay,
+                    ...(isMonthFirst ? S.lunarMonthFirst : null),
+                  }}>{lunarLabel}</span>
+                );
+              })()}
               {jq && cell.currentMonth && (
                 <span style={S.jieqiTag}>{jq.name}</span>
               )}
@@ -381,12 +402,27 @@ function DayDetailPanel({ date, divinations, lessons, onJumpToHexagram, onClose 
   const { hexagramId, yaoIndex } = getDailyYao(date);
   const hex = getHexagramById(hexagramId);
   const yaoName = hex ? formatYaoName(hex.binary || '000000', yaoIndex) : '';
+  const lunar = getLunarInfo(date);
 
   return (
     <div style={S.detailPanel}>
       <div style={S.detailTitle}>
         {date.getMonth() + 1}月{date.getDate()}日
+        <span style={{ marginLeft: '0.4em', color: 'var(--ink-soft)', fontWeight: 'normal' }}>
+          · 农历{lunar.lunarMonthStr}{lunar.lunarDayStr}
+        </span>
         {isToday && <span style={{ marginLeft: '0.5em', color: 'var(--vermilion)' }}>· 今日</span>}
+      </div>
+
+      {/* 干支与生肖 */}
+      <div style={S.detailRow}>
+        <span style={{ color: 'var(--ink-light)' }}>{lunar.ganzhiYear}年</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.3em' }}>·</span>
+        <span style={{ color: 'var(--ink-light)' }}>{lunar.ganzhiMonth}月</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.3em' }}>·</span>
+        <span style={{ color: 'var(--ink-soft)', fontWeight: 500 }}>{lunar.ganzhiDay}日</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.3em' }}>·</span>
+        <span style={{ color: 'var(--ink-soft)' }}>属{lunar.shengxiao}</span>
       </div>
 
       {jq && (
@@ -397,8 +433,56 @@ function DayDetailPanel({ date, divinations, lessons, onJumpToHexagram, onClose 
         </div>
       )}
 
+      {/* 黄历宜忌 */}
+      {(lunar.yi.length > 0 || lunar.ji.length > 0) && (
+        <div style={{ ...S.detailRow, paddingTop: '0.4em', borderTop: '1px dashed var(--paper-edge)' }}>
+          {lunar.yi.length > 0 && (
+            <div style={{ marginBottom: '0.2em' }}>
+              <span style={{ color: 'var(--vermilion-deep)', fontWeight: 500, marginRight: '0.4em' }}>宜</span>
+              <span style={{ color: 'var(--ink)' }}>{lunar.yi.join(' · ')}</span>
+            </div>
+          )}
+          {lunar.ji.length > 0 && (
+            <div>
+              <span style={{ color: 'var(--vermilion-deep)', fontWeight: 500, marginRight: '0.4em' }}>忌</span>
+              <span style={{ color: 'var(--ink)' }}>{lunar.ji.join(' · ')}</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 冲煞 + 建除 + 星宿 + 纳音 */}
+      <div style={S.detailRow}>
+        <span style={{ color: 'var(--ink-light)', marginRight: '0.5em' }}>冲</span>
+        <span style={{ color: 'var(--ink-soft)' }}>{lunar.chong}</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.5em' }}>·</span>
+        <span style={{ color: 'var(--ink-light)', marginRight: '0.5em' }}>煞</span>
+        <span style={{ color: 'var(--ink-soft)' }}>{lunar.sha}</span>
+      </div>
+      <div style={S.detailRow}>
+        <span style={{ color: 'var(--ink-light)', marginRight: '0.5em' }}>值</span>
+        <span style={{ color: 'var(--ink-soft)' }}>{lunar.zhixing}</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.5em' }}>·</span>
+        <span style={{ color: 'var(--ink-light)', marginRight: '0.5em' }}>宿</span>
+        <span style={{ color: 'var(--ink-soft)' }}>{lunar.xiu} {lunar.xiuLuck && `(${lunar.xiuLuck})`}</span>
+        <span style={{ color: 'var(--ink-whisper)', margin: '0 0.5em' }}>·</span>
+        <span style={{ color: 'var(--ink-light)', marginRight: '0.5em' }}>纳</span>
+        <span style={{ color: 'var(--ink-soft)' }}>{lunar.naYin}</span>
+      </div>
+
+      {/* 彭祖百忌 */}
+      {(lunar.pengzuGan || lunar.pengzuZhi) && (
+        <div style={{ ...S.detailRow, fontSize: 'var(--text-xs)', color: 'var(--ink-light)' }}>
+          <span style={{ marginRight: '0.4em' }}>彭祖：</span>
+          {lunar.pengzuGan}
+          {lunar.pengzuGan && lunar.pengzuZhi && '；'}
+          {lunar.pengzuZhi}
+        </div>
+      )}
+
+      {/* 易经今日一爻 */}
       {hex && (
-        <div style={S.detailRow}>
+        <div style={{ ...S.detailRow, paddingTop: '0.4em', borderTop: '1px dashed var(--paper-edge)' }}>
           <span style={{ color: 'var(--ink-light)', marginRight: '0.4em' }}>今日一爻</span>
           {onJumpToHexagram ? (
             <button

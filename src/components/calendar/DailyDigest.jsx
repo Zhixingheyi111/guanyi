@@ -12,6 +12,7 @@ import {
   setCachedDailyYaoReading,
 } from '../../utils/storage';
 import { interpretDailyYao } from '../../utils/claudeApi';
+import { getLunarInfo } from '../../utils/lunar';
 
 const S = {
   card: {
@@ -240,6 +241,8 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
     }
   }
 
+  const lunar = getLunarInfo(now);
+
   const lastRead = findLastReadLesson();
   const nextLesson = findNextLesson();
   const progressTarget = lastRead || nextLesson;
@@ -271,7 +274,17 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
   return (
     <div style={S.card}>
       <div style={S.header}>
-        <span style={S.dateText}>{formatDateZh(now)}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
+          <span style={S.dateText}>
+            {formatDateZh(now)}
+            <span style={{ marginLeft: '0.5em', color: 'var(--ink-light)', fontSize: 'var(--text-xs)', letterSpacing: 'var(--track-wide)' }}>
+              农历{lunar.lunarMonthStr}{lunar.lunarDayStr}
+            </span>
+          </span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--ink-whisper)', letterSpacing: 'var(--track-wide)' }}>
+            {lunar.ganzhiYear}年 · {lunar.ganzhiDay}日 · 属{lunar.shengxiao}
+          </span>
+        </div>
         <span style={S.jieqiText}>
           {jieqi.name}
           {isJieqi
