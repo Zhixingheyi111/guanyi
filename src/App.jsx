@@ -6,6 +6,7 @@ import Study from './components/Study';
 import Fortune from './components/Fortune';
 import Bagua from './components/Bagua';
 import Seal from './components/Seal';
+import DailyDigest from './components/calendar/DailyDigest';
 import { generateHexagram } from './utils/divination';
 import { calculateTransformations } from './utils/transformations';
 import { getHexagramIdByBinary } from './data/hexagramIndex';
@@ -381,6 +382,9 @@ export default function App() {
 
           {/* 模式导航 */}
           <Navigation currentMode={mode} onModeChange={handleModeChange} />
+
+          {/* 今日卡片：节气 + 一爻 + 学习进度。挂在所有 mode content 之上 */}
+          <DailyDigest onJumpToLesson={() => setMode('study')} />
 
           {error && <div style={S.error}>{error}</div>}
 
