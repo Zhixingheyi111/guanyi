@@ -612,7 +612,7 @@ const DAILY_YAO_TOOL = {
   type: 'function',
   function: {
     name: 'daily_yao_interpret',
-    description: '生成今日一爻的现代场景观象解读',
+    description: '生成今日一爻的现代场景观象解读（含宜、忌各一条）',
     parameters: {
       type: 'object',
       properties: {
@@ -620,17 +620,16 @@ const DAILY_YAO_TOOL = {
           type: 'string',
           description: '60-90 字现代场景的观象小解。不是占卜，是借此爻意境照见今日普遍处境。用日常语境（工作、关系、心境），避免纯古文措辞。',
         },
-        hintType: {
+        yi: {
           type: 'string',
-          enum: ['宜', '忌'],
-          description: '本爻意境在今日的导向：偏吉/和顺/进取的爻 → 宜；偏凶/警示/退守的爻 → 忌',
+          description: '今日宜：8-14 字具体可行的动作建议。要具体，不要空话——"宜稍等一日再决断"好过"宜静"。',
         },
-        hint: {
+        ji: {
           type: 'string',
-          description: '8-14 字的"今日宜 X"或"今日忌 Y"的具体动作建议。要具体可行，不要空话。',
+          description: '今日忌：8-14 字具体要避免的动作。要具体，不要空话——"忌强求他人回应"好过"忌急躁"。',
         },
       },
-      required: ['observation', 'hintType', 'hint'],
+      required: ['observation', 'yi', 'ji'],
     },
   },
 };
@@ -649,7 +648,7 @@ const DAILY_YAO_TOOL = {
  *   jieqiName?: string,
  * }} input
  *
- * @returns {Promise<{ observation: string, hintType: '宜'|'忌', hint: string }>}
+ * @returns {Promise<{ observation: string, yi: string, ji: string }>}
  */
 export async function interpretDailyYao({ hex, yaoIndex, yaoOriginal, yaoTranslation, jieqiName }) {
   const appSecret = import.meta.env.VITE_APP_SECRET;
@@ -674,14 +673,16 @@ ${jieqiName ? `- 节气：${jieqiName}` : ''}
 - 避免"君子""小人"等纯古文，但可承爻辞内涵
 - 1-2 句直入要害；不要复述爻辞
 
-**hintType**（必填 enum）
-- 此爻意境是偏导向"进取/和顺"→ "宜"
-- 此爻意境是偏导向"警示/退守/反思"→ "忌"
-
-**hint**（8-14 字）
-- 紧扣 hintType：宜 → 具体可行的当下动作；忌 → 具体要避免的当下动作
+**yi**（8-14 字"今日宜"）
+- 具体可行的当下动作
 - 不空话："宜静"太空，"宜稍等一日再决断"更好
-- 不夸大："忌万事不顺"太悲，"忌强求他人回应"更准`;
+
+**ji**（8-14 字"今日忌"）
+- 具体要避免的当下动作
+- 不夸大："忌万事不顺"太悲，"忌强求他人回应"更准
+
+宜和忌都必填。即便此爻偏吉，也要有"忌"（如"忌骄"、"忌过求"）；
+偏凶也要有"宜"（如"宜守"、"宜止"）。两者从不同侧面呼应本爻。`;
 
   let response;
   try {
@@ -730,12 +731,12 @@ ${jieqiName ? `- 节气：${jieqiName}` : ''}
     throw new Error('解读失败：返回格式异常');
   }
 
-  if (!parsed.observation || !parsed.hintType || !parsed.hint) {
+  if (!parsed.observation || !parsed.yi || !parsed.ji) {
     throw new Error('解读失败：字段缺失');
   }
   return {
     observation: String(parsed.observation).trim(),
-    hintType:    parsed.hintType === '忌' ? '忌' : '宜',
-    hint:        String(parsed.hint).trim(),
+    yi:          String(parsed.yi).trim(),
+    ji:          String(parsed.ji).trim(),
   };
 }

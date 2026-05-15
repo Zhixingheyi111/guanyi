@@ -163,8 +163,13 @@ const S = {
     letterSpacing: 'var(--track-xwide)',
     marginBottom: '0.4rem',
   },
-  aiHintLine: {
+  aiYiLine: {
     marginTop: '0.8em',
+    color: 'var(--vermilion-deep)',
+    fontWeight: 500,
+  },
+  aiJiLine: {
+    marginTop: '0.25em',
     color: 'var(--vermilion-deep)',
     fontWeight: 500,
   },
@@ -288,9 +293,8 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
           <div style={S.aiReading}>
             <div style={S.aiReadingLabel}>占者观象</div>
             {aiReading.observation}
-            <div style={S.aiHintLine}>
-              今日{aiReading.hintType}：{aiReading.hint}
-            </div>
+            <div style={S.aiYiLine}>今日宜：{aiReading.yi}</div>
+            <div style={S.aiJiLine}>今日忌：{aiReading.ji}</div>
           </div>
         ) : aiLoading ? (
           <div style={{ ...S.aiReading, fontStyle: 'italic', color: 'var(--ink-light)' }}>
