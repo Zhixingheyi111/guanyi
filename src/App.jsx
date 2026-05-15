@@ -399,17 +399,18 @@ export default function App() {
           {/* 模式导航 */}
           <Navigation currentMode={mode} onModeChange={handleModeChange} />
 
-          {/* 今日卡片：节气 + 一爻 + 学习进度。挂在所有 mode content 之上 */}
+          {/* 月历展开时放在 DailyDigest 之上：作为整月视野，DailyDigest 仍在下面提供"今日详情" */}
+          {calendarOpen && (
+            <Calendar onJumpToHexagram={handleJumpToHexagram} />
+          )}
+
+          {/* 今日卡片：节气 + 一爻 + 学习进度 */}
           <DailyDigest
             onJumpToLesson={() => setMode('study')}
             onJumpToHexagram={handleJumpToHexagram}
             calendarOpen={calendarOpen}
             onToggleCalendar={() => setCalendarOpen(v => !v)}
           />
-
-          {calendarOpen && (
-            <Calendar onJumpToHexagram={handleJumpToHexagram} />
-          )}
 
           {error && <div style={S.error}>{error}</div>}
 
