@@ -15,8 +15,15 @@ const ALLOWED_ORIGINS = [
 // 开发期允许局域网 IP（手机访问 Vite dev server 用）
 const LAN_ORIGIN_RE = /^http:\/\/192\.168\.\d{1,3}\.\d{1,3}:\d{1,5}$/;
 
+// Cloudflare Pages preview 子域名：https://<8-char-hash>.guanyi.pages.dev
+// 或 branch deploy：https://<branch-slug>.guanyi.pages.dev
+// 限制 host 必须以 .guanyi.pages.dev 结尾，子域名仅允许字母数字与短横线
+const CF_PREVIEW_ORIGIN_RE = /^https:\/\/[a-z0-9][a-z0-9-]*\.guanyi\.pages\.dev$/;
+
 function isAllowedOrigin(origin) {
-  return ALLOWED_ORIGINS.includes(origin) || LAN_ORIGIN_RE.test(origin);
+  return ALLOWED_ORIGINS.includes(origin)
+      || LAN_ORIGIN_RE.test(origin)
+      || CF_PREVIEW_ORIGIN_RE.test(origin);
 }
 
 function corsHeaders(origin) {
