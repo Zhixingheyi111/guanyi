@@ -6,6 +6,22 @@
 
 ---
 
+## 2026-05-17 22:16 CDT — 占卜页精简 + 起卦历史/学习笔记单独出来（未推 main）
+
+接续同 session 的原生化重做，又改了三处（worktree `clever-torvalds-6f9f19`，仍未推 main）：
+
+- **commit 2097e39**：删占卜 tab 顶部 3 个方法导读 box（`DivinationMethodCards.jsx`，与 sub-tab 重复、又和学易第 8/10–12 课重叠）；把「最庄重·约5分钟」这类定位+时长并进蓍草/梅花/铜钱各自 intro。占卜页直达起卦。
+- **commit 690cdb9**：起卦历史从蓍草 sub-tab 移到占卜 tab 顶部折叠条（三 sub-tab 都可见）；学易新增「笔记」sub-tab（`NoteList.jsx` + `storage.getAllHexagramNotes()`）汇总所有卦笔记；顺修 Study/Fortune sub-tab 的 borderBottom 简写混用 React 警告。
+
+**下一步待办（用户已确认方向，未动手）：三种占卜统一 UI**
+- 现状：蓍草/梅花/铜钱是不同时期做的，入口（八卦圆按钮 / formCard / 开始按钮）、结果（蓍草独立 Reading 五层 / 梅花铜钱 inline + QuickReading）、样式各一套，体验不流畅。
+- 用户确认方向：**保留蓍草五层深度，只统一外壳** —— 三者共用一致的「引导卡 → 心中所惑输入 → 起卦 → 本卦象头 → 方法专属中段 → AI 解读 → 重新起卦」框架与样式；蓍草内部仍五层、梅花铜钱仍轻量。
+- 同时要做：梅花/铜钱也调 `saveDivinationRecord` 存入历史（需统一 record 形状 + 让 `DivinationHistory` 兼容渲染非蓍草记录）。
+- 建议做法：新建 `src/components/fortune/fortuneUI.js` 共享样式（intro/questionInput/primaryBtn/resultHeader/resetBtn 等），三组件改用；可选把八卦圆按钮抽成通用「起卦」组件。
+- 因属大重构 + 本 session 已很长，留作下一次专注执行。
+
+---
+
 ## 2026-05-17 21:41 CDT — 原生化 UI 重做（Phase A–E，未推 main）
 
 **背景：** 用户反馈 UI「不像 App」。诊断核心问题：结构是一张居中网页卡片，今日页 1200–1500px 要一直滚。计划见 `~/.claude/plans/1-ui-app-app-2026-app-design-1-sorted-seal.md`。在 worktree `clever-torvalds-6f9f19` 上做，4 个本地 commit，**尚未推 main**（等用户验收）。
