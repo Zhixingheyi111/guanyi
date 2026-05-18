@@ -6,6 +6,27 @@
 
 ---
 
+## 2026-05-17 22:39 CDT — 三种占卜统一 UI + 梅花/铜钱存历史（未推 main）
+
+执行上一条待办的「三占卜统一 UI」。worktree `clever-torvalds-6f9f19`，2 个本地 commit，**未推 main**。
+
+- **commit a330e33（外壳统一）**：新建 `src/components/fortune/fortuneUI.js`，导出三种占卜共用的外壳样式（引导卡 introCard / 心中所惑输入 questionInput / 起卦按钮 primaryBtn / 本卦象头 resultHeader / 变卦框 / 重新起卦 resetBtn）+ 淡入动画 + 方法元信息 METHOD_META。Divination(蓍草)、MeiHua(梅花)、TongQian(铜钱) 改用共享样式 —— 三者统一为「引导卡 → 心中所惑输入 → 起卦动作」框架。纯视觉，无行为变化。
+- **commit 01d18ef（存历史 + 历史兼容）**：统一 record 形状（`method` 字段区分蓍草/梅花/铜钱），梅花/铜钱起卦后也调 `saveDivinationRecord`。
+  - `storage.js` 加 `updateDivinationRecord(id, patch)`，注释统一 record 形状。
+  - `QuickReading` 加 `savedReading`（历史回看直接展示存档解读，不再调 AI）+ `onResult`（AI 返回后回写记录）。
+  - 抽出 `MeiHuaResult.jsx` / `TongQianResult.jsx` 结果组件，现场起卦与历史回看共用；`TongQianResult` 导出 `YaoColumn` 供摇钱动画复用。
+  - `App.jsx` 历史详情按 `record.method` 分派：蓍草→Reading 五层，梅花→MeiHuaResult，铜钱→TongQianResult。
+  - `DivinationHistory` 列表项加方法标签，兼容渲染所有记录。
+- 蓍草五层深度、梅花体用、铜钱摇钱动画均不变。
+
+**验证：** `npm run lint` rc=0、`npm run build` rc=0；preview 移动端逐项验证三 tab 外壳一致、梅花/铜钱起卦写入历史、历史方法标签、查看详情路由到对应结果组件均无误。本地无 API key，`QuickReading` 走「密钥配置错误」错误分支属预期；构建产物上线后 AI 解读正常。
+
+**已知遗留（非本次引入）：** console 仍有 `borderBottomColor / borderBottom` 简写混用 React 警告（PROGRESS 690cdb9 提过、Study/Fortune 已修但仍有残留），与本次改动无关，待单独排查。
+
+**下一步：** 用户验收三占卜统一效果；连同原生化重做一并满意后走 `/premerge` 推 main 上线。
+
+---
+
 ## 2026-05-17 22:16 CDT — 占卜页精简 + 起卦历史/学习笔记单独出来（未推 main）
 
 接续同 session 的原生化重做，又改了三处（worktree `clever-torvalds-6f9f19`，仍未推 main）：
