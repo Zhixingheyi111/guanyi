@@ -1,45 +1,13 @@
 import { useState } from 'react';
-import DivinationHistory from './DivinationHistory';
 import Bagua from './Bagua';
+import { fortuneUI as F, METHOD_META } from './fortune/fortuneUI';
+
+const META = METHOD_META.shicao;
 
 const S = {
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--space-6)',
-  },
-  intro: {
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-whisper)',
-    letterSpacing: 'var(--track-wide)',
-    lineHeight: 1.8,
-  },
-  inputBlock: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 'var(--text-md)',
-    color: 'var(--ink)',
-    letterSpacing: '0.08em',
-    lineHeight: 1.6,
-    margin: '0 0 var(--space-4)',
-    fontWeight: 500,
-  },
-  textarea: {
-    width: '100%',
-    minHeight: '110px',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    color: 'var(--ink)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-base)',
-    padding: 'var(--space-3)',
-    resize: 'vertical',
-    outline: 'none',
-    lineHeight: 1.85,
   },
   // 八卦按钮整体容器
   baguaButtonWrap: {
@@ -47,10 +15,9 @@ const S = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: 'var(--space-3)',
-    marginTop: 'var(--space-4)',
-    marginBottom: 'var(--space-2)',
+    marginBottom: 'var(--space-3)',
   },
-  // 八卦按钮本身（圆形，可点击）
+  // 八卦按钮本身（圆形，可点击）—— 蓍草专属的「起卦动作」
   baguaButton: {
     width: '120px',
     height: '120px',
@@ -93,7 +60,7 @@ const S = {
   },
 };
 
-export default function Divination({ question, setQuestion, onSubmit, loading, onViewHistory }) {
+export default function Divination({ question, setQuestion, onSubmit, loading }) {
   const [hovering, setHovering] = useState(false);
 
   const canSubmit = !loading && question.trim();
@@ -128,27 +95,28 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
         }
       `}</style>
 
-      <div style={S.intro}>
-        蓍草揲数 · 大衍之数<br />
-        心有大事 · 一日一占
+      {/* 引导卡 */}
+      <div style={F.introCard}>
+        <div style={F.introDesc}>
+          {META.desc1}<br />
+          {META.desc2}
+        </div>
+        <div style={F.introMeta}>{META.meta}</div>
       </div>
 
-      <DivinationHistory onView={onViewHistory} />
+      {/* 心中所惑输入 */}
+      <label style={F.questionLabel} htmlFor="shicao-question">你此刻面对什么处境？</label>
+      <textarea
+        id="shicao-question"
+        className="guanyi-question-input"
+        style={{ ...F.questionInput, minHeight: '110px' }}
+        value={question}
+        onChange={e => setQuestion(e.target.value)}
+        placeholder="易经不是占卜，是一面镜子。在此描述你的处境与挣扎……"
+        disabled={loading}
+      />
 
-      <div style={S.inputBlock}>
-        <p style={S.title}>你此刻面对什么处境？</p>
-
-        <textarea
-          className="guanyi-question-input"
-          style={S.textarea}
-          value={question}
-          onChange={e => setQuestion(e.target.value)}
-          placeholder="易经不是占卜，是一面镜子。在此描述你的处境与挣扎……"
-          disabled={loading}
-        />
-      </div>
-
-      {/* 八卦起卦按钮：圆形八卦图本身即为按钮。canSubmit 时呼吸光晕暗示可点 */}
+      {/* 起卦动作：八卦圆按钮即为「叩卦」按钮。canSubmit 时呼吸光晕暗示可点 */}
       <div style={S.baguaButtonWrap}>
         <button
           type="button"

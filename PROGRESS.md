@@ -6,6 +6,77 @@
 
 ---
 
+## 2026-05-17 23:21 CDT — 今日 AI 入口文案 + 日历年月选择面板（未推 main）
+
+接续同 session，按用户反馈又改两处（worktree `clever-torvalds-6f9f19`，仍未推 main）：
+
+- **commit afda785**：今日一爻的 AI 解读入口改用「观」语气（呼应品牌「观易·见自己」）——按钮「请 AI 一解 →」→「一观此爻 →」，结果区标题「占者观象」→「今日之象」，加载文案去掉「占者」。
+- **commit a9bf540**：日历加年月选择面板。原先只能逐月点 `‹ ›`，去很远的月份很累。现点月份标签弹出面板：年份 `‹ ›` 步进 + 12 月网格 + 「回到今月」，任意跳转。原「点标签=回到本月」并入面板。顺修 `pickerMonthActive` / `toggleActive` 两处 border/borderColor 简写混用的 React 警告（即上一条遗留的警告，已清）。
+
+**验证：** lint+build rc=0；preview 移动端验证今日按钮文案、日历面板跳转（跨年步进 + 选月）、节气 overlay 均无误；重启 dev server 后 console 全清，无报错。
+
+---
+
+## 2026-05-17 22:39 CDT — 三种占卜统一 UI + 梅花/铜钱存历史（未推 main）
+
+执行上一条待办的「三占卜统一 UI」。worktree `clever-torvalds-6f9f19`，2 个本地 commit，**未推 main**。
+
+- **commit a330e33（外壳统一）**：新建 `src/components/fortune/fortuneUI.js`，导出三种占卜共用的外壳样式（引导卡 introCard / 心中所惑输入 questionInput / 起卦按钮 primaryBtn / 本卦象头 resultHeader / 变卦框 / 重新起卦 resetBtn）+ 淡入动画 + 方法元信息 METHOD_META。Divination(蓍草)、MeiHua(梅花)、TongQian(铜钱) 改用共享样式 —— 三者统一为「引导卡 → 心中所惑输入 → 起卦动作」框架。纯视觉，无行为变化。
+- **commit 01d18ef（存历史 + 历史兼容）**：统一 record 形状（`method` 字段区分蓍草/梅花/铜钱），梅花/铜钱起卦后也调 `saveDivinationRecord`。
+  - `storage.js` 加 `updateDivinationRecord(id, patch)`，注释统一 record 形状。
+  - `QuickReading` 加 `savedReading`（历史回看直接展示存档解读，不再调 AI）+ `onResult`（AI 返回后回写记录）。
+  - 抽出 `MeiHuaResult.jsx` / `TongQianResult.jsx` 结果组件，现场起卦与历史回看共用；`TongQianResult` 导出 `YaoColumn` 供摇钱动画复用。
+  - `App.jsx` 历史详情按 `record.method` 分派：蓍草→Reading 五层，梅花→MeiHuaResult，铜钱→TongQianResult。
+  - `DivinationHistory` 列表项加方法标签，兼容渲染所有记录。
+- 蓍草五层深度、梅花体用、铜钱摇钱动画均不变。
+
+**验证：** `npm run lint` rc=0、`npm run build` rc=0；preview 移动端逐项验证三 tab 外壳一致、梅花/铜钱起卦写入历史、历史方法标签、查看详情路由到对应结果组件均无误。本地无 API key，`QuickReading` 走「密钥配置错误」错误分支属预期；构建产物上线后 AI 解读正常。
+
+**已知遗留（非本次引入）：** console 仍有 `borderBottomColor / borderBottom` 简写混用 React 警告（PROGRESS 690cdb9 提过、Study/Fortune 已修但仍有残留），与本次改动无关，待单独排查。
+
+**下一步：** 用户验收三占卜统一效果；连同原生化重做一并满意后走 `/premerge` 推 main 上线。
+
+---
+
+## 2026-05-17 22:16 CDT — 占卜页精简 + 起卦历史/学习笔记单独出来（未推 main）
+
+接续同 session 的原生化重做，又改了三处（worktree `clever-torvalds-6f9f19`，仍未推 main）：
+
+- **commit 2097e39**：删占卜 tab 顶部 3 个方法导读 box（`DivinationMethodCards.jsx`，与 sub-tab 重复、又和学易第 8/10–12 课重叠）；把「最庄重·约5分钟」这类定位+时长并进蓍草/梅花/铜钱各自 intro。占卜页直达起卦。
+- **commit 690cdb9**：起卦历史从蓍草 sub-tab 移到占卜 tab 顶部折叠条（三 sub-tab 都可见）；学易新增「笔记」sub-tab（`NoteList.jsx` + `storage.getAllHexagramNotes()`）汇总所有卦笔记；顺修 Study/Fortune sub-tab 的 borderBottom 简写混用 React 警告。
+
+**下一步待办（用户已确认方向，未动手）：三种占卜统一 UI**
+- 现状：蓍草/梅花/铜钱是不同时期做的，入口（八卦圆按钮 / formCard / 开始按钮）、结果（蓍草独立 Reading 五层 / 梅花铜钱 inline + QuickReading）、样式各一套，体验不流畅。
+- 用户确认方向：**保留蓍草五层深度，只统一外壳** —— 三者共用一致的「引导卡 → 心中所惑输入 → 起卦 → 本卦象头 → 方法专属中段 → AI 解读 → 重新起卦」框架与样式；蓍草内部仍五层、梅花铜钱仍轻量。
+- 同时要做：梅花/铜钱也调 `saveDivinationRecord` 存入历史（需统一 record 形状 + 让 `DivinationHistory` 兼容渲染非蓍草记录）。
+- 建议做法：新建 `src/components/fortune/fortuneUI.js` 共享样式（intro/questionInput/primaryBtn/resultHeader/resetBtn 等），三组件改用；可选把八卦圆按钮抽成通用「起卦」组件。
+- 因属大重构 + 本 session 已很长，留作下一次专注执行。
+
+---
+
+## 2026-05-17 21:41 CDT — 原生化 UI 重做（Phase A–E，未推 main）
+
+**背景：** 用户反馈 UI「不像 App」。诊断核心问题：结构是一张居中网页卡片，今日页 1200–1500px 要一直滚。计划见 `~/.claude/plans/1-ui-app-app-2026-app-design-1-sorted-seal.md`。在 worktree `clever-torvalds-6f9f19` 上做，4 个本地 commit，**尚未推 main**（等用户验收）。
+
+**做了什么：**
+
+- **Phase A · 原生骨架**（commit e675881）：
+  - 新建 `src/components/shell/TabBar.jsx`（底部导航：今日/占卜/学易/日历，水墨线条 SVG 图标 + 文字，朱砂激活态 + 顶部指示条，`env(safe-area-inset-bottom)` 适配）
+  - 新建 `src/components/shell/AppHeader.jsx`（52px 紧凑固定头，显当前 tab 名 + 小朱砂印，取代每屏重复的大标题巨块）
+  - 重构 `src/App.jsx`：mode 加 `calendar`，4 tab 各自独立滚动面板（`position:absolute`+`display` 切换，保留滚动位置与内部状态），切换淡入动效，八卦水印改整屏淡背景
+  - `index.css` `#root` 改全屏三段式 flex column；`tokens.css` 加 z-index 层级
+  - 删 `src/components/Navigation.jsx`
+- **Phase B · 日历独立 + 今日瘦身**（并入 e675881）：日历独立成 tab；今日页只留 DailyDigest（删「看整月」按钮），从 ~1400px 缩到 ~410px；今日页顶部加小「卷首」品牌区块
+- **Phase C · tracking 精简**（commit 02edcf5）：`Calendar.jsx` overlay 4→2（留节气/占卜，删学易金点 + 每日爻）；`DayDetailPanel` 黄历宜忌/冲煞/建除/彭祖默认折叠加「黄历宜忌 ▾」；删 `storage.js` 孤儿函数 `getDivinationStats`
+- **Phase D · 学易一致性**（commit b1cde6b）：第 8 课三法命名对齐占卜 tab——「蓍草（揲蓍法）/铜钱（金钱卦）/梅花（梅花易数）」（intro + 3 小标题，经用户逐条确认）；修第 8 课揲蓍概率旧 bug `3/16·7/16·5/16·1/16` → `3:5:5:3`（与第 10 课、divination.js 一致）；清 `QuickReading.jsx` 残留「灵签」注释
+- **Phase E · 打磨**（commit 87693f5）：Tab Bar 按压微动效（scale 0.93）
+
+**验证：** `npm run lint` rc=0、`npm run build` rc=0；preview 移动端逐 tab 验证 4 tab 切换/固定头底栏/独立滚动/第 8 课新命名均无误，无 console 报错。
+
+**待续：** 用户验收中，表示「还需要改」——下一轮改动待定。改完验收满意后走 `/premerge` 推 main 上线。数据库 + 登录（Cloudflare D1 + 现有 Worker）为后续独立阶段，本轮不做。
+
+---
+
 ## 2026-05-14 22:30 CDT — Phase 易经-B4 完成：DailyDigest 今日卡片（commit 44e4ff8）
 
 **做了什么：**

@@ -38,6 +38,24 @@ function safeRemove(key) {
 }
 
 // ---------- 起卦历史 ----------
+//
+// 统一 record 形状（三种占卜共用，2026-05-17 起）：
+//   {
+//     id, timestamp,
+//     method: 'shicao' | 'meihua' | 'tongqian',   // 缺省视为 'shicao'（兼容旧记录）
+//     question,
+//     benGua,  bianGua,            // 卦对象；bianGua 无动爻时为 null
+//     changingPositions,           // 0-indexed 动爻数组
+//     userNote,
+//     // —— 蓍草专属 ——
+//     zongGua, cuoGua, huGua,      // 五层卦象其余三层
+//     interpretation,              // 五层 AI 解读
+//     // —— 梅花/铜钱专属 ——
+//     meihua:   { upperBagua, lowerBagua, changingPositionName, tiyong },
+//     tongqian: { yaos },
+//     quickReading: { coreAdvice, yi, ji, valence } | null,  // 轻量 AI 解读
+//     coreAdvice,                  // quickReading.coreAdvice 的顶层镜像（复盘用）
+//   }
 
 // 生成 id：YYYYMMDD-HHMMSS
 export function generateDivinationId(date = new Date()) {
@@ -81,6 +99,13 @@ export function getDivinationRecords() {
 
 export function getDivinationRecord(id) {
   return safeGet(DIVINATION_PREFIX + id);
+}
+
+// 局部更新一条已存在的记录（梅花/铜钱先存卦、AI 解读返回后再补写 quickReading 用）
+export function updateDivinationRecord(id, patch) {
+  const record = getDivinationRecord(id);
+  if (!record) return false;
+  return safeSet(DIVINATION_PREFIX + id, { ...record, ...patch });
 }
 
 export function deleteDivinationRecord(id) {
@@ -143,27 +168,6 @@ export function getPendingReviewRecords(now = Date.now()) {
   return result;
 }
 
-/**
- * 统计：用户的占卜准确度分布。
- * 用于"我的占卜日记"页面显示"上个月 5 卦准了 3 个"等信息。
- */
-export function getDivinationStats(daysAgo = 30, now = Date.now()) {
-  const cutoff = now - daysAgo * 24 * 3600 * 1000;
-  const records = getDivinationRecords().filter(r => r.timestamp >= cutoff);
-  const reviewed = records.filter(r => r.followUp?.reviewedAt);
-  const ratings = reviewed.map(r => r.followUp.selfRating).filter(x => x >= 1 && x <= 5);
-  const accurate = ratings.filter(x => x >= 4).length;
-  return {
-    totalCount: records.length,
-    reviewedCount: reviewed.length,
-    accurateCount: accurate,           // 自评 4-5 = 较准/非常准
-    averageRating: ratings.length
-      ? ratings.reduce((s, x) => s + x, 0) / ratings.length
-      : null,
-    daysAgo,
-  };
-}
-
 // ---------- 卦笔记（模块 2 使用）----------
 
 export function getHexagramNote(hexagramId) {
@@ -173,6 +177,25 @@ export function getHexagramNote(hexagramId) {
 
 export function saveHexagramNote(hexagramId, note) {
   return safeSet(HEXAGRAM_NOTE_PREFIX + hexagramId, note);
+}
+
+// 列出所有写过笔记的卦（学易「笔记」sub-tab 用）。返回按卦序升序排列。
+export function getAllHexagramNotes() {
+  const result = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith(HEXAGRAM_NOTE_PREFIX)) continue;
+      const hexagramId = Number(key.slice(HEXAGRAM_NOTE_PREFIX.length));
+      const note = getHexagramNote(hexagramId);
+      if (hexagramId && note && note.trim()) {
+        result.push({ hexagramId, note });
+      }
+    }
+  } catch (e) {
+    console.error('[storage] 枚举卦笔记失败', e);
+  }
+  return result.sort((a, b) => a.hexagramId - b.hexagramId);
 }
 
 // ---------- 入门课程进度 ----------

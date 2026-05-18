@@ -7,12 +7,13 @@ import Glossary from './Glossary';
 import GlossaryEntry from './GlossaryEntry';
 import HexagramGrid from './HexagramGrid';
 import HexagramDetail from './HexagramDetail';
+import NoteList from './NoteList';
 
 const S = {
   tabs: {
     display: 'flex',
     justifyContent: 'center',
-    gap: 'var(--space-5)',
+    gap: 'var(--space-4)',
     marginBottom: 'var(--space-5)',
     borderBottom: '1px solid var(--paper-edge)',
   },
@@ -33,7 +34,7 @@ const S = {
   tabActive: {
     color: 'var(--ink)',
     fontWeight: 500,
-    borderBottomColor: 'var(--vermilion)',
+    borderBottom: '2px solid var(--vermilion)',
   },
 };
 
@@ -41,6 +42,7 @@ const TABS = [
   { id: 'lessons',  label: '入　门' },
   { id: 'glossary', label: '通　识' },
   { id: 'grid',     label: '卦　目' },
+  { id: 'notes',    label: '笔　记' },
 ];
 
 export default function Study({ initialHexagramId = null }) {
@@ -122,6 +124,10 @@ export default function Study({ initialHexagramId = null }) {
 
       {tab === 'grid' && (
         <HexagramGrid onSelectHexagram={(id) => setHexagramId(id)} />
+      )}
+
+      {tab === 'notes' && (
+        <NoteList onSelectHexagram={(id) => setHexagramId(id)} />
       )}
     </div>
   );

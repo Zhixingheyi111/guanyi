@@ -5,6 +5,7 @@ import {
   updateDivinationFollowUp,
 } from '../utils/storage';
 import ReviewPrompt from './divination/ReviewPrompt';
+import { METHOD_META } from './fortune/fortuneUI';
 
 const S = {
   container: { marginBottom: 'var(--space-5)' },
@@ -72,6 +73,17 @@ const S = {
     color: 'var(--ink-light)',
     fontSize: 'var(--text-xs)',
     letterSpacing: 'var(--track-normal)',
+  },
+  methodTag: {
+    display: 'inline-block',
+    padding: '0.05rem 0.45rem',
+    marginRight: '0.4rem',
+    background: 'var(--paper-deep)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: '3px',
+    color: 'var(--ink-soft)',
+    fontSize: '0.68rem',
+    letterSpacing: '0.05em',
   },
   question: {
     color: 'var(--ink)',
@@ -232,6 +244,9 @@ export default function DivinationHistory({ onView }) {
             return (
               <div key={r.id} style={itemStyle}>
                 <div style={S.timestamp}>
+                  <span style={S.methodTag}>
+                    {(METHOD_META[r.method] || METHOD_META.shicao).label}
+                  </span>
                   {formatTimestamp(r.timestamp)}
                   {isReviewed && (
                     <span style={S.reviewBadge}>

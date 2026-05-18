@@ -1,5 +1,5 @@
 // 今日卡片：节气 + 今日一爻 + 学习进度
-// 全局每日仪式区，在 Navigation 之上，所有 mode 都能看见
+// 「今日」tab 的主内容（日历已独立成单独 tab）
 // 数据来源：jieqi.js + dailyYao.js + lessons.js + storage.js
 import { useState } from 'react';
 import { getCurrentJieqi, isJieqiDay } from '../../data/jieqi';
@@ -54,24 +54,6 @@ const S = {
     borderRadius: '8px',
     letterSpacing: '0.05em',
     fontWeight: 'normal',
-  },
-  calendarBtn: {
-    padding: '0.35rem 0.8rem',
-    background: 'var(--paper)',
-    border: '1px solid var(--vermilion)',
-    color: 'var(--vermilion)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-xs)',
-    letterSpacing: 'var(--track-wide)',
-    cursor: 'pointer',
-    borderRadius: 'var(--radius-md)',
-    minHeight: '30px',
-    whiteSpace: 'nowrap',
-    marginLeft: 'auto',
-  },
-  calendarBtnActive: {
-    background: 'var(--vermilion)',
-    color: 'var(--paper)',
   },
   yaoSection: {
     marginBottom: 'var(--space-3)',
@@ -220,7 +202,7 @@ function findLastReadLesson() {
   return readLessons.reduce((max, l) => (l.order > max.order ? l : max), readLessons[0]);
 }
 
-export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendarOpen, onToggleCalendar }) {
+export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
   // mount 时算一次：Date.now() 在 useState initializer 中允许
   const [now] = useState(() => new Date());
   const { jieqi, daysSinceStart } = getCurrentJieqi(now);
@@ -292,18 +274,6 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
             : daysSinceStart > 0 && <span style={{ marginLeft: '0.4rem', color: 'var(--ink-light)' }}>后 {daysSinceStart} 天</span>
           }
         </span>
-        {onToggleCalendar && (
-          <button
-            type="button"
-            style={{
-              ...S.calendarBtn,
-              ...(calendarOpen ? S.calendarBtnActive : null),
-            }}
-            onClick={onToggleCalendar}
-          >
-            {calendarOpen ? '收起整月 ▴' : '看整月 ▾'}
-          </button>
-        )}
       </div>
 
       <div style={S.yaoSection}>
@@ -334,14 +304,14 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
 
         {aiReading ? (
           <div style={S.aiReading}>
-            <div style={S.aiReadingLabel}>占者观象</div>
+            <div style={S.aiReadingLabel}>今日之象</div>
             {aiReading.observation}
             <div style={S.aiYiLine}>今日宜：{aiReading.yi}</div>
             <div style={S.aiJiLine}>今日忌：{aiReading.ji}</div>
           </div>
         ) : aiLoading ? (
           <div style={{ ...S.aiReading, fontStyle: 'italic', color: 'var(--ink-light)' }}>
-            占者正在观此爻于今日之象……
+            正在观此爻于今日之象……
           </div>
         ) : (
           <div style={S.aiButtonRow}>
@@ -350,7 +320,7 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram, calendar
               onClick={handleAskAi}
               disabled={aiLoading}
             >
-              请 AI 一解 →
+              一观此爻 →
             </button>
           </div>
         )}

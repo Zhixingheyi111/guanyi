@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import MeiHua from './fortune/MeiHua';
 import TongQian from './fortune/TongQian';
-import DivinationMethodCards from './fortune/DivinationMethodCards';
+import DivinationHistory from './DivinationHistory';
 
 const S = {
   tabs: {
@@ -31,7 +31,7 @@ const S = {
   tabActive: {
     color: 'var(--ink)',
     fontWeight: 500,
-    borderBottomColor: 'var(--vermilion)',
+    borderBottom: '2px solid var(--vermilion)',
   },
 };
 
@@ -41,12 +41,19 @@ const TABS = [
   { id: 'tongqian', label: '铜　钱' },
 ];
 
-export default function Fortune({ shicaoSlot }) {
+export default function Fortune({ shicaoSlot, onViewRecord }) {
   const [tab, setTab] = useState('shicao');
+
+  // 查看某条起卦历史：切回蓍草 sub-tab 并由 App 渲染该记录的 Reading
+  const handleViewRecord = (id) => {
+    setTab('shicao');
+    onViewRecord(id);
+  };
 
   return (
     <div>
-      <DivinationMethodCards />
+      {/* 起卦历史：占卜板块顶部，三个 sub-tab 都可见 */}
+      <DivinationHistory onView={handleViewRecord} />
 
       <div style={S.tabs} role="tablist">
         {TABS.map(t => (

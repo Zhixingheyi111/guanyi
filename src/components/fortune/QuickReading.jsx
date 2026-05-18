@@ -1,5 +1,5 @@
 // 占卜专用的 AI 解读卡：mount 时调用 interpretFortune 一次，展示精简结果
-// 三种占卜方法（梅花/铜钱/灵签）共用此组件
+// 梅花、铜钱两种占卜方法共用此组件
 import { useState, useEffect } from 'react';
 import { interpretFortune } from '../../utils/claudeApi';
 
@@ -115,23 +115,30 @@ const ANIM = `
   }
 `;
 
-export default function QuickReading({ scenario, question }) {
-  const [state, setState] = useState({ status: 'loading' });
+export default function QuickReading({ scenario, question, savedReading = null, onResult }) {
+  // savedReading 非空 = 历史回看模式，直接展示已存解读，不再调 AI
+  const [state, setState] = useState(
+    savedReading ? { status: 'ok', data: savedReading } : { status: 'loading' },
+  );
 
   // 输入是 mount 时的快照，本组件挂载即触发一次 AI 调用，永不重跑
   // 初始 state 已经是 'loading'，所以不需要在 effect 里再 setState（React 19 严格模式禁止）
   // setState 在 then/catch 的 promise 回调里是异步触发，符合规则
   useEffect(() => {
+    if (savedReading) return;   // 历史回看：已有解读，跳过 AI 调用
     let cancelled = false;
     interpretFortune({ scenario, question })
       .then(data => {
-        if (!cancelled) setState({ status: 'ok', data });
+        if (!cancelled) {
+          setState({ status: 'ok', data });
+          onResult?.(data);     // 让父组件把解读写回记录
+        }
       })
       .catch(err => {
         if (!cancelled) setState({ status: 'error', message: err.message || '解读失败' });
       });
     return () => { cancelled = true; };
-    // 故意只在 mount 时跑一次，scenario/question 是 mount 快照
+    // 故意只在 mount 时跑一次，scenario/question/onResult 是 mount 快照
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
