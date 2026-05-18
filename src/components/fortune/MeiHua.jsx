@@ -1,20 +1,16 @@
 // 梅花易数子组件：数字起卦 / 时间起卦
-// 本组件不调 LLM；AI 解读在 Phase 1.5 (A5) 接入。
+// 外壳样式（引导卡 / 输入 / 象头 / 重新起卦）取自 fortuneUI，与蓍草、铜钱统一。
 import { useState } from 'react';
 import { generateByNumbers, generateByTime } from '../../utils/meiHua';
 import { getHexagramIdByBinary } from '../../data/hexagramIndex';
 import { getHexagramById } from '../../data/hexagrams';
 import QuickReading from './QuickReading';
+import { fortuneUI as F, FORTUNE_ANIM, METHOD_META } from './fortuneUI';
 
+const META = METHOD_META.meihua;
+
+// 梅花专属样式（体用论 / 起卦表单），外壳样式见 fortuneUI
 const S = {
-  intro: {
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-whisper)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-5)',
-    lineHeight: 1.8,
-  },
   modeRow: {
     display: 'flex',
     justifyContent: 'center',
@@ -71,57 +67,6 @@ const S = {
     textAlign: 'center',
     minHeight: '44px',
   },
-  primaryBtn: {
-    display: 'block',
-    margin: '0 auto',
-    padding: '0.6rem 1.8rem',
-    background: 'var(--ink)',
-    color: 'var(--paper)',
-    border: 'none',
-    borderRadius: 'var(--radius-md)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-base)',
-    letterSpacing: 'var(--track-xwide)',
-    cursor: 'pointer',
-    minHeight: '44px',
-    transition: 'opacity 0.2s ease',
-  },
-  primaryBtnDisabled: {
-    opacity: 0.4,
-    cursor: 'not-allowed',
-  },
-  hint: {
-    textAlign: 'center',
-    fontSize: 'var(--text-xs)',
-    color: 'var(--ink-whisper)',
-    marginTop: 'var(--space-3)',
-    letterSpacing: 'var(--track-wide)',
-  },
-  errorMsg: {
-    color: 'var(--vermilion-deep)',
-    fontSize: 'var(--text-sm)',
-    textAlign: 'center',
-    marginTop: 'var(--space-3)',
-  },
-  result: {
-    animation: 'meihua-fade-in 0.5s ease',
-  },
-  resultHeader: {
-    textAlign: 'center',
-    marginBottom: 'var(--space-5)',
-  },
-  hexagramSymbol: {
-    fontSize: '4rem',
-    lineHeight: 1,
-    color: 'var(--ink)',
-    marginBottom: 'var(--space-2)',
-  },
-  hexagramName: {
-    fontSize: 'var(--text-xl)',
-    color: 'var(--ink)',
-    letterSpacing: 'var(--track-hero)',
-    paddingLeft: '0.5em',
-  },
   triagramRow: {
     display: 'flex',
     justifyContent: 'center',
@@ -130,34 +75,6 @@ const S = {
     marginBottom: 'var(--space-4)',
     fontSize: 'var(--text-sm)',
     color: 'var(--ink-soft)',
-  },
-  changingNote: {
-    textAlign: 'center',
-    color: 'var(--vermilion)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-5)',
-  },
-  guaciBox: {
-    padding: 'var(--space-4)',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-4)',
-    lineHeight: 1.9,
-    color: 'var(--ink-soft)',
-    fontSize: 'var(--text-base)',
-  },
-  variantBox: {
-    padding: 'var(--space-4)',
-    background: 'var(--paper-deep)',
-    border: '1px dashed var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-4)',
-    textAlign: 'center',
-    color: 'var(--ink-soft)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
   },
   // 体用分析卡片
   tiyongCard: {
@@ -240,58 +157,12 @@ const S = {
     fontStyle: 'italic',
     lineHeight: 1.8,
   },
-  variantSymbol: {
-    fontSize: '2rem',
-    marginRight: 'var(--space-2)',
-    verticalAlign: 'middle',
-    color: 'var(--ink)',
-  },
-  questionLabel: {
-    display: 'block',
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-soft)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-2)',
-  },
-  questionInput: {
-    display: 'block',
-    width: '100%',
-    maxWidth: '420px',
-    margin: '0 auto var(--space-5)',
-    padding: '0.6rem 0.9rem',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    color: 'var(--ink)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-base)',
-    lineHeight: 1.7,
-    boxSizing: 'border-box',
-    outline: 'none',
-    resize: 'vertical',
-    minHeight: '60px',
-  },
-  resetBtn: {
-    display: 'block',
-    margin: '0 auto',
-    padding: '0.5rem 1.5rem',
-    background: 'transparent',
-    border: '1px solid var(--paper-edge)',
-    color: 'var(--ink-soft)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
-    cursor: 'pointer',
-    borderRadius: 'var(--radius-md)',
-    minHeight: '44px',
-  },
 };
 
 function HexagramCard({ hexId, label }) {
   if (!hexId) {
     return (
-      <div style={S.variantBox}>
+      <div style={F.variantBox}>
         <span style={{ color: 'var(--ink-whisper)' }}>{label}：未匹配到卦</span>
       </div>
     );
@@ -299,19 +170,19 @@ function HexagramCard({ hexId, label }) {
   const hex = getHexagramById(hexId);
   if (!hex) {
     return (
-      <div style={S.variantBox}>
+      <div style={F.variantBox}>
         <span style={{ color: 'var(--ink-whisper)' }}>{label}：数据缺失</span>
       </div>
     );
   }
   return (
     <div>
-      <div style={S.resultHeader}>
-        <div style={S.hexagramSymbol}>{hex.symbol}</div>
-        <div style={S.hexagramName}>{hex.name}</div>
+      <div style={F.resultHeader}>
+        <div style={F.hexagramSymbol}>{hex.symbol}</div>
+        <div style={F.hexagramName}>{hex.name}</div>
       </div>
       {hex.guaci?.original && (
-        <div style={S.guaciBox}>{hex.guaci.original}</div>
+        <div style={F.guaciBox}>{hex.guaci.original}</div>
       )}
     </div>
   );
@@ -360,13 +231,8 @@ export default function MeiHua() {
     const variant   = variantId ? getHexagramById(variantId) : null;
 
     return (
-      <div style={S.result}>
-        <style>{`
-          @keyframes meihua-fade-in {
-            from { opacity: 0; transform: translateY(6px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+      <div style={F.result}>
+        <style>{FORTUNE_ANIM}</style>
 
         <HexagramCard hexId={benId} label="本卦" />
 
@@ -375,13 +241,13 @@ export default function MeiHua() {
           <span>下 {result.lowerBagua.symbol} {result.lowerBagua.name}（{result.lowerBagua.num}）</span>
         </div>
 
-        <div style={S.changingNote}>
+        <div style={F.changingNote}>
           动 · {result.changingPositionName}
         </div>
 
         {variant && (
-          <div style={S.variantBox}>
-            <span style={S.variantSymbol}>{variant.symbol}</span>
+          <div style={F.variantBox}>
+            <span style={F.variantSymbol}>{variant.symbol}</span>
             变卦 · {variant.name}
           </div>
         )}
@@ -424,7 +290,7 @@ export default function MeiHua() {
           />
         )}
 
-        <button style={S.resetBtn} onClick={reset}>
+        <button style={F.resetBtn} onClick={reset}>
           重新起卦
         </button>
       </div>
@@ -433,22 +299,27 @@ export default function MeiHua() {
 
   return (
     <div>
-      <div style={S.intro}>
-        梅花易数 · 邵雍传<br />
-        心动则占，数即是象
-        <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最灵巧 · 约 1 分钟</div>
+      {/* 引导卡 */}
+      <div style={F.introCard}>
+        <div style={F.introDesc}>
+          {META.desc1}<br />
+          {META.desc2}
+        </div>
+        <div style={F.introMeta}>{META.meta}</div>
       </div>
 
-      <label style={S.questionLabel} htmlFor="meihua-question">心中所惑（可选）</label>
+      {/* 心中所惑输入 */}
+      <label style={F.questionLabel} htmlFor="meihua-question">心中所惑（可选）</label>
       <textarea
         id="meihua-question"
-        style={S.questionInput}
+        style={F.questionInput}
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
         placeholder="问什么..."
         rows={2}
       />
 
+      {/* 起卦动作 */}
       <div style={S.modeRow}>
         <button
           style={{ ...S.modeBtn, ...(mode === 'numbers' ? S.modeBtnActive : null) }}
@@ -488,26 +359,26 @@ export default function MeiHua() {
           </div>
           <button
             style={{
-              ...S.primaryBtn,
-              ...(!num1 || !num2 ? S.primaryBtnDisabled : null),
+              ...F.primaryBtn,
+              ...(!num1 || !num2 ? F.primaryBtnDisabled : null),
             }}
             onClick={castNumbers}
             disabled={!num1 || !num2}
           >
             起　卦
           </button>
-          <div style={S.hint}>任意正整数皆可，例如 12 与 7</div>
-          {error && <div style={S.errorMsg}>{error}</div>}
+          <div style={{ ...F.hint, marginTop: 'var(--space-3)' }}>任意正整数皆可，例如 12 与 7</div>
+          {error && <div style={F.errorMsg}>{error}</div>}
         </div>
       )}
 
       {mode === 'time' && (
         <div style={S.formCard}>
-          <button style={S.primaryBtn} onClick={castTime}>
+          <button style={F.primaryBtn} onClick={castTime}>
             取此刻 · 起卦
           </button>
-          <div style={S.hint}>以公历年月日时为据</div>
-          {error && <div style={S.errorMsg}>{error}</div>}
+          <div style={{ ...F.hint, marginTop: 'var(--space-3)' }}>以公历年月日时为据</div>
+          {error && <div style={F.errorMsg}>{error}</div>}
         </div>
       )}
     </div>

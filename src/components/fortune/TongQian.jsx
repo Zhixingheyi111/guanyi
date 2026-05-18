@@ -1,36 +1,25 @@
 // 铜钱起卦子组件：摇 6 次三钱，逐爻揭示动画
-// 本组件不调 LLM；AI 解读在 Phase 1.5 (A5) 接入。
+// 外壳样式（引导卡 / 输入 / 象头 / 重新起卦）取自 fortuneUI，与蓍草、梅花统一。
 import { useState, useRef } from 'react';
 import { castTongQian } from '../../utils/tongQian';
 import { getHexagramIdByBinary } from '../../data/hexagramIndex';
 import { getHexagramById } from '../../data/hexagrams';
 import QuickReading from './QuickReading';
+import { fortuneUI as F, FORTUNE_ANIM, METHOD_META } from './fortuneUI';
 
+const META = METHOD_META.tongqian;
 const REVEAL_INTERVAL_MS = 1200;
 const POSITION_NAMES = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
 
+// 铜钱专属样式（摇钱爻列），外壳样式见 fortuneUI
 const S = {
-  intro: {
+  status: {
     textAlign: 'center',
     fontSize: 'var(--text-sm)',
     color: 'var(--ink-whisper)',
     letterSpacing: 'var(--track-wide)',
     marginBottom: 'var(--space-5)',
     lineHeight: 1.8,
-  },
-  startBtn: {
-    display: 'block',
-    margin: '0 auto var(--space-5)',
-    padding: '0.7rem 2rem',
-    background: 'var(--ink)',
-    color: 'var(--paper)',
-    border: 'none',
-    borderRadius: 'var(--radius-md)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-base)',
-    letterSpacing: 'var(--track-xwide)',
-    cursor: 'pointer',
-    minHeight: '44px',
   },
   yaoColumn: {
     display: 'flex',
@@ -103,98 +92,6 @@ const S = {
     background: 'var(--paper)',
     border: '1.5px solid var(--ink-soft)',
     animation: 'tongqian-spin 0.5s linear infinite',
-  },
-  // 结果区
-  resultHeader: {
-    textAlign: 'center',
-    marginBottom: 'var(--space-4)',
-    animation: 'tongqian-fade-in 0.6s ease',
-  },
-  hexagramSymbol: {
-    fontSize: '4rem',
-    lineHeight: 1,
-    color: 'var(--ink)',
-    marginBottom: 'var(--space-2)',
-  },
-  hexagramName: {
-    fontSize: 'var(--text-xl)',
-    color: 'var(--ink)',
-    letterSpacing: 'var(--track-hero)',
-    paddingLeft: '0.5em',
-  },
-  guaciBox: {
-    padding: 'var(--space-4)',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-4)',
-    lineHeight: 1.9,
-    color: 'var(--ink-soft)',
-    fontSize: 'var(--text-base)',
-  },
-  changingNote: {
-    textAlign: 'center',
-    color: 'var(--vermilion)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-4)',
-  },
-  variantBox: {
-    padding: 'var(--space-4)',
-    background: 'var(--paper-deep)',
-    border: '1px dashed var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-4)',
-    textAlign: 'center',
-    color: 'var(--ink-soft)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
-  },
-  variantSymbol: {
-    fontSize: '2rem',
-    marginRight: 'var(--space-2)',
-    verticalAlign: 'middle',
-    color: 'var(--ink)',
-  },
-  questionLabel: {
-    display: 'block',
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-soft)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-2)',
-  },
-  questionInput: {
-    display: 'block',
-    width: '100%',
-    maxWidth: '420px',
-    margin: '0 auto var(--space-5)',
-    padding: '0.6rem 0.9rem',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    color: 'var(--ink)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-base)',
-    lineHeight: 1.7,
-    boxSizing: 'border-box',
-    outline: 'none',
-    resize: 'vertical',
-    minHeight: '60px',
-  },
-  resetBtn: {
-    display: 'block',
-    margin: '0 auto',
-    padding: '0.5rem 1.5rem',
-    background: 'transparent',
-    border: '1px solid var(--paper-edge)',
-    color: 'var(--ink-soft)',
-    fontFamily: 'var(--font-serif)',
-    fontSize: 'var(--text-sm)',
-    letterSpacing: 'var(--track-wide)',
-    cursor: 'pointer',
-    borderRadius: 'var(--radius-md)',
-    minHeight: '44px',
   },
 };
 
@@ -287,22 +184,29 @@ export default function TongQian() {
   if (phase === 'idle') {
     return (
       <div>
-        <div style={S.intro}>
-          铜钱起卦 · 火珠林<br />
-          三钱六摇，问询所惑
-          <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最日常 · 约 2 分钟</div>
+        {/* 引导卡 */}
+        <div style={F.introCard}>
+          <div style={F.introDesc}>
+            {META.desc1}<br />
+            {META.desc2}
+          </div>
+          <div style={F.introMeta}>{META.meta}</div>
         </div>
-        <label style={S.questionLabel} htmlFor="tongqian-question">心中所惑（可选）</label>
+
+        {/* 心中所惑输入 */}
+        <label style={F.questionLabel} htmlFor="tongqian-question">心中所惑（可选）</label>
         <textarea
           id="tongqian-question"
-          style={S.questionInput}
+          style={F.questionInput}
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="问什么..."
           rows={2}
         />
-        <button style={S.startBtn} onClick={start}>
-          开　始
+
+        {/* 起卦动作 */}
+        <button style={F.primaryBtn} onClick={start}>
+          开　始　摇　卦
         </button>
       </div>
     );
@@ -311,18 +215,15 @@ export default function TongQian() {
   return (
     <div>
       <style>{`
+        ${FORTUNE_ANIM}
         @keyframes tongqian-spin {
           0%   { transform: rotateX(0deg); }
           50%  { transform: rotateX(180deg); }
           100% { transform: rotateX(360deg); }
         }
-        @keyframes tongqian-fade-in {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
       `}</style>
 
-      <div style={S.intro}>
+      <div style={S.status}>
         {phase === 'casting' ? '摇钱中...' : '六爻已成'}
       </div>
 
@@ -342,31 +243,31 @@ export default function TongQian() {
         return (
           <div>
             {ben && (
-              <div style={S.resultHeader}>
-                <div style={S.hexagramSymbol}>{ben.symbol}</div>
-                <div style={S.hexagramName}>{ben.name}</div>
+              <div style={F.resultHeader}>
+                <div style={F.hexagramSymbol}>{ben.symbol}</div>
+                <div style={F.hexagramName}>{ben.name}</div>
               </div>
             )}
 
             {ben?.guaci?.original && (
-              <div style={S.guaciBox}>{ben.guaci.original}</div>
+              <div style={F.guaciBox}>{ben.guaci.original}</div>
             )}
 
             {result.changingPositions.length > 0 && (
-              <div style={S.changingNote}>
+              <div style={F.changingNote}>
                 动 · {changingNames}
               </div>
             )}
 
             {variant && (
-              <div style={S.variantBox}>
-                <span style={S.variantSymbol}>{variant.symbol}</span>
+              <div style={F.variantBox}>
+                <span style={F.variantSymbol}>{variant.symbol}</span>
                 变卦 · {variant.name}
               </div>
             )}
 
             {result.changingPositions.length === 0 && (
-              <div style={{ ...S.variantBox, color: 'var(--ink-whisper)' }}>
+              <div style={{ ...F.variantBox, color: 'var(--ink-whisper)' }}>
                 六爻无动 · 静卦
               </div>
             )}
@@ -383,7 +284,7 @@ export default function TongQian() {
               />
             )}
 
-            <button style={S.resetBtn} onClick={reset}>
+            <button style={F.resetBtn} onClick={reset}>
               重新起卦
             </button>
           </div>
@@ -391,7 +292,7 @@ export default function TongQian() {
       })()}
 
       {phase === 'casting' && (
-        <button style={S.resetBtn} onClick={reset}>
+        <button style={F.resetBtn} onClick={reset}>
           取消
         </button>
       )}
