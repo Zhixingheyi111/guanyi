@@ -143,27 +143,6 @@ export function getPendingReviewRecords(now = Date.now()) {
   return result;
 }
 
-/**
- * 统计：用户的占卜准确度分布。
- * 用于"我的占卜日记"页面显示"上个月 5 卦准了 3 个"等信息。
- */
-export function getDivinationStats(daysAgo = 30, now = Date.now()) {
-  const cutoff = now - daysAgo * 24 * 3600 * 1000;
-  const records = getDivinationRecords().filter(r => r.timestamp >= cutoff);
-  const reviewed = records.filter(r => r.followUp?.reviewedAt);
-  const ratings = reviewed.map(r => r.followUp.selfRating).filter(x => x >= 1 && x <= 5);
-  const accurate = ratings.filter(x => x >= 4).length;
-  return {
-    totalCount: records.length,
-    reviewedCount: reviewed.length,
-    accurateCount: accurate,           // 自评 4-5 = 较准/非常准
-    averageRating: ratings.length
-      ? ratings.reduce((s, x) => s + x, 0) / ratings.length
-      : null,
-    daysAgo,
-  };
-}
-
 // ---------- 卦笔记（模块 2 使用）----------
 
 export function getHexagramNote(hexagramId) {
