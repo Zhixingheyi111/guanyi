@@ -131,6 +131,7 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
       <div style={S.intro}>
         蓍草揲数 · 大衍之数<br />
         心有大事 · 一日一占
+        <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最庄重 · 约 5 分钟</div>
       </div>
 
       <DivinationHistory onView={onViewHistory} />

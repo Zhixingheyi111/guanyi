@@ -436,6 +436,7 @@ export default function MeiHua() {
       <div style={S.intro}>
         梅花易数 · 邵雍传<br />
         心动则占，数即是象
+        <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最灵巧 · 约 1 分钟</div>
       </div>
 
       <label style={S.questionLabel} htmlFor="meihua-question">心中所惑（可选）</label>

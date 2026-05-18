@@ -290,6 +290,7 @@ export default function TongQian() {
         <div style={S.intro}>
           铜钱起卦 · 火珠林<br />
           三钱六摇，问询所惑
+          <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最日常 · 约 2 分钟</div>
         </div>
         <label style={S.questionLabel} htmlFor="tongqian-question">心中所惑（可选）</label>
         <textarea
