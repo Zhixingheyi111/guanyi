@@ -6,6 +6,17 @@
 
 ---
 
+## 2026-05-17 23:21 CDT — 今日 AI 入口文案 + 日历年月选择面板（未推 main）
+
+接续同 session，按用户反馈又改两处（worktree `clever-torvalds-6f9f19`，仍未推 main）：
+
+- **commit afda785**：今日一爻的 AI 解读入口改用「观」语气（呼应品牌「观易·见自己」）——按钮「请 AI 一解 →」→「一观此爻 →」，结果区标题「占者观象」→「今日之象」，加载文案去掉「占者」。
+- **commit a9bf540**：日历加年月选择面板。原先只能逐月点 `‹ ›`，去很远的月份很累。现点月份标签弹出面板：年份 `‹ ›` 步进 + 12 月网格 + 「回到今月」，任意跳转。原「点标签=回到本月」并入面板。顺修 `pickerMonthActive` / `toggleActive` 两处 border/borderColor 简写混用的 React 警告（即上一条遗留的警告，已清）。
+
+**验证：** lint+build rc=0；preview 移动端验证今日按钮文案、日历面板跳转（跨年步进 + 选月）、节气 overlay 均无误；重启 dev server 后 console 全清，无报错。
+
+---
+
 ## 2026-05-17 22:39 CDT — 三种占卜统一 UI + 梅花/铜钱存历史（未推 main）
 
 执行上一条待办的「三占卜统一 UI」。worktree `clever-torvalds-6f9f19`，2 个本地 commit，**未推 main**。
