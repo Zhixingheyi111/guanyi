@@ -898,7 +898,7 @@ export const lessons = [
     id: 'how-to-divine',
     order: 8,
     title: '怎么起卦',
-    intro: '揲蓍法、金钱卦、梅花易数——古今三种起卦路径。',
+    intro: '蓍草、铜钱、梅花——古今三种起卦路径。',
     sections: [
       {
         type: 'p',
@@ -912,7 +912,7 @@ export const lessons = [
           '当你面对一个处境想不清楚时，把心沉下来，提出问题，起出一卦——这一卦就是你此刻心境、处境的截面。易经是一面镜子，起卦是对镜的动作。',
         ],
       },
-      { type: 'h', content: '揲蓍法：最传统的起卦' },
+      { type: 'h', content: '蓍草（揲蓍法）：最传统的起卦' },
       {
         type: 'p',
         content: [
@@ -938,14 +938,14 @@ export const lessons = [
       {
         type: 'p',
         content: [
-          '揲蓍的概率分布严格对应四种爻：老阳 3/16、少阴 7/16、少阳 5/16、老阴 1/16。',
+          '揲蓍的概率分布严格对应四种爻：老阳 3/16、少阴 5/16、少阳 5/16、老阴 3/16。',
         ],
       },
       {
         type: 'note',
         content: '本 App 的起卦算法严格按揲蓍概率实现——不是简化的"四种结果均等"，而是真实的蓍草分堆数学。',
       },
-      { type: 'h', content: '金钱卦：最流行的起卦' },
+      { type: 'h', content: '铜钱（金钱卦）：最流行的起卦' },
       {
         type: 'p',
         content: [
@@ -975,7 +975,7 @@ export const lessons = [
           '金钱卦比揲蓍法快得多——但概率分布与揲蓍不完全一致，老阳老阴出现的频率偏高，更容易出动爻。',
         ],
       },
-      { type: 'h', content: '梅花易数：最灵活的起卦' },
+      { type: 'h', content: '梅花（梅花易数）：最灵活的起卦' },
       {
         type: 'p',
         content: [

@@ -1,5 +1,5 @@
 // 占卜专用的 AI 解读卡：mount 时调用 interpretFortune 一次，展示精简结果
-// 三种占卜方法（梅花/铜钱/灵签）共用此组件
+// 梅花、铜钱两种占卜方法共用此组件
 import { useState, useEffect } from 'react';
 import { interpretFortune } from '../../utils/claudeApi';
 
