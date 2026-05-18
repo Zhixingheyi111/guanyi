@@ -306,7 +306,6 @@ export default function App() {
         setQuestion={setQuestion}
         onSubmit={handleSubmit}
         loading={loading}
-        onViewHistory={setViewingHistoryId}
       />
     );
   };
@@ -364,7 +363,7 @@ export default function App() {
 
         <Panel active={mode === 'divination'}>
           {error && <div style={S.error}>{error}</div>}
-          <Fortune shicaoSlot={buildShicaoSlot()} />
+          <Fortune shicaoSlot={buildShicaoSlot()} onViewRecord={setViewingHistoryId} />
         </Panel>
 
         <Panel active={mode === 'study'}>

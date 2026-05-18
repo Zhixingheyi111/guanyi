@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import DivinationHistory from './DivinationHistory';
 import Bagua from './Bagua';
 
 const S = {
@@ -93,7 +92,7 @@ const S = {
   },
 };
 
-export default function Divination({ question, setQuestion, onSubmit, loading, onViewHistory }) {
+export default function Divination({ question, setQuestion, onSubmit, loading }) {
   const [hovering, setHovering] = useState(false);
 
   const canSubmit = !loading && question.trim();
@@ -133,8 +132,6 @@ export default function Divination({ question, setQuestion, onSubmit, loading, o
         心有大事 · 一日一占
         <div style={{ fontSize: 'var(--text-xs)', marginTop: '0.35rem' }}>最庄重 · 约 5 分钟</div>
       </div>
-
-      <DivinationHistory onView={onViewHistory} />
 
       <div style={S.inputBlock}>
         <p style={S.title}>你此刻面对什么处境？</p>

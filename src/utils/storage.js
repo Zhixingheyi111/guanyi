@@ -154,6 +154,25 @@ export function saveHexagramNote(hexagramId, note) {
   return safeSet(HEXAGRAM_NOTE_PREFIX + hexagramId, note);
 }
 
+// 列出所有写过笔记的卦（学易「笔记」sub-tab 用）。返回按卦序升序排列。
+export function getAllHexagramNotes() {
+  const result = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith(HEXAGRAM_NOTE_PREFIX)) continue;
+      const hexagramId = Number(key.slice(HEXAGRAM_NOTE_PREFIX.length));
+      const note = getHexagramNote(hexagramId);
+      if (hexagramId && note && note.trim()) {
+        result.push({ hexagramId, note });
+      }
+    }
+  } catch (e) {
+    console.error('[storage] 枚举卦笔记失败', e);
+  }
+  return result.sort((a, b) => a.hexagramId - b.hexagramId);
+}
+
 // ---------- 入门课程进度 ----------
 //
 // 存储格式向前兼容：
