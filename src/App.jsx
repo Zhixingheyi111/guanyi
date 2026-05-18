@@ -3,6 +3,8 @@ import Divination from './components/Divination';
 import Reading from './components/Reading';
 import Study from './components/Study';
 import Fortune from './components/Fortune';
+import MeiHuaResult from './components/fortune/MeiHuaResult';
+import TongQianResult from './components/fortune/TongQianResult';
 import Bagua from './components/Bagua';
 import AppHeader from './components/shell/AppHeader';
 import TabBar from './components/shell/TabBar';
@@ -226,6 +228,7 @@ export default function App() {
       saveDivinationRecord({
         id: newId,
         timestamp: Date.now(),
+        method: 'shicao',
         question,
         benGua:  hexagramsData.benGua,
         zongGua: hexagramsData.zongGua,
@@ -246,6 +249,7 @@ export default function App() {
   };
 
   // 蓍草 sub-tab 内容（提交问题 / 5 层卦象 / Reading / 历史详情）
+  // 历史详情按 record.method 分派：蓍草 → Reading 五层，梅花/铜钱 → 各自结果组件。
   const buildShicaoSlot = () => {
     if (viewingHistoryId) {
       const record = getDivinationRecord(viewingHistoryId);
@@ -257,6 +261,37 @@ export default function App() {
               返回
             </button>
           </div>
+        );
+      }
+      if (record.method === 'meihua') {
+        return (
+          <MeiHuaResult
+            ben={record.benGua}
+            variant={record.bianGua}
+            upperBagua={record.meihua?.upperBagua}
+            lowerBagua={record.meihua?.lowerBagua}
+            changingPositionName={record.meihua?.changingPositionName}
+            changingPositions={record.changingPositions || []}
+            tiyong={record.meihua?.tiyong}
+            question={record.question}
+            savedReading={record.quickReading}
+            recordId={record.id}
+            onBack={() => setViewingHistoryId(null)}
+          />
+        );
+      }
+      if (record.method === 'tongqian') {
+        return (
+          <TongQianResult
+            ben={record.benGua}
+            variant={record.bianGua}
+            yaos={record.tongqian?.yaos}
+            changingPositions={record.changingPositions || []}
+            question={record.question}
+            savedReading={record.quickReading}
+            recordId={record.id}
+            onBack={() => setViewingHistoryId(null)}
+          />
         );
       }
       return (

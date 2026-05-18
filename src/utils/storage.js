@@ -38,6 +38,24 @@ function safeRemove(key) {
 }
 
 // ---------- 起卦历史 ----------
+//
+// 统一 record 形状（三种占卜共用，2026-05-17 起）：
+//   {
+//     id, timestamp,
+//     method: 'shicao' | 'meihua' | 'tongqian',   // 缺省视为 'shicao'（兼容旧记录）
+//     question,
+//     benGua,  bianGua,            // 卦对象；bianGua 无动爻时为 null
+//     changingPositions,           // 0-indexed 动爻数组
+//     userNote,
+//     // —— 蓍草专属 ——
+//     zongGua, cuoGua, huGua,      // 五层卦象其余三层
+//     interpretation,              // 五层 AI 解读
+//     // —— 梅花/铜钱专属 ——
+//     meihua:   { upperBagua, lowerBagua, changingPositionName, tiyong },
+//     tongqian: { yaos },
+//     quickReading: { coreAdvice, yi, ji, valence } | null,  // 轻量 AI 解读
+//     coreAdvice,                  // quickReading.coreAdvice 的顶层镜像（复盘用）
+//   }
 
 // 生成 id：YYYYMMDD-HHMMSS
 export function generateDivinationId(date = new Date()) {
@@ -81,6 +99,13 @@ export function getDivinationRecords() {
 
 export function getDivinationRecord(id) {
   return safeGet(DIVINATION_PREFIX + id);
+}
+
+// 局部更新一条已存在的记录（梅花/铜钱先存卦、AI 解读返回后再补写 quickReading 用）
+export function updateDivinationRecord(id, patch) {
+  const record = getDivinationRecord(id);
+  if (!record) return false;
+  return safeSet(DIVINATION_PREFIX + id, { ...record, ...patch });
 }
 
 export function deleteDivinationRecord(id) {

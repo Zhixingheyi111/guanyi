@@ -1,15 +1,16 @@
 // 梅花易数子组件：数字起卦 / 时间起卦
-// 外壳样式（引导卡 / 输入 / 象头 / 重新起卦）取自 fortuneUI，与蓍草、铜钱统一。
+// 起卦后存入起卦历史；结果展示与历史回看共用 MeiHuaResult。
 import { useState } from 'react';
 import { generateByNumbers, generateByTime } from '../../utils/meiHua';
 import { getHexagramIdByBinary } from '../../data/hexagramIndex';
 import { getHexagramById } from '../../data/hexagrams';
-import QuickReading from './QuickReading';
-import { fortuneUI as F, FORTUNE_ANIM, METHOD_META } from './fortuneUI';
+import { generateDivinationId, saveDivinationRecord } from '../../utils/storage';
+import MeiHuaResult from './MeiHuaResult';
+import { fortuneUI as F, METHOD_META } from './fortuneUI';
 
 const META = METHOD_META.meihua;
 
-// 梅花专属样式（体用论 / 起卦表单），外壳样式见 fortuneUI
+// 梅花起卦表单专属样式，外壳样式见 fortuneUI
 const S = {
   modeRow: {
     display: 'flex',
@@ -67,148 +68,68 @@ const S = {
     textAlign: 'center',
     minHeight: '44px',
   },
-  triagramRow: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 'var(--space-6)',
-    marginTop: 'var(--space-4)',
-    marginBottom: 'var(--space-4)',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-soft)',
-  },
-  // 体用分析卡片
-  tiyongCard: {
-    padding: 'var(--space-4)',
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderLeft: '3px solid var(--vermilion)',
-    borderRadius: 'var(--radius-md)',
-    marginBottom: 'var(--space-4)',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-soft)',
-    lineHeight: 1.85,
-  },
-  tiyongTitle: {
-    fontSize: 'var(--text-sm)',
-    fontWeight: 500,
-    color: 'var(--vermilion-deep)',
-    letterSpacing: 'var(--track-wide)',
-    marginBottom: 'var(--space-2)',
-  },
-  tiyongRow: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    gap: 'var(--space-3)',
-    flexWrap: 'wrap',
-    marginBottom: 'var(--space-3)',
-    paddingBottom: 'var(--space-3)',
-    borderBottom: '1px dashed var(--paper-edge)',
-  },
-  tiyongSlot: {
-    textAlign: 'center',
-    flex: '1 1 auto',
-    minWidth: '110px',
-  },
-  tiyongRole: {
-    fontSize: 'var(--text-xs)',
-    color: 'var(--ink-light)',
-    letterSpacing: 'var(--track-xwide)',
-    marginBottom: 'var(--space-1)',
-  },
-  tiyongBaguaSymbol: {
-    fontSize: 'var(--text-2xl)',
-    color: 'var(--ink)',
-    lineHeight: 1,
-  },
-  tiyongBaguaName: {
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink)',
-    letterSpacing: 'var(--track-wide)',
-    marginTop: 'var(--space-1)',
-  },
-  tiyongElement: {
-    fontSize: 'var(--text-xs)',
-    color: 'var(--ink-light)',
-    marginTop: 'var(--space-1)',
-  },
-  tiyongRelation: {
-    textAlign: 'center',
-    fontSize: 'var(--text-base)',
-    color: 'var(--ink)',
-    letterSpacing: 'var(--track-wide)',
-    fontWeight: 500,
-    marginBottom: 'var(--space-2)',
-  },
-  tiyongNature: {
-    display: 'inline-block',
-    padding: '0.15rem 0.5rem',
-    marginLeft: 'var(--space-2)',
-    background: 'var(--vermilion)',
-    color: 'var(--paper)',
-    fontSize: 'var(--text-xs)',
-    borderRadius: 'var(--radius-sm)',
-    letterSpacing: 'var(--track-wide)',
-    verticalAlign: 'middle',
-  },
-  tiyongMeaning: {
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
-    color: 'var(--ink-soft)',
-    fontStyle: 'italic',
-    lineHeight: 1.8,
-  },
 };
-
-function HexagramCard({ hexId, label }) {
-  if (!hexId) {
-    return (
-      <div style={F.variantBox}>
-        <span style={{ color: 'var(--ink-whisper)' }}>{label}：未匹配到卦</span>
-      </div>
-    );
-  }
-  const hex = getHexagramById(hexId);
-  if (!hex) {
-    return (
-      <div style={F.variantBox}>
-        <span style={{ color: 'var(--ink-whisper)' }}>{label}：数据缺失</span>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <div style={F.resultHeader}>
-        <div style={F.hexagramSymbol}>{hex.symbol}</div>
-        <div style={F.hexagramName}>{hex.name}</div>
-      </div>
-      {hex.guaci?.original && (
-        <div style={F.guaciBox}>{hex.guaci.original}</div>
-      )}
-    </div>
-  );
-}
 
 export default function MeiHua() {
   const [mode, setMode] = useState('numbers');  // 'numbers' | 'time'
   const [num1, setNum1] = useState('');
   const [num2, setNum2] = useState('');
   const [question, setQuestion] = useState('');
-  const [result, setResult] = useState(null);
+  // cast：{ ben, variant, upperBagua, lowerBagua, changingPositionName, changingPositions, tiyong, recordId }
+  const [cast, setCast] = useState(null);
   const [error, setError] = useState(null);
 
   const reset = () => {
-    setResult(null);
+    setCast(null);
     setError(null);
     setNum1('');
     setNum2('');
     // 不清空 question：允许同一问题反复起卦
   };
 
+  // 起卦成功 → 解析卦象 → 存入起卦历史 → 进入结果态
+  const applyResult = (r) => {
+    const benId     = getHexagramIdByBinary(r.binary);
+    const variantId = getHexagramIdByBinary(r.variantBinary);
+    const ben       = benId ? getHexagramById(benId) : null;
+    const variant   = variantId ? getHexagramById(variantId) : null;
+
+    const recordId = generateDivinationId();
+    saveDivinationRecord({
+      id: recordId,
+      timestamp: Date.now(),
+      method: 'meihua',
+      question,
+      benGua: ben,
+      bianGua: variant,
+      changingPositions: r.changingPositions,
+      meihua: {
+        upperBagua: r.upperBagua,
+        lowerBagua: r.lowerBagua,
+        changingPositionName: r.changingPositionName,
+        tiyong: r.tiyong,
+      },
+      quickReading: null,
+      coreAdvice: '',
+      userNote: '',
+    });
+
+    setCast({
+      ben,
+      variant,
+      upperBagua: r.upperBagua,
+      lowerBagua: r.lowerBagua,
+      changingPositionName: r.changingPositionName,
+      changingPositions: r.changingPositions,
+      tiyong: r.tiyong,
+      recordId,
+    });
+  };
+
   const castNumbers = () => {
     setError(null);
     try {
-      const r = generateByNumbers(num1, num2);
-      setResult(r);
+      applyResult(generateByNumbers(num1, num2));
     } catch (e) {
       setError(e.message);
     }
@@ -217,83 +138,26 @@ export default function MeiHua() {
   const castTime = () => {
     setError(null);
     try {
-      const r = generateByTime(new Date());
-      setResult(r);
+      applyResult(generateByTime(new Date()));
     } catch (e) {
       setError(e.message);
     }
   };
 
-  if (result) {
-    const benId     = getHexagramIdByBinary(result.binary);
-    const variantId = getHexagramIdByBinary(result.variantBinary);
-    const ben       = benId ? getHexagramById(benId) : null;
-    const variant   = variantId ? getHexagramById(variantId) : null;
-
+  if (cast) {
     return (
-      <div style={F.result}>
-        <style>{FORTUNE_ANIM}</style>
-
-        <HexagramCard hexId={benId} label="本卦" />
-
-        <div style={S.triagramRow}>
-          <span>上 {result.upperBagua.symbol} {result.upperBagua.name}（{result.upperBagua.num}）</span>
-          <span>下 {result.lowerBagua.symbol} {result.lowerBagua.name}（{result.lowerBagua.num}）</span>
-        </div>
-
-        <div style={F.changingNote}>
-          动 · {result.changingPositionName}
-        </div>
-
-        {variant && (
-          <div style={F.variantBox}>
-            <span style={F.variantSymbol}>{variant.symbol}</span>
-            变卦 · {variant.name}
-          </div>
-        )}
-
-        {result.tiyong && (
-          <div style={S.tiyongCard}>
-            <div style={S.tiyongTitle}>体用之论</div>
-            <div style={S.tiyongRow}>
-              <div style={S.tiyongSlot}>
-                <div style={S.tiyongRole}>体 · 我</div>
-                <div style={S.tiyongBaguaSymbol}>{result.tiyong.tiBagua.symbol}</div>
-                <div style={S.tiyongBaguaName}>{result.tiyong.tiBagua.name}</div>
-                <div style={S.tiyongElement}>{result.tiyong.tiBagua.elementName}</div>
-              </div>
-              <div style={S.tiyongSlot}>
-                <div style={S.tiyongRole}>用 · 事</div>
-                <div style={S.tiyongBaguaSymbol}>{result.tiyong.yongBagua.symbol}</div>
-                <div style={S.tiyongBaguaName}>{result.tiyong.yongBagua.name}</div>
-                <div style={S.tiyongElement}>{result.tiyong.yongBagua.elementName}</div>
-              </div>
-            </div>
-            <div style={S.tiyongRelation}>
-              {result.tiyong.relationLabel}
-              <span style={S.tiyongNature}>{result.tiyong.nature}</span>
-            </div>
-            <div style={S.tiyongMeaning}>{result.tiyong.meaning}</div>
-          </div>
-        )}
-
-        {ben && (
-          <QuickReading
-            scenario={{
-              method: 'meihua',
-              benHex: ben,
-              changingPositions: result.changingPositions,
-              variantHex: variant,
-              tiyong: result.tiyong,
-            }}
-            question={question}
-          />
-        )}
-
-        <button style={F.resetBtn} onClick={reset}>
-          重新起卦
-        </button>
-      </div>
+      <MeiHuaResult
+        ben={cast.ben}
+        variant={cast.variant}
+        upperBagua={cast.upperBagua}
+        lowerBagua={cast.lowerBagua}
+        changingPositionName={cast.changingPositionName}
+        changingPositions={cast.changingPositions}
+        tiyong={cast.tiyong}
+        question={question}
+        recordId={cast.recordId}
+        onRestart={reset}
+      />
     );
   }
 
