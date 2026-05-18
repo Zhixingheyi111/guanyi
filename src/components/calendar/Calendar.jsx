@@ -50,6 +50,67 @@ const S = {
     justifyContent: 'center',
     marginBottom: 'var(--space-4)',
   },
+  // 年月选择面板
+  pickerPanel: {
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-md)',
+    background: 'var(--paper-soft)',
+    padding: 'var(--space-3)',
+    marginBottom: 'var(--space-4)',
+  },
+  pickerYearRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 'var(--space-4)',
+    marginBottom: 'var(--space-3)',
+  },
+  pickerYearLabel: {
+    fontSize: 'var(--text-base)',
+    color: 'var(--ink)',
+    fontWeight: 500,
+    letterSpacing: 'var(--track-wide)',
+    minWidth: '5em',
+    textAlign: 'center',
+  },
+  pickerMonthGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: 'var(--space-2)',
+    marginBottom: 'var(--space-3)',
+  },
+  pickerMonthBtn: {
+    background: 'var(--paper)',
+    border: '1px solid var(--paper-edge)',
+    borderRadius: 'var(--radius-sm)',
+    padding: '0.5rem 0',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    color: 'var(--ink-soft)',
+    cursor: 'pointer',
+    minHeight: '40px',
+  },
+  pickerMonthActive: {
+    background: 'var(--vermilion)',
+    // 用 border 全简写而非 borderColor 长写，避免与 pickerMonthBtn.border 混用触发 React 警告
+    border: '1px solid var(--vermilion)',
+    color: 'var(--paper)',
+    fontWeight: 500,
+  },
+  pickerTodayBtn: {
+    display: 'block',
+    width: '100%',
+    background: 'transparent',
+    border: 'none',
+    borderTop: '1px solid var(--paper-edge)',
+    paddingTop: 'var(--space-2)',
+    color: 'var(--ink-light)',
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'var(--text-sm)',
+    letterSpacing: 'var(--track-wide)',
+    cursor: 'pointer',
+    minHeight: '36px',
+  },
   toggle: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -68,7 +129,8 @@ const S = {
   toggleActive: {
     background: 'var(--paper)',
     color: 'var(--ink)',
-    borderColor: 'var(--ink-soft)',
+    // 用 border 全简写，避免与 toggle.border 混用触发 React 警告
+    border: '1px solid var(--ink-soft)',
   },
   toggleDot: {
     display: 'inline-block',
@@ -243,6 +305,10 @@ export default function Calendar({ onJumpToHexagram }) {
     return result;
   }, [monthAnchor]);
 
+  // 年月选择面板：点月份标签弹出，年份步进 + 12 月网格，任意跳转
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerYear, setPickerYear] = useState(() => monthAnchor.getFullYear());
+
   const goPrev = () => {
     setMonthAnchor(new Date(monthAnchor.getFullYear(), monthAnchor.getMonth() - 1, 1));
     setSelected(null);
@@ -255,6 +321,17 @@ export default function Calendar({ onJumpToHexagram }) {
     const now = new Date();
     setMonthAnchor(new Date(now.getFullYear(), now.getMonth(), 1));
     setSelected(now);
+    setPickerOpen(false);
+  };
+
+  const togglePicker = () => {
+    if (!pickerOpen) setPickerYear(monthAnchor.getFullYear());  // 每次打开同步到当前年
+    setPickerOpen(o => !o);
+  };
+  const jumpToMonth = (monthIndex) => {
+    setMonthAnchor(new Date(pickerYear, monthIndex, 1));
+    setSelected(null);
+    setPickerOpen(false);
   };
 
   return (
@@ -263,20 +340,61 @@ export default function Calendar({ onJumpToHexagram }) {
         <button style={S.navBtn} onClick={goPrev} aria-label="上一月">‹</button>
         <button
           type="button"
-          onClick={goToday}
+          onClick={togglePicker}
           style={{
             background: 'transparent',
             border: 'none',
             cursor: 'pointer',
             fontFamily: 'var(--font-serif)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
             ...S.monthLabel,
           }}
-          title="回到本月"
+          aria-expanded={pickerOpen}
+          title="选择年月"
         >
           {monthAnchor.getFullYear()} 年 {monthAnchor.getMonth() + 1} 月
+          <span
+            style={{
+              fontSize: '0.7rem',
+              color: 'var(--ink-light)',
+              transform: pickerOpen ? 'rotate(180deg)' : 'none',
+              transition: 'transform 0.2s ease',
+            }}
+          >
+            ▾
+          </span>
         </button>
         <button style={S.navBtn} onClick={goNext} aria-label="下一月">›</button>
       </div>
+
+      {pickerOpen && (
+        <div style={S.pickerPanel}>
+          <div style={S.pickerYearRow}>
+            <button style={S.navBtn} onClick={() => setPickerYear(y => y - 1)} aria-label="上一年">‹</button>
+            <span style={S.pickerYearLabel}>{pickerYear} 年</span>
+            <button style={S.navBtn} onClick={() => setPickerYear(y => y + 1)} aria-label="下一年">›</button>
+          </div>
+          <div style={S.pickerMonthGrid}>
+            {Array.from({ length: 12 }, (_, m) => {
+              const isCurrent =
+                pickerYear === monthAnchor.getFullYear() && m === monthAnchor.getMonth();
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  style={{ ...S.pickerMonthBtn, ...(isCurrent ? S.pickerMonthActive : null) }}
+                  onClick={() => jumpToMonth(m)}
+                >
+                  {m + 1} 月
+                </button>
+              );
+            })}
+          </div>
+          <button style={S.pickerTodayBtn} onClick={goToday}>回到今月</button>
+        </div>
+      )}
 
       <div style={S.toggleRow}>
         <Toggle on={showJieqi}      onChange={setShowJieqi}      dot="vermilion"  label="节气" />
