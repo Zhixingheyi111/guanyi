@@ -71,4 +71,10 @@
   /* ---------- 阴影（克制的纸面阴影）---------- */
   --shadow-paper: 0 1px 0 rgba(28, 26, 23, 0.03), 0 2px 12px rgba(28, 26, 23, 0.05);
   --shadow-lift:  0 2px 0 rgba(28, 26, 23, 0.04), 0 8px 24px rgba(28, 26, 23, 0.08);
+
+  /* ---------- 层级 z-index ----------
+     watermark < content < 固定头/底栏 */
+  --z-watermark: 0;
+  --z-content:   1;
+  --z-appbar:    10;
 }

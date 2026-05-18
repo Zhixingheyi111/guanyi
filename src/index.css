@@ -22,9 +22,14 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  /* App 外壳：全屏、纵向三段式（固定头 + 滚动区 + 固定底栏），
+     只有中间内容区滚动，整体不滚 —— 原生 App 体感 */
+  height: 100vh;
   /* 防止 100vh 在 iOS Safari 底部工具栏区域留空 */
-  min-height: 100dvh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* 按钮/输入框在 iOS 上的默认内发光和圆角清除 */

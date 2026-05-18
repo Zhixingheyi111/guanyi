@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Divination from './components/Divination';
 import Reading from './components/Reading';
-import Navigation from './components/Navigation';
 import Study from './components/Study';
 import Fortune from './components/Fortune';
 import Bagua from './components/Bagua';
-import Seal from './components/Seal';
+import AppHeader from './components/shell/AppHeader';
+import TabBar from './components/shell/TabBar';
 import DailyDigest from './components/calendar/DailyDigest';
 import Calendar from './components/calendar/Calendar';
 import { generateHexagram } from './utils/divination';
@@ -20,86 +20,54 @@ import {
 } from './utils/storage';
 
 const S = {
-  // 外层：深宣纸色，微微的径向渐变让中心略亮，视觉上提示"焦点在中间"
-  page: {
-    minHeight: '100vh',
-    backgroundColor: 'var(--paper-deep)',
-    backgroundImage:
-      'radial-gradient(ellipse at center top, rgba(245, 241, 232, 0.7) 0%, rgba(237, 230, 214, 0.1) 60%, rgba(221, 212, 190, 0) 100%)',
+  // App 外壳：纵向三段式，桌面端限宽居中如手机框
+  app: {
+    flex: 1,
+    width: '100%',
+    maxWidth: '480px',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 0,
+    position: 'relative',
+    overflow: 'hidden',
+    background: 'var(--paper)',
     color: 'var(--ink)',
     fontFamily: 'var(--font-serif)',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: 'var(--space-6) var(--space-4)',
-    position: 'relative',
-    overflow: 'hidden', // 防止水印溢出造成横向滚动
-  },
-  // 主内容卡片：浅宣纸色，软阴影浮于深宣纸之上，如一张信笺铺桌
-  card: {
-    position: 'relative',
-    width: '100%',
-    maxWidth: '620px',
-    background: 'var(--paper)',
-    borderRadius: 'var(--radius-lg)',
     boxShadow: 'var(--shadow-paper)',
-    padding: 'var(--space-6) var(--space-5) var(--space-8)',
-    // 细微纸边，增强"一张纸"的质感
-    border: '1px solid var(--paper-edge)',
-    overflow: 'hidden', // 让水印裁在卡片内
   },
-  // 八卦水印：卡片内部居中，巨大低透明度，轻微慢转
+  // 八卦水印：整屏淡固定背景，缓慢旋转
   watermark: {
     position: 'absolute',
-    top: '50%',
+    top: '46%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     pointerEvents: 'none',
-    opacity: 0.055, // 足够淡，不干扰阅读
-    zIndex: 0,
+    opacity: 0.05,
+    zIndex: 'var(--z-watermark)',
   },
-  // 内容层：必须显式抬升到水印之上
-  content: {
+  // 内容视口：固定头与底栏之间，唯一可滚动区
+  viewport: {
     position: 'relative',
-    zIndex: 1,
+    flex: 1,
+    minHeight: 0,
+    zIndex: 'var(--z-content)',
   },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 'var(--space-4)',
-    marginBottom: 'var(--space-2)',
-    position: 'relative',
-  },
-  // 装饰占位，让印章和标题视觉居中（标题两侧各有元素对称）
-  headerSpacer: {
-    width: '44px',
-    height: '44px',
-    flexShrink: 0,
-  },
-  brandTitle: {
-    fontSize: 'var(--text-2xl)',
-    fontWeight: 500,
-    letterSpacing: 'var(--track-hero)',
-    color: 'var(--ink)',
-    margin: 0,
-    paddingLeft: '0.5em', // 补 letter-spacing 造成的末尾视觉偏移
-    lineHeight: 1.2,
+  // 卷首品牌区块（仅今日 tab 顶部）
+  frontispiece: {
+    textAlign: 'center',
+    marginBottom: 'var(--space-5)',
   },
   brandSlogan: {
-    textAlign: 'center',
     fontSize: 'var(--text-xs)',
     color: 'var(--ink-light)',
     letterSpacing: 'var(--track-xwide)',
-    marginTop: 'var(--space-2)',
-    marginBottom: 'var(--space-5)',
   },
-  // 卷首引语：水墨分隔线之下、tab 之上的引文
   epigraph: {
-    textAlign: 'center',
-    fontSize: 'var(--text-sm)',
+    fontSize: 'var(--text-xs)',
     color: 'var(--ink-whisper)',
     letterSpacing: 'var(--track-wide)',
-    margin: '0 0 var(--space-5)',
+    marginTop: 'var(--space-2)',
   },
   error: {
     color: 'var(--vermilion-deep)',
@@ -132,6 +100,25 @@ const S = {
   },
 };
 
+// 单个 tab 面板：各自独立滚动容器，display 切换（保留各自滚动位置 + 内部状态）
+function Panel({ active, children }) {
+  return (
+    <div
+      className={active ? 'guanyi-panel guanyi-panel-enter' : 'guanyi-panel'}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        padding: 'var(--space-5) var(--space-5) var(--space-8)',
+        display: active ? 'block' : 'none',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 // 水墨干笔分隔线：一笔带点飞白的墨痕，两端渐隐
 function InkSeparator() {
   return (
@@ -140,48 +127,36 @@ function InkSeparator() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 'var(--space-4) 0 var(--space-6)',
+        margin: 'var(--space-3) 0 0',
       }}
       aria-hidden="true"
     >
       <svg
         viewBox="0 0 300 8"
-        width="70%"
+        width="55%"
         height="8"
         preserveAspectRatio="none"
         style={{ color: 'var(--ink)' }}
       >
-        {/* 主笔 */}
         <path
           d="M 20 4 Q 90 2.6 150 3.8 T 280 4"
           stroke="currentColor"
           strokeWidth="1.3"
           fill="none"
           strokeLinecap="round"
-          opacity="0.55"
+          opacity="0.45"
         />
-        {/* 副笔，制造"枯笔"层次 */}
-        <path
-          d="M 45 4.3 Q 140 3 170 4.6 T 260 4.2"
-          stroke="currentColor"
-          strokeWidth="0.6"
-          fill="none"
-          strokeLinecap="round"
-          opacity="0.3"
-        />
-        {/* 中心小点，像一滴墨 */}
-        <circle cx="150" cy="3.8" r="1.1" fill="currentColor" opacity="0.5" />
+        <circle cx="150" cy="3.8" r="1.1" fill="currentColor" opacity="0.4" />
       </svg>
     </div>
   );
 }
 
 export default function App() {
-  // 模式：today（今日：节气/农历/一爻/学习进度+月历）/ divination / study
-  // 2026-05-15 起加 today 顶层 mode，把 DailyDigest+Calendar 从全局移入
+  // 顶层 tab：today（今日）/ divination（占卜）/ study（学易）/ calendar（日历）
   const [mode, setMode] = useState('today');
 
-  // 问道模式的原有状态
+  // 问道（蓍草）模式的原有状态
   const [question, setQuestion]         = useState('');
   const [hexagrams, setHexagrams]       = useState(null);
   const [changingPositions, setChanging] = useState([]);
@@ -194,12 +169,8 @@ export default function App() {
   const [viewingHistoryId, setViewingHistoryId] = useState(null);
   const [currentRecordId,  setCurrentRecordId]  = useState(null);
 
-  // 学易 deep link：DailyDigest 点击"今日一爻"卦名时跳到该卦详情
-  // 用 { hexagramId, ts } 触发 Study 组件 key 变化 → unmount + 新 mount 用 initial 值
+  // 学易 deep link：点击某卦名跳到该卦详情（ts 变化触发 Study 重新 mount）
   const [studyDeepLink, setStudyDeepLink] = useState(null);
-
-  // 月历展开（在 today mode 内默认展开；其他 mode 不渲染月历）
-  const [calendarOpen, setCalendarOpen] = useState(true);
 
   const reset = () => {
     setQuestion('');
@@ -211,8 +182,6 @@ export default function App() {
     setCurrentRecordId(null);
   };
 
-  // 学易模式的所有子路由（课程/词条/卦详情）都封装在 Study 组件内部，
-  // 模式切换时 Study 会 unmount，内部状态自然重置，这里不用手动清理
   const handleModeChange = (nextMode) => {
     setMode(nextMode);
     setViewingHistoryId(null);
@@ -348,78 +317,63 @@ export default function App() {
     setViewingHistoryId(null);
   };
 
-  const renderContent = () => {
-    if (mode === 'today') {
-      return (
-        <>
-          <DailyDigest
-            onJumpToLesson={() => setMode('study')}
-            onJumpToHexagram={handleJumpToHexagram}
-            calendarOpen={calendarOpen}
-            onToggleCalendar={() => setCalendarOpen(v => !v)}
-          />
-          {calendarOpen && (
-            <Calendar onJumpToHexagram={handleJumpToHexagram} />
-          )}
-        </>
-      );
-    }
-
-    if (mode === 'study') {
-      // key={ts} 让每次 deep link 重新 mount Study，使 initialHexagramId 生效
-      const studyKey = studyDeepLink?.ts || 'default';
-      return <Study key={studyKey} initialHexagramId={studyDeepLink?.hexagramId} />;
-    }
-
-    // mode === 'divination'：占卜模式（蓍草 / 梅花 / 铜钱）
-    return <Fortune shicaoSlot={buildShicaoSlot()} />;
-  };
+  // key={ts} 让每次 deep link 重新 mount Study，使 initialHexagramId 生效
+  const studyKey = studyDeepLink?.ts || 'default';
 
   return (
-    <div style={S.page}>
-      {/* 全局样式：水印慢转动画 */}
+    <div style={S.app}>
       <style>{`
         @keyframes guanyi-watermark-spin {
           from { transform: translate(-50%, -50%) rotate(0deg); }
           to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
-        .guanyi-watermark {
-          animation: guanyi-watermark-spin 180s linear infinite;
+        .guanyi-watermark { animation: guanyi-watermark-spin 180s linear infinite; }
+        @keyframes guanyi-panel-enter {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
+        .guanyi-panel-enter { animation: guanyi-panel-enter 0.24s ease both; }
         @media (prefers-reduced-motion: reduce) {
           .guanyi-watermark { animation: none; }
+          .guanyi-panel-enter { animation: none; }
         }
       `}</style>
 
-      <main style={S.card}>
-        {/* 极淡的先天八卦水印，卡片中心缓慢旋转 */}
-        <div className="guanyi-watermark" style={S.watermark}>
-          <Bagua variant="watermark" size={Math.min(520, window.innerWidth * 0.95)} />
-        </div>
+      {/* 整屏淡八卦水印 */}
+      <div className="guanyi-watermark" style={S.watermark}>
+        <Bagua variant="watermark" size={Math.min(440, window.innerWidth * 0.9)} />
+      </div>
 
-        <div style={S.content}>
-          {/* 品牌标题区：左侧朱砂印 + 居中标题 + 右侧对称占位 */}
-          <div style={S.header}>
-            <Seal size={44} character="观" />
-            <h1 style={S.brandTitle}>观　易</h1>
-            <div style={S.headerSpacer} aria-hidden="true" />
+      <AppHeader mode={mode} />
+
+      <div style={S.viewport}>
+        <Panel active={mode === 'today'}>
+          <div style={S.frontispiece}>
+            <div style={S.brandSlogan}>观易 · 见自己</div>
+            <div style={S.epigraph}>观天地之变，见生命之常</div>
+            <InkSeparator />
           </div>
-          <div style={S.brandSlogan}>观易 · 见自己</div>
+          <DailyDigest
+            onJumpToLesson={() => handleModeChange('study')}
+            onJumpToHexagram={handleJumpToHexagram}
+          />
+        </Panel>
 
-          {/* 水墨分隔线 */}
-          <InkSeparator />
-
-          {/* 卷首引语 */}
-          <p style={S.epigraph}>天行健，君子以自强不息</p>
-
-          {/* 模式导航 */}
-          <Navigation currentMode={mode} onModeChange={handleModeChange} />
-
+        <Panel active={mode === 'divination'}>
           {error && <div style={S.error}>{error}</div>}
+          <Fortune shicaoSlot={buildShicaoSlot()} />
+        </Panel>
 
-          {renderContent()}
-        </div>
-      </main>
+        <Panel active={mode === 'study'}>
+          <Study key={studyKey} initialHexagramId={studyDeepLink?.hexagramId} />
+        </Panel>
+
+        <Panel active={mode === 'calendar'}>
+          <Calendar onJumpToHexagram={handleJumpToHexagram} />
+        </Panel>
+      </div>
+
+      <TabBar currentMode={mode} onModeChange={handleModeChange} />
     </div>
   );
 }
