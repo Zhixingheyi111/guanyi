@@ -6,6 +6,29 @@
 
 ---
 
+## 2026-05-17 21:41 CDT — 原生化 UI 重做（Phase A–E，未推 main）
+
+**背景：** 用户反馈 UI「不像 App」。诊断核心问题：结构是一张居中网页卡片，今日页 1200–1500px 要一直滚。计划见 `~/.claude/plans/1-ui-app-app-2026-app-design-1-sorted-seal.md`。在 worktree `clever-torvalds-6f9f19` 上做，4 个本地 commit，**尚未推 main**（等用户验收）。
+
+**做了什么：**
+
+- **Phase A · 原生骨架**（commit e675881）：
+  - 新建 `src/components/shell/TabBar.jsx`（底部导航：今日/占卜/学易/日历，水墨线条 SVG 图标 + 文字，朱砂激活态 + 顶部指示条，`env(safe-area-inset-bottom)` 适配）
+  - 新建 `src/components/shell/AppHeader.jsx`（52px 紧凑固定头，显当前 tab 名 + 小朱砂印，取代每屏重复的大标题巨块）
+  - 重构 `src/App.jsx`：mode 加 `calendar`，4 tab 各自独立滚动面板（`position:absolute`+`display` 切换，保留滚动位置与内部状态），切换淡入动效，八卦水印改整屏淡背景
+  - `index.css` `#root` 改全屏三段式 flex column；`tokens.css` 加 z-index 层级
+  - 删 `src/components/Navigation.jsx`
+- **Phase B · 日历独立 + 今日瘦身**（并入 e675881）：日历独立成 tab；今日页只留 DailyDigest（删「看整月」按钮），从 ~1400px 缩到 ~410px；今日页顶部加小「卷首」品牌区块
+- **Phase C · tracking 精简**（commit 02edcf5）：`Calendar.jsx` overlay 4→2（留节气/占卜，删学易金点 + 每日爻）；`DayDetailPanel` 黄历宜忌/冲煞/建除/彭祖默认折叠加「黄历宜忌 ▾」；删 `storage.js` 孤儿函数 `getDivinationStats`
+- **Phase D · 学易一致性**（commit b1cde6b）：第 8 课三法命名对齐占卜 tab——「蓍草（揲蓍法）/铜钱（金钱卦）/梅花（梅花易数）」（intro + 3 小标题，经用户逐条确认）；修第 8 课揲蓍概率旧 bug `3/16·7/16·5/16·1/16` → `3:5:5:3`（与第 10 课、divination.js 一致）；清 `QuickReading.jsx` 残留「灵签」注释
+- **Phase E · 打磨**（commit 87693f5）：Tab Bar 按压微动效（scale 0.93）
+
+**验证：** `npm run lint` rc=0、`npm run build` rc=0；preview 移动端逐 tab 验证 4 tab 切换/固定头底栏/独立滚动/第 8 课新命名均无误，无 console 报错。
+
+**待续：** 用户验收中，表示「还需要改」——下一轮改动待定。改完验收满意后走 `/premerge` 推 main 上线。数据库 + 登录（Cloudflare D1 + 现有 Worker）为后续独立阶段，本轮不做。
+
+---
+
 ## 2026-05-14 22:30 CDT — Phase 易经-B4 完成：DailyDigest 今日卡片（commit 44e4ff8）
 
 **做了什么：**
