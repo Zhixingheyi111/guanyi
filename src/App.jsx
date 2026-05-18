@@ -333,9 +333,12 @@ export default function App() {
           to   { opacity: 1; transform: translateY(0); }
         }
         .guanyi-panel-enter { animation: guanyi-panel-enter 0.24s ease both; }
+        .guanyi-tap { transition: transform 0.09s ease; }
+        .guanyi-tap:active { transform: scale(0.93); }
         @media (prefers-reduced-motion: reduce) {
           .guanyi-watermark { animation: none; }
           .guanyi-panel-enter { animation: none; }
+          .guanyi-tap:active { transform: none; }
         }
       `}</style>
 

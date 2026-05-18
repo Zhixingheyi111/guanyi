@@ -127,6 +127,7 @@ export default function TabBar({ currentMode, onModeChange }) {
           <button
             key={tab.id}
             type="button"
+            className="guanyi-tap"
             style={{ ...S.item, color: active ? 'var(--vermilion)' : 'var(--ink-light)' }}
             aria-current={active ? 'page' : undefined}
             onClick={() => onModeChange(tab.id)}
