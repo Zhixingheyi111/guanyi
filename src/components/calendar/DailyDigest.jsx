@@ -304,14 +304,14 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
 
         {aiReading ? (
           <div style={S.aiReading}>
-            <div style={S.aiReadingLabel}>占者观象</div>
+            <div style={S.aiReadingLabel}>今日之象</div>
             {aiReading.observation}
             <div style={S.aiYiLine}>今日宜：{aiReading.yi}</div>
             <div style={S.aiJiLine}>今日忌：{aiReading.ji}</div>
           </div>
         ) : aiLoading ? (
           <div style={{ ...S.aiReading, fontStyle: 'italic', color: 'var(--ink-light)' }}>
-            占者正在观此爻于今日之象……
+            正在观此爻于今日之象……
           </div>
         ) : (
           <div style={S.aiButtonRow}>
@@ -320,7 +320,7 @@ export default function DailyDigest({ onJumpToLesson, onJumpToHexagram }) {
               onClick={handleAskAi}
               disabled={aiLoading}
             >
-              请 AI 一解 →
+              一观此爻 →
             </button>
           </div>
         )}
