@@ -15,7 +15,7 @@
 4. 读 `ACTION_ITEMS.md` 的"🔄 进行中"和"📋 待做"前 3 条
 5. 看 `git log --oneline -5` 最近 commits
 6. 看 `git status --short` 是否有未 commit 改动
-7. 看 `git ls-remote forgejo` vs 本地 HEAD（Forgejo 是否同步）
+7. 看 `git ls-remote origin "$(git branch --show-current)"` vs 本地 HEAD（功能分支是否已备份到 origin）
 8. 输出下面的模板，**给用户直接复制粘贴**
 
 ## 模板（占位 `{...}` 由生成时填充）
@@ -24,7 +24,7 @@
 接班观易 App 的开发。
 
 # 工作目录
-{cwd}（在 worktree `claude/naughty-booth-4d532f`）
+{cwd}（在 worktree 分支 `{branch}`）
 
 # 必读
 1. `CLAUDE.md` — 核心规则 + 自治模式说明
@@ -36,7 +36,7 @@
 # 当前状态（{timestamp}）
 - 阶段：{phase}
 - 当前任务：{current_task}
-- Forgejo 同步状态：{forgejo_status}
+- origin 备份状态：{origin_status}
 - 本地 HEAD：{local_commit_short} {local_commit_subject}
 
 # 最近 commits
@@ -56,18 +56,19 @@
 {next_step_suggestion}
 
 # 工作流命令
-- `/backup`：commit + push forgejo
+- `/backup`：commit + push 功能分支到 GitHub origin（不部署）
 - `/checkpoint`：phase 完成仪式
 - `/log-error`：错误记录
 - `/handoff`：再次生成接班 prompt
-- `/premerge`：唯一允许 push GitHub 的命令（Phase 4 用）
+- `/premerge`：唯一允许 merge 到 main / 推 main 的命令（= 触发 Cloudflare Pages 部署）
 ```
 
 ## 字段填法示例
 
+`{branch}` — `claude/clever-torvalds-6f9f19`
 `{phase}` — `Phase 1 完成 v0.1.0-fortune-and-dialogue，等用户验收`
-`{current_task}` — `验收中；E006 已修；等 Forgejo 恢复 + 用户验收通过开 Phase 2`
-`{forgejo_status}` — `⚠️ unpacker error 持续，本地领先 11 commits` 或 `✅ 同步`
+`{current_task}` — `验收中；E006 已修；等用户验收通过开 Phase 2`
+`{origin_status}` — `✅ 功能分支已同步到 origin` 或 `⚠️ 本地领先 N commits 未推`
 `{recent_progress_summary}` — 50-100 字，概括上 session 关键动作
 
 ## 输出格式

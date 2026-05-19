@@ -1,6 +1,7 @@
 # Pre-Merge Checklist
 
-每次准备从 worktree 分支 merge 到 main（即触发 GitHub Pages 部署）之前，**逐项核对**。
+每次准备从 worktree 分支 merge 到 main（即触发 Cloudflare Pages 生产部署）之前，**逐项核对**。
+生产地址：https://guanyi.pages.dev
 
 `/premerge` 命令会自动运行能自动的部分，无法自动的项必须用户确认。
 
@@ -40,7 +41,7 @@
 - [ ] 仓库里没有 secret（grep 一遍 `sk-`、`api_key=` 等模式）
 
 ## 备份就位
-- [ ] worktree 分支已 push 到 forgejo（最新 commit hash 可见）
+- [ ] 功能分支已 push 到 GitHub origin（最新 commit hash 可见；forgejo 已弃用，见 backup 流程）
 - [ ] ERROR_LOG.md 是否需新增条目（本期是否有失败值得记录）
 
 ## 用户验收（最后一步）
@@ -51,14 +52,15 @@
 ## 全部 ✅ 后才能：
 
 ```bash
+BRANCH="$(git branch --show-current)"
 git checkout main
-git merge --no-ff claude/naughty-booth-4d532f -m "Merge Phase X: ..."
-git push origin main           # ⚠️ 触发 GitHub Pages 部署
+git merge --no-ff "$BRANCH" -m "Merge: ..."
+git push origin main           # ⚠️ 触发 Cloudflare Pages 生产部署
 git push origin --tags         # 把 phase tag 也推上去
 ```
 
-部署完成后：
-- [ ] 打开 GitHub Pages URL，手机扫码访问
+部署完成后（Cloudflare Pages 构建约 1–2 分钟）：
+- [ ] 打开生产地址 https://guanyi.pages.dev ，手机访问
 - [ ] golden path 在生产环境再走一遍
 - [ ] 如有问题：**不要 hotfix 到 main**，回到 worktree 分支修复后重走 /premerge
 

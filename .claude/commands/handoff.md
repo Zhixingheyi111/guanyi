@@ -14,7 +14,7 @@ description: Generate a self-contained handoff prompt to continue work in a fres
    - `head -50 PROGRESS.md` 看顶部一条
    - `git log --oneline -5`
    - `git status --short`
-   - `git ls-remote forgejo claude/naughty-booth-4d532f | head -1`（对比本地 HEAD）
+   - `git ls-remote origin "$(git branch --show-current)" | head -1`（对比本地 HEAD，看功能分支是否已备份到 origin）
    - 读 `ACTION_ITEMS.md` 的进行中 + 待做前 3 条
 3. 按 `docs/HANDOFF_PROMPT.md` 模板填空
 4. **输出时整段包在 ``` ``` 代码块里**，让用户一键复制
@@ -23,5 +23,5 @@ description: Generate a self-contained handoff prompt to continue work in a fres
 ## 安全约束
 
 - 不要把 .env 内容、API key、密码塞进 handoff prompt
-- 不要 push 到 GitHub
+- 不要推 `main`（推 main = 生产部署）
 - 输出后不要继续做别的事，等用户决定是否切换 session

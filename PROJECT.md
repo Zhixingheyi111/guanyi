@@ -24,10 +24,9 @@
 
 | 动作 | 状态 | 说明 |
 |---|---|---|
-| 在 worktree 分支编辑 + commit | ✅ 允许 | 当前分支 `claude/naughty-booth-4d532f` |
-| `git push forgejo ...` | ✅ 允许 | 进度备份用，不触发任何部署 |
-| `git push origin ...`（任何分支） | ❌ 禁止 | 直到 Phase 4 用户明确批准 |
-| 修改 main 分支 | ❌ 禁止 | 直到 Phase 4 用户明确批准 |
+| 在 worktree 功能分支编辑 + commit | ✅ 允许 | 当前 worktree 分支 |
+| `git push origin <功能分支>` | ✅ 允许 | 进度备份用；非 main，不触发部署（forgejo 已于 2026-05-18 弃用）|
+| `git push origin main` / merge 到 main | ❌ 禁止 | = 触发 Cloudflare Pages 生产部署；需用户明确批准，只走 `/premerge` |
 | 修改 src/data/ | ⚠️ 每次单独询问 | 核心资产 |
 | 安装新依赖 | ❌ 禁止 | CLAUDE.md 规定 |
 | 改 worker/ | ⚠️ 仅必要 + 告知 | 一期不需要改 |
@@ -43,7 +42,7 @@
 
 | 命令 | 何时用 |
 |---|---|
-| `/backup` | 任何时候做进度备份（commit + push forgejo） |
+| `/backup` | 任何时候做进度备份（commit + push 功能分支到 GitHub origin，不部署） |
 | `/checkpoint` | 每个 Phase 完成时（lint+build+commit+tag+push） |
 | `/log-error` | 失败发生时（写 ERROR_LOG.md + 防范机制） |
 | `/premerge` | Phase 4，merge to main 前（走完整 checklist） |
@@ -184,7 +183,7 @@
 - [ ] 2.3.8 金刚经 (32 分)
 - [ ] 2.3.9 坛经 (10 品)
 
-每部书录入完成后单独 commit + push forgejo。每部都更新 SOURCES.md。
+每部书录入完成后单独 commit + push 功能分支到 origin。每部都更新 SOURCES.md。
 
 ## 2.4 Author Personas
 

@@ -43,7 +43,7 @@ npm run dev -- --host --port 5199
 curl -s http://localhost:5199/src/components/Navigation.jsx | head -3
 ```
 
-输出里的 `fileName` 路径应包含 `naughty-booth-4d532f`（worktree），不是 `Yijing App (Claude Code)/src` 顶层。如不对：检查是否启错了 npm（cwd 应在 worktree 根）。
+输出里的 `fileName` 路径应包含当前 worktree 目录名（`.claude/worktrees/<名字>`），不是 `Yijing App (Claude Code)/src` 顶层。如不对：检查是否启错了 npm（cwd 应在 worktree 根）。
 
 ### 0d. 报告用户的 URL **必须无歧义**
 

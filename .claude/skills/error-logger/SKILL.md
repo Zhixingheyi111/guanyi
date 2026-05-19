@@ -33,20 +33,20 @@ When invoked, log the most recent failure to `ERROR_LOG.md` so the same mistake 
    - Also save as memory in `~/.claude/projects/-Users-dz-Documents-Yijing-App--Claude-Code-/memory/lesson_<slug>.md`
    - Add to that directory's `MEMORY.md` index.
 
-7. **Commit + push to Forgejo**:
+7. **Commit + push the feature branch to GitHub origin**:
    - Commit message: `docs(errors): E0NN — <现象简述>`
-   - Push: `git push forgejo claude/naughty-booth-4d532f`
+   - Push: `git push origin "$(git branch --show-current)"`
 
 8. **Report**:
    - The error ID and one-line summary
    - Whether you proposed a hook/skill/memory addition
-   - Confirmation that it's pushed to Forgejo
+   - Confirmation that it's pushed to origin
 
 ## Strict Rules
 
 - **Time field is mandatory and must include HH:MM TZ** (not just date).
 - **Never** mark an error as "minor — won't log it" — every failure gets logged. The whole point is to never repeat them.
-- Don't push to GitHub origin (forgejo only).
+- Push the **feature branch** to origin — never push `main` (that triggers a production deploy).
 
 ## Example output entry
 

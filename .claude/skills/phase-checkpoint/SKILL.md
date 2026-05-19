@@ -1,6 +1,6 @@
 ---
 name: phase-checkpoint
-description: Use when a Phase or sub-phase of the 观易 App project is complete and ready to be tagged + backed up. Triggers on user mentions like "phase X 完成", "phase done", "可以 tag 了", "1.1 finished", "ready to checkpoint". Runs the end-of-phase ritual — verifies all sub-tasks done, runs lint+build, updates CHANGELOG/PROGRESS/PROJECT/ACTION_ITEMS, creates a Conventional commit, tags the version, and pushes to Forgejo. Different from safe-backup: this is the formal release ritual at Phase boundaries, not ad-hoc backups.
+description: Use when a Phase or sub-phase of the 观易 App project is complete and ready to be tagged + backed up. Triggers on user mentions like "phase X 完成", "phase done", "可以 tag 了", "1.1 finished", "ready to checkpoint". Runs the end-of-phase ritual — verifies all sub-tasks done, runs lint+build, updates CHANGELOG/PROGRESS/PROJECT/ACTION_ITEMS, creates a Conventional commit, tags the version, and pushes the feature branch + tags to GitHub origin (never main). Different from safe-backup: this is the formal release ritual at Phase boundaries, not ad-hoc backups.
 ---
 
 # Phase Checkpoint Skill
@@ -43,26 +43,27 @@ End-of-phase release ritual. The args (`$ARGUMENTS`) should be the phase number 
    git tag -a vX.Y.Z-<phase-slug> -m "<one-line description>"
    ```
 
-7. **Push to Forgejo with tags**:
+7. **Push the feature branch to GitHub origin with tags**:
    ```bash
-   git push forgejo claude/naughty-booth-4d532f --tags
+   git push origin "$(git branch --show-current)" --tags
    ```
+   Pushes the **feature branch** (not main) — does NOT trigger deploy.
 
-8. **Verify** the tag is on Forgejo:
+8. **Verify** the tag is on origin:
    ```bash
-   git ls-remote forgejo --tags
+   git ls-remote origin --tags
    ```
 
 9. **Report**:
    - Version + tag
    - CHANGELOG summary
-   - Forgejo verification
+   - origin verification
    - **Next phase's first action item** (from ACTION_ITEMS.md)
 
 ## Strict Rules
 
 - **Lint/build failure = STOP**. No "fix and squash" — surface the issue first.
-- **Never push to `origin` (GitHub)** — that's `/premerge` only, used at the very end of the project. Phase checkpoints are Forgejo-only.
+- **Never push `main`** — pushing main triggers production deploy, that's `/premerge` only. Phase checkpoints push the feature branch to origin (no deploy).
 - **Tag once**: never reuse the same tag name (semantic versioning).
 - Every timestamp HH:MM TZ.
 - If `npm run lint` finds warnings (not errors): document in CHANGELOG, don't block.

@@ -29,19 +29,19 @@ description: Log an error/failure to ERROR_LOG.md with timestamp, root cause, le
 
 6. Commit：`docs(errors): E00N - <现象简述>`
 
-7. `/backup`（push 到 forgejo）
+7. `/backup`（push 功能分支到 GitHub origin）
 
 ## 报告
 
 - error ID 和标题
 - 是否提议建 hook/skill / 加 memory
-- 已 push 到 forgejo（commit hash + 验证）
+- 已 push 功能分支到 origin（commit hash + 验证）
 
 ## 严格规则
 
 - **时间字段必填**，必须 HH:MM TZ（不能只写日期）
 - **不能跳过任何字段**，宁可写"待补"也不能省略
-- 不 push 到 GitHub origin（forgejo only）
+- push 功能分支到 origin，**不推 main**（推 main = 生产部署）
 
 ## 例子
 

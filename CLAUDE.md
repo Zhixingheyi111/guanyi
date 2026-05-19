@@ -12,7 +12,7 @@
 - React 18 + Vite + JavaScript
 - 纯 CSS（不用 UI 框架）
 - axios（API 调用）
-- 部署：GitHub Pages
+- 部署：Cloudflare Pages（生产 https://guanyi.pages.dev；连 GitHub `main` 分支，推 main 自动构建上线）
 
 ## 核心原则
 1. 事实和解读分离：经文原文（卦辞/爻辞/经典文段）从本地数据库读取，AI 只负责解读分析
@@ -46,35 +46,34 @@
 
 **用户已授予全自治权限。** 不要每个 bash / edit / write 都问 allow。
 - `.claude/settings.local.json` 设了 `defaultMode: "bypassPermissions"` + 通配 allow
-- 只有 `deny` 列表里的操作（rm -rf, git push origin, git reset --hard, sudo, npm install 等）才会被 harness 阻止
+- 只有 `deny` 列表里的操作（rm -rf, git push origin main, git reset --hard, sudo, npm install 等）才会被 harness 阻止
 - **必须停下来问用户的场景（这些是 hard rules，自治也不能跨过）：**
   1. **修改现有 src/data/* 文件**（hexagrams.js 等 v0.1.0 已有的数据，每次单独问）
   2. **添加经典数据但来源版权不确定**（哪怕一句话）
-  3. push 到 GitHub `origin`（任何分支，触发生产部署）
-  4. merge 到 main 分支
-  5. 安装新依赖（CLAUDE.md 规定）
-  6. 不可逆操作（rm -rf 等）
-  7. 真正模糊的产品决策（不是技术细节）
-  8. 用户主动说"等等"或者明确否决了某做法
+  3. push `main` 或 merge 到 main（= 触发 Cloudflare Pages 生产部署）
+  4. 安装新依赖（CLAUDE.md 规定）
+  5. 不可逆操作（rm -rf 等）
+  6. 真正模糊的产品决策（不是技术细节）
+  7. 用户主动说"等等"或者明确否决了某做法
 
 - **可以自治做的（用户 2026-05-12 扩展授权）：**
   - 新增 `src/data/classics/*.js`（公版经典原文）
   - 写经典翻译（自录）+ 注释（自录或公版古注引用）
   - 更新 `SOURCES.md` 标明来源（每条数据必须可追溯）
-- **不需要停下来问的：** 日常 bash、edit、write、commit、push forgejo、跑 lint/build、读文件、改 tracking 文件、修 bug、log error
+- **不需要停下来问的：** 日常 bash、edit、write、commit、push 功能分支到 origin（非 main，不部署）、跑 lint/build、读文件、改 tracking 文件、修 bug、log error
 - 失败时**自己 /log-error 记录后继续**，不要等用户决定，除非碰到上面 hard rules
 
 ## 行为准则
 
 ### 必须做的
 1. **真正不确定**才停下来问（不是每个小决策；自治模式下默认推进）
-2. 改 src/data/* 或动 main / origin 之前先说计划
+2. 改 src/data/* 或动 main 之前先说计划
 3. 中文沟通，中文注释
 4. 完成任务时报告：做了什么、改了哪些文件、需要用户注意什么
 
 ### 不能做的
 1. 不装额外依赖
-2. 不 push 到 GitHub origin（任何分支，main 自动部署 GitHub Pages）
+2. 不 push `main`（main 自动部署到 Cloudflare Pages）——推 main 只走 `/premerge`
 3. 不写单元测试
 4. 不重试超过2次
 5. 不执行 rm -rf、git reset --hard 等不可逆命令
@@ -82,8 +81,10 @@
 7. 不部署到生产环境（除非我明确要求）
 
 ### 备份是允许的
-- ✅ push 到 `forgejo` remote（nexus.xinle.biz/git/ailearnandgrowth/guanyi）作为进度备份，不触发任何部署
-- ❌ push 到 `origin`（GitHub）需用户明确批准
+- ✅ push **功能分支**到 GitHub `origin` 作为进度备份——只有 `main` 触发部署，功能分支不会上线
+- ✅ 日常用 `/backup`（commit + push 当前功能分支到 origin）
+- ❌ push `main` / merge 到 main = 生产部署，需用户明确批准，且只走 `/premerge`
+- 注：forgejo 远端已于 2026-05-18 弃用
 
 ### 关键提醒
 ⚠️ API key 只能在 .env 文件，绝不进 git，绝不写进代码

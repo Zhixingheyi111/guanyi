@@ -6,6 +6,15 @@
 
 ---
 
+## 2026-05-18 21:40 CDT — 上线 + 备份流程改造（forgejo 弃用）
+
+- **上线**：worktree 分支 merge 到 main（merge commit `092c58f`），`git push origin main` 成功，触发 Cloudflare Pages 生产部署（生产 https://guanyi.pages.dev）。本次发布累积了原生化 App 重做 + 三占卜统一 UI + 今日文案 + 日历年月选择共 15 个 commit。
+- **/premerge 中发现 forgejo 远端损坏**：forgejo 仓库 HEAD 指向空对象 `548235fb`，push 被拒。用户决定**弃用 forgejo**。
+- **备份流程改造**（用户确认方向）：forgejo remote 已移除；备份改为 `git push origin <功能分支>`——只有 `main` 触发 Cloudflare Pages 部署，推功能分支不上线。更新了所有相关治理文件：CLAUDE.md、PROJECT.md、`.claude/commands/{backup,checkpoint,premerge,handoff,log-error}.md`、`.claude/skills/{safe-backup,phase-checkpoint,error-logger}/SKILL.md`、`docs/{PRE_MERGE_CHECKLIST,HANDOFF_PROMPT,MOBILE_TEST_SOP}.md`，并顺手把硬编码的旧 worktree 分支名改为动态 `$(git branch --show-current)`。
+- 顺带更正：CLAUDE.md 旧写「部署 GitHub Pages」其实是 Cloudflare Pages，已改。
+
+---
+
 ## 2026-05-17 23:21 CDT — 今日 AI 入口文案 + 日历年月选择面板（未推 main）
 
 接续同 session，按用户反馈又改两处（worktree `clever-torvalds-6f9f19`，仍未推 main）：

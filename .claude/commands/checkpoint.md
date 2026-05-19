@@ -32,9 +32,9 @@ description: End-of-phase ritual — verify, commit, tag, backup. Args = phase n
 5. **Tag**
    - `git tag vX.Y.Z-<phase-slug>` (例：`v0.1.0-fortune-and-dialogue`)
 
-6. **Push 到 forgejo**
-   - `git push forgejo claude/naughty-booth-4d532f --tags`
-   - **不动 GitHub**
+6. **Push 功能分支到 GitHub origin（带 tag）**
+   - `git push origin "$(git branch --show-current)" --tags`
+   - 推的是功能分支，**不推 main**——不触发部署。上线由 `/premerge` 单独走。
 
 7. **报告**
    - 版本号、tag、CHANGELOG 摘要
@@ -43,4 +43,5 @@ description: End-of-phase ritual — verify, commit, tag, backup. Args = phase n
 ## 安全约束
 
 ⚠️ 任何步骤失败都停止，不要带病 commit。
-⚠️ tag 一旦推到 forgejo，不要重复使用同一 tag 名（语义版本）。
+⚠️ tag 一旦推到 origin，不要重复使用同一 tag 名（语义版本）。
+⚠️ 本命令推功能分支，**绝不推 main**（推 main = 生产部署，那是 `/premerge`）。
