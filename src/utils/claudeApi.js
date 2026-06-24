@@ -446,8 +446,6 @@ export async function interpretHexagrams({ question, hexagrams, changingPosition
   // 从 tool_calls 提取结构化结果（OpenAI 风格：arguments 是 JSON 字符串）
   const message  = response.data.choices?.[0]?.message;
   const toolCall = message?.tool_calls?.[0];
-  console.log('[LLM tool_call]', toolCall);
-  console.log('[LLM content]',  message?.content);
 
   let input;
   if (toolCall?.function?.arguments) {

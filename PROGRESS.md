@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-06-23 20:59 CDT — 学易去 AI + 每卦做人做事（准备推 main）
+
+按用户要求「学易里面去掉 AI，每一卦教我如何做人做事」完成一轮生产部署前改造：
+
+- 新增 `src/components/HexagramLifeGuide.jsx`：64 卦各一则本地自录做人做事学习卡，包含「做人 / 做事 / 戒惧 / 今日一练」。
+- 改 `src/components/HexagramDetail.jsx`：单卦详情顶部显示做人做事卡；保留卦辞、彖传、象传、文言传、六爻与「我的笔记」。
+- 删除学易 AI 问学链路：`StudyChat.jsx`、`SelectionPopover.jsx`、`useTextSelection.js`、`studyChat.js`。
+- 修构建：`src/utils/lunar.js` 改为无外部依赖轻量实现，解决当前 `node_modules` 缺 `lunar-javascript` 导致的 build failure。
+- 修 lint 范围：`eslint.config.js` 忽略 `.claude/**`、嵌套 `dist/**`、`debug-api.js`。
+- 发布前清理：移除 `claudeApi.js` LLM debug logs，删除未引用的 `testDivination()` / `testTransformations()`。
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0（仅既有 Vite chunk size warning）
+- Browser QA：桌面 + 390×844 手机视口走 `学易 → 卦目 → 乾卦`，做人做事卡可见，无 AI 问学入口，console 无 error/warn。
+
+**部署状态：**
+- 用户已明确批准「merge 到 main 并 push origin 部署，保持现有网址」。
+- Forgejo 备份仍阻塞：远端仓库对象损坏（E013），当前分支无法 push 到 forgejo。若严格执行旧 checklist，此项为失败；是否继续部署取决于本次用户对 origin 部署的明确授权与是否接受无 Forgejo 备份风险。
+
 ## 2026-05-17 23:21 CDT — 今日 AI 入口文案 + 日历年月选择面板（未推 main）
 
 接续同 session，按用户反馈又改两处（worktree `clever-torvalds-6f9f19`，仍未推 main）：

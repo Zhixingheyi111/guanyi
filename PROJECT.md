@@ -293,12 +293,13 @@
 - A polish：蓍草 sub-tab intro
 - B1+B2：jieqi.js（24 节气×12 消息卦）+ dailyYao.js（384 爻日历算法）数据层
 - B4：DailyDigest 今日卡片（全局每日仪式，挂在 Navigation 下方）
+- Study polish：学易去 AI；每卦新增「做人 / 做事 / 戒惧 / 今日一练」本地学习卡；用户已批准推 main 部署并保持现有网址
 **下一步：**
 - B3：Calendar 月历 4 种 overlay 视图（节气×卦 / 占卜历 / 学习打卡 / 每日爻历）
 - A4 后半：占卜后 7/30 天首页主动弹追问（依赖 B3 首页骨架）
 - C：Worker 限频 + 缓存（部署前必做）
-**Forgejo 备份：** ⚠️ unpacker error 持续中（E004），本期 9 个 commit 仅在本地
-**当前时间最后更新：** 2026-05-14 22:30 CDT
+**Forgejo 备份：** ⚠️ 远端仓库对象损坏（E013），`codex/study-life-lessons` 无法 push 到 forgejo；本地 commit 为当前 source of truth
+**当前时间最后更新：** 2026-06-23 20:59 CDT
 
 ---
 
@@ -318,14 +319,14 @@
 | `.claude/commands/*.md` | slash 命令定义 |
 | `.claude/settings.local.json` | hooks + permissions |
 | `src/App.jsx` | 路由入口（mode 状态机） |
-| `src/components/Navigation.jsx` | 顶部 tab 导航 |
+| `src/components/shell/AppHeader.jsx` | 原生化顶部栏 |
+| `src/components/shell/TabBar.jsx` | 底部 tab 导航 |
 | `src/components/Divination.jsx` + `Reading.jsx` | 蓍草问道（Phase 4 之前不动） |
 | `src/components/Study.jsx` + 子组件 | 学易模式 |
-| `src/components/StudyChat.jsx` | 与大师对话（Phase 1 升级） |
+| `src/components/HexagramLifeGuide.jsx` | 每卦做人做事本地学习卡 |
 | `src/utils/divination.js` | 蓍草算法 |
 | `src/utils/transformations.js` | 五层卦象计算 |
 | `src/utils/claudeApi.js` | LLM 解读（Phase 1.5 加 interpretFortune） |
-| `src/utils/studyChat.js` | 对话 LLM（Phase 1.6 参数化） |
 | `src/data/hexagrams.js` | 64 卦数据（**改前必问**） |
 | `src/data/lessons.js` | 9 课入门体系 |
 | `src/data/glossary.js` | 词条库 |

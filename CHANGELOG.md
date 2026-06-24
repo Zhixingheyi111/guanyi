@@ -12,6 +12,31 @@
 
 Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
 
+### Study polish — 2026-06-23 20:59 CDT — 学易去 AI + 每卦做人做事
+
+#### Added
+- `src/components/HexagramLifeGuide.jsx`：64 卦本地自录「做人 / 做事 / 戒惧 / 今日一练」学习卡。
+
+#### Changed
+- `src/components/HexagramDetail.jsx`：单卦详情顶部新增做人做事卡，经典原文与笔记保留。
+- `src/utils/lunar.js`：改为基于浏览器内建 Chinese calendar 的轻量实现，避免缺少 `lunar-javascript` 时构建失败。
+- `eslint.config.js`：忽略 `.claude/**`、嵌套 `dist/**` 和本地调试脚本，避免 lint 扫描生成产物。
+
+#### Removed
+- 学易 AI 问学入口、选中文本追问浮层、学习聊天 API：
+  `StudyChat.jsx` / `SelectionPopover.jsx` / `useTextSelection.js` / `studyChat.js`。
+- 发布前清理旧调试输出：移除 `claudeApi.js` 的 LLM debug logs，以及未引用的终端测试函数。
+
+#### Rationale
+用户要求「学易里面去掉 AI，每一卦教我如何做人做事」。学易模块转为纯本地学习体验，AI 继续保留在占卜/复盘等问道场景中。
+
+#### Validation
+- `npm run lint` 通过
+- `npm run build` 通过（保留既有 Vite chunk size warning）
+- Browser QA：桌面 + 390×844 手机视口验证 `学易 → 卦目 → 乾卦`，做人做事卡可见，无 AI 问学入口，无 console error/warn。
+
+---
+
 ### B4 — 2026-05-14 22:30 CDT — DailyDigest 今日卡片
 
 #### Added

@@ -1,90 +1,189 @@
-// 农历 + 黄历 wrapper — 基于 lunar-javascript (6tail, MIT)
-//
-// 库覆盖 1900-2100 年（约 200 年）的农历换算 + 完整传统黄历数据：
-//   农历日/月/年 / 干支 / 生肖 / 24 节气 / 每日宜忌 / 彭祖百忌
-//   建除十二神 / 星宿 / 冲煞 / 喜神福神财神方位 / 黄道黑道日
-//
-// 本 wrapper 只输出我们需要的字段，避免组件直接 import 第三方 API
-import { Solar } from 'lunar-javascript';
+// 农历 + 黄历轻量 wrapper。
+// 不依赖第三方包：用浏览器内建 Chinese calendar 取得农历年月日，
+// 再用本地算法补足页面展示需要的干支与生肖。
+
+const GAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+const ZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+const SHENGXIAO_BY_ZHI = {
+  子: '鼠',
+  丑: '牛',
+  寅: '虎',
+  卯: '兔',
+  辰: '龙',
+  巳: '蛇',
+  午: '马',
+  未: '羊',
+  申: '猴',
+  酉: '鸡',
+  戌: '狗',
+  亥: '猪',
+};
+
+const CHINESE_DIGITS = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+const MONTH_NUMBER = {
+  正: 1,
+  一: 1,
+  二: 2,
+  三: 3,
+  四: 4,
+  五: 5,
+  六: 6,
+  七: 7,
+  八: 8,
+  九: 9,
+  十: 10,
+  冬: 11,
+  腊: 12,
+  臘: 12,
+};
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+// 公历 1970-01-01 为辛巳日，辛巳是六十甲子 0-based 第 17 位。
+const DAY_GANZHI_REFERENCE_INDEX = 17;
+
+const chineseCalendarFormatter = new Intl.DateTimeFormat('zh-u-ca-chinese', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
+
+function toDate(date) {
+  return date instanceof Date ? date : new Date(date);
+}
+
+function getChineseCalendarParts(date) {
+  const parts = chineseCalendarFormatter.formatToParts(date);
+  return parts.reduce((acc, part) => {
+    if (part.type !== 'literal') acc[part.type] = part.value;
+    return acc;
+  }, {});
+}
+
+function toChineseYear(year) {
+  return String(year)
+    .split('')
+    .map((d) => CHINESE_DIGITS[Number(d)] || d)
+    .join('');
+}
+
+function toLunarDayText(dayValue) {
+  if (!dayValue) return '';
+  if (Number.isNaN(Number(dayValue))) return String(dayValue);
+
+  const day = Number(dayValue);
+  if (day <= 0 || day > 30) return String(dayValue);
+  if (day <= 10) return day === 10 ? '初十' : `初${CHINESE_DIGITS[day]}`;
+  if (day < 20) return `十${CHINESE_DIGITS[day - 10]}`;
+  if (day === 20) return '二十';
+  if (day < 30) return `廿${CHINESE_DIGITS[day - 20]}`;
+  return '三十';
+}
+
+function parseLunarMonthNumber(monthStr) {
+  if (!monthStr) return null;
+  const clean = monthStr.replace(/[闰閏月]/g, '');
+  if (MONTH_NUMBER[clean]) return MONTH_NUMBER[clean];
+  if (clean.startsWith('十')) {
+    const tail = clean.slice(1);
+    return 10 + (MONTH_NUMBER[tail] || 0);
+  }
+  return MONTH_NUMBER[clean[0]] || null;
+}
+
+function getGanzhiYearByNumber(year) {
+  const index = mod(Number(year) - 4, 60);
+  return `${GAN[index % 10]}${ZHI[index % 12]}`;
+}
+
+function getGanzhiDay(date) {
+  const utcDay = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const referenceDay = Date.UTC(1970, 0, 1);
+  const dayOffset = Math.round((utcDay - referenceDay) / MS_PER_DAY);
+  const index = mod(DAY_GANZHI_REFERENCE_INDEX + dayOffset, 60);
+  return `${GAN[index % 10]}${ZHI[index % 12]}`;
+}
+
+function getGanzhiMonth(yearGanzhi, lunarMonthStr) {
+  const monthNumber = parseLunarMonthNumber(lunarMonthStr);
+  const yearGanIndex = GAN.indexOf(yearGanzhi?.[0]);
+  if (!monthNumber || yearGanIndex < 0) return '—';
+
+  const firstMonthStemByYearStem = {
+    0: 2, // 甲年正月起丙寅；己同
+    5: 2,
+    1: 4, // 乙、庚起戊寅
+    6: 4,
+    2: 6, // 丙、辛起庚寅
+    7: 6,
+    3: 8, // 丁、壬起壬寅
+    8: 8,
+    4: 0, // 戊、癸起甲寅
+    9: 0,
+  };
+
+  const stemIndex = mod(firstMonthStemByYearStem[yearGanIndex] + monthNumber - 1, 10);
+  const branchIndex = mod(monthNumber + 1, 12); // 正月为寅
+  return `${GAN[stemIndex]}${ZHI[branchIndex]}`;
+}
+
+function getShengxiao(yearGanzhi) {
+  const zhi = yearGanzhi?.[1];
+  return SHENGXIAO_BY_ZHI[zhi] || '';
+}
 
 /**
- * 从公历 Date 取完整黄历信息。
+ * 从公历 Date 取页面展示所需的农历信息。
  *
- * @param {Date} date - 任意公历日期
- * @returns {{
- *   // 农历日历
- *   lunarYearStr:   string,    // "二〇二六"
- *   lunarMonthStr:  string,    // "三月" / "闰四月"
- *   lunarDayStr:    string,    // "廿八"
- *   isLeapMonth:    boolean,
- *   // 干支与生肖
- *   ganzhiYear:     string,    // "丙午"
- *   ganzhiMonth:    string,    // "癸巳"
- *   ganzhiDay:      string,    // "戊子"
- *   shengxiao:      string,    // "马"
- *   // 黄历宜忌（数组，传统民俗规则）
- *   yi:             string[],  // ["纳采","嫁娶","祭祀"...]
- *   ji:             string[],  // ["开市","立券"...]
- *   // 冲煞与彭祖
- *   chong:          string,    // "(壬午)马" 表达冲什么
- *   sha:            string,    // "南" 等方位
- *   pengzuGan:      string,    // "戊不受田田主不祥"
- *   pengzuZhi:      string,    // "子不问卜自惹祸殃"
- *   // 建除/星宿/纳音
- *   zhixing:        string,    // "建除满平定执破危成收开闭" 之一
- *   xiu:            string,    // "奎"
- *   xiuLuck:        string,    // "吉" / "凶"
- *   naYin:          string,    // 当日纳音
- *   // 方位
- *   xiShenFang:     string,    // 喜神方位
- *   fuShenFang:     string,    // 福神方位
- *   caiShenFang:    string,    // 财神方位
- *   yangGuiFang:    string,    // 阳贵神方位
- *   yinGuiFang:     string,    // 阴贵神方位
- * }}
+ * 注：传统黄历宜忌、星宿、纳音等原先来自第三方库；当前轻量实现
+ * 不臆造这些民俗数据，统一返回空数组或占位符。
  */
 export function getLunarInfo(date = new Date()) {
-  const solar = Solar.fromYmd(date.getFullYear(), date.getMonth() + 1, date.getDate());
-  const lunar = solar.getLunar();
+  const d = toDate(date);
+  const parts = getChineseCalendarParts(d);
+  const relatedYear = parts.relatedYear || d.getFullYear();
+  const yearGanzhi = parts.yearName || getGanzhiYearByNumber(relatedYear);
+  const lunarMonthStr = parts.month || `${d.getMonth() + 1}月`;
 
   return {
-    lunarYearStr:   lunar.getYearInChinese(),
-    lunarMonthStr:  (lunar.getMonth() < 0 ? '闰' : '') + lunar.getMonthInChinese() + '月',
-    lunarDayStr:    lunar.getDayInChinese(),
-    isLeapMonth:    lunar.getMonth() < 0,
-    ganzhiYear:     lunar.getYearInGanZhi(),
-    ganzhiMonth:    lunar.getMonthInGanZhi(),
-    ganzhiDay:      lunar.getDayInGanZhi(),
-    shengxiao:      lunar.getYearShengXiao(),
-    yi:             lunar.getDayYi() || [],
-    ji:             lunar.getDayJi() || [],
-    chong:          lunar.getDayChongDesc(),
-    sha:            lunar.getDaySha(),
-    pengzuGan:      lunar.getPengZuGan(),
-    pengzuZhi:      lunar.getPengZuZhi(),
-    zhixing:        lunar.getZhiXing(),
-    xiu:            lunar.getXiu(),
-    xiuLuck:        lunar.getXiuLuck(),
-    naYin:          lunar.getDayNaYin(),
-    xiShenFang:     lunar.getDayPositionXiDesc(),
-    fuShenFang:     lunar.getDayPositionFuDesc(),
-    caiShenFang:    lunar.getDayPositionCaiDesc(),
-    yangGuiFang:    lunar.getDayPositionYangGuiDesc(),
-    yinGuiFang:     lunar.getDayPositionYinGuiDesc(),
+    lunarYearStr: toChineseYear(relatedYear),
+    lunarMonthStr,
+    lunarDayStr: toLunarDayText(parts.day || d.getDate()),
+    isLeapMonth: lunarMonthStr.startsWith('闰') || lunarMonthStr.startsWith('閏'),
+    ganzhiYear: yearGanzhi,
+    ganzhiMonth: getGanzhiMonth(yearGanzhi, lunarMonthStr),
+    ganzhiDay: getGanzhiDay(d),
+    shengxiao: getShengxiao(yearGanzhi),
+    yi: [],
+    ji: [],
+    chong: '—',
+    sha: '—',
+    pengzuGan: '',
+    pengzuZhi: '',
+    zhixing: '—',
+    xiu: '—',
+    xiuLuck: '',
+    naYin: '—',
+    xiShenFang: '—',
+    fuShenFang: '—',
+    caiShenFang: '—',
+    yangGuiFang: '—',
+    yinGuiFang: '—',
   };
 }
 
 /**
  * 仅返回农历日字符串（"廿八"等），用于日历格内小字。
- * 月初一返回月名（"三月初一"或"四月"压缩）便于辨识。
+ * 月初一返回月名（如"三月"或"闰四月"）便于辨识。
  */
 export function getLunarDayLabel(date = new Date()) {
-  const solar = Solar.fromYmd(date.getFullYear(), date.getMonth() + 1, date.getDate());
-  const lunar = solar.getLunar();
-  const day = lunar.getDay();
-  if (day === 1) {
-    // 月初一显示月份
-    return (lunar.getMonth() < 0 ? '闰' : '') + lunar.getMonthInChinese() + '月';
+  const d = toDate(date);
+  const parts = getChineseCalendarParts(d);
+  if (Number(parts.day) === 1) {
+    return parts.month || `${d.getMonth() + 1}月`;
   }
-  return lunar.getDayInChinese();
+  return toLunarDayText(parts.day || d.getDate());
 }

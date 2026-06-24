@@ -21,6 +21,76 @@
 
 ---
 
+## E014 — 2026-06-23 20:49 CDT — rg 查询包含不存在的 .github 目录
+
+**现象**：核对部署相关文件时执行 `rg ... src worker .github vite.config.*`，因当前仓库没有 `.github` 目录，`rg` 返回退出码 2。
+
+**根因**：我把可选目录当成必然存在的路径传给了 `rg`，没有先用 `rg --files` 或 `test -d` 确认。
+
+**教训**：查询可选目录时，应使用存在性检查或 glob 过滤，避免把“目录不存在”制造成命令错误。
+
+**防范机制**：后续跨目录搜索前先确认目录存在；对可选目录使用 `find`/`rg --files` 发现路径后再搜索。
+
+## E013 — 2026-06-23 19:25 CDT — Forgejo 远端仓库对象损坏导致 push 被拒绝
+
+**现象**：补齐 `forgejo` remote 后执行 `git push forgejo codex/study-life-lessons`，远端报告 object file 为空、`bad object refs/heads/claude/naughty-booth-4d532f`，并以 `missing necessary objects` 拒绝 push。
+
+**根因**：Forgejo 服务器端仓库对象库或引用已损坏，客户端无法通过重试修复。
+
+**教训**：远端能连通不等于仓库健康；出现 empty object / bad object / missing necessary objects 属于服务端仓库维护问题，不能无限重试。
+
+**防范机制**：本次停止重试，仅保留本地 commits；需要用户在 Forgejo 服务器侧修复仓库或重建备份 remote 后再推送。
+
+## E012 — 2026-06-23 19:23 CDT — Browser 截图 API 调用到错误命名空间
+
+**现象**：做浏览器 QA 截图时调用 `tab.playwright.screenshot(...)` 报 `is not a function`。
+
+**根因**：Browser 文档的 API reference 中截图方法在 `Tab` 对象上，应使用 `tab.screenshot(...)`；我把普通 Playwright 习惯误套到了 Browser runtime 的 `tab.playwright` 子 API 上。
+
+**教训**：Browser runtime 不是完整 Playwright page，截图、导航等顶层能力要按 `Tab` API 调用。
+
+**防范机制**：后续 Browser QA 截图统一使用 `tab.screenshot({ fullPage })`；仅把 `tab.playwright` 用于 locator、DOM snapshot 和 evaluate。
+
+## E011 — 2026-06-23 19:19 CDT — 构建缺少 lunar-javascript 依赖导致失败
+
+**现象**：执行 `npm run build` 时，Vite/Rolldown 无法解析 `src/utils/lunar.js` 中的 `lunar-javascript` import，构建失败。
+
+**根因**：`package.json` 和 `package-lock.json` 声明了 `lunar-javascript`，但当前 `node_modules` 没有安装该包；项目规则禁止安装依赖，不能用 `npm install` 修复。
+
+**教训**：构建流程不能依赖当前环境里未实际存在的包；若项目规则禁止安装，源码应提供可构建的本地实现或降级路径。
+
+**防范机制**：把 `src/utils/lunar.js` 改成基于浏览器内建 `Intl.DateTimeFormat('zh-u-ca-chinese')` 的轻量实现，移除对缺失包的静态 import。
+
+## E010 — 2026-06-23 19:18 CDT — ESLint 扫描 worktree 打包产物导致 lint 失败
+
+**现象**：执行 `npm run lint` 时，ESLint 扫到 `.claude/worktrees/*/dist/assets/*.js` 和根目录 `debug-api.js`，产生大量 `no-undef`、`no-cond-assign` 等与本次源码修改无关的错误。
+
+**根因**：`eslint.config.js` 只忽略了顶层 `dist`，没有忽略嵌套 worktree 的构建产物、`.claude` 工作目录和本地调试脚本。
+
+**教训**：flat config 的 ignore 要覆盖实际工作区布局；项目目录里有生成产物或辅助脚本时，lint 范围必须明确限制在可维护源码内。
+
+**防范机制**：更新 `eslint.config.js` 的 `globalIgnores`，忽略 `.claude/**`、`**/dist/**` 和 `debug-api.js`。
+
+## E009 — 2026-06-23 19:13 CDT — Forgejo 备份 remote 在当前工作区不存在
+
+**现象**：执行 `git push forgejo codex/study-life-lessons` 时失败，提示 `forgejo` does not appear to be a git repository。
+
+**根因**：当前工作区只配置了 GitHub `origin` remote，没有配置项目规则中用于备份的 `forgejo` remote。
+
+**教训**：执行项目约定的备份命令前，不能假设当前 worktree 一定继承了全部 remote 配置，应先检查 `git remote -v`。
+
+**防范机制**：后续备份前先确认 `forgejo` remote 是否存在；若缺失，按项目记录的 Forgejo 地址补齐 remote，且仍禁止 push 到 GitHub `origin`。
+
+## E008 — 2026-06-23 19:12 CDT — React 技能文件路径按旧缓存目录读取失败
+
+**现象**：准备读取 `build-web-apps:react-best-practices` 技能时，按 `a89a13d7` 缓存目录拼出的路径不存在，`cat` 返回 No such file or directory。
+
+**根因**：技能清单中的缓存根与当前实际插件缓存目录不一致，实际文件位于 `ae48be50` 目录；我没有先用文件发现确认路径。
+
+**教训**：读取插件技能文件时，若缓存目录来自会变动的哈希路径，应先确认实际文件位置，再打开目标文件。
+
+**防范机制**：后续读取插件技能时，如路径失败，立即用 `find`/`rg --files` 定位同名 `SKILL.md`，并记录正确路径；不为此新增 hook。
+
 ## E007 — 2026-05-11 21:08 CDT — 占卜 prompt 有 positive bias + Worker CORS 不认 port 5199
 
 用户验收 Phase 1 时一并报两问题：

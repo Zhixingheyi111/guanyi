@@ -83,31 +83,3 @@ export function calculateTransformations(benGuaBinary, changingPositions) {
     bianGua: getBianGua(benGuaBinary, changingPositions),
   };
 }
-
-/**
- * 测试函数：用本卦 "101010"，动爻 [1, 4] 演示五卦计算结果
- */
-export function testTransformations() {
-  const benGua = '101010';
-  const changingPositions = [1, 4];
-
-  console.log('=== 五层卦象计算测试 ===\n');
-  console.log('本卦二进制（index 0 = 初爻）：', benGua);
-  console.log('动爻位置：', changingPositions, '\n');
-
-  const result = calculateTransformations(benGua, changingPositions);
-
-  const labels = {
-    benGua:  '本卦',
-    zongGua: '综卦（六爻反转）',
-    cuoGua:  '错卦（阴阳翻转）',
-    huGua:   '互卦（中间四爻重组）',
-    bianGua: '变卦（动爻翻转）',
-  };
-
-  Object.entries(result).forEach(([key, value]) => {
-    console.log(`${labels[key]}：${value ?? '无（无动爻）'}`);
-  });
-
-  return result;
-}
