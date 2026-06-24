@@ -21,6 +21,16 @@
 
 ---
 
+## E009 — 2026-06-23 19:13 CDT — Forgejo 备份 remote 在当前工作区不存在
+
+**现象**：执行 `git push forgejo codex/study-life-lessons` 时失败，提示 `forgejo` does not appear to be a git repository。
+
+**根因**：当前工作区只配置了 GitHub `origin` remote，没有配置项目规则中用于备份的 `forgejo` remote。
+
+**教训**：执行项目约定的备份命令前，不能假设当前 worktree 一定继承了全部 remote 配置，应先检查 `git remote -v`。
+
+**防范机制**：后续备份前先确认 `forgejo` remote 是否存在；若缺失，按项目记录的 Forgejo 地址补齐 remote，且仍禁止 push 到 GitHub `origin`。
+
 ## E008 — 2026-06-23 19:12 CDT — React 技能文件路径按旧缓存目录读取失败
 
 **现象**：准备读取 `build-web-apps:react-best-practices` 技能时，按 `a89a13d7` 缓存目录拼出的路径不存在，`cat` 返回 No such file or directory。
