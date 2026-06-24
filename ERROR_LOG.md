@@ -21,6 +21,16 @@
 
 ---
 
+## E014 — 2026-06-23 20:49 CDT — rg 查询包含不存在的 .github 目录
+
+**现象**：核对部署相关文件时执行 `rg ... src worker .github vite.config.*`，因当前仓库没有 `.github` 目录，`rg` 返回退出码 2。
+
+**根因**：我把可选目录当成必然存在的路径传给了 `rg`，没有先用 `rg --files` 或 `test -d` 确认。
+
+**教训**：查询可选目录时，应使用存在性检查或 glob 过滤，避免把“目录不存在”制造成命令错误。
+
+**防范机制**：后续跨目录搜索前先确认目录存在；对可选目录使用 `find`/`rg --files` 发现路径后再搜索。
+
 ## E013 — 2026-06-23 19:25 CDT — Forgejo 远端仓库对象损坏导致 push 被拒绝
 
 **现象**：补齐 `forgejo` remote 后执行 `git push forgejo codex/study-life-lessons`，远端报告 object file 为空、`bad object refs/heads/claude/naughty-booth-4d532f`，并以 `missing necessary objects` 拒绝 push。
