@@ -21,6 +21,16 @@
 
 ---
 
+## E013 — 2026-06-23 19:25 CDT — Forgejo 远端仓库对象损坏导致 push 被拒绝
+
+**现象**：补齐 `forgejo` remote 后执行 `git push forgejo codex/study-life-lessons`，远端报告 object file 为空、`bad object refs/heads/claude/naughty-booth-4d532f`，并以 `missing necessary objects` 拒绝 push。
+
+**根因**：Forgejo 服务器端仓库对象库或引用已损坏，客户端无法通过重试修复。
+
+**教训**：远端能连通不等于仓库健康；出现 empty object / bad object / missing necessary objects 属于服务端仓库维护问题，不能无限重试。
+
+**防范机制**：本次停止重试，仅保留本地 commits；需要用户在 Forgejo 服务器侧修复仓库或重建备份 remote 后再推送。
+
 ## E012 — 2026-06-23 19:23 CDT — Browser 截图 API 调用到错误命名空间
 
 **现象**：做浏览器 QA 截图时调用 `tab.playwright.screenshot(...)` 报 `is not a function`。
