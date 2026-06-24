@@ -6,6 +6,25 @@
 
 ---
 
+## 2026-06-23 21:50 CDT — 学易单卦详情页专业化（准备推 main）
+
+按用户确认的美观/专业化方向，完成学易详情页视觉与阅读体验升级：
+
+- `src/components/HexagramDetail.jsx`：单卦页改成阅读器式结构，顶部增加完整六爻卦象主视觉、卦名、拼音、上下卦与卷首卦辞。
+- 新增详情页快速跳转：导读 / 卦辞 / 六爻 / 笔记。
+- 六爻详解由长串卡片改成可展开条目，默认展开初爻；手机上阅读节奏更轻。
+- `src/components/HexagramLifeGuide.jsx`：做人做事模块改成开放式导读，不再是卡片套卡片；保留做人 / 做事 / 戒惧 / 今日一练四项。
+- 记录本轮工程失败教训：E015（补丁上下文）、E016（Fast Refresh helper 导出）、E017（Browser 空 tab）。
+
+**验证：**
+- `npm run lint` rc=0
+- `npm run build` rc=0（仅既有 Vite chunk size warning）
+- Browser QA：桌面 + 390×844 手机视口走 `学易 → 卦目 → 乾卦`，无横向溢出；快速跳转到六爻、展开九二正常；console 无 error/warn。
+
+**部署状态：**
+- 用户已说「deploy吧」，本次视为允许 merge 到 main 并 push origin，保持现有网址。
+- Forgejo 仍因远端仓库对象损坏不可用；用户已明确说不需要 Forgejo，采用本地 Git commit 作为备份。
+
 ## 2026-06-23 20:59 CDT — 学易去 AI + 每卦做人做事（准备推 main）
 
 按用户要求「学易里面去掉 AI，每一卦教我如何做人做事」完成一轮生产部署前改造：

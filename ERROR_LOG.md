@@ -21,6 +21,36 @@
 
 ---
 
+## E017 — 2026-06-23 21:40 CDT — Browser 空会话中调用 selected tab 失败
+
+**现象**：浏览器 QA 时调用 `browser.tabs.selected()` 返回 “No active tab found”，未能进入本地页面。
+
+**根因**：当前 Browser 会话没有已选中的受控标签；我按“先 selected 再 new”的常规写法处理，但这个后端会在空会话直接报错而不是返回 `undefined`。
+
+**教训**：Browser QA 新会话里如果不需要复用现有页面，应直接 `browser.tabs.new()`，不要假设 `selected()` 在空状态可安全探测。
+
+**防范机制**：后续本地渲染 QA 默认直接新建测试标签；只有明确要接管已打开页面时才用 `openTabs()`/claim 或 `selected()`。
+
+## E016 — 2026-06-23 21:38 CDT — 从组件文件导出 helper 触发 Fast Refresh lint
+
+**现象**：执行 `npm run lint` 时，`HexagramLifeGuide.jsx` 因导出 `getHexagramLifeGuide` 报 `react-refresh/only-export-components`。
+
+**根因**：该文件本来是 React 组件文件，我为复用主题句临时导出了非组件函数，违反了项目 ESLint 的 Fast Refresh 约束。
+
+**教训**：组件文件里不要顺手导出普通 helper；若需要共享数据或工具，应拆到非组件模块，或保持 helper 为文件内部实现。
+
+**防范机制**：本次移除非组件导出；后续新增跨组件复用逻辑时先检查 `react-refresh/only-export-components` 规则。
+
+## E015 — 2026-06-23 21:33 CDT — UI 补丁上下文少包含一层结构导致应用失败
+
+**现象**：修改 `HexagramLifeGuide.jsx` 时第一次 `apply_patch` 因目标片段与实际 JSX 结构不完全一致而失败。
+
+**根因**：我在替换组件返回结构时只匹配了外层 panel 的开合，没有把内部 grid 的完整收尾一并纳入上下文。
+
+**教训**：手工补丁改 JSX 嵌套结构时，要先用行号确认完整开闭范围，再按较小、可验证的片段分步替换。
+
+**防范机制**：后续涉及多层 JSX 的补丁先用 `nl -ba` 定位范围，优先拆成样式、辅助函数、返回结构三个小补丁执行。
+
 ## E014 — 2026-06-23 20:49 CDT — rg 查询包含不存在的 .github 目录
 
 **现象**：核对部署相关文件时执行 `rg ... src worker .github vite.config.*`，因当前仓库没有 `.github` 目录，`rg` 返回退出码 2。

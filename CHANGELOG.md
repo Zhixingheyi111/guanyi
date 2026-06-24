@@ -12,6 +12,18 @@
 
 Phase 易经-A 进行中（占卜模块整治）。下个版本 tag：`v0.2.0-divination-deep`（A+B+C 全完后）。
 
+### Study detail polish — 2026-06-23 21:50 CDT — 学易单卦详情页专业化
+
+#### Changed
+- `src/components/HexagramDetail.jsx`：单卦详情页改成阅读器式结构，增加完整卦象主视觉、卷首卦辞、快速跳转、统一章节标题。
+- `src/components/HexagramDetail.jsx`：六爻详解改成可展开条目，默认展开初爻，降低手机长页阅读负担。
+- `src/components/HexagramLifeGuide.jsx`：做人做事模块改为开放式导读布局，去掉外层套卡片感，强化「主题句 + 四项实践」层级。
+
+#### Validation
+- `npm run lint` 通过
+- `npm run build` 通过（保留既有 Vite chunk size warning）
+- Browser QA：`学易 → 卦目 → 乾卦`，桌面和 390×844 手机视口均无横向溢出；快速跳转到六爻、展开九二正常；console 无 error/warn。
+
 ### Study polish — 2026-06-23 20:59 CDT — 学易去 AI + 每卦做人做事
 
 #### Added

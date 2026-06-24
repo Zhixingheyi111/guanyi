@@ -454,49 +454,61 @@ const LIFE_GUIDES = {
 const S = {
   section: {
     borderTop: '1px solid var(--paper-edge)',
-    paddingTop: 'var(--space-5)',
-    marginTop: 'var(--space-5)',
+    paddingTop: 'var(--space-6)',
+    marginTop: 'var(--space-6)',
+    scrollMarginTop: 'var(--space-5)',
+  },
+  sectionHead: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--space-2)',
+    marginBottom: 'var(--space-4)',
   },
   sectionTitle: {
     fontSize: 'var(--text-sm)',
     color: 'var(--ink)',
-    marginBottom: 'var(--space-3)',
     fontWeight: 500,
     borderLeft: '3px solid var(--vermilion)',
     paddingLeft: '0.6rem',
     lineHeight: 1.4,
+    letterSpacing: 'var(--track-wide)',
   },
-  panel: {
-    background: 'var(--paper-soft)',
-    border: '1px solid var(--paper-edge)',
-    borderRadius: 'var(--radius-md)',
-    padding: 'var(--space-4)',
+  sectionRule: {
+    height: '1px',
+    flex: 1,
+    background: 'var(--paper-edge)',
+  },
+  themeBlock: {
+    borderLeft: '2px solid var(--gold)',
+    paddingLeft: 'var(--space-4)',
+    marginBottom: 'var(--space-4)',
   },
   theme: {
     color: 'var(--ink)',
-    fontSize: 'var(--text-base)',
-    lineHeight: 1.85,
+    fontSize: 'var(--text-md)',
+    lineHeight: 1.9,
     margin: 0,
     fontWeight: 500,
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
     gap: 'var(--space-3)',
-    marginTop: 'var(--space-4)',
   },
   item: {
-    background: 'var(--paper)',
+    background: 'rgba(250, 247, 239, 0.72)',
     border: '1px solid var(--paper-edge)',
     borderRadius: 'var(--radius-md)',
-    padding: 'var(--space-3)',
+    padding: 'var(--space-4)',
+    minHeight: '138px',
   },
   label: {
     display: 'block',
     color: 'var(--vermilion)',
     fontSize: 'var(--text-sm)',
     fontWeight: 500,
-    marginBottom: 'var(--space-1)',
+    marginBottom: 'var(--space-2)',
+    letterSpacing: 'var(--track-wide)',
   },
   text: {
     color: 'var(--ink-soft)',
@@ -520,17 +532,20 @@ export default function HexagramLifeGuide({ hexagram }) {
   if (!guide) return null;
 
   return (
-    <div style={S.section}>
-      <div style={S.sectionTitle}>{hexagram.name}　卦　做　人　做　事</div>
-      <div style={S.panel}>
-        <p style={S.theme}>{guide.theme}</p>
-        <div style={S.grid}>
-          <GuideItem label="做人" text={guide.be} />
-          <GuideItem label="做事" text={guide.do} />
-          <GuideItem label="戒惧" text={guide.caution} />
-          <GuideItem label="今日一练" text={guide.practice} />
-        </div>
+    <section id="life-guide" style={S.section}>
+      <div style={S.sectionHead}>
+        <div style={S.sectionTitle}>{hexagram.name}卦 · 做人做事</div>
+        <div style={S.sectionRule} />
       </div>
-    </div>
+      <div style={S.themeBlock}>
+        <p style={S.theme}>{guide.theme}</p>
+      </div>
+      <div style={S.grid}>
+        <GuideItem label="做人" text={guide.be} />
+        <GuideItem label="做事" text={guide.do} />
+        <GuideItem label="戒惧" text={guide.caution} />
+        <GuideItem label="今日一练" text={guide.practice} />
+      </div>
+    </section>
   );
 }
