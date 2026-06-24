@@ -103,36 +103,3 @@ export function generateHexagram() {
 
   return { yaoTypes, binary, changingPositions, process };
 }
-
-/**
- * 测试函数：在终端输出一次完整起卦过程
- */
-export function testDivination() {
-  console.log('=== 蓍草揲蓍法起卦测试 ===\n');
-
-  const result = generateHexagram();
-
-  const yaoNames = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
-  const typeNames = {
-    old_yang:   '老阳 ● 动爻（阳变阴）',
-    young_yang: '少阳 — 静爻',
-    young_yin:  '少阴 -- 静爻',
-    old_yin:    '老阴 ○ 动爻（阴变阳）',
-  };
-
-  result.process.forEach(({ yao, sums, total, type }) => {
-    console.log(
-      `${yaoNames[yao - 1]}：` +
-      `三变设除（${sums[0]} + ${sums[1]} + ${sums[2]}）= ${total}` +
-      `  →  ${typeNames[type]}`
-    );
-  });
-
-  console.log('\n本卦二进制（初→上）：', result.binary);
-  console.log(
-    '动爻位置（0=初爻）：',
-    result.changingPositions.length ? result.changingPositions.join(', ') : '无动爻'
-  );
-
-  return result;
-}
